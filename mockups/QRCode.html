@@ -5,10 +5,12 @@
         <title>Template</title>
         <link rel="stylesheet" type="text/css" href="../style/front_page.css">
         <link rel="stylesheet" type="text/css" href="../style/QRCode.css">
+        <link rel="stylesheet" type="text/css" href="../style/default.css">
+        <link rel="stylesheet" type="text/css" href="../style/popup.css">
     </head>
     <body class="bg_default">
         <header class="header_default">
-            <h1>[Logo][appName]</h1>
+            <button class="logo_image"><img class='bell_image' src="../images/preto-no-branco.png" alt="" /></button>
             <h2>[Perfil]</h2>
         </header>
         <nav class="navbar_default">
@@ -19,7 +21,7 @@
             </div>
             <div class="navbar_group">
                 <button class="navbar_button"> [search] </button>
-                <button class="navbar_button"> [notifyBell] </button>
+                <button class="navbar_image_button"> <img class='bell_image' src="../images/bell_notification.png" alt="" /> </button>
                 <button class="navbar_button"> Login </button>
             </div>
         </nav>
@@ -156,10 +158,10 @@
                 <button class="default" style="width: 100%;">Apply filters</button>
             </aside>
         </div>
-        <div class="popup-container">
-            <div class="popup-body">
-                <div class="popup-close-button">
-                    <div class="pmAline"> </div>
+        <div class="popup_container">
+            <div class="popup_body">
+                <div class="popup_close_button">
+                    <div class="pm_aline"> </div>
                     <h1>QRCode</h1>
                     <button class="default close_button" onclick="generateQRCode()">X</Button >
                 </div>
