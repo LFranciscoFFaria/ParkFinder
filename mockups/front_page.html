@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Template</title>
+        <link rel="stylesheet" type="text/css" href="../style/front_page.css">
+    </head>
+    <body class="bg_default">
+        <header class="header_default">
+            <h1>[Logo][appName]</h1>
+            <h2>[Perfil]</h2>
+        </header>
+        <nav class="navbar_default">
+            <div class="navbar_group">
+                <button class="navbar_button"> Airports </button>
+                <button class="navbar_button"> Cities </button>
+                <button class="navbar_button"> Train Stations </button>
+            </div>
+            <div class="navbar_group">
+                <button class="navbar_button"> [search] </button>
+                <button class="navbar_button"> [notifyBell] </button>
+                <button class="navbar_button"> Login </button>
+            </div>
+        </nav>
+        <div class="content_default">
+            <main class="main_fp">
+                <div>
+                    <h1>[Local De Pesquisa]</h1>
+                    <div class="main_header_fp">
+                        <div>
+                            <label>[SelectDataInicio]</label>
+                            <label>[SelectDataFim]</label>
+                        </div>
+                        <select class="select" name="Criterion" id="criterion">
+                            <option style="display: none;" disabled selected>Sort by</option>
+                            <option value="distance">Distance</option>
+                            <option value="price">Price</option>
+                        </select>
+                    </div>
+                    <div class="park_fp">
+                        <div class="park_fp_header">
+                            <div class="park_fp_title">
+                                <h2>PARQUE VISCONDE DO RAIO</h2>
+                                <label style="color: gray;">(797 m)</label>
+                            </div>
+                            <div class="park_fp_spaces">
+                                <b> 45/96 </b>
+                            </div>
+                        </div>
+                        <div class="park_fp_image_info">
+                            <div class="image">
+                                <h3> Imagem </h3>
+                            </div>
+                            <div class="park_fp_info">
+                                <label>Estimated cost: <b>€1.30</b></label>
+                                <ul>
+                                    <li>Public covered parking</li>
+                                    <li>7 min. walk from the heart of the city</li>
+                                    <li> Accessible from Monday to Friday from 8:00 am to 8:00 pm and Saturdays from 10:00 am to 8:00 pm.</li>
+                                </ul>
+                                <div class="park_fp_buttons">
+                                    <button class="page_button see_details_button">See details</button>
+                                    <button class="default">Book</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="park_fp">
+                        <div class="park_fp_header">
+                            <div class="park_fp_title">
+                                <h2>B&B BRAGA LAMAÇÃES</h2>
+                                <label style="color: gray;">(2.7 km)</label>
+                            </div>
+                            <div class="park_fp_spaces">
+                                <b> 22/51 </b>
+                            </div>
+                        </div>
+                        <div class="park_fp_image_info">
+                            <div class="image">
+                                <h3> Imagem </h3>
+                            </div>
+                            <div class="park_fp_info">
+                                <label>Estimated cost: <b>€7.00</b></label>
+                                <ul>
+                                    <li>Covered Hotel Parking</li>
+                                    <li>10 min. from University of Minho</li>
+                                    <li>taxi service Accessible 24/7</li>
+                                </ul>
+                                <div class="park_fp_buttons">
+                                    <button class="page_button SeeDetails_button">See details</button>
+                                    <button class="default">Book</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="park_fp">
+                        <div class="park_fp_header">
+                            <div class="park_fp_title">
+                                <h2>BRAGA PARQUE</h2>
+                                <label style="color: gray;">(1.1km)</label>
+                            </div>
+                            <div class="park_fp_spaces" style="background-color: orange;">
+                                <b> 186/268 </b>
+                            </div>
+                        </div>
+                        <div class="park_fp_image_info">
+                            <div class="image">
+                                <h3> Imagem </h3>
+                            </div>
+                            <div class="park_fp_info">
+                                <label>Estimated cost: <b>€2.15</b></label>
+                                <ul>
+                                    <li>Public covered Parking</li>
+                                    <li>Under the citizen's house from Braga</li>
+                                    <li>Accessible 24/7</li>
+                                </ul>
+                                <div class="park_fp_buttons">
+                                    <button class="page_button SeeDetails_button">See details</button>
+                                    <button class="default">Book</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pageNumb">
+                    <button class="page_button"> << </button>
+                    <button class="page_button"> 1 </button>
+                    <button class="page_button"> 2 </button>
+                    <button class="page_button"> 3  </button>
+                    <button class="page_button"> >> </button>
+                </div>
+            </main>
+            <aside class="aside_fp">
+                <div class="aside_header">
+                    <h2>Filter</h2>
+                    <button class="contrast">Remove all filters</button>
+                </div>
+                <div class="aside_block_fp">
+                    <b> Type of parking</b>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> Covered </label>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> Outside </label>
+                </div>
+                <div class="aside_block_fp">
+                    <b> Services</b>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> Electric recharge service </label>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> Multiple entries and exits  </label>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> Quick access </label>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> Elevator </label>
+                </div>
+                <div class="aside_block_fp">
+                    <b> Reservations</b>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> Schedule reservation </label>
+                    <label class="checkbox_label"><input type="checkbox" class="checkbox"> On arrival </label>
+                </div>
+                <button class="default" style="width: 100%;">Apply filters</button>
+            </aside>
+        </div>
+    </body>
+</html>
+
+
