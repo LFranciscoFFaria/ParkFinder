@@ -59,7 +59,6 @@
 
 
 
-
 button{
     font-family: system-ui;
     font-weight: bold;
@@ -120,8 +119,22 @@ button{
     transition: ease-out 0.1s all;
     transform: scale(0.9,0.9);
 }
+
+.perfil_image{
+    width: 90px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    transition: ease-out 0.1s all;
+}
+
+.perfil_image:hover,
+.logo_image:hover,
 .navbar_image_button:hover{
-    border-radius: 15px;
     transform: scale(1.1,1.1);
 }
 
@@ -132,7 +145,10 @@ button{
     height: 135px;
     background-color: transparent;
     border: none;
+    transition: ease-out 0.1s all;
 }
+
+
 
 
 
