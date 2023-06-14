@@ -1,0 +1,57 @@
+.bg_color_gestor{
+  font-family: system-ui;
+  background-image: linear-gradient(to top, rgb(255, 191, 117), rgb(255, 238, 164), rgb(255, 191, 117));
+  height: 890px;
+  display: flex;
+
+  justify-content: center;
+}
+
+.whitebox_gestor{
+  background-color: white;
+  margin: 30px;
+  padding: 60px;
+  min-height: 800px;
+  min-width: 800px;
+  border-radius: 30px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.desc_desc{
+  padding: 10px 30px 0px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.desc_button{
+  background-color: white;
+  border: 2px solid white;
+  padding: 3px 3px 3px 5px;
+  height: 60px;
+  padding: 20px;
+  color: gray;
+}
+
+.desc_button_hover,
+.desc_button:hover{
+  background-color: lightgray;
+  border-bottom: 2px solid lightgray;
+  transition: all 0.1s ease-out;
+  color: black;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.desc_desc{
+  padding: 10px 30px 0px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+option[value=""][disabled] {
+  display: none;
+}
