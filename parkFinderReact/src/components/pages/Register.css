@@ -1,0 +1,18 @@
+
+.form_sex_register{
+    margin-bottom: 5px;
+    gap: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form_sex_buttons_register{
+    display: flex;
+    gap: 10px;
+}
+
+.input_registo{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
