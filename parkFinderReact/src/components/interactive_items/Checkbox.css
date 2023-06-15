@@ -1,0 +1,26 @@
+
+.checkbox_label{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.checkbox{
+    border-radius: 3px;
+    background-color: transparent;
+    border: 2px solid rgb(255, 191, 73);
+    width: 20px;
+    height: 20px;
+    appearance: none;
+}
+
+
+.checkbox:checked{
+    border-radius: 3px;
+    border: none;
+    background-color: rgb(255, 202, 103);
+    appearance: none;
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3'%3E%3Cline x1='18' x2='10' y1='8' y2='17' vector-effect='non-scaling-stroke'/%3E%3Cline x1='10' x2='6' y1='17' y2='12' vector-effect='non-scaling-stroke'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}

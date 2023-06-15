@@ -1,0 +1,114 @@
+
+.button{
+    font-family: system-ui;
+    font-weight: bold;
+    font-size: medium;
+}
+
+
+.default,
+.contrast:hover{
+    background-color: rgb(255, 202, 103);
+    border: 2px solid rgb(255, 202, 103);
+    border-radius: 10px;
+    padding: 5px;
+    width: fit-content;
+    min-width: 100px;
+    font-family: system-ui;
+    font-weight: bold;
+    font-size: medium;
+}
+
+
+.default:hover,
+.contrast{
+    background-color: white;
+    border: 2px solid rgb(255, 202, 103);
+    border-radius: 10px;
+    padding: 5px;
+    width: fit-content;
+    min-width: 100px;
+    font-family: system-ui;
+    font-weight: bold;
+    font-size: medium;
+}
+
+
+.navbar_button{
+    background-color: transparent;
+    border: 0;
+    padding: 5px;
+    min-width: 100px;
+    height: inherit;
+    font-family: system-ui;
+    font-weight: bold;
+    font-size: large;
+    transition: ease-out 0.2s all;
+}
+
+
+.navbar_image_button{
+    width: fit-content;
+    min-width: none;
+    height: inherit;
+    background-color: transparent;
+    border: 0;
+    border: 1px solid rgba(255, 255, 255, 0.0001);
+    transition: ease-out 0.1s all;
+    transform: scale(0.9,0.9);
+}
+
+
+.perfil_image{
+    width: 90px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    transition: ease-out 0.1s all;
+}
+
+
+.logo_image{
+    width: 225px;
+    height: 135px;
+    background-color: transparent;
+    border: none;
+    transition: ease-out 0.1s all;
+}
+
+
+.sex_button{
+    background-color: white;
+    border: 2px solid white;
+    display: flex;
+    border-bottom: 2px solid lightgray;
+    transition: all 0.2s ease-out;
+    padding: 3px 3px 3px 5px;
+    color: gray;
+    width: 60px;
+}
+
+
+
+
+.navbar_button:hover{
+    background-color: white;
+    border-radius: 15px;
+}
+
+.perfil_image:hover,
+.logo_image:hover,
+.navbar_image_button:hover{
+    transform: scale(1.1,1.1);
+}
+
+.sex_button:hover{
+    border: 2px solid gray;
+    border-radius: 15px;
+    transition: all 0.2s ease-out;
+    color: black;
+}
