@@ -6,10 +6,6 @@ import { Button } from '../interactive_items/Button';
 function Login({
     
 }) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const navigate = useNavigate()
-
     return (
         <div className="bg_color">
             <div className="whitebox">
@@ -32,7 +28,7 @@ function Login({
                     </div>
                     
                     <div className="buttons_login">
-                        <Button buttonStyle={"contrast"}>Login</Button>
+                        <Button buttonStyle={"contrast"} link={"/"}>Login</Button>
                     </div>
                 </form>
                 <div className="image">

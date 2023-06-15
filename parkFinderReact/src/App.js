@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/pages/Login.js';
 import Register from './components/pages/Register.js';
+import FrontPage from './components/pages/FrontPage.js';
 
 
 
@@ -21,8 +22,9 @@ function App() {
         <Router>
             <Routes>
                 {/*Mutual pages*/}
-                <Route path='/' element={<Login/>} />
+                <Route path='/login' element={<Login/>} />
                 <Route path='/register' element={<Register/>} />
+                <Route path='/' element={<FrontPage/>} />
             </Routes>
         </Router>
     );

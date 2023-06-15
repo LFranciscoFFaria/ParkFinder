@@ -3,6 +3,7 @@
     font-family: system-ui;
     font-weight: bold;
     font-size: medium;
+    cursor: pointer;
 }
 
 
@@ -34,6 +35,43 @@
 }
 
 
+.sex_button{
+    background-color: white;
+    border: 2px solid white;
+    display: flex;
+    border-bottom: 2px solid lightgray;
+    transition: all 0.2s ease-out;
+    padding: 3px 3px 3px 5px;
+    color: gray;
+    width: 60px;
+}
+
+
+.perfil_image{
+    width: 90px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    transition: ease-out 0.1s all;
+    font-size: 160%;
+    gap: 10px;
+}
+
+
+.logo_image{
+    width: 225px;
+    height: 135px;
+    background-color: transparent;
+    border: none;
+    transition: ease-out 0.1s all;
+}
+
+
 .navbar_button{
     background-color: transparent;
     border: 0;
@@ -59,41 +97,19 @@
 }
 
 
-.perfil_image{
-    width: 90px;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-    transition: ease-out 0.1s all;
+.button_link_default{
+    color: inherit;
+    text-decoration: inherit;
 }
 
 
-.logo_image{
-    width: 225px;
-    height: 135px;
-    background-color: transparent;
-    border: none;
-    transition: ease-out 0.1s all;
-}
 
-
-.sex_button{
-    background-color: white;
-    border: 2px solid white;
-    display: flex;
-    border-bottom: 2px solid lightgray;
+.sex_button:hover{
+    border: 2px solid gray;
+    border-radius: 15px;
     transition: all 0.2s ease-out;
-    padding: 3px 3px 3px 5px;
-    color: gray;
-    width: 60px;
+    color: black;
 }
-
-
-
 
 .navbar_button:hover{
     background-color: white;
@@ -104,11 +120,4 @@
 .logo_image:hover,
 .navbar_image_button:hover{
     transform: scale(1.1,1.1);
-}
-
-.sex_button:hover{
-    border: 2px solid gray;
-    border-radius: 15px;
-    transition: all 0.2s ease-out;
-    color: black;
 }

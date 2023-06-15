@@ -7,10 +7,6 @@ import { Button } from '../interactive_items/Button';
 function Register({
     
 }) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const navigate = useNavigate()
-
     return (
         <div className="bg_color">
             <div className="whitebox">
@@ -49,7 +45,7 @@ function Register({
                         </div>
                     </div>
                     <div className="buttons_login">
-                        <Button buttonStyle={"contrast"}>Submit</Button>
+                        <Button buttonStyle={"contrast"} link={"/"}>Submit</Button>
                     </div>
                 </form>
                 <div className="image">
