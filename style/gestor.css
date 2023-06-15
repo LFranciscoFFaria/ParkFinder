@@ -55,3 +55,12 @@
 option[value=""][disabled] {
   display: none;
 }
+
+.park_fp_gestor{
+  border-bottom: 1px solid gray;
+  padding: 0px 20px 20px 20px;
+}
+
+.criar_admin{
+  display: block;
+}
