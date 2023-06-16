@@ -1,0 +1,46 @@
+.parks_content_display{
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    gap: 5%;
+}
+
+
+.parks_info_display{
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.parks_header{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0px 20px 20px 20px;
+}
+
+
+.pageNumb{
+    display: flex;
+    justify-content: end;
+}
+
+
+@media screen and (max-width: 1080px){
+    .parks_content_display{
+        flex-direction: column-reverse;
+        transition: all 1s ease;
+        align-items: center;
+    }
+
+    .parks_filter_display{
+        display: none;
+        width: 100%;
+    }
+
+    .parks_filter_display.active {
+        display: flex;
+        justify-content: center;
+    }
+}

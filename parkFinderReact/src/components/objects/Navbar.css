@@ -1,10 +1,13 @@
-
+.navbar_layer{
+    z-index: 5;
+}
 
 .header_default{
     padding: 10px 30px 10px 30px;
     font-size: small;
     display: flex;
     justify-content: space-between;
+    background-color: white;
 }
 
 

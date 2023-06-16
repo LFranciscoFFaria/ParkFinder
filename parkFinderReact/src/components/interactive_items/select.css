@@ -11,3 +11,7 @@
     border-radius: 0.25rem;
     appearance: none;
 }
+
+.disabled_selected{
+    display: none;
+}

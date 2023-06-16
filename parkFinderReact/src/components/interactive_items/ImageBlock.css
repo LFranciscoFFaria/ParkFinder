@@ -1,0 +1,18 @@
+.block_image{
+    overflow: hidden;
+    display: flex;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: ease-out 0.1s all;
+}
+.block_image:hover{
+    transform: scale(1.05,1.05);
+    transition: ease-out 0.1s all;
+}
+
+
+.image{
+    max-width: 432px;
+}

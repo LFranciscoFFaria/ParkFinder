@@ -1,23 +1,20 @@
-import './Parks.css';
-import './Perfil.css';
-import './Details.css';
+import './FrontPage.css';
 import Parks from './Parks.js';
 import Perfil from './Perfil.js';
 import Details from './Details.js';
-import Navbar from '../objects/Navbar'
+import Navbar from '../objects/Navbar.js'
 import { useEffect, useState } from 'react';
-import Filter from './Filter.js';
 
 function FrontPage({
     
 }) {
-    const [state, setState] = useState("");
+    const [state, setState] = useState('');
+    const [filter, setFilter] = useState(false);
     const [elementToRender, setElementToRender] = useState(null);
 
 
-
     function changeElement() {
-        console.log("state = " + state);
+        console.log('state = ' + state);
         switch (state) {
             case 'perfil':
               setElementToRender(<Perfil />);
@@ -26,21 +23,21 @@ function FrontPage({
               setElementToRender(<Details />);
               break;
             default:
-              setElementToRender(<Parks />);
+              setElementToRender(<Parks filter={filter}/>);
         }
     }
 
+
     useEffect(() => {
         changeElement();
-    }, [state]);
-    
+    }, [state,filter]);
+
+
     return (
-        <>
-            <Navbar setState={setState}/>
+        <div className='front_page'>
+            <Navbar setState={setState} setFilter={() => setFilter(!filter)}/>
             {elementToRender}
-            {elementToRender}
-            <Filter/>
-        </>
+        </div>
     );
 }
 

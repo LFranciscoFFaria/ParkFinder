@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar({
-    setState
+    setState,
+    setFilter
 }) {
     const [click, setClick] = useState(false);
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
     
     return (
-        <>
+        <div className='navbar_layer'>
             <header className={"header_default"}>
                 <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}}><img className={'button_image'} src={"images/preto_no_branco.png"} alt={""} /></Button>
                 <Button buttonStyle={"perfil_image"} onClick={() => setState("perfil")}> <img className={'button_image'} src={"images/perfil.png"} alt={""} /> Pessoa </Button>
@@ -27,14 +28,14 @@ function Navbar({
                     <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("train _stations"); closeMobileMenu()}}> Train Stations </Button>
                 </div>
                 <div className={"navbar_group"}>
-                    <div className='navbar_disappearing_icon' onClick={handleClick}>
-                        <Button buttonStyle={"navbar_image_button"} onClick={closeMobileMenu}> <img className={'button_image'} src={"images/search_icon.png"} alt={""} /> </Button>
+                    <div className='navbar_disappearing_icon' onClick={closeMobileMenu}>
+                        <Button buttonStyle={"navbar_image_button"} onClick={setFilter}> <img className={'button_image'} src={"images/search_icon.png"} alt={""} /> </Button>
                     </div>
                     <Button buttonStyle={"navbar_image_button"} onClick={closeMobileMenu}> <img className={'button_image'} src={"images/bell_notification.png"} alt={""} /> </Button>
                     <Button buttonStyle={"navbar_button"} onClick={closeMobileMenu} link={"/login"}> Login </Button>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
