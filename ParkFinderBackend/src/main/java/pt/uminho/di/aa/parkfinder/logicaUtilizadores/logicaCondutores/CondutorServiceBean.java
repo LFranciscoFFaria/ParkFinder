@@ -2,7 +2,7 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-import pt.uminho.di.aa.parkfinder.logicaParques.TipoLugarEstacionamento;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 import java.util.List;
@@ -19,7 +19,8 @@ public class CondutorServiceBean implements CondutorService {
 	 * @param newCondutor
 	 */
 	public boolean editarPerfil(Condutor newCondutor) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	public List<Reserva> listarMinhasReservas() {

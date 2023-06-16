@@ -1,6 +1,9 @@
 package pt.uminho.di.aa.parkfinder.logicaParques;
 
 
+import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
+
 import java.util.List;
 
 public interface ParqueService {

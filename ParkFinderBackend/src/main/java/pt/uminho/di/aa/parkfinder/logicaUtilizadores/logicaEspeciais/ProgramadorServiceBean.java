@@ -2,8 +2,10 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-import pt.uminho.di.aa.parkfinder.logicaParques.Estatisticas;
-import pt.uminho.di.aa.parkfinder.logicaParques.Parque;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 
 import java.util.List;
 
@@ -20,7 +22,8 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param ids_parques
 	 */
 	public void criarGestor(Gestor g, List<Integer> ids_parques) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -28,7 +31,8 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param id_gestor
 	 */
 	public void removerGestor(int id_gestor) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -37,7 +41,8 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param id_gestor
 	 */
 	public void adicionarParquesAGestor(List<Integer> ids_parques, int id_gestor) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -46,7 +51,8 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param id_gestor
 	 */
 	public void removerParquesAGestor(List<Integer> ids_parques, int id_gestor) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**

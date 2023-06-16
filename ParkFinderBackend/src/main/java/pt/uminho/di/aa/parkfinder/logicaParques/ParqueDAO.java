@@ -1,10 +1,10 @@
 package pt.uminho.di.aa.parkfinder.logicaParques;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 
-import java.util.List;
-import java.util.Optional;
-
+@Repository
 public interface ParqueDAO extends JpaRepository<Parque,Integer> {
     //List<Parque> findByAllNome(String nome);
 }

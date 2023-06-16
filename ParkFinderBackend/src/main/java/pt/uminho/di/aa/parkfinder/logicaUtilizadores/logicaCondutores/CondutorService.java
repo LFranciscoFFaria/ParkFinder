@@ -1,6 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
-import pt.uminho.di.aa.parkfinder.logicaParques.TipoLugarEstacionamento;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 import java.util.List;

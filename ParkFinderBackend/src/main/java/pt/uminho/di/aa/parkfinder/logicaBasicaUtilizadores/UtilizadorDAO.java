@@ -13,6 +13,7 @@ public interface UtilizadorDAO extends JpaRepository<Utilizador,Integer> {
     Optional<Utilizador> findByEmail(String email);
     boolean existsByEmail(String email);
 
+    //TODO
     //@Query("")
     //List<Utilizador> findAllByNome(@Param("nome") String nome,@Param("descriminador") String descriminador);
 }

@@ -1,7 +1,8 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
-import pt.uminho.di.aa.parkfinder.logicaParques.Estatisticas;
-import pt.uminho.di.aa.parkfinder.logicaParques.Parque;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 
 import java.util.List;
 

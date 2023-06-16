@@ -1,6 +1,8 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
-import pt.uminho.di.aa.parkfinder.logicaParques.*;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 
 import java.util.List;
 

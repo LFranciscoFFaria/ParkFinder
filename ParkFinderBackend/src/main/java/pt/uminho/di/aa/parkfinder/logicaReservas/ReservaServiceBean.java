@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pt.uminho.di.aa.parkfinder.logicaParques.Parque;
-import pt.uminho.di.aa.parkfinder.logicaParques.ParqueDAO;
 
 import java.util.List;
 
@@ -56,7 +54,8 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param estado
 	 */
 	public boolean setEstado(int id_reserva, int estado) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -65,7 +64,8 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param custo
 	 */
 	public boolean setCusto(int id_reserva, float custo) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -74,7 +74,8 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param pago
 	 */
 	public void setPago(int id_reserva, boolean pago) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -83,7 +84,8 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param data_inicio
 	 */
 	public boolean setDataInicio(int id_reserva, java.util.Date data_inicio) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -92,7 +94,8 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param data_fim
 	 */
 	public boolean setDataFim(int id_reserva, java.util.Date data_fim) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -106,7 +109,8 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param matricula
 	 */
 	public boolean setAll(int id_reserva, Integer estado, Boolean pago, Float custo, java.util.Date dataInicio, java.util.Date dataFim, String matricula) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -115,7 +119,8 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param matricula
 	 */
 	public void setMatricula(int id_reserva, String matricula) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**

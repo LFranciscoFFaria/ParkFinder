@@ -1,11 +1,12 @@
-package pt.uminho.di.aa.parkfinder.logicaParques;
+package pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios;
 
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="PrecarioLinear")
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorValue("linear")
@@ -18,7 +19,13 @@ public class PrecarioLinear extends Precario implements Serializable {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}
-	
+
+	@Override
+	public float calcular_preco(Date data_inicio, Date data_fim) {
+		//TODO
+		throw new UnsupportedOperationException();
+	}
+
 	public String toString() {
 		return super.toString();
 	}

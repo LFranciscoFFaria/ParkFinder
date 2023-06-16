@@ -11,22 +11,26 @@
  * Licensee: Alexandre Martins(Universidade do Minho)
  * License Type: Academic
  */
-package pt.uminho.di.aa.parkfinder.logicaParques;
+package pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="PrecarioDecrementoLinear")
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorValue("decrementoLinear")
 @PrimaryKeyJoinColumn(name="PrecarioID", referencedColumnName="ID")
+@Getter
+@Setter
 public class PrecarioDecrementoLinear extends Precario implements Serializable {
-	public PrecarioDecrementoLinear() {
-	}
-	
+	public PrecarioDecrementoLinear() {}
+
 	@Column(name="PrecoPorIntervaloMax", nullable=false)	
 	private float precoPorIntervaloMax;
 	
@@ -36,35 +40,17 @@ public class PrecarioDecrementoLinear extends Precario implements Serializable {
 	@Column(name="IntervaloParaAtingirMin", nullable=false)	
 	private float intervaloParaAtingirMin;
 	
-	public void setPrecoPorIntervaloMax(float value) {
-		this.precoPorIntervaloMax = value;
-	}
-	
-	public float getPrecoPorIntervaloMax() {
-		return precoPorIntervaloMax;
-	}
-	
-	public void setPrecoPorIntervaloMin(float value) {
-		this.precoPorIntervaloMin = value;
-	}
-	
-	public float getPrecoPorIntervaloMin() {
-		return precoPorIntervaloMin;
-	}
-	
-	public void setIntervaloParaAtingirMin(float value) {
-		this.intervaloParaAtingirMin = value;
-	}
-	
-	public float getIntervaloParaAtingirMin() {
-		return intervaloParaAtingirMin;
-	}
-	
 	public PrecarioDecrementoLinear(float precoFixo, float precoPorIntervaloMax, float precoPorIntervaloMin, float intervalo, TimeUnit tipoIntervalo, float intervaloParaAtingirMin) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}
-	
+
+	@Override
+	public float calcular_preco(Date data_inicio, Date data_fim) {
+		//TODO
+		throw new UnsupportedOperationException();
+	}
+
 	public String toString() {
 		return super.toString();
 	}

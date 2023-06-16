@@ -2,7 +2,10 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-import pt.uminho.di.aa.parkfinder.logicaParques.*;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 
 import java.util.List;
 
@@ -17,7 +20,8 @@ public class GestorServiceBean implements GestorService {
 	 * @param id_parque
 	 */
 	public Estatisticas verEstatisticasParque(int id_parque) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -27,11 +31,13 @@ public class GestorServiceBean implements GestorService {
 	 * @param precario
 	 */
 	public void adicionarPrecario(int id_parque, TipoLugarEstacionamento tipoLugar, Precario precario) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	public List<Parque> listarMeusParques() {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -40,11 +46,13 @@ public class GestorServiceBean implements GestorService {
 	 * @param tipoLugar
 	 */
 	public void removerPrecario(int id_parque, TipoLugarEstacionamento tipoLugar) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	public List<Administrador> listarMeusAdministradores() {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -53,7 +61,8 @@ public class GestorServiceBean implements GestorService {
 	 * @param ids_parques
 	 */
 	public void criarAdmin(Administrador a, List<Integer> ids_parques) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -61,7 +70,8 @@ public class GestorServiceBean implements GestorService {
 	 * @param id_admin
 	 */
 	public void removerAdmin(int id_admin) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -70,7 +80,8 @@ public class GestorServiceBean implements GestorService {
 	 * @param ids_parques
 	 */
 	public void removerPermissaoAdminSobreParques(int id_admin, List<Integer> ids_parques) {
-
+		//TODO
+		throw new UnsupportedOperationException();
 	}
 
 	/**

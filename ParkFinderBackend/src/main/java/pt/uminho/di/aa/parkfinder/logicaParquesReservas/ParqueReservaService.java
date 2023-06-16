@@ -1,6 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaParquesReservas;
 
-import pt.uminho.di.aa.parkfinder.logicaParques.TipoLugarEstacionamento;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 public interface ParqueReservaService {
