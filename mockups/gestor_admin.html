@@ -6,6 +6,8 @@
         <link rel="stylesheet" type="text/css" href="../style/gestor.css">
         <link rel="stylesheet" type="text/css" href="../style/detalhes.css">
         <link rel="stylesheet" type="text/css" href="../style/default.css">
+        <link rel="stylesheet" type="text/css" href="../style/front_page.css">
+        <link rel="stylesheet" type="text/css" href="../style/popup.css">
 
     </head>
     <body class="bg_color_gestor">
@@ -18,6 +20,54 @@
                 <button class="desc_button" onclick="window.location.href='./gestor.html'">Parques</button>
                 <button class="desc_button desc_button_hover" onclick="window.location.href='./gestor_admin.html'">Administradores</button>
                 <button class="desc_button" onclick="window.location.href='./gestor_stats.html'">Estatísticas</button>
+            </div>
+            <button class="default">Criar administrador</button>
+            <div class="popup_container" style="display: none;">
+                <div class="popup_body">
+                    <div class="popup_close_button">
+                        <div class="pm_aline"> </div>
+                        <h1>Criar Administrador</h1>
+                        <button class="default close_button" onclick="">X</Button >
+
+                    </div>
+                    <div class="">
+                        <label> Parque </label> <br>
+                        <select class="select" name="Park" id="park">
+                            <option style="display: none;" disabled selected>Parque</option>
+                            <option >BragaPark</option>
+                            <option >NovaArcada</option>
+                            <option value="null">null</option>
+                        </select><br>
+                        <label> Nome </label><br>
+                        <input placeholder="nome"/><br>
+                        <label> Email </label><br>
+                        <input placeholder="email"/><br>
+                        <label> Nº Telefónico </label><br>
+                        <input placeholder="Nº Telefónico"/><br>
+                        <label> Password </label><br>
+                        <input placeholder="password"/><br>
+                    </div>
+                    <br>
+                    <button class="default" onclick="">Criar</Button >
+                </div>
+            </div>
+            <div class="park_fp_gestor">
+                <div class="park_fp_header">
+                    <div class="park_fp_title">
+                        <h2>Diogo Francisco Silva Soares</h2>
+                    </div>
+                </div>
+                <div class="park_fp_image_info">
+                    <div class="park_fp_info">
+                        <label>Parque: <b href="">Braga Park</b></label>
+                        <label>Email: <b>asmisgay@itstrue.fr</b> </label>
+                        <label>Nº telefónico: <b>948008569</b></label> 
+                    </div>
+                    <div class="park_fp_buttons">
+                        <button class="page_button see_details_button">Edit</button>
+                        <button class="default">Remove</button>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
