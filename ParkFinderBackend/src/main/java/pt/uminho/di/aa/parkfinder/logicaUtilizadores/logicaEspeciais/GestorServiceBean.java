@@ -43,7 +43,7 @@ public class GestorServiceBean implements GestorService {
 
 	}
 
-	public Administrador[] listarMeusAdministradores() {
+	public List<Administrador> listarMeusAdministradores() {
 
 	}
 
@@ -52,7 +52,7 @@ public class GestorServiceBean implements GestorService {
 	 * @param a
 	 * @param ids_parques
 	 */
-	public void criarAdmin(Administrador a, int[] ids_parques) {
+	public void criarAdmin(Administrador a, List<Integer> ids_parques) {
 
 	}
 
@@ -69,7 +69,7 @@ public class GestorServiceBean implements GestorService {
 	 * @param id_admin
 	 * @param ids_parques
 	 */
-	public void removerPermissaoAdminSobreParques(int id_admin, int[] ids_parques) {
+	public void removerPermissaoAdminSobreParques(int id_admin, List<Integer> ids_parques) {
 
 	}
 
@@ -98,7 +98,7 @@ public class GestorServiceBean implements GestorService {
 	 * @param ids_parques
 	 * @param id_admin
 	 */
-	public void adicionarParquesAAdmin(int[] ids_parques, int id_admin) {
+	public void adicionarParquesAAdmin(List<Integer> ids_parques, int id_admin) {
 		// TODO - implement GestorService.adicionarParquesAAdmin
 		throw new UnsupportedOperationException();
 	}

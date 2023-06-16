@@ -2,6 +2,10 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import pt.uminho.di.aa.parkfinder.logicaParques.Estatisticas;
+import pt.uminho.di.aa.parkfinder.logicaParques.Parque;
+
+import java.util.List;
 
 
 @Component
@@ -15,7 +19,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param g
 	 * @param ids_parques
 	 */
-	public void criarGestor(Gestor g, int[] ids_parques) {
+	public void criarGestor(Gestor g, List<Integer> ids_parques) {
 
 	}
 
@@ -32,7 +36,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param ids_parques
 	 * @param id_gestor
 	 */
-	public void adicionarParquesAGestor(int[] ids_parques, int id_gestor) {
+	public void adicionarParquesAGestor(List<Integer> ids_parques, int id_gestor) {
 
 	}
 
@@ -41,7 +45,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param ids_parques
 	 * @param id_gestor
 	 */
-	public void removerParquesAGestor(int[] ids_parques, int id_gestor) {
+	public void removerParquesAGestor(List<Integer> ids_parques, int id_gestor) {
 
 	}
 
@@ -67,12 +71,12 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * 
 	 * @param nome
 	 */
-	public Gestor[] procurarGestor(String nome) {
+	public List<Gestor>  procurarGestor(String nome) {
 		// TODO - implement ProgramadorService.procurarGestor
 		throw new UnsupportedOperationException();
 	}
 
-	public Gestor[] listarGestores() {
+	public List<Gestor>  listarGestores() {
 		// TODO - implement ProgramadorService.listarGestores
 		throw new UnsupportedOperationException();
 	}

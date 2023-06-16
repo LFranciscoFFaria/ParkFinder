@@ -2,6 +2,10 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import pt.uminho.di.aa.parkfinder.logicaParques.TipoLugarEstacionamento;
+import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+
+import java.util.List;
 
 
 @Component
@@ -67,7 +71,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * 
 	 * @param id_parque
 	 */
-	public Reserva[] verReservasAtivasDeParque(int id_parque) {
+	public List<Reserva> verReservasAtivasDeParque(int id_parque) {
 
 	}
 

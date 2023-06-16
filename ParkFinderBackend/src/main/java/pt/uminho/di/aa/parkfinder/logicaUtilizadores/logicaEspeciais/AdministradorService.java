@@ -3,6 +3,8 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 import pt.uminho.di.aa.parkfinder.logicaParques.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
+import java.util.List;
+
 public interface AdministradorService {
 
 	/**
@@ -52,7 +54,7 @@ public interface AdministradorService {
 	 * 
 	 * @param id_parque
 	 */
-	Reserva[] verReservasAtivasDeParque(int id_parque);
+	List<Reserva> verReservasAtivasDeParque(int id_parque);
 
 	void logout();
 }

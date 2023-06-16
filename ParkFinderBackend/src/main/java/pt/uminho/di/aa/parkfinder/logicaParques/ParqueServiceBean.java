@@ -1,8 +1,10 @@
 package pt.uminho.di.aa.parkfinder.logicaParques;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pt.uminho.di.aa.parkfinder.logicaBasicaUtilizadores.UtilizadorDAO;
 
 import java.util.List;
 
@@ -10,18 +12,24 @@ import java.util.List;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ParqueServiceBean implements ParqueService {
 
+	private ParqueDAO parqueDAO;
+
+	@Autowired
+	public ParqueServiceBean(ParqueDAO parqueDAO) {
+		this.parqueDAO = parqueDAO;
+	}
+
 	public List<Parque> listarParques() {
-		// TODO - implement ParqueService.listarParques
-		throw new UnsupportedOperationException();
+		return parqueDAO.findAll();
 	}
 
 	/**
 	 * 
 	 * @param ids
 	 */
-	public List<Parque> listarParques(int[] ids) {
-		// TODO
-		throw new UnsupportedOperationException();
+	public List<Parque> listarParques(List<Integer> ids) {
+		// TODO: Não sei se a verificação de ID válido é para ser feita aqui
+		return parqueDAO.findAllById(ids);
 	}
 
 	/**
@@ -29,8 +37,8 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param nome
 	 */
 	public List<Parque> procurarParque(String nome) {
-		// TODO
-		throw new UnsupportedOperationException();
+		//return parqueDAO.findByAllNome(nome);
+		return null;
 	}
 
 	/**
@@ -38,8 +46,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque
 	 */
 	public Parque procurarParque(int id_parque) {
-		// TODO
-		throw new UnsupportedOperationException();
+		return parqueDAO.findById(id_parque).orElse(null);
 	}
 
 	/**
@@ -47,8 +54,8 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param p
 	 */
 	public Parque criarParque(Parque p) {
-		// TODO
-		throw new UnsupportedOperationException();
+		p.setId(0);
+		return parqueDAO.save(p);
 	}
 
 	/**
@@ -56,8 +63,11 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque
 	 */
 	public void removerParque(int id_parque) {
-		// TODO - implement ParqueService.removerParque
-		throw new UnsupportedOperationException();
+		// TODO: ver exceptions
+		if (!parqueDAO.existsById(id_parque)){
+			//throw new Exception("Parque não existe!");
+		}
+		parqueDAO.deleteById(id_parque);
 	}
 
 	/**
@@ -66,8 +76,12 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param p
 	 */
 	public void criarPrecario(int id_parque, Precario p) {
-		// TODO
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		// TODO: não sei adicionar à lista de Precarios
 	}
 
 	/**
@@ -76,8 +90,12 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param tipoPrecario
 	 */
 	public void removerPrecario(int id_parque, TipoLugarEstacionamento tipoPrecario) {
-		// TODO
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		// TODO: não sei remover à lista de Precarios
 	}
 
 	/**
@@ -85,7 +103,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque
 	 */
 	public List<Precario> getPrecarios(int id_parque) {
-		// TODO
+		// TODO nao sei
 		throw new UnsupportedOperationException();
 	}
 
@@ -146,8 +164,16 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param n
 	 */
 	public void addLugaresInstantaneos(int id_parque, int n) {
-		// TODO - implement ParqueService.addLugaresInstantaneos
-		throw new UnsupportedOperationException();
+		// TODO: Verificar exceção
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			//throw new Exception("Parque não Existe")
+		}
+		int instantaneos_livres = parque.getInstantaneos_livres();
+		int instantaneos_total = parque.getInstantaneos_total();
+		parque.setInstantaneos_livres(instantaneos_livres + n);
+		parque.setInstantaneos_total(instantaneos_total + n);
+		parqueDAO.save(parque);
 	}
 
 	/**
@@ -156,8 +182,19 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param n
 	 */
 	public void removeLugaresInstantaneos(int id_parque, int n) {
-		// TODO - implement ParqueService.removeLugaresInstantaneos
-		throw new UnsupportedOperationException();
+		// TODO: Verificar exceção
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			//throw new Exception("Parque não Existe");
+		}
+		int instantaneos_livres = parque.getInstantaneos_livres();
+		int instantaneos_total = parque.getInstantaneos_total();
+		if ((instantaneos_livres - n)<0||(instantaneos_total - n)<0){
+			//throw new Exception("Não podem ser removidos tantos lugares")
+		}
+		parque.setInstantaneos_livres(instantaneos_livres - n);
+		parque.setInstantaneos_total(instantaneos_total - n);
+		parqueDAO.save(parque);
 	}
 
 	/**
@@ -166,7 +203,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_lugar
 	 */
 	public boolean getEstadoUtilizavelLugar(int id_parque, int id_lugar) {
-		// TODO - implement ParqueService.getEstadoUtilizavelLugar
+		// TODO Vai ser preciso fazer uma querry
 		throw new UnsupportedOperationException();
 	}
 
@@ -177,7 +214,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param utilizavel
 	 */
 	public void setEstadoUtilizavelLugar(int id_parque, int id_lugar, boolean utilizavel) {
-		// TODO - implement ParqueService.setEstadoUtilizavelLugar
+		// TODO Mesma querry que em cima
 		throw new UnsupportedOperationException();
 	}
 
@@ -188,7 +225,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param ocupado
 	 */
 	public void setEstadoOcupadoLugar(int id_parque, int id_lugar, boolean ocupado) {
-		// TODO - implement ParqueService.setEstadoOcupadoLugar
+		// TODO fazer outra querry
 		throw new UnsupportedOperationException();
 	}
 
@@ -222,8 +259,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param tipo_lugar
 	 */
 	public void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) {
-		// TODO - implement ParqueService.removerLugar
-		throw new UnsupportedOperationException();
+
 	}
 
 	/**

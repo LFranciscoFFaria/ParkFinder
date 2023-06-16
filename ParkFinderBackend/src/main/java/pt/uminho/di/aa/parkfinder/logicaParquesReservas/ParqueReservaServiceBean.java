@@ -3,6 +3,8 @@ package pt.uminho.di.aa.parkfinder.logicaParquesReservas;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pt.uminho.di.aa.parkfinder.logicaParques.TipoLugarEstacionamento;
+import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)

@@ -11,7 +11,7 @@ public interface ParqueService {
 	 * 
 	 * @param ids
 	 */
-	List<Parque> listarParques(int[] ids);
+	List<Parque> listarParques(List<Integer> ids);
 
 	/**
 	 * 

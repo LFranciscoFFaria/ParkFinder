@@ -1,6 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaParques;
 
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 @Embeddable
@@ -43,11 +43,11 @@ public class LugarEstacionamentoPK implements Serializable {
 	@JoinColumns(value={ @JoinColumn(name="ParqueID", referencedColumnName="ID", nullable=false) }, foreignKey=@ForeignKey(name="FKLugarEstac742434"))	
 	private Parque parque;
 	
-	public void setParque(pt.uminho.di.ea.parkfinder.logicaParques.Parque value)  {
+	public void setParque(pt.uminho.di.aa.parkfinder.logicaParques.Parque value)  {
 		this.parque =  value;
 	}
 	
-	public pt.uminho.di.ea.parkfinder.logicaParques.Parque getParque()  {
+	public pt.uminho.di.aa.parkfinder.logicaParques.Parque getParque()  {
 		return this.parque;
 	}
 	
