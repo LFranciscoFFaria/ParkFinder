@@ -31,7 +31,7 @@ function Login({
                         <Button buttonStyle={"contrast"} link={"/"}>Login</Button>
                     </div>
                 </form>
-                <div className="image">
+                <div className="login_image">
                     <h3> Imagem </h3>
                 </div>
             </div>

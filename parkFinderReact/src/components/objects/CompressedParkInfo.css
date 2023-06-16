@@ -1,6 +1,8 @@
 .compressed_park{
     border-top: 1px solid gray;
     padding: 0px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -19,6 +21,13 @@
     margin-right: 10px;
 }
 
+
+.compressed_park_block_image{
+    display: flex;
+    max-width: 50%;
+    align-items: center;
+    justify-content: center;
+}
 
 
 .gray_label{
@@ -51,33 +60,16 @@
 }
 
 
-.compressed_park_block_image{
-    min-width: 40vw;
-}
-
-
-.compressed_park_image{
+.compressed_park_info_description{
     display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    transition: ease-out 0.1s all;
 }
-.compressed_park_image:hover{
-    transform: scale(1.05,1.05);
-    transition: ease-out 0.1s all;
-}
-    
 
 
 .compressed_park_info{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 100%;
-    min-width: 300px;
+    width: 60%;
     justify-content: space-evenly;
 }
 
@@ -99,7 +91,9 @@
     justify-content: end;
 }
 
-@media screen and (max-width: 900px) {
+
+
+@media screen and (max-width: 700px) {
     .compressed_park_info_description{
         display: none;
     }
@@ -110,18 +104,16 @@
 
     .compressed_park_info{
         flex-direction: row;
+        width: 100%;
         justify-content: space-between;
         gap: 30px;
     }
-
+    
     .compressed_park_block_image{
         display: flex;
-        justify-content: center;
         width: 100%;
+        max-width: 100%;
+        align-items: center;
+        justify-content: center;
     }
-
-    .compressed_park_image{
-        max-width: 400px;
-    }
-
 }
