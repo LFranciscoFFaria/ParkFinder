@@ -2,3 +2,5 @@ parkFinderReact/node_modules/*
 .gitignore
 *.lck*
 *.bak_*
+.iml
+.idea/
