@@ -3,9 +3,9 @@ import './Checkbox.css';
 
 
 
-export const Checkbox = ({
-    children,
-}) => {
+function Checkbox({
+    children
+}) {
     return (
         <label className="checkbox_label">
             <input type="checkbox" className="checkbox"/>
@@ -13,4 +13,6 @@ export const Checkbox = ({
         </label>
     );
 };
-    
+
+
+export default Checkbox;

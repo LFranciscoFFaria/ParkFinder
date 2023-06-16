@@ -1,0 +1,127 @@
+.compressed_park{
+    border-top: 1px solid gray;
+    padding: 0px 20px 20px 20px;
+}
+
+
+.compressed_park_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.compressed_park_title{
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    height: max-content;
+    margin-right: 10px;
+}
+
+
+
+.gray_label{
+    color: gray;
+    min-width: max-content;
+}
+
+
+.compressed_park_spaces{
+    padding: 10px;
+    border-radius: 15px;
+    align-items: center;
+    height: max-content;
+}
+
+.compressed_park_spaces.green{
+    background-color: lawngreen;
+}
+.compressed_park_spaces.orange{
+    background-color: orange;
+}
+.compressed_park_spaces.red{
+    background-color: red;
+}
+
+
+.compressed_park_image_info{
+    display: flex;
+    gap: 20px;
+}
+
+
+.compressed_park_block_image{
+    min-width: 40vw;
+}
+
+
+.compressed_park_image{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: ease-out 0.1s all;
+}
+.compressed_park_image:hover{
+    transform: scale(1.05,1.05);
+    transition: ease-out 0.1s all;
+}
+    
+
+
+.compressed_park_info{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    min-width: 300px;
+    justify-content: space-evenly;
+}
+
+
+.compressed_park_buttons{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+
+.see_details_button{
+    font-weight: normal;
+}
+
+
+.pageNumb{
+    display: flex;
+    justify-content: end;
+}
+
+@media screen and (max-width: 900px) {
+    .compressed_park_info_description{
+        display: none;
+    }
+
+    .compressed_park_image_info{
+        flex-direction: column;
+    }
+
+    .compressed_park_info{
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .compressed_park_block_image{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .compressed_park_image{
+        max-width: 400px;
+    }
+
+}

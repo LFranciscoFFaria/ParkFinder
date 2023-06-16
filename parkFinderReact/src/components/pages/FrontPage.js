@@ -1,30 +1,32 @@
-import '../objects/Parks.css';
-import '../objects/Perfil.css';
-import '../objects/Details.css';
-import Parks from '../objects/Parks.js';
-import Perfil from '../objects/Perfil.js';
-import Details from '../objects/Details.js';
+import './Parks.css';
+import './Perfil.css';
+import './Details.css';
+import Parks from './Parks.js';
+import Perfil from './Perfil.js';
+import Details from './Details.js';
 import Navbar from '../objects/Navbar'
 import { useEffect, useState } from 'react';
+import Filter from './Filter.js';
 
 function FrontPage({
     
 }) {
     const [state, setState] = useState("");
-    let elementToRender;
+    const [elementToRender, setElementToRender] = useState(null);
+
 
 
     function changeElement() {
         console.log("state = " + state);
         switch (state) {
             case 'perfil':
-                elementToRender = <Perfil />;
-                break;
+              setElementToRender(<Perfil />);
+              break;
             case 'details':
-                elementToRender = <Details />;
-                break;
+              setElementToRender(<Details />);
+              break;
             default:
-                elementToRender = <Parks />;
+              setElementToRender(<Parks />);
         }
     }
 
@@ -36,6 +38,8 @@ function FrontPage({
         <>
             <Navbar setState={setState}/>
             {elementToRender}
+            {elementToRender}
+            <Filter/>
         </>
     );
 }

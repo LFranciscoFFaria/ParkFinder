@@ -1,6 +1,5 @@
 
 .button{
-    font-family: system-ui;
     font-weight: bold;
     font-size: medium;
     cursor: pointer;
@@ -15,7 +14,6 @@
     padding: 5px;
     width: fit-content;
     min-width: 100px;
-    font-family: system-ui;
     font-weight: bold;
     font-size: medium;
 }
@@ -32,6 +30,14 @@
     font-family: system-ui;
     font-weight: bold;
     font-size: medium;
+}
+
+.page_button{
+    background-color: white;
+    border: 2px solid white;
+    transition: all 0.2s ease-out;
+    padding: 3px 3px 3px 5px;
+    color: gray;
 }
 
 
@@ -78,7 +84,6 @@
     padding: 5px;
     min-width: 100px;
     height: inherit;
-    font-family: system-ui;
     font-weight: bold;
     font-size: large;
     transition: ease-out 0.2s all;
@@ -103,6 +108,17 @@
 }
 
 
+
+
+
+
+
+
+.page_button:hover{
+    border-bottom: 2px solid lightgray;
+    transition: all 0.1s ease-out;
+    color: black;
+}
 
 .sex_button:hover{
     border: 2px solid gray;
