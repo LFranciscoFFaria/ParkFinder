@@ -49,7 +49,7 @@ public class Reserva implements Serializable {
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date data_fim = null;
 	
-	private void setId(int value) {
+	public void setId(int value) {
 		this.id = value;
 	}
 	

@@ -1,5 +1,7 @@
 package pt.uminho.di.aa.parkfinder.logicaBasicaUtilizadores;
 
+import java.util.List;
+
 public interface UtilizadorService {
 
 	/**
@@ -38,5 +40,5 @@ public interface UtilizadorService {
 	 * @param nome
 	 * @param descriminador
 	 */
-	Utilizador[] procurarUtilizador(String nome, String descriminador);
+	List<Utilizador> procurarUtilizador(String nome, String descriminador);
 }

@@ -34,6 +34,7 @@ public class LugarEstacionamento implements Serializable {
 
 	@Column(name="ID", nullable=false)
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_lugar;
 	
 	@PrimaryKeyJoinColumn	
@@ -42,9 +43,7 @@ public class LugarEstacionamento implements Serializable {
 	private Parque parque;
 	
 	@Column(name="ParqueID", nullable=false, insertable=false, updatable=false)	
-	@Id	
-	@GeneratedValue(generator="PT_UMINHO_DI_EA_PARKFINDER_LOGICAPARQUES_LUGARESTACIONAMENTO_PARQUEID_GENERATOR")	
-	@org.hibernate.annotations.GenericGenerator(name="PT_UMINHO_DI_EA_PARKFINDER_LOGICAPARQUES_LUGARESTACIONAMENTO_PARQUEID_GENERATOR", strategy="foreign", parameters=@org.hibernate.annotations.Parameter(name="property", value="parque"))	
+	@Id
 	private int parqueId;
 	
 	private void setParqueId(int value) {
@@ -56,7 +55,6 @@ public class LugarEstacionamento implements Serializable {
 	}
 	
 	@ManyToOne(targetEntity= TipoLugarEstacionamento.class, fetch=FetchType.LAZY)
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns(value={ @JoinColumn(name="TipoLugarEstacionamentoID", referencedColumnName="ID", nullable=false) }, foreignKey=@ForeignKey(name="FKLugarEstac319247"))	
 	private TipoLugarEstacionamento tipo;
 	

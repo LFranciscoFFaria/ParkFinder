@@ -1,20 +1,29 @@
 package pt.uminho.di.aa.parkfinder.logicaBasicaUtilizadores;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class UtilizadorServiceBean implements UtilizadorService {
+
+	private UtilizadorDAO utilizadorDAO;
+
+	@Autowired
+	public UtilizadorServiceBean(UtilizadorDAO utilizadorDAO) {
+		this.utilizadorDAO = utilizadorDAO;
+	}
 
 	/**
 	 * 
 	 * @param email
 	 */
 	public Utilizador getUtilizador(String email) {
-		//TODO
-		throw new UnsupportedOperationException();
+		return utilizadorDAO.findByEmail(email).orElse(null);
 	}
 
 	/**
@@ -23,8 +32,12 @@ public class UtilizadorServiceBean implements UtilizadorService {
 	 * @param password
 	 */
 	public Utilizador login(String email, String password) {
-		//TODO
-		throw new UnsupportedOperationException();
+		Utilizador utilizador = utilizadorDAO.findByEmail(email).orElse(null);
+		if(utilizador != null && utilizador.getPassword().equals(password)){
+			//TODO Logica de tipos de utilizador
+		}
+
+		return null;
 	}
 
 	/**
@@ -32,17 +45,23 @@ public class UtilizadorServiceBean implements UtilizadorService {
 	 * @param utilizador
 	 */
 	public Utilizador criarUtilizador(Utilizador utilizador) {
-		//TODO
-		throw new UnsupportedOperationException();
+		utilizador.setId(0);
+		return utilizadorDAO.save(utilizador);
 	}
 
 	/**
 	 * 
 	 * @param id_user
 	 */
+
+	// TODO: Considerar adicionar exceção
 	public boolean removerUtilizador(int id_user) {
-		//TODO
-		throw new UnsupportedOperationException();
+		if (!utilizadorDAO.existsById(id_user)){
+			//throw new Exception("Utilizador não existe!");
+			return false;
+		}
+		utilizadorDAO.deleteById(id_user);
+		return true;
 	}
 
 	/**
@@ -50,8 +69,14 @@ public class UtilizadorServiceBean implements UtilizadorService {
 	 * @param utilizador
 	 */
 	public boolean atualizarUtilizador(Utilizador utilizador) {
-		//TODO
-		throw new UnsupportedOperationException();
+		Utilizador u = utilizadorDAO.findById(utilizador.getId()).orElse(null);
+		if (u.equals(null)){
+			return false;
+		}
+		else {
+			//TODO Fazer lógica de atualização
+			return true;
+		}
 	}
 
 	/**
@@ -59,8 +84,9 @@ public class UtilizadorServiceBean implements UtilizadorService {
 	 * @param nome
 	 * @param descriminador
 	 */
-	public Utilizador[] procurarUtilizador(String nome, String descriminador) {
-		// TODO - implement UtilizadorService.procurarUtilizador
+	public List<Utilizador> procurarUtilizador(String nome, String descriminador) {
+		// TODO - Vai ser preciso fazer uma query
+
 		throw new UnsupportedOperationException();
 	}
 

@@ -1,5 +1,7 @@
 package pt.uminho.di.aa.parkfinder.logicaReservas;
 
+import java.util.List;
+
 public interface ReservaService {
 
 	/**
@@ -18,7 +20,7 @@ public interface ReservaService {
 	 * 
 	 * @param id_user
 	 */
-	Reserva[] getReservas(int id_user);
+	List<Reserva> getReservas(int id_user);
 
 	/**
 	 * 

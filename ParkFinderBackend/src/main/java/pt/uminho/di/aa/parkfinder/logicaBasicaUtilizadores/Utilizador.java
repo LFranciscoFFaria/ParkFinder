@@ -24,7 +24,7 @@ public abstract class Utilizador implements Serializable {
 	@Column(name="Nome")
 	private String nome;
 	
-	@Column(name="Email")
+	@Column(name="Email", unique = true)
 	private String email;
 	
 	@Column(name="Password")
@@ -36,7 +36,7 @@ public abstract class Utilizador implements Serializable {
 	@OneToMany(mappedBy="utilizador", targetEntity= Notificacao.class, cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	private Set<Notificacao> notificacoes = new HashSet<>();
 	
-	private void setId(int value) {
+	public void setId(int value) {
 		this.id = value;
 	}
 	

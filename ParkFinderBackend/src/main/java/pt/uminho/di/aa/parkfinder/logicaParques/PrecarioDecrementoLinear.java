@@ -13,8 +13,10 @@
  */
 package pt.uminho.di.aa.parkfinder.logicaParques;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
-import javax.persistence.*;
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="PrecarioDecrementoLinear")

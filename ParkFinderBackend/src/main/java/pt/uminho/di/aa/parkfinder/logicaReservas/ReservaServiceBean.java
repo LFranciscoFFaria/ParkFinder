@@ -1,9 +1,12 @@
 package pt.uminho.di.aa.parkfinder.logicaReservas;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pt.uminho.di.aa.parkfinder.logicaParques.Parque;
+import pt.uminho.di.aa.parkfinder.logicaParques.ParqueDAO;
 
 import java.util.List;
 
@@ -11,12 +14,20 @@ import java.util.List;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ReservaServiceBean implements ReservaService {
 
+	private ReservaDAO reservaDAO;
+
+	@Autowired
+	public ReservaServiceBean(ReservaDAO reservaDAO) {
+		this.reservaDAO = reservaDAO;
+	}
+
 	/**
 	 * 
 	 * @param r
 	 */
 	public Reserva criarReserva(Reserva r) {
-
+		r.setId(0);
+		return reservaDAO.save(r);
 	}
 
 	/**
@@ -24,15 +35,19 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param id_reserva
 	 */
 	public void removerReserva(int id_reserva) {
-
+		if (!reservaDAO.existsById(id_reserva)){
+			//throw new Exception("Reserva não existe!");
+		}
+		reservaDAO.deleteById(id_reserva);
 	}
 
 	/**
 	 * 
 	 * @param id_user
 	 */
-	public Reserva[] getReservas(int id_user) {
-
+	public List<Reserva> getReservas(int id_user) {
+		//return reservaDAO.findAllByUtilizadorId(id_user);
+		return null;
 	}
 
 	/**

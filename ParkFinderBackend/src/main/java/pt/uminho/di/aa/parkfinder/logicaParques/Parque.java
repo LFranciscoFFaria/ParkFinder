@@ -1,78 +1,30 @@
-/**
- * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
- * 
- * This is an automatic generated file. It will be regenerated every time 
- * you generate persistence class.
- * 
- * Modifying its content may cause the program not work, or your work may lost.
- */
-
-/**
- * Licensee: Alexandre Martins(Universidade do Minho)
- * License Type: Academic
- */
 package pt.uminho.di.aa.parkfinder.logicaParques;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
-import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Parque")
 public class Parque implements Serializable {
 	public Parque() {
 	}
-	
-	private java.util.Set this_getSet (int key) {
-		if (key == ORMConstants.KEY_PARQUE_LUGARESESPECIAIS) {
-			return ORM_lugaresEspeciais;
-		}
-		else if (key == ORMConstants.KEY_PARQUE_PRECARIO) {
-			return ORM_precario;
-		}
-		
-		return null;
-	}
-	
-	private void this_setOwner(Object owner, int key) {
-		if (key == ORMConstants.KEY_PARQUE_ESTATISTICAS) {
-			this.estatisticas = (Estatisticas) owner;
-		}
-		
-		else if (key == ORMConstants.KEY_PARQUE_HORARIO) {
-			this.horario = (Horario) owner;
-		}
-	}
-	
-	@Transient	
-	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
-		public java.util.Set getSet(int key) {
-			return this_getSet(key);
-		}
-		
-		public void setOwner(Object owner, int key) {
-			this_setOwner(owner, key);
-		}
-		
-	};
-	
-	@Column(name="ID", nullable=false, length=10)	
-	@Id	
-	@GeneratedValue(generator="PT_UMINHO_DI_EA_PARKFINDER_LOGICAPARQUES_PARQUE_ID_GENERATOR")	
-	@org.hibernate.annotations.GenericGenerator(name="PT_UMINHO_DI_EA_PARKFINDER_LOGICAPARQUES_PARQUE_ID_GENERATOR", strategy="native")	
+
+	@Column(name="ID", nullable=false, length=10)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@ManyToOne(targetEntity= Estatisticas.class, fetch=FetchType.LAZY)
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns(value={ @JoinColumn(name="EstatisticasID", referencedColumnName="ID", nullable=false) }, foreignKey=@ForeignKey(name="FKParque820715"))	
 	private Estatisticas estatisticas;
 	
 	@ManyToOne(targetEntity= Horario.class, fetch=FetchType.LAZY)
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns(value={ @JoinColumn(name="HorarioID", referencedColumnName="ID") }, foreignKey=@ForeignKey(name="FKParque800300"))	
 	private Horario horario;
-	
-	@Column(name="Name", nullable=true, length=255)	
-	private String name;
+
+	// TODO: Alterei a varialvel "name" do Parque para "nome" para ficar em português mas pode dar erro algures
+	@Column(name="Nome", nullable=true, length=255)
+	private String nome;
 	
 	@Column(name="Descricao", nullable=true, length=255)	
 	private String descricao;
@@ -98,18 +50,14 @@ public class Parque implements Serializable {
 	@Column(name="Caminho_foto", nullable=true, length=255)	
 	private String caminho_foto;
 	
-	@OneToMany(mappedBy="parque", targetEntity= LugarEstacionamento.class)
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	@OneToMany(mappedBy="parque", targetEntity= LugarEstacionamento.class, fetch=FetchType.LAZY)
 	private java.util.Set ORM_lugaresEspeciais = new java.util.HashSet();
 	
-	@OneToMany(targetEntity= Precario.class)
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="ParqueID", nullable=false) })	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	@OneToMany(targetEntity= Precario.class, fetch=FetchType.LAZY)
+	@JoinColumns({ @JoinColumn(name="ParqueID", nullable=false) })
 	private java.util.Set ORM_precario = new java.util.HashSet();
 	
-	private void setId(int value) {
+	public void setId(int value) {
 		this.id = value;
 	}
 	
@@ -121,12 +69,12 @@ public class Parque implements Serializable {
 		return getId();
 	}
 	
-	public void setName(String value) {
-		this.name = value;
+	public void setNome(String value) {
+		this.nome = value;
 	}
 	
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 	
 	public void setDescricao(String value) {

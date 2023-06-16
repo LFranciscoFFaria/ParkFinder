@@ -1,5 +1,10 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
+import pt.uminho.di.aa.parkfinder.logicaParques.Estatisticas;
+import pt.uminho.di.aa.parkfinder.logicaParques.Parque;
+
+import java.util.List;
+
 public interface ProgramadorService {
 
 	/**
@@ -7,7 +12,7 @@ public interface ProgramadorService {
 	 * @param g
 	 * @param ids_parques
 	 */
-	void criarGestor(Gestor g, int[] ids_parques);
+	void criarGestor(Gestor g, List<Integer> ids_parques);
 
 	/**
 	 * 
@@ -20,14 +25,14 @@ public interface ProgramadorService {
 	 * @param ids_parques
 	 * @param id_gestor
 	 */
-	void adicionarParquesAGestor(int[] ids_parques, int id_gestor);
+	void adicionarParquesAGestor(List<Integer> ids_parques, int id_gestor);
 
 	/**
 	 * 
 	 * @param ids_parques
 	 * @param id_gestor
 	 */
-	void removerParquesAGestor(int[] ids_parques, int id_gestor);
+	void removerParquesAGestor(List<Integer> ids_parques, int id_gestor);
 
 	/**
 	 * 
@@ -45,9 +50,9 @@ public interface ProgramadorService {
 	 * 
 	 * @param nome
 	 */
-	Gestor[] procurarGestor(String nome);
+	List<Gestor> procurarGestor(String nome);
 
-	Gestor[] listarGestores();
+	List<Gestor>  listarGestores();
 
 	Estatisticas verEstatisticasGerais();
 

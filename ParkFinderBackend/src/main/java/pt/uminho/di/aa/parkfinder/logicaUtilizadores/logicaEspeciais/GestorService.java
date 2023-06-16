@@ -29,14 +29,14 @@ public interface GestorService {
 	 */
 	void removerPrecario(int id_parque, TipoLugarEstacionamento tipoLugar);
 
-	Administrador[] listarMeusAdministradores();
+	List<Administrador> listarMeusAdministradores();
 
 	/**
 	 * 
 	 * @param a
 	 * @param ids_parques
 	 */
-	void criarAdmin(Administrador a, int[] ids_parques);
+	void criarAdmin(Administrador a, List<Integer> ids_parques);
 
 	/**
 	 * 
@@ -49,7 +49,7 @@ public interface GestorService {
 	 * @param id_admin
 	 * @param ids_parques
 	 */
-	void removerPermissaoAdminSobreParques(int id_admin, int[] ids_parques);
+	void removerPermissaoAdminSobreParques(int id_admin, List<Integer> ids_parques);
 
 	/**
 	 * 
@@ -70,7 +70,7 @@ public interface GestorService {
 	 * @param ids_parques
 	 * @param id_admin
 	 */
-	void adicionarParquesAAdmin(int[] ids_parques, int id_admin);
+	void adicionarParquesAAdmin(List<Integer> ids_parques, int id_admin);
 
 	void logout();
 
