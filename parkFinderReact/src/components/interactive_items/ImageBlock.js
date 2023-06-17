@@ -3,10 +3,11 @@ import './ImageBlock.css';
 
 
 export const ImageBlock = ({
-    imageLink
+    imageLink,
+    border_radius,
 }) => {
     return (
-        <div className='block_image'>
+        <div className={'block_image'}>
             <img className={'image'} src={imageLink} alt={""} />
         </div>
     );

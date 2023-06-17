@@ -15,7 +15,7 @@ function Navbar({
         <div className='navbar_layer'>
             <header className={"header_default"}>
                 <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
-                <Button buttonStyle={"perfil_image"} onClick={() => setState("perfil")}> <img className={'button_image'} src={"images/perfil.png"} alt={""} /> Pessoa </Button>
+                <Button buttonStyle={"navbar_perfil_image"} onClick={() => setState("perfil")}> <img className={'button_image'} src={"images/perfil.png"} alt={""} /> Pessoa </Button>
             </header>
             <div className={'navbar_default'}>
                 <div className='navbar_disappearing_icon' onClick={handleClick}>
