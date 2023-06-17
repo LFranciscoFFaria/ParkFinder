@@ -62,18 +62,16 @@ public class ParqueAPI {
 
     // Métodos de todos os utilizadores
 
-    // Não sei muito bem com funciona o Post,mas deve ser o mais indicado para a situação
-    @PostMapping("/nome")
-    public ResponseEntity<List<Parque>> procurarParque(@RequestBody String nome){
+    @GetMapping("/nome")
+    public ResponseEntity<List<Parque>> procurarParque(@RequestParam String nome){
         try{ return new ResponseEntity<>(parqueServiceBean.procurarParque(nome),HttpStatus.OK);}
         catch (Exception e){
             return new ResponseEntityBadRequest<List<Parque>>().createBadRequest(e.getMessage());
         }
     }
 
-    //Não sei a que utilizadores se aplica este método nem qual é método HTML apropriado
-    @PostMapping("/nome")
-    public ResponseEntity<Parque> procurarParque(@RequestBody int id_parque){
+    @GetMapping("/id")
+    public ResponseEntity<Parque> procurarParque(@RequestParam int id_parque){
         try{ return new ResponseEntity<>((Parque) parqueServiceBean.procurarParque(id_parque),HttpStatus.OK);}
         catch (Exception e){
             return new ResponseEntityBadRequest<Parque>().createBadRequest(e.getMessage());

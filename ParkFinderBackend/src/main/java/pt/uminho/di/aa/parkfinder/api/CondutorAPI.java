@@ -22,7 +22,7 @@ public class CondutorAPI {
         this.condutorServiceBean = condutorServiceBean;
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<Condutor> criarCondutor(@RequestBody Condutor c){
         try{ return new ResponseEntity<>((Condutor) utilizadorServiceBean.criarUtilizador(c), HttpStatus.OK); }
         catch (Exception e){
@@ -36,6 +36,12 @@ public class CondutorAPI {
         catch (Exception e){
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/logout")
+    public ResponseEntity<Boolean> logout(){
+        return ResponseEntity.ok(condutorServiceBean.logout());
+
     }
 
 }

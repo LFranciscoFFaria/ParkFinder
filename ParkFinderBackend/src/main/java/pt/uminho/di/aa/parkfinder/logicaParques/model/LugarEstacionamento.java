@@ -26,7 +26,7 @@ public class LugarEstacionamento implements Serializable {
 	@Column(name="ParqueID", nullable=false, insertable=false, updatable=false)
 	private int parqueId;
 	
-	@ManyToOne(targetEntity= TipoLugarEstacionamento.class, fetch=FetchType.LAZY)
+	@ManyToOne(targetEntity= TipoLugarEstacionamento.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="TipoLugarID", referencedColumnName="ID", nullable=false)
 	private TipoLugarEstacionamento tipo;
 	
@@ -36,8 +36,14 @@ public class LugarEstacionamento implements Serializable {
 	@Column(name="Ocupado", nullable=false, length=1)	
 	private boolean ocupado;
 
+	@Override
 	public String toString() {
-		return String.valueOf(getLugarId() + " " + ((getParque() == null) ? "" : String.valueOf(getParque().getId())));
+		return "LugarEstacionamento{" +
+				"lugarId=" + lugarId +
+				", parqueId=" + parqueId +
+				", tipo=" + tipo +
+				", utilizavel=" + utilizavel +
+				", ocupado=" + ocupado +
+				'}';
 	}
-	
 }
