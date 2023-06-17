@@ -1,8 +1,24 @@
 import './Details.css'
+import Filter from '../objects/Filter';
+import {ImageBlock} from '../interactive_items/ImageBlock';
 
+
+function separateString(string) {
+    let lines = string.split("\n");
+
+    return(
+        <ul>
+            {lines.map((line, index) => (
+                <li key={index}>{line}</li>
+            ))}
+        </ul>
+    )
+}
 
 function Details({
-    
+    filter,
+    parque,
+    setState
 }) {
     
     return (
@@ -15,9 +31,9 @@ function Details({
                         <b> 45/96 </b>
                     </div>
                 </div>
-                <label>Rua Raio, 209, 4710-923 Braga</label>
+                <label>{separateString(parque.morada)}</label>
                 <div className="image image_desc">
-                    Imagem
+                    <ImageBlock imageLink={parque.link_imagem}/>
                 </div>
                 
                 <div className="options_desc">
@@ -27,43 +43,17 @@ function Details({
                 </div>
 
                 <div className="desc_desc">
-                    <h2>Description</h2>
                     <h3>Information</h3>
-                    <ul>
-                        <li> Public parking The PARC VISCONDE DO RAIO is located in the heart of the city, just a 7-minute walk from the historic city center. </li>
-                        <li> Parking is covered and accessible from Monday to Friday from 8:00 am to 8:00 pm and Saturdays from 10:00 to 20:00. </li>
-                        <li> Parking is offered by our partner VISCONDE DO RAY PARK . </li>
-                    </ul>
+                    <label className='compressed_park_info_description'>{separateString(parque.descricao)}</label>
                     <h3>Opening hours</h3>
                     <ul>
                         <li> Monday to Friday from 08:00 to 20:00 and Saturdays from 10:00 to 20:00. </li>
                     </ul>
                 </div>
             </main>
-            <aside className="aside_fp">
-                <h2>Booking information</h2>
-                <div className="aside_desc_section">
-                    <h3>[selectDataInicio]</h3>
-                </div>
-                <div className="aside_desc_section">
-                    <h3>[selectDataFim]</h3>
-                </div>
-                <div className="aside_desc_section">
-                    <div className="aside_desc_subsection">
-                        <label>Tempo utilizado: 2h</label>
-                        <label>€1.30</label>
-                    </div>
-                    <div className="aside_desc_subsection">
-                        <label>Multiple entries and exits</label>
-                        <label>Free</label>
-                    </div>
-                    <div className="aside_desc_subsection">
-                        <b>Total</b>
-                        <b>€1.30</b>
-                    </div>
-                </div>
-                {/*<button className="default" style="width: 100%;">Book</button>*/}
-            </aside>
+            <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
+                <Filter dates={true}/>
+            </div>
         </div>
         </>
     );

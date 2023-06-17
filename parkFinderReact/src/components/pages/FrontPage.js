@@ -22,7 +22,7 @@ function FrontPage({
               setElementToRender(<Perfil />);
               break;
             case 'details':
-              setElementToRender(<Details />);
+              setElementToRender(<Details filter={filter} setState={setState}/>);
               break;
             default:
               setElementToRender(<Parks filter={filter} setState={setState}/>);
