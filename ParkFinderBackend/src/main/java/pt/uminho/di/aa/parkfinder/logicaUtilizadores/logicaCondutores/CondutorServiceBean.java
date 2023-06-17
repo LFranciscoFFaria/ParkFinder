@@ -34,7 +34,7 @@ public class CondutorServiceBean implements CondutorService {
 	/* ******** Métodos do serviço ******** */
 
 	/**
-	 * 
+	 *
 	 * @param newCondutor Instância com os novos campos do perfil atualizados
 	 */
 	public boolean editarPerfil(Condutor newCondutor) throws Exception {
@@ -47,13 +47,12 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	public List<Reserva> listarMinhasReservas() throws Exception{
-		if(condutor == null)
-			throw new Exception("Não tem sessão iniciada.");
-		return reservaServiceBean.listarReservas(condutor.getId());
+		// TODO - implement CondutorService.listarMinhasReservas
+		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_parque
 	 */
 	public Reserva fazerReservaInstantanea(int id_parque) {
@@ -62,7 +61,7 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_parque
 	 * @param tipo
 	 * @param data_inicio
@@ -74,7 +73,7 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_reserva
 	 */
 	public boolean pagarReserva(int id_reserva) {
@@ -82,9 +81,14 @@ public class CondutorServiceBean implements CondutorService {
 		throw new UnsupportedOperationException();
 	}
 
-	public void logout() {
-		// TODO - implement CondutorService.logout
-		throw new UnsupportedOperationException();
+	/**
+	 * @return true if user was logged in. false if the user wasn't authenticated.
+	 */
+	public boolean logout() {
+		if(condutor == null)
+			return false;
+		condutor = null;
+		return true;
 	}
 
 }
