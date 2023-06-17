@@ -13,88 +13,11 @@
     margin: 30px;
     padding: 60px;
     display: flex;
-    min-height: 600px;
-    width: 800px;
+    min-height: 300px;
+    width: 400px;
     border-radius: 30px;
     gap: 20px;
 }
-
-.login_image{
-    display: flex;
-    max-width: 420px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    border-radius: 30px;
-    border: 1px black solid;
-}
-
-
-
-
-
-
-
-
-
-
-
-.Link{
-    color: blue;
-    text-decoration: underline blue;
-    cursor: pointer;
-}
-
-input{
-    font-family: system-ui;
-    border-radius: 5px;
-    padding: 10px;
-    border: 1px gray solid;
-    background-color: rgb(240, 240, 240);
-}
-input:focus{
-    outline: none;
-    background-color: rgb(220, 220, 220);
-}
-
-button{
-    font-family: system-ui;
-    font-weight: bold;
-    font-size: medium;
-}
-.default:hover,
-.contrast{
-    background-color: white;
-    border: 2px solid rgb(255, 202, 103);
-    border-radius: 10px;
-    padding: 5px;
-    width: fit-content;
-    min-width: 100px;
-    font-family: system-ui;
-    font-weight: bold;
-    font-size: medium;
-}
-.default,
-.contrast:hover{
-    background-color: rgb(255, 202, 103);
-    border: 2px solid rgb(255, 202, 103);
-    border-radius: 10px;
-    padding: 5px;
-    width: fit-content;
-    min-width: 100px;
-    font-family: system-ui;
-    font-weight: bold;
-    font-size: medium;
-}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -106,13 +29,13 @@ button{
     display: flex;
     flex-direction: column;
     min-width: 250px;
-    margin-right: 15px;
     width: 100%;
 }
 
 .form_title_login{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .form_content_login{

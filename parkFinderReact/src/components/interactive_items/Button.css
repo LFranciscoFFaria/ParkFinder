@@ -120,6 +120,7 @@
     color: black;
 }
 
+.sex_button_selected,
 .sex_button:hover{
     border: 2px solid gray;
     border-radius: 15px;

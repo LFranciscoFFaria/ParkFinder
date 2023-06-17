@@ -2,7 +2,24 @@
     font-family: system-ui;
 }
 
+.Link{
+    color: blue;
+    text-decoration: underline blue;
+    cursor: pointer;
+}
 
 body{
     margin: 0;
+}
+
+input{
+    font-family: system-ui;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px gray solid;
+    background-color: rgb(240, 240, 240);
+}
+input:focus{
+    outline: none;
+    background-color: rgb(220, 220, 220);
 }
