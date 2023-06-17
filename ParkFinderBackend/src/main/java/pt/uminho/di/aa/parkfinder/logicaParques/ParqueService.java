@@ -32,7 +32,7 @@ public interface ParqueService {
 	 * 
 	 * @param p
 	 */
-	Parque criarParque(Parque p);
+	Parque criarParque(Parque p)  throws Exception ;
 
 	/**
 	 * 

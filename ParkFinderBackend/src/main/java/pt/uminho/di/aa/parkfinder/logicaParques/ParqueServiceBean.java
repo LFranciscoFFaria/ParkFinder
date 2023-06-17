@@ -60,7 +60,10 @@ public class ParqueServiceBean implements ParqueService {
 	 * Adiciona o parque à base de dados da aplicação.
 	 * @param p
 	 */
-	public Parque criarParque(Parque p) {
+	public Parque criarParque(Parque p) throws Exception  {
+		if(p == null) {
+			throw new Exception("O parque não pode ser nulo!");
+		}
 		p.setId(0);
 		// TODO: verificar que campos do parque já veem preenchidos do front end
 		p.setEstatisticas(null);
