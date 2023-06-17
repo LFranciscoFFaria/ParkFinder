@@ -16,7 +16,8 @@ function separateString(string) {
 
 
 function CompressedParkInfo({
-    parque
+    parque,
+    setState
 }) {
     function ocupationColor() {
         if ((parque.lugares_vagos/parque.lugares_totais) > 0.30) {
@@ -46,7 +47,7 @@ function CompressedParkInfo({
                     <label>Estimated cost: <b>{parque.custo.toFixed(2)}€</b></label>
                     <label className='compressed_park_info_description'>{separateString(parque.descricao)}</label>
                     <div className="compressed_park_buttons">
-                        <Button buttonStyle="page_button see_details_button">See details</Button>
+                        <Button buttonStyle="page_button see_details_button" onClick={() => setState('details ' + parque.id)}>See details</Button>
                         <Button buttonStyle="default">Book</Button>
                     </div>
                 </div>

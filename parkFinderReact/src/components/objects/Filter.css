@@ -4,7 +4,7 @@
     padding: 20px;
     height: fit-content;
     width: 20%;
-    min-width: 250px;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -33,6 +33,34 @@
 .filter_block_display{
     display: flex;
     flex-direction: column;
+}
+
+.filter_dates_display{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter_dates_block{
+    display: flex;
+    border-top: 1px lightgrey solid;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 10px 0px 15px;
+    font-weight: bold;
+}
+
+.filter_dates_fields{
+    display: flex;
+    border-color: lightgray;
+    justify-content: space-between;
+}
+
+.filter_date_input_field{
+    font-size: medium;
+    font-weight: 400;
+    border-radius: 0px;
+    border: 0;
 }
 
 
@@ -72,6 +100,20 @@
         flex-direction: column;
         border-top: none;
         padding: 0px 10px;
+    }
+
+    .filter_dates_display{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        padding-bottom: 15px;
+        border-bottom: 1px lightgrey solid;
+    }
+
+    .filter_dates_block{
+        border-top: 0;
+        padding: 0;
     }
 
     .deactivate{
