@@ -1,7 +1,6 @@
-package pt.uminho.di.aa.parkfinder.logicaBasicaUtilizadores;
+package pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +11,5 @@ import java.util.Optional;
 public interface UtilizadorDAO extends JpaRepository<Utilizador,Integer> {
     Optional<Utilizador> findByEmail(String email);
     boolean existsByEmail(String email);
-
-    //TODO
-    //@Query("")
-    //List<Utilizador> findAllByNome(@Param("nome") String nome,@Param("descriminador") String descriminador);
+    List<Utilizador> findUtilizadorByNomeContainingIgnoreCaseAndDiscriminator(String nome, String descriminador);
 }

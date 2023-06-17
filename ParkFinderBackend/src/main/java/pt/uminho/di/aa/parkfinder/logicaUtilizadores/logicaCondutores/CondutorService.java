@@ -11,7 +11,7 @@ public interface CondutorService {
 	 * 
 	 * @param newCondutor
 	 */
-	boolean editarPerfil(Condutor newCondutor);
+	boolean editarPerfil(Condutor newCondutor) throws Exception;
 
 	List<Reserva> listarMinhasReservas();
 

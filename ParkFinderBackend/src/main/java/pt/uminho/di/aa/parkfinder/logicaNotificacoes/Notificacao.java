@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import pt.uminho.di.aa.parkfinder.logicaBasicaUtilizadores.Utilizador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.io.Serializable;
 @Entity

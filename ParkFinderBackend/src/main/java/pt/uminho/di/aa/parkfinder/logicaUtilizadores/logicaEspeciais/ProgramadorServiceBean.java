@@ -6,6 +6,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.util.List;
 
@@ -97,4 +98,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 		throw new UnsupportedOperationException();
 	}
 
+    public void setProgramador(Utilizador u) {
+    	this.programador = (Programador) u;
+	}
 }

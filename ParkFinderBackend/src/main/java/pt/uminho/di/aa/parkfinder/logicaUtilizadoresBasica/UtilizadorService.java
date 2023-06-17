@@ -1,4 +1,4 @@
-package pt.uminho.di.aa.parkfinder.logicaBasicaUtilizadores;
+package pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface UtilizadorService {
 	 * 
 	 * @param utilizador
 	 */
-	Utilizador criarUtilizador(Utilizador utilizador);
+	Utilizador criarUtilizador(Utilizador utilizador) throws Exception;
 
 	/**
 	 * 
@@ -30,10 +30,9 @@ public interface UtilizadorService {
 	boolean removerUtilizador(int id_user);
 
 	/**
-	 * 
 	 * @param utilizador
 	 */
-	boolean atualizarUtilizador(Utilizador utilizador);
+	Utilizador atualizarUtilizador(Utilizador utilizador) throws Exception;
 
 	/**
 	 * 

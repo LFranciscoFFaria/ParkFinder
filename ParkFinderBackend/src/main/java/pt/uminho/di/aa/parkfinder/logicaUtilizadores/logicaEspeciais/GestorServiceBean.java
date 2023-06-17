@@ -6,6 +6,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.util.List;
 
@@ -129,4 +130,7 @@ public class GestorServiceBean implements GestorService {
 		throw new UnsupportedOperationException();
 	}
 
+    public void setGestor(Utilizador u) {
+		this.gestor = (Gestor) u;
+    }
 }

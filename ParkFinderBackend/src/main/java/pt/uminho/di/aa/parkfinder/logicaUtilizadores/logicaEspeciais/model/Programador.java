@@ -1,6 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model;
 
-import pt.uminho.di.aa.parkfinder.logicaBasicaUtilizadores.Utilizador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import jakarta.persistence.*;
 import java.io.Serializable;
 

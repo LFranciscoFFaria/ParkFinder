@@ -1,9 +1,12 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
 import java.util.List;
 
@@ -12,15 +15,32 @@ import java.util.List;
 @SessionScope
 public class CondutorServiceBean implements CondutorService {
 
-	private Condutor condutor;
+	private final UtilizadorServiceBean utilizadorServiceBean;
+	private Condutor condutor = null;
+
+	@Autowired
+	public CondutorServiceBean(UtilizadorServiceBean utilizadorServiceBean) {
+		this.utilizadorServiceBean = utilizadorServiceBean;
+	}
+
+	public void setCondutor(Utilizador utilizador) {
+		this.condutor = (Condutor) utilizador;
+	}
+
+
+	/* ******** Métodos do serviço ******** */
 
 	/**
 	 * 
-	 * @param newCondutor
+	 * @param newCondutor Instância com os novos campos do perfil atualizados
 	 */
-	public boolean editarPerfil(Condutor newCondutor) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public boolean editarPerfil(Condutor newCondutor) throws Exception {
+		if(condutor == null)
+			throw new Exception("Não tem sessão iniciada.");
+		System.out.println("Condutor logged in: " + condutor.getNome());
+		newCondutor.setId(condutor.getId());
+		utilizadorServiceBean.atualizarUtilizador(newCondutor);
+		return true;
 	}
 
 	public List<Reserva> listarMinhasReservas() {

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
 @Component
 @SessionScope
 public class AdministradorServiceBean implements AdministradorService {
+
+	private Administrador administrador = null;
 
 	/**
 	 * 
@@ -87,4 +91,7 @@ public class AdministradorServiceBean implements AdministradorService {
 		throw new UnsupportedOperationException();
 	}
 
+    public void setAdministrador(Utilizador u) {
+		this.administrador = (Administrador) u;
+    }
 }

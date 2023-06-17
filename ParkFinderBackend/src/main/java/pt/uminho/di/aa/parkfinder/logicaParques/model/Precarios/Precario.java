@@ -32,7 +32,10 @@ public abstract class Precario implements Serializable {
 	
 	@Column(name="PrecoPorMinuto", nullable=false)	
 	private float precoPorMinuto;
-	
+
+	@Column(name = "Discriminator", insertable = false, updatable = false)
+	private String discriminator;
+
 	public abstract float calcular_preco(java.util.Date data_inicio, java.util.Date data_fim);
 
 	public String toString() {
