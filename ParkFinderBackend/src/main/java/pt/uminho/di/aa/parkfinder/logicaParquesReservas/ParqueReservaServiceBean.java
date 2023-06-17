@@ -70,13 +70,13 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @param id_reserva
 	 */
 	public boolean marcarSaidaParque(int id_reserva) throws Exception{
-		try {
-			Reserva reserva = reservaServiceBean.getReserva(id_reserva);
-			if (reserva.getLugar().getTipo().equals(""))
-		}
-		catch (Exception e){
-			throw e;
-		}
+		//try {
+		//	Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+		//}
+		//catch (Exception e){
+		//	throw e;
+		//}
+		return true;
 	}
 
 	/**
