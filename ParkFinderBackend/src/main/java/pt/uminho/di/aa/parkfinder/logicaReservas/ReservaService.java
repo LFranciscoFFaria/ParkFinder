@@ -17,6 +17,18 @@ public interface ReservaService {
 	void removerReserva(int id_reserva);
 
 	/**
+	 *
+	 * @param
+	 */
+	public Reserva getReserva(int id_reserva) throws Exception;
+
+	/**
+	 *
+	 * @param
+	 */
+	public boolean updateReserva(Reserva reserva) throws Exception;
+
+	/**
 	 * 
 	 * @param id_user
 	 */

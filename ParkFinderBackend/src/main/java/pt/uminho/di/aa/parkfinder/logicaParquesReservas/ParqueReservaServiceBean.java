@@ -3,12 +3,22 @@ package pt.uminho.di.aa.parkfinder.logicaParquesReservas;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaServiceBean;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ParqueReservaServiceBean implements ParqueReservaService {
+
+	private final ParqueServiceBean parqueServiceBean;
+	private final ReservaServiceBean reservaServiceBean;
+
+	public ParqueReservaServiceBean(ParqueServiceBean parqueServiceBean, ReservaServiceBean reservaServiceBean) {
+		this.parqueServiceBean = parqueServiceBean;
+		this.reservaServiceBean = reservaServiceBean;
+	}
 
 	/**
 	 * 
@@ -59,18 +69,29 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * 
 	 * @param id_reserva
 	 */
-	public boolean marcarSaidaParque(int id_reserva) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public boolean marcarSaidaParque(int id_reserva) throws Exception{
+		try {
+			Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+			if (reserva.getLugar().getTipo().equals(""))
+		}
+		catch (Exception e){
+			throw e;
+		}
 	}
 
 	/**
 	 * 
 	 * @param id_reserva
 	 */
-	public boolean pagarReserva(int id_reserva) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public boolean pagarReserva(int id_reserva) throws Exception{
+		try {
+			Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+			reserva.setPago(true);
+			return reservaServiceBean.updateReserva(reserva);
+		}
+		catch (Exception e){
+			throw e;
+		}
 	}
 
 }

@@ -39,6 +39,23 @@ public class ReservaServiceBean implements ReservaService {
 		reservaDAO.deleteById(id_reserva);
 	}
 
+	public Reserva getReserva(int id_reserva) throws Exception {
+		Reserva reserva = reservaDAO.findById(id_reserva).orElse(null);
+		if(reserva == null)
+			throw new Exception("A reserva não existe!");
+		return reserva;
+	}
+
+	public boolean updateReserva(Reserva reserva) throws Exception {
+		if (reserva == null)
+			throw new Exception("A reserva não pode ser nula!");
+		Reserva reservaold = reservaDAO.findById(reserva.getId()).orElse(null);
+		if (reservaold == null)
+			throw new Exception("A reserva não existe!");
+		reservaDAO.save(reserva);
+		return true;
+	}
+
 	/**
 	 * Devolve a lista com as reservas do utilizador com o identificador especificado.
 	 * @param id_user
