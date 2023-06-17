@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ParqueDAO extends JpaRepository<Parque,Integer> {
-    List<Parque> findAllByNome(String nome);
+    List<Parque> findAllByNomeContainingIgnoreCase(String nome);
 }

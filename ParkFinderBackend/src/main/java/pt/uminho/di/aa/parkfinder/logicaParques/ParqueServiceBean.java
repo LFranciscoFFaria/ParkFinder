@@ -22,12 +22,16 @@ public class ParqueServiceBean implements ParqueService {
 		this.parqueDAO = parqueDAO;
 	}
 
+
+	/**
+	 * Devolve a lista de todos os parques registados na aplicação.
+	 */
 	public List<Parque> listarParques() {
 		return parqueDAO.findAll();
 	}
 
 	/**
-	 * 
+	 * Encontra todos os parques com identificadores válidos da lista passada por argumento.
 	 * @param ids
 	 */
 	public List<Parque> listarParques(List<Integer> ids) {
@@ -36,15 +40,16 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Encontra todos os parques com o nome passado por argumento.
+	 * Não é sensível à capitalização de carácteres.
 	 * @param nome
 	 */
 	public List<Parque> procurarParque(String nome) {
-		return parqueDAO.findAllByNome(nome);
+		return parqueDAO.findAllByNomeContainingIgnoreCase(nome);
 	}
 
 	/**
-	 * 
+	 * Encontra o parque pelo identificador se existir.
 	 * @param id_parque
 	 */
 	public Parque procurarParque(int id_parque) {
@@ -52,7 +57,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Adiciona o parque à base de dados da aplicação.
 	 * @param p
 	 */
 	public Parque criarParque(Parque p) {
@@ -63,7 +68,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Remove o parque da base de dados da aplicação se existir.
 	 * @param id_parque
 	 */
 	public void removerParque(int id_parque) {
@@ -75,7 +80,8 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Adiciona um precario para um tipo de lugar de estacionamento. Se já existir um
+	 * precário para esse tipo de lugar o antigo não é alterado e o novo não é adicionado.
 	 * @param id_parque
 	 * @param p
 	 */
@@ -97,7 +103,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Remove um precário para um tipo de lugar de estacionamento específico.
 	 * @param id_parque
 	 * @param tipoPrecario
 	 */
@@ -120,7 +126,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Retorna a lista de precarios do parque indicado.
 	 * @param id_parque
 	 */
 	public List<Precario> getPrecarios(int id_parque) {
@@ -134,7 +140,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Calcula o custo de fazer determinada reserva no parque pretendido.
 	 * @param id_parque
 	 * @param id_lugar
 	 * @param data_inicio
@@ -146,7 +152,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Devolve as estatísticas do parque
 	 * @param id_parque
 	 */
 	public Estatisticas getEstatisticasParque(int id_parque) {
@@ -158,6 +164,10 @@ public class ParqueServiceBean implements ParqueService {
 		return parque.getEstatisticas();
 	}
 
+	/**
+	 * Devolve as estatísticas gerais da aplicação.
+	 * Uma instância de estatistica por cada parque da aplicação.
+	 */
 	public List<Estatisticas> getEstatisticasGeral() {
 		List<Parque> parques= parqueDAO.findAll();
 		List<Estatisticas> estatisticas = new ArrayList<Estatisticas>();
@@ -167,6 +177,10 @@ public class ParqueServiceBean implements ParqueService {
 		return estatisticas;
 	}
 
+	/**
+	 * Devolve as estatísticas gerais da aplicação.
+	 * Soma das estatísticas individuais de todos os parques da aplicação.
+	 */
 	public Estatisticas getEstatisticasGeralAgregado() {
 		List<Parque> parques= parqueDAO.findAll();
 		Estatisticas estatistica = new Estatisticas();
@@ -183,7 +197,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Adiciona um lugar do tipo escolhido ao parque.
 	 * @param id_parque
 	 * @param tipo_lugar
 	 */
@@ -205,7 +219,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Remove o lugar com o identificador especificado do parque.
 	 * @param id_parque
 	 * @param id_lugar
 	 */
@@ -229,7 +243,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Adiciona n lugares instântaneos ao parque.
 	 * @param id_parque
 	 * @param n
 	 */
@@ -247,7 +261,10 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Remove n lugares instântenos do parque.
+	 * Se não for possível remover os n lugares ao parque,
+	 * porque este tem menos de n lugares.
+	 * Nenhum lugar é removido.
 	 * @param id_parque
 	 * @param n
 	 */
@@ -268,7 +285,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Devolve o valor da variável utilizavel do lugar com o identificador especificado.
 	 * @param id_parque
 	 * @param id_lugar
 	 */
@@ -289,7 +306,8 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Modifica o valor da variável utilizavel do lugar com o identificador especificado
+	 * para o valor passado por argumento.
 	 * @param id_parque
 	 * @param id_lugar
 	 * @param utilizavel
@@ -313,7 +331,8 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Modifica o valor da variável ocupado do lugar com o identificador especificado
+	 * para o valor passado por argumento.
 	 * @param id_parque
 	 * @param id_lugar
 	 * @param ocupado
@@ -337,7 +356,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Guarda o horário passado por argumento no parque.
 	 * @param id_parque
 	 * @param h
 	 */
@@ -352,7 +371,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Devolve o horário associado ao parque.
 	 * @param id_parque
 	 */
 	public Horario getHorario(int id_parque) {
@@ -370,7 +389,7 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * 
+	 * Remove do parque de estacionamento um lugar do tipo especificado
 	 * @param id_parque
 	 * @param tipo_lugar
 	 */
@@ -390,11 +409,11 @@ public class ParqueServiceBean implements ParqueService {
 				break;
 			}
 		}
-		//throw new Exception("O parque não possui um lugar de estacionamento com esse identificador");
+		//throw new Exception("O parque não possui um lugar de estacionamento com esse tipo");
 	}
 
 	/**
-	 * 
+	 * Encontra o primeiro lugar disponível do parque com o tipo especificado
 	 * @param id_parque
 	 * @param tipo
 	 * @param data_inicio
