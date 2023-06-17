@@ -13,6 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Estatisticas implements Serializable {
 	public Estatisticas() {
+		volume_de_estacionamento = 0;
+		faturacao_total = 0F;
 	}
 	
 	@Column(name="ID", nullable=false)

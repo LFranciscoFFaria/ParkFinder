@@ -13,7 +13,6 @@ import java.io.Serializable;
 @DiscriminatorColumn(name="Discriminator", discriminatorType=DiscriminatorType.STRING)
 @Getter
 @Setter
-@AllArgsConstructor
 public abstract class Precario implements Serializable {
 	public Precario() {
 	}
@@ -23,18 +22,21 @@ public abstract class Precario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne(targetEntity= TipoLugarEstacionamento.class, fetch=FetchType.LAZY)
+	@ManyToOne(targetEntity= TipoLugarEstacionamento.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="TipoLugarID", referencedColumnName="ID", nullable=false)
 	private TipoLugarEstacionamento tipo;
 	
 	@Column(name="PrecoFixo", nullable=false)	
 	private float precoFixo;
-	
-	@Column(name="PrecoPorMinuto", nullable=false)	
-	private float precoPorMinuto;
 
 	@Column(name = "Discriminator", insertable = false, updatable = false)
 	private String discriminator;
+
+	public Precario(int id, TipoLugarEstacionamento tipo, float precoFixo) {
+		this.id = id;
+		this.tipo = tipo;
+		this.precoFixo = precoFixo;
+	}
 
 	public abstract float calcular_preco(java.util.Date data_inicio, java.util.Date data_fim);
 

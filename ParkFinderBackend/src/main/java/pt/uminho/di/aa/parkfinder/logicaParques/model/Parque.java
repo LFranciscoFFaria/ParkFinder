@@ -65,9 +65,28 @@ public class Parque implements Serializable {
 	@OneToMany(targetEntity= Precario.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="ParqueID", nullable=false)
 	private Set<Precario> precarios = new HashSet<>();
-	
-	public String toString() {
-		return String.valueOf(getId());
+
+	public void addLugarEstacionamento(LugarEstacionamento lugar){
+		lugaresEspeciais.add(lugar);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Parque{" +
+				"id=" + id +
+				", estatisticas=" + estatisticas +
+				", horario=" + horario +
+				", nome='" + nome + '\'' +
+				", descricao='" + descricao + '\'' +
+				", latitude=" + latitude +
+				", longitude=" + longitude +
+				", disponivel=" + disponivel +
+				", instantaneos_livres=" + instantaneos_livres +
+				", instantaneos_total=" + instantaneos_total +
+				", total_lugares=" + total_lugares +
+				", caminho_foto='" + caminho_foto + '\'' +
+				", lugaresEspeciais=" + lugaresEspeciais +
+				", precarios=" + precarios +
+				'}';
+	}
 }

@@ -31,24 +31,34 @@ import java.util.concurrent.TimeUnit;
 public class PrecarioDecrementoLinear extends Precario implements Serializable {
 	public PrecarioDecrementoLinear() {}
 
-	@Column(name="PrecoPorIntervaloMax", nullable=false)	
-	private float precoPorIntervaloMax;
+	@Column(name="PrecoPorMinutoMax", nullable=false)
+	private float precoPorMinutoMax;
 	
-	@Column(name="PrecoPorIntervaloMin", nullable=false)	
-	private float precoPorIntervaloMin;
+	@Column(name="PrecoPorMinutoMin", nullable=false)
+	private float precoPorMinutoMin;
 	
 	@Column(name="IntervaloParaAtingirMin", nullable=false)	
-	private float intervaloParaAtingirMin;
+	private float intervaloParaAtingirMin; // tempo para atingir o minimo em minutos
 	
 	public PrecarioDecrementoLinear(float precoFixo, float precoPorIntervaloMax, float precoPorIntervaloMin, float intervalo, TimeUnit tipoIntervalo, float intervaloParaAtingirMin) {
-		//TODO: Implement Method
+		//TODO Implement Method
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public float calcular_preco(Date data_inicio, Date data_fim) {
-		//TODO
-		throw new UnsupportedOperationException();
+		float tempoEmMinutos = (float) (data_fim.getTime() - data_inicio.getTime()) / 60000;
+		float razao = tempoEmMinutos / intervaloParaAtingirMin;
+		float preco_a_pagar_por_min;
+
+		if(razao >= 1)
+			preco_a_pagar_por_min = precoPorMinutoMin;
+		else {
+			float decliveFunc = (precoPorMinutoMin - precoPorMinutoMax) / intervaloParaAtingirMin;
+			preco_a_pagar_por_min = decliveFunc * tempoEmMinutos + precoPorMinutoMax;
+		}
+
+		return this.getPrecoFixo() + preco_a_pagar_por_min * tempoEmMinutos;
 	}
 
 	public String toString() {

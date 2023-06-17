@@ -1,0 +1,61 @@
+
+.perfil_main{
+    display: flex;
+    width: max-content;
+    max-width: 300px;
+    padding: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.perfil_block_image{
+    overflow: hidden;
+    display: flex;
+    max-width: 230px;
+    border-radius: 40px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: ease-out 0.1s all;
+}
+
+.perfil_image{
+    height: 230px;
+}
+
+.perfil_info{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    width: 700px;
+    gap: 5px;
+}
+
+.perfil_block_info{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.field_name{
+    padding-left: 10px;
+}
+
+.field_content{
+    padding-left: 20px;
+}
+
+.perfil_input{
+    padding: 10px;
+    grid-area: fieldContent;
+}
+
+.perfil_button{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.perfil_options_image{
+    
+}
