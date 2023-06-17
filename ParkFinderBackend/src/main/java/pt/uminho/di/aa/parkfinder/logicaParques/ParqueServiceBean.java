@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -38,8 +40,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param nome
 	 */
 	public List<Parque> procurarParque(String nome) {
-		//return parqueDAO.findByAllNome(nome);
-		return null;
+		return parqueDAO.findAllByNome(nome);
 	}
 
 	/**
@@ -56,6 +57,8 @@ public class ParqueServiceBean implements ParqueService {
 	 */
 	public Parque criarParque(Parque p) {
 		p.setId(0);
+		// TODO: verificar que campos do parque já veem preenchidos do front end
+		p.setEstatisticas(null);
 		return parqueDAO.save(p);
 	}
 
@@ -82,7 +85,15 @@ public class ParqueServiceBean implements ParqueService {
 			// TODO: ver exceptions
 			//throw new Exception("Parque não existe!");
 		}
-		// TODO: não sei adicionar à lista de Precarios
+		Set<Precario> precarios = parque.getPrecarios();
+		for (Precario precario : precarios){
+			if(precario.getTipo().getId() == p.getTipo().getId()){
+				//throw new Exception("Já existe um precário desse tipo " + tipoPrecario.toString() + " associado ao parque!");
+			}
+		}
+		precarios.add(p);
+		parque.setPrecarios(precarios);
+		parqueDAO.save(parque);
 	}
 
 	/**
@@ -96,7 +107,16 @@ public class ParqueServiceBean implements ParqueService {
 			// TODO: ver exceptions
 			//throw new Exception("Parque não existe!");
 		}
-		// TODO: não sei remover à lista de Precarios
+		Set<Precario> precarios = parque.getPrecarios();
+		for (Precario precario : precarios){
+			if(precario.getTipo().getId() == tipoPrecario.getId()){
+				precarios.remove(precario);
+				parque.setPrecarios(precarios);
+				parqueDAO.save(parque);
+				break;
+			}
+		}
+		//throw new Exception("Não existe um precário do tipo " + tipoPrecario.toString() + " associado ao parque!");
 	}
 
 	/**
@@ -104,8 +124,13 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque
 	 */
 	public List<Precario> getPrecarios(int id_parque) {
-		// TODO nao sei
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		// TODO: não sei se resulta ou se queremos mudar o tipo de retorno
+		return parque.getPrecarios().stream().toList();
 	}
 
 	/**
@@ -116,7 +141,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param data_fim
 	 */
 	public float calcularCusto(int id_parque, int id_lugar, java.util.Date data_inicio, java.util.Date data_fim) {
-		// TODO
+		// TODO: Necessario saber o tipo de lugar de estacionamento para ser possivel calcular o custo
 		throw new UnsupportedOperationException();
 	}
 
@@ -125,18 +150,36 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque
 	 */
 	public Estatisticas getEstatisticasParque(int id_parque) {
-		// TODO
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		return parque.getEstatisticas();
 	}
 
 	public List<Estatisticas> getEstatisticasGeral() {
-		// TODO
-		throw new UnsupportedOperationException();
+		List<Parque> parques= parqueDAO.findAll();
+		List<Estatisticas> estatisticas = new ArrayList<Estatisticas>();
+		for(Parque parque:parques){
+			estatisticas.add(parque.getEstatisticas());
+		}
+		return estatisticas;
 	}
 
 	public Estatisticas getEstatisticasGeralAgregado() {
-		// TODO
-		throw new UnsupportedOperationException();
+		List<Parque> parques= parqueDAO.findAll();
+		Estatisticas estatistica = new Estatisticas();
+		int volume_de_estacionamento = 0;
+		float faturacao_total = 0;
+		for (Parque parque:parques){
+			Estatisticas e = parque.getEstatisticas();
+			volume_de_estacionamento += e.getVolume_de_estacionamento();
+			faturacao_total += e.getFaturacao_total();
+		}
+		estatistica.setVolume_de_estacionamento(volume_de_estacionamento);
+		estatistica.setFaturacao_total(faturacao_total);
+		return estatistica;
 	}
 
 	/**
@@ -145,8 +188,20 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param tipo_lugar
 	 */
 	public void addLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) {
-		// TODO
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		LugarEstacionamento lugarEstacionamento = new LugarEstacionamento();
+		lugarEstacionamento.setParqueId(id_parque);
+		lugarEstacionamento.setOcupado(false);
+		lugarEstacionamento.setUtilizavel(true);
+		lugarEstacionamento.setTipo(tipo_lugar);
+		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		lugarEstacionamentoSet.add(lugarEstacionamento);
+		parque.setLugaresEspeciais(lugarEstacionamentoSet);
+		parqueDAO.save(parque);
 	}
 
 	/**
@@ -155,8 +210,22 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_lugar
 	 */
 	public void removerLugar(int id_parque, int id_lugar) {
-		// TODO - implement ParqueService.removerLugar
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		for (LugarEstacionamento lugarEstacionamento:lugarEstacionamentoSet){
+			if(lugarEstacionamento.getLugarId()==id_lugar) {
+				//TODO : preciso verificar as reservas do lugar ou se está ocupado
+				lugarEstacionamentoSet.remove(lugarEstacionamento);
+				parque.setLugaresEspeciais(lugarEstacionamentoSet);
+				parqueDAO.save(parque);
+				break;
+			}
+		}
+		//throw new Exception("O parque não possui um lugar de estacionamento com esse identificador");
 	}
 
 	/**
@@ -204,7 +273,18 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_lugar
 	 */
 	public boolean getEstadoUtilizavelLugar(int id_parque, int id_lugar) {
-		// TODO Vai ser preciso fazer uma querry
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		for (LugarEstacionamento lugarEstacionamento : lugarEstacionamentoSet){
+			if(lugarEstacionamento.getLugarId()==id_lugar) {
+				return lugarEstacionamento.isUtilizavel();
+			}
+		}
+		//throw new Exception("O parque não possui um lugar de estacionamento com esse identificador");
 		throw new UnsupportedOperationException();
 	}
 
@@ -215,8 +295,21 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param utilizavel
 	 */
 	public void setEstadoUtilizavelLugar(int id_parque, int id_lugar, boolean utilizavel) {
-		// TODO Mesma querry que em cima
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		for (LugarEstacionamento lugarEstacionamento : lugarEstacionamentoSet){
+			if(lugarEstacionamento.getLugarId()==id_lugar) {
+				lugarEstacionamento.setUtilizavel(utilizavel);
+				parque.setLugaresEspeciais(lugarEstacionamentoSet);
+				parqueDAO.save(parque);
+				break;
+			}
+		}
+		//throw new Exception("O parque não possui um lugar de estacionamento com esse identificador");
 	}
 
 	/**
@@ -226,8 +319,21 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param ocupado
 	 */
 	public void setEstadoOcupadoLugar(int id_parque, int id_lugar, boolean ocupado) {
-		// TODO fazer outra querry
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		for (LugarEstacionamento lugarEstacionamento : lugarEstacionamentoSet){
+			if(lugarEstacionamento.getLugarId()==id_lugar) {
+				lugarEstacionamento.setOcupado(ocupado);
+				parque.setLugaresEspeciais(lugarEstacionamentoSet);
+				parqueDAO.save(parque);
+				break;
+			}
+		}
+		//throw new Exception("O parque não possui um lugar de estacionamento com esse identificador");
 	}
 
 	/**
@@ -236,8 +342,13 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param h
 	 */
 	public void setHorario(int id_parque, Horario h) {
-		// TODO
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		parque.setHorario(h);
+		parqueDAO.save(parque);
 	}
 
 	/**
@@ -245,8 +356,12 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque
 	 */
 	public Horario getHorario(int id_parque) {
-		// TODO
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		return parque.getHorario();
 	}
 
 	public List<List<Object>> listarParquesMaisLugaresLivresETotais() {
@@ -260,7 +375,22 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param tipo_lugar
 	 */
 	public void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) {
-
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		for (LugarEstacionamento lugarEstacionamento:lugarEstacionamentoSet){
+			if(lugarEstacionamento.getTipo().getId()==tipo_lugar.getId()) {
+				//TODO : preciso verificar as reservas do lugar ou se está ocupado
+				lugarEstacionamentoSet.remove(lugarEstacionamento);
+				parque.setLugaresEspeciais(lugarEstacionamentoSet);
+				parqueDAO.save(parque);
+				break;
+			}
+		}
+		//throw new Exception("O parque não possui um lugar de estacionamento com esse identificador");
 	}
 
 	/**
@@ -271,8 +401,19 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param data_fim
 	 */
 	public Integer procurarLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, java.util.Date data_inicio, java.util.Date data_fim) {
-		// TODO - implement ParqueService.procurarLugarDisponivel
-		throw new UnsupportedOperationException();
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque.equals(null)){
+			// TODO: ver exceptions
+			//throw new Exception("Parque não existe!");
+		}
+		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		for (LugarEstacionamento lugarEstacionamento : lugarEstacionamentoSet){
+			if(lugarEstacionamento.getTipo().getId()==tipo.getId()) {
+				//TODO Lógica de ver as reservas
+				return lugarEstacionamento.getLugarId();
+			}
+		}
+		return -1;
 	}
 
 }
