@@ -11,68 +11,89 @@ import java.util.function.Predicate;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class NotificationServiceBean implements NotificationService {
 
+	private final NotificaoDAO notificaoDAO;
+
+	public NotificationServiceBean(NotificaoDAO notificaoDAO) {this.notificaoDAO = notificaoDAO;}
+
 	/**
-	 * 
+	 * Persiste a notificação na base de dados.
 	 * @param n
 	 */
-	public void addNotificacao(Notificacao n) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public void addNotificacao(Notificacao n) throws Exception{
+		if(n == null)
+			throw new Exception("A notificação não pode ser nula.");
+		notificaoDAO.save(n);
 	}
 
 	/**
-	 * 
-	 * @param n
+	 * Remove o notificação com o id especificado da base de dados.
+	 * @param id_notificacao
 	 */
-	public void removerNotificacao(Notificacao n) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public void removerNotificacao(int id_notificacao) throws Exception{
+		if(!notificaoDAO.existsById(id_notificacao))
+			throw new Exception("A notificação não existe!");
+		notificaoDAO.deleteById(id_notificacao);
 	}
 
 	/**
-	 * 
+	 * Devolve as notificações associadas ao identificador de utilizador especificado.
 	 * @param id_user
 	 */
 	public List<Notificacao> getNotificacoes(int id_user) {
-		//TODO
-		throw new UnsupportedOperationException();
+		return notificaoDAO.getByUtilizadorID(id_user);
 	}
 
 	/**
-	 * 
+	 * Devolve as notificações não lidas associadas ao identificador de utilizador especificado.
 	 * @param id_user
 	 */
 	public List<Notificacao> getNotificacoesNaoLidas(int id_user) {
-		//TODO
-		throw new UnsupportedOperationException();
+		// TODO: Ver se existe maneira de fazer isto sem buscar todas as notificações
+		List<Notificacao> notificacoes= notificaoDAO.getByUtilizadorID(id_user);
+		if(notificacoes.size()>0) {
+			notificacoes.removeIf(Notificacao::isLida);
+		}
+		return notificacoes;
 	}
 
 	/**
-	 * 
+	 * Devolve as notificações que respeitam determinado predicado
+	 * associadas ao identificador de utilizador especificado.
 	 * @param id_user
 	 * @param predicate
 	 */
 	public List<Notificacao> getNotificacoes(int id_user, Predicate<Notificacao> predicate) {
-		//TODO
-		throw new UnsupportedOperationException();
+		// TODO: Ver se existe maneira de fazer isto sem buscar todas as notificações
+		List<Notificacao> notificacoes= notificaoDAO.getByUtilizadorID(id_user);
+		if(notificacoes.size()>0) {
+			notificacoes.removeIf(notificacao -> !predicate.test(notificacao));
+		}
+		return notificacoes;
 	}
 
 	/**
-	 * 
+	 * Remove as notificações que respeitam determinado predicado da base de dados.
 	 * @param predicate
 	 */
 	public void removerNotificacoes(Predicate<Notificacao> predicate) {
-		//TODO
-		throw new UnsupportedOperationException();
+		// TODO: Ver se existe maneira de fazer isto sem buscar todas as notificações
+		List<Notificacao> notificacoes= notificaoDAO.findAll();
+		if(notificacoes.size()>0) {
+			notificacoes.removeIf(predicate::test);
+		}
+		notificaoDAO.deleteAll(notificacoes);
 	}
 
 	/**
 	 * 
 	 * @param id_notificacao
 	 */
-	public void setNotificacaoLida(int id_notificacao) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public void setNotificacaoLida(int id_notificacao) throws Exception{
+		Notificacao notificacao = notificaoDAO.findById(id_notificacao).orElse(null);
+		if(notificacao == null)
+			throw new Exception("A notificação não existe!");
+		notificacao.setLida(true);
+		notificaoDAO.save(notificacao);
 	}
 
 }

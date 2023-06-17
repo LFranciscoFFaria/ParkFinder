@@ -9,13 +9,13 @@ public interface NotificationService {
 	 * 
 	 * @param n
 	 */
-	void addNotificacao(Notificacao n);
+	void addNotificacao(Notificacao n) throws Exception;
 
 	/**
 	 * 
-	 * @param n
+	 * @param id_notificacao
 	 */
-	void removerNotificacao(Notificacao n);
+	void removerNotificacao(int id_notificacao) throws Exception;
 
 	/**
 	 * 
@@ -46,5 +46,5 @@ public interface NotificationService {
 	 * 
 	 * @param id_notificacao
 	 */
-	void setNotificacaoLida(int id_notificacao);
+	void setNotificacaoLida(int id_notificacao) throws Exception;
 }
