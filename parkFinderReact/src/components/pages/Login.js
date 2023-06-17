@@ -6,34 +6,52 @@ import { Button } from '../interactive_items/Button';
 function Login({
     
 }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const validateForm = (event) => {
+        event.preventDefault()
+        console.log("validate");
+        window.location.href = '/';
+    };
+
     return (
-        <div className="bg_color">
-            <div className="whitebox">
-                <form className="form_login">
-                    <div className="form_title_login">
-                        <h1>[Logo]</h1>
+        <div className='bg_color'>
+            <div className='whitebox'>
+                <form className='form_login' onSubmit={validateForm}>
+                    <div className='form_title_login'>
+                        <img className={'button_image'} src={"images/preto_no_branco.png"} alt={""} />
                         <h1> Login </h1>
                     </div>
-                    <div className="form_content_login">
+                    <div className='form_content_login'>
                         <h3> Email </h3>
-                        <input placeholder="email"/>
+                        <input 
+                            type='email'
+                            placeholder='email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
                         <h3> Password </h3>
-                        <input placeholder="password"/>
+                        <input
+                            type='password'
+                            placeholder='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
                     </div>
-                    <div className="register_label_login">
+                    <div className='register_label_login'>
                         <label>Don’t have an account?</label>
                         <Link to='/register' className='link'>
                             Sign up
                         </Link>
                     </div>
                     
-                    <div className="buttons_login">
-                        <Button buttonStyle={"contrast"} link={"/"}>Login</Button>
+                    <div className='buttons_login'>
+                        <Button buttonStyle={'contrast'} type='submit'>Login</Button>
                     </div>
                 </form>
-                <div className="login_image">
-                    <h3> Imagem </h3>
-                </div>
             </div>
         </div>
     );

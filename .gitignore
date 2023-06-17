@@ -4,3 +4,4 @@ parkFinderReact/node_modules/*
 *.bak_*
 .iml
 .idea/
+*.class
