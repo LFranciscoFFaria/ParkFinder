@@ -46,9 +46,10 @@ public class CondutorServiceBean implements CondutorService {
 		return true;
 	}
 
-	public List<Reserva> listarMinhasReservas() {
-		// TODO - implement CondutorService.listarMinhasReservas
-		throw new UnsupportedOperationException();
+	public List<Reserva> listarMinhasReservas() throws Exception{
+		if(condutor == null)
+			throw new Exception("Não tem sessão iniciada.");
+		return reservaServiceBean.listarReservas(condutor.getId());
 	}
 
 	/**
@@ -81,14 +82,9 @@ public class CondutorServiceBean implements CondutorService {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @return true if user was logged in. false if the user wasn't authenticated.
-	 */
-	public boolean logout() {
-		if(condutor == null)
-			return false;
-		condutor = null;
-		return true;
+	public void logout() {
+		// TODO - implement CondutorService.logout
+		throw new UnsupportedOperationException();
 	}
 
 }
