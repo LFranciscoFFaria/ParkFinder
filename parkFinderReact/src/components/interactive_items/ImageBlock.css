@@ -1,10 +1,8 @@
 .block_image{
     overflow: hidden;
     display: flex;
-    border-radius: 15px;
     align-items: center;
     justify-content: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     transition: ease-out 0.1s all;
 }
 .block_image:hover{
@@ -12,6 +10,13 @@
     transition: ease-out 0.1s all;
 }
 
+.shadow{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.border_radius{
+    border-radius: 15px;
+}
 
 .image{
     max-width: 432px;

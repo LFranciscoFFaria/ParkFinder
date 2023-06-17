@@ -53,7 +53,7 @@
 }
 
 
-.perfil_image{
+.navbar_perfil_image{
     width: 90px;
     height: 100%;
     background-color: transparent;
@@ -133,7 +133,7 @@
     border-radius: 15px;
 }
 
-.perfil_image:hover,
+.navbar_perfil_image:hover,
 .logo_image:hover,
 .navbar_image_button:hover{
     transform: scale(1.1,1.1);
