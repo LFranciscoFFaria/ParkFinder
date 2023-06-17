@@ -16,10 +16,11 @@
 
 .parks_header{
     display: flex;
-    align-items: baseline;
+    align-items: end;
     justify-content: space-between;
     padding: 0px 20px 20px 20px;
 }
+
 
 
 .pageNumb{

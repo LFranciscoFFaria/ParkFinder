@@ -28,7 +28,7 @@ function Perfil({
             <input type="text"/>
             <input type="time"/>
             <input type="url"/>
-            <input type="week"></input>
+            <input type="week"/>
         </div>
     );
 }

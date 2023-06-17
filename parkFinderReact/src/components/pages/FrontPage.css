@@ -1,3 +1,10 @@
+.content_front_page{
+    display: flex;
+    padding: 30px;
+    justify-content: center;
+    gap: 5%;
+}
+
 .front_page{
     display: flex;
     flex-direction: column;
