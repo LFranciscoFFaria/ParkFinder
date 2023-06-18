@@ -14,8 +14,8 @@ function Navbar({
     return (
         <div className='navbar_layer'>
             <header className={"header_default"}>
-                <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
-                <Button buttonStyle={"navbar_perfil_image"} onClick={() => setState("perfil")}> <img className={'button_image'} src={"images/perfil.png"} alt={""} /> Pessoa </Button>
+                <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}} link={'/'}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
+                <Button buttonStyle={"navbar_perfil_image"} link={'/perfil'}> <img className={'button_image'} src={"images/perfil.png"} alt={""} /> Pessoa </Button>
             </header>
             <div className={'navbar_default'}>
                 <div className='navbar_disappearing_icon' onClick={handleClick}>
@@ -28,9 +28,13 @@ function Navbar({
                     <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("train _stations"); closeMobileMenu()}}> Train Stations </Button>
                 </div>
                 <div className={"navbar_group"}>
-                    <div className='navbar_disappearing_icon' onClick={closeMobileMenu}>
-                        <Button buttonStyle={"navbar_image_button"} onClick={setFilter}> <img className={'button_image'} src={"images/search_icon.png"} alt={""} /> </Button>
-                    </div>
+                    {setFilter===null?
+                        null
+                        :
+                        <div className='navbar_disappearing_icon' onClick={closeMobileMenu}>
+                            <Button buttonStyle={"navbar_image_button"} onClick={setFilter}> <img className={'button_image'} src={"images/search_icon.png"} alt={""} /> </Button>
+                        </div>
+                    }
                     <Button buttonStyle={"navbar_image_button"} onClick={closeMobileMenu}> <img className={'button_image'} src={"images/bell_notification.png"} alt={""} /> </Button>
                     <Button buttonStyle={"navbar_button"} onClick={closeMobileMenu} link={"/login"}> Login </Button>
                 </div>

@@ -2,37 +2,43 @@ import './Parks.css'
 import '../interactive_items/select.css'
 import CompressedParkInfo from '../objects/CompressedParkInfo.js';
 import Filter from '../objects/Filter';
+import Navbar from '../objects/Navbar';
 
 function Parks({
     parques,
     filter,
-    setState
+    setFilter,
+    setState,
+    setIdParque,
 }) {
     
     return (
-        <div className='parks_content_display'>
-            <div className='parks_info_display'>
-                <div className='parks_header'>
-                    <h1>[Local De Pesquisa]</h1>
-                    <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
-                        <option className='disabled_selected' value="default" disabled>Sort by</option>
-                        <option value='distance'>Distance</option>
-                        <option value='price'>Price</option>
-                    </select>
+        <div className='front_page'>
+            <Navbar setState={setState} setFilter={() => setFilter(!filter)}/>
+            <div className='parks_content_display'>
+                <div className='parks_info_display'>
+                    <div className='parks_header'>
+                        <h1>[Local De Pesquisa]</h1>
+                        <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
+                            <option className='disabled_selected' value="default" disabled>Sort by</option>
+                            <option value='distance'>Distance</option>
+                            <option value='price'>Price</option>
+                        </select>
+                    </div>
+                    {parques.map(parque => 
+                        <CompressedParkInfo key={parque.id} parque={parque} setIdParque={setIdParque}/>
+                    )}
+                    <div className='pageNumb'>
+                        <button className='page_button'> {'<<'} </button>
+                        <button className='page_button'> 1 </button>
+                        <button className='page_button'> 2 </button>
+                        <button className='page_button'> 3  </button>
+                        <button className='page_button'> {'>>'} </button>
+                    </div>
                 </div>
-                {parques.map(parque => 
-                    <CompressedParkInfo key={parque.id} parque={parque} setState={setState}/>
-                )}
-                <div className='pageNumb'>
-                    <button className='page_button'> {'<<'} </button>
-                    <button className='page_button'> 1 </button>
-                    <button className='page_button'> 2 </button>
-                    <button className='page_button'> 3  </button>
-                    <button className='page_button'> {'>>'} </button>
+                <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
+                    <Filter dates={true}/>
                 </div>
-            </div>
-            <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
-                <Filter dates={true}/>
             </div>
         </div>
     );

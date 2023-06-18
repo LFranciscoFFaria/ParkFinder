@@ -61,13 +61,13 @@ function FrontPage({
 
         switch (details_park[0]) {
             case 'perfil':
-              setElementToRender(<Perfil />);
+              setElementToRender(<Perfil setState={setState}/>);
               break;
             case 'details':
               setElementToRender(<Details parque={parques[parseInt(details_park[1])]} filter={filter} setState={setState}/>);
               break;
             default:
-              setElementToRender(<Parks parques={parques} filter={filter} setState={setState}/>);
+              setElementToRender(<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState}/>);
         }
     }
 
