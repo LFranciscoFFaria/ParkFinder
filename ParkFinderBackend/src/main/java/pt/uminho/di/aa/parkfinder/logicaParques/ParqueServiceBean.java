@@ -33,7 +33,6 @@ public class ParqueServiceBean implements ParqueService {
 		this.estatisticasDAO = estatisticasDAO;
 	}
 
-
 	/**
 	 * Devolve a lista de todos os parques registados na aplicação.
 	 */

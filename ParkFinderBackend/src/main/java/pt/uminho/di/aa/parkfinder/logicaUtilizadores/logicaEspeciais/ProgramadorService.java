@@ -13,7 +13,7 @@ public interface ProgramadorService {
 	 * @param g
 	 * @param ids_parques
 	 */
-	void criarGestor(Gestor g, List<Integer> ids_parques);
+	void criarGestor(Gestor g, List<Integer> ids_parques) throws Exception;
 
 	/**
 	 * 
@@ -26,26 +26,26 @@ public interface ProgramadorService {
 	 * @param ids_parques
 	 * @param id_gestor
 	 */
-	void adicionarParquesAGestor(List<Integer> ids_parques, int id_gestor);
+	void adicionarParquesAGestor(List<Integer> ids_parques, int id_gestor) throws Exception;
 
 	/**
 	 * 
 	 * @param ids_parques
 	 * @param id_gestor
 	 */
-	void removerParquesAGestor(List<Integer> ids_parques, int id_gestor);
+	void removerParquesAGestor(List<Integer> ids_parques, int id_gestor) throws Exception;
 
 	/**
 	 * 
 	 * @param p
 	 */
-	void registarParque(Parque p);
+	void registarParque(Parque p) throws Exception;
 
 	/**
 	 * 
 	 * @param p
 	 */
-	void removerParque(Parque p);
+	void removerParque(Parque p) throws Exception;
 
 	/**
 	 * 

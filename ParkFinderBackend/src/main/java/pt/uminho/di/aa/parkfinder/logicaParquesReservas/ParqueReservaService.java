@@ -3,6 +3,9 @@ package pt.uminho.di.aa.parkfinder.logicaParquesReservas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 public interface ParqueReservaService {
 
 	/**
@@ -10,7 +13,7 @@ public interface ParqueReservaService {
 	 * @param id_user
 	 * @param id_parque
 	 */
-	Reserva criarReservaInstantanea(int id_user, int id_parque);
+	Reserva criarReservaInstantanea(int id_user, int id_parque) throws Exception;
 
 	/**
 	 * 
@@ -20,7 +23,7 @@ public interface ParqueReservaService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	Reserva criarReservaAgendada(int id_user, int id_parque, TipoLugarEstacionamento tipo, java.util.Date data_inicio, java.util.Date data_fim);
+	Reserva criarReservaAgendada(int id_user, int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
 	/**
 	 * 
@@ -29,14 +32,14 @@ public interface ParqueReservaService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	int getIdLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, java.util.Date data_inicio, java.util.Date data_fim);
+	List<Integer> getIdLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
 
 	/**
 	 * 
 	 * @param id_reserva
 	 * @param matricula
 	 */
-	boolean marcarEntradaParque(int id_reserva, String matricula);
+	boolean marcarEntradaParque(int id_reserva, String matricula) throws Exception;
 
 	/**
 	 * 

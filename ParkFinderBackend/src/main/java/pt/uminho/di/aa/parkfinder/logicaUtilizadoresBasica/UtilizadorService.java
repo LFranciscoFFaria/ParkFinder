@@ -11,6 +11,12 @@ public interface UtilizadorService {
 	Utilizador getUtilizador(String email);
 
 	/**
+	 *
+	 * @param id_utilizador
+	 */
+	public Utilizador getUtilizador(int id_utilizador);
+
+	/**
 	 * 
 	 * @param email
 	 * @param password
@@ -40,4 +46,10 @@ public interface UtilizadorService {
 	 * @param descriminador
 	 */
 	List<Utilizador> procurarUtilizador(String nome, String descriminador);
+
+	/**
+	 *
+	 * @param descriminador
+	 */
+	public List<Utilizador> procurarUtilizador(String descriminador);
 }

@@ -9,6 +9,8 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="Reserva")
 @Getter
@@ -49,11 +51,11 @@ public class Reserva implements Serializable {
 	
 	@Column(name="Data_inicio")
 	@Temporal(TemporalType.DATE)	
-	private java.util.Date data_inicio;
+	private LocalDateTime data_inicio;
 	
 	@Column(name="Data_fim")
 	@Temporal(TemporalType.DATE)	
-	private java.util.Date data_fim = null;
+	private LocalDateTime data_fim = null;
 	
 	public String toString() {
 		return String.valueOf(getId());

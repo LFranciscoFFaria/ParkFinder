@@ -12,4 +12,5 @@ public interface UtilizadorDAO extends JpaRepository<Utilizador,Integer> {
     Optional<Utilizador> findByEmail(String email);
     boolean existsByEmail(String email);
     List<Utilizador> findUtilizadorByNomeContainingIgnoreCaseAndDiscriminator(String nome, String descriminador);
+    List<Utilizador> findUtilizadorByDiscriminator(String descriminador);
 }
