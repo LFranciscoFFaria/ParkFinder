@@ -38,6 +38,13 @@
     gap: 5px;
 }
 
+.desc_desc_none{
+    padding: 10px 30px 0px 30px;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+}
+
 option[value=""][disabled] {
     display: none;
 }
@@ -54,4 +61,8 @@ option[value=""][disabled] {
     padding: 20px 20px 0px 20px;
     justify-content: space-between;
     gap: 20px;
+}
+
+.details{
+    width: 50%;
 }
