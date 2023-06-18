@@ -30,13 +30,19 @@ public class Condutor extends Utilizador implements Serializable {
 	@JsonDeserialize(using = GeneroDeserializer.class)
 	private boolean genero;
 
+	// TODO : Adicionei número de telemóvel ao utilizador por pedido do Diogo e porque faz bastante sentido.
+	@Column(name="Numero_telemovel", nullable=false, length=1)
+	@JsonDeserialize(using = GeneroDeserializer.class)
+	private int numero_telemovel;
+
 	public Condutor(@JsonProperty("nome") String nome, @JsonProperty("email") String email, @JsonProperty("password") String password,
-					@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero) {
+					@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero, @JsonProperty("numero_telemovel") int numero_telemovel) {
 		this.setNome(nome);
 		this.setEmail(email);
 		this.setPassword(password);
 		this.nif = nif;
 		this.genero = genero;
+		this.numero_telemovel = numero_telemovel;
 	}
 
 	/**
@@ -47,7 +53,10 @@ public class Condutor extends Utilizador implements Serializable {
 		String valido = super.validarAtributos();
 		if(valido != null) return valido;
 		if(!Pattern.matches("^\\d{9}$", String.valueOf(this.getNif())))
-			return "NIF has to be a 9 digits number.";
+			return "O NIF contêm 9 digitos numéricos.";
+		// TODO: Copiei a expressão regular do NIF em príncípio está certa
+		if(!Pattern.matches("^\\d{9}$", String.valueOf(this.getNumero_telemovel())))
+			return "O número de telemóvel português têm de conter 9 digitos numéricos.";
 		return null;
 	}
 

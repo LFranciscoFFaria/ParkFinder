@@ -27,6 +27,14 @@ public class UtilizadorServiceBean implements UtilizadorService {
 	}
 
 	/**
+	 * Encontra utilizador pelo seu identificador.
+	 * @param id_utilizador identificador do utilizador
+	 */
+	public Utilizador getUtilizador(int id_utilizador) {
+		return utilizadorDAO.findById(id_utilizador).orElse(null);
+	}
+
+	/**
 	 * Se as credenciais estiverem corretas, retorna uma instância do utilizador.
 	 * @param email -
 	 * @param password -
@@ -94,6 +102,15 @@ public class UtilizadorServiceBean implements UtilizadorService {
 	 */
 	public List<Utilizador> procurarUtilizador(String nome, String descriminador) {
 		return utilizadorDAO.findUtilizadorByNomeContainingIgnoreCaseAndDiscriminator(nome, descriminador);
+	}
+
+	/**
+	 * Procura por utilizadores com nome parecido com o fornecido.
+	 * É necessário fornecer um descriminador válido para obter resultados.
+	 * @param descriminador Tipo de utilizador
+	 */
+	public List<Utilizador> procurarUtilizador(String descriminador) {
+		return utilizadorDAO.findUtilizadorByDiscriminator(descriminador);
 	}
 
 }
