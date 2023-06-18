@@ -8,13 +8,25 @@ public interface ReservaService {
 	 * 
 	 * @param r
 	 */
-	Reserva criarReserva(Reserva r);
+	Reserva criarReserva(Reserva r) throws Exception;
 
 	/**
 	 * 
 	 * @param id_reserva
 	 */
 	void removerReserva(int id_reserva);
+
+	/**
+	 *
+	 * @param
+	 */
+	public Reserva getReserva(int id_reserva) throws Exception;
+
+	/**
+	 *
+	 * @param
+	 */
+	public boolean updateReserva(Reserva reserva) throws Exception;
 
 	/**
 	 * 

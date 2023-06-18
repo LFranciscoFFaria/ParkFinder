@@ -1,8 +1,7 @@
 
 .perfil_main{
     display: flex;
-    width: max-content;
-    max-width: 300px;
+    width: 300px;
     padding: 30px;
     flex-direction: column;
     align-items: center;
@@ -48,7 +47,6 @@
 
 .perfil_input{
     padding: 10px;
-    grid-area: fieldContent;
 }
 
 .perfil_button{
@@ -56,6 +54,44 @@
     flex-direction: row-reverse;
 }
 
+
+
+
+.perfil_options{
+    display: flex;
+    width: 500px;
+    padding-top: 80px;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.perfil_options_box{
+    border: 1px solid black;
+    width: 100%;
+    display: flex;
+    border-radius: 30px;
+    transition: all 0.1s ease-out;
+    padding: 15px;
+}
+
+.perfil_options_box:hover{
+    transition: all 0.1s ease-out;
+    transform: scale(1.1,1.1);
+}
+
 .perfil_options_image{
-    
+    padding: 20px 20px;
+}
+
+.perfil_options_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 90%;
+    gap: 10px;
+}
+
+.perfil_options_text_title{
+    font-size: 140%;
 }

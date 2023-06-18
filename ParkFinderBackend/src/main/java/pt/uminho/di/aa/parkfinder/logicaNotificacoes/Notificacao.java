@@ -25,8 +25,8 @@ public class Notificacao implements Serializable {
 	@JoinColumn(name="UtilizadorID", referencedColumnName="ID", nullable=false)
 	private Utilizador utilizador;
 
-	@Column(name="UtilizadorID", nullable=false, insertable=false, updatable=false)
-	private int UtilizadorID;
+	@Column(name="UtilizadorID", updatable = false, insertable = false, nullable = false)
+	private int utilizadorID;
 	
 	@Column(name="Titulo")
 	private String titulo;

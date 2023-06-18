@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
@@ -16,11 +17,13 @@ import java.util.List;
 public class CondutorServiceBean implements CondutorService {
 
 	private final UtilizadorServiceBean utilizadorServiceBean;
+	private final ReservaServiceBean reservaServiceBean;
 	private Condutor condutor = null;
 
 	@Autowired
-	public CondutorServiceBean(UtilizadorServiceBean utilizadorServiceBean) {
+	public CondutorServiceBean(UtilizadorServiceBean utilizadorServiceBean, ReservaServiceBean reservaServiceBean) {
 		this.utilizadorServiceBean = utilizadorServiceBean;
+		this.reservaServiceBean = reservaServiceBean;
 	}
 
 	public void setCondutor(Utilizador utilizador) {
@@ -31,7 +34,7 @@ public class CondutorServiceBean implements CondutorService {
 	/* ******** Métodos do serviço ******** */
 
 	/**
-	 * 
+	 *
 	 * @param newCondutor Instância com os novos campos do perfil atualizados
 	 */
 	public boolean editarPerfil(Condutor newCondutor) throws Exception {
@@ -43,13 +46,13 @@ public class CondutorServiceBean implements CondutorService {
 		return true;
 	}
 
-	public List<Reserva> listarMinhasReservas() {
+	public List<Reserva> listarMinhasReservas() throws Exception{
 		// TODO - implement CondutorService.listarMinhasReservas
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_parque
 	 */
 	public Reserva fazerReservaInstantanea(int id_parque) {
@@ -58,7 +61,7 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_parque
 	 * @param tipo
 	 * @param data_inicio
@@ -70,7 +73,7 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_reserva
 	 */
 	public boolean pagarReserva(int id_reserva) {
@@ -78,9 +81,14 @@ public class CondutorServiceBean implements CondutorService {
 		throw new UnsupportedOperationException();
 	}
 
-	public void logout() {
-		// TODO - implement CondutorService.logout
-		throw new UnsupportedOperationException();
+	/**
+	 * @return true if user was logged in. false if the user wasn't authenticated.
+	 */
+	public boolean logout() {
+		if(condutor == null)
+			return false;
+		condutor = null;
+		return true;
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -23,8 +24,13 @@ public class ReservaServiceBean implements ReservaService {
 	 * Adiciona uma reserva à base de dados.
 	 * @param r
 	 */
-	public Reserva criarReserva(Reserva r) {
+	public Reserva criarReserva(Reserva r) throws Exception{
 		r.setId(0);
+		Date data_inicio =  r.getData_inicio();
+		Date data_fim = r.getData_fim();
+		if(data_fim.before(data_inicio)){
+			throw new Exception("A data de fim da reserva não pode ser antes da data de inicio");
+		}
 		return reservaDAO.save(r);
 	}
 
@@ -37,6 +43,28 @@ public class ReservaServiceBean implements ReservaService {
 			//throw new Exception("Reserva não existe!");
 		}
 		reservaDAO.deleteById(id_reserva);
+	}
+
+	public Reserva getReserva(int id_reserva) throws Exception {
+		Reserva reserva = reservaDAO.findById(id_reserva).orElse(null);
+		if(reserva == null)
+			throw new Exception("A reserva não existe!");
+		return reserva;
+	}
+
+	public boolean updateReserva(Reserva reserva) throws Exception {
+		if (reserva == null)
+			throw new Exception("A reserva não pode ser nula!");
+		Reserva reservaold = reservaDAO.findById(reserva.getId()).orElse(null);
+		if (reservaold == null)
+			throw new Exception("A reserva não existe!");
+		Date data_inicio =  reserva.getData_inicio();
+		Date data_fim = reserva.getData_fim();
+		if(data_fim.before(data_inicio)){
+			throw new Exception("A data de fim da reserva não pode ser antes da data de inicio");
+		}
+		reservaDAO.save(reserva);
+		return true;
 	}
 
 	/**

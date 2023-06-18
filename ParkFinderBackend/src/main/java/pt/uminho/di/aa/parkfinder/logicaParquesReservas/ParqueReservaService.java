@@ -42,11 +42,11 @@ public interface ParqueReservaService {
 	 * 
 	 * @param id_reserva
 	 */
-	boolean marcarSaidaParque(int id_reserva);
+	boolean marcarSaidaParque(int id_reserva) throws Exception;
 
 	/**
 	 * 
 	 * @param id_reserva
 	 */
-	boolean pagarReserva(int id_reserva);
+	boolean pagarReserva(int id_reserva) throws Exception;
 }

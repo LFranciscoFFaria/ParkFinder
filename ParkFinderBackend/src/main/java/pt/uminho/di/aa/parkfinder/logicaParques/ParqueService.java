@@ -1,20 +1,26 @@
 package pt.uminho.di.aa.parkfinder.logicaParques;
 
 
+import org.springframework.data.domain.Page;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface ParqueService {
 
 	List<Parque> listarParques();
+
+	Page<Parque> listarParques(int pagina, int nrResultadosPorPagina);
 
 	/**
 	 * 
 	 * @param ids
 	 */
 	List<Parque> listarParques(List<Integer> ids);
+
 
 	/**
 	 * 
@@ -45,20 +51,20 @@ public interface ParqueService {
 	 * @param id_parque
 	 * @param p
 	 */
-	void criarPrecario(int id_parque, Precario p);
+	void criarPrecario(int id_parque, Precario p) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param tipoPrecario
 	 */
-	void removerPrecario(int id_parque, TipoLugarEstacionamento tipoPrecario);
+	void removerPrecario(int id_parque, TipoLugarEstacionamento tipoPrecario) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 */
-	List<Precario> getPrecarios(int id_parque);
+	List<Precario> getPrecarios(int id_parque) throws Exception;
 
 	/**
 	 * 
@@ -67,13 +73,13 @@ public interface ParqueService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	float calcularCusto(int id_parque, int id_lugar, java.util.Date data_inicio, java.util.Date data_fim);
+	float calcularCusto(int id_parque, int id_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 */
-	Estatisticas getEstatisticasParque(int id_parque);
+	Estatisticas getEstatisticasParque(int id_parque) throws Exception;
 
 	List<Estatisticas> getEstatisticasGeral();
 
@@ -84,35 +90,35 @@ public interface ParqueService {
 	 * @param id_parque
 	 * @param tipo_lugar
 	 */
-	void addLugar(int id_parque, TipoLugarEstacionamento tipo_lugar);
+	void addLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param id_lugar
 	 */
-	void removerLugar(int id_parque, int id_lugar);
+	void removerLugar(int id_parque, int id_lugar) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param n
 	 */
-	void addLugaresInstantaneos(int id_parque, int n);
+	void addLugaresInstantaneos(int id_parque, int n) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param n
 	 */
-	void removeLugaresInstantaneos(int id_parque, int n);
+	void removeLugaresInstantaneos(int id_parque, int n) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param id_lugar
 	 */
-	boolean getEstadoUtilizavelLugar(int id_parque, int id_lugar);
+	boolean getEstadoUtilizavelLugar(int id_parque, int id_lugar) throws Exception;
 
 	/**
 	 * 
@@ -120,7 +126,7 @@ public interface ParqueService {
 	 * @param id_lugar
 	 * @param utilizavel
 	 */
-	void setEstadoUtilizavelLugar(int id_parque, int id_lugar, boolean utilizavel);
+	void setEstadoUtilizavelLugar(int id_parque, int id_lugar, boolean utilizavel) throws Exception;
 
 	/**
 	 * 
@@ -128,29 +134,29 @@ public interface ParqueService {
 	 * @param id_lugar
 	 * @param ocupado
 	 */
-	void setEstadoOcupadoLugar(int id_parque, int id_lugar, boolean ocupado);
+	void setEstadoOcupadoLugar(int id_parque, int id_lugar, boolean ocupado) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param h
 	 */
-	void setHorario(int id_parque, Horario h);
+	void setHorario(int id_parque, Horario h) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 */
-	Horario getHorario(int id_parque);
+	Horario getHorario(int id_parque) throws Exception;
 
-	List<List<Object>> listarParquesMaisLugaresLivresETotais();
+	List<Map.Entry<Parque, Integer>> listarParquesMaisLugaresLivres();
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param tipo_lugar
 	 */
-	void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar);
+	void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception;
 
 	/**
 	 * 
@@ -159,5 +165,5 @@ public interface ParqueService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	Integer procurarLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, java.util.Date data_inicio, java.util.Date data_fim);
+	List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 }
