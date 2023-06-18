@@ -1,16 +1,3 @@
-/**
- * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
- * 
- * This is an automatic generated file. It will be regenerated every time 
- * you generate persistence class.
- * 
- * Modifying its content may cause the program not work, or your work may lost.
- */
-
-/**
- * Licensee: Alexandre Martins(Universidade do Minho)
- * License Type: Academic
- */
 package pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios;
 
 import jakarta.persistence.*;
@@ -18,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 @Entity
@@ -46,8 +34,8 @@ public class PrecarioDecrementoLinear extends Precario implements Serializable {
 	}
 
 	@Override
-	public float calcular_preco(Date data_inicio, Date data_fim) {
-		float tempoEmMinutos = (float) (data_fim.getTime() - data_inicio.getTime()) / 60000;
+	public float calcular_preco(LocalDateTime data_inicio, LocalDateTime data_fim) {
+		float tempoEmMinutos = (float) (Duration.between(data_inicio,data_fim).toSeconds() / 60);
 		float razao = tempoEmMinutos / intervaloParaAtingirMin;
 		float preco_a_pagar_por_min;
 

@@ -70,6 +70,10 @@ public class Parque implements Serializable {
 		lugaresEspeciais.add(lugar);
 	}
 
+	public int getLugaresLivres(){
+		return (int) (instantaneos_livres + lugaresEspeciais.stream().filter(l -> !l.isOcupado()).count());
+	}
+
 	@Override
 	public String toString() {
 		return "Parque{" +

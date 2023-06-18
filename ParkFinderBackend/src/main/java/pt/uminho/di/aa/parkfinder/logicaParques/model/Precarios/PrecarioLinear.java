@@ -6,8 +6,8 @@ import lombok.Setter;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="PrecarioLinear")
@@ -36,8 +36,8 @@ public class PrecarioLinear extends Precario implements Serializable {
 	}
 
 	@Override
-	public float calcular_preco(Date data_inicio, Date data_fim) {
-		return this.getPrecoFixo() + ((float) (data_fim.getTime() - data_inicio.getTime()) / 60000) * this.getPrecoPorMinuto();
+	public float calcular_preco(LocalDateTime data_inicio, LocalDateTime data_fim) {
+		return this.getPrecoFixo() + ((float) (Duration.between(data_inicio,data_fim).toSeconds() / 60) * this.getPrecoPorMinuto());
 	}
 
 	public String toString() {

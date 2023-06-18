@@ -1,12 +1,13 @@
 package pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="Precario")
 @Inheritance(strategy= InheritanceType.JOINED)
@@ -38,7 +39,7 @@ public abstract class Precario implements Serializable {
 		this.precoFixo = precoFixo;
 	}
 
-	public abstract float calcular_preco(java.util.Date data_inicio, java.util.Date data_fim);
+	public abstract float calcular_preco(LocalDateTime data_inicio, LocalDateTime data_fim);
 
 	public String toString() {
 		return String.valueOf(getId());

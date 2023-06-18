@@ -12,9 +12,9 @@ import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -128,9 +128,7 @@ public class ParqueServiceBean implements ParqueService {
 		if(p == null)
 			throw new Exception("Precario não pode ser nulo!");
 
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não existe!");
+		Parque parque = getParque(id_parque);
 
 		TipoLugarEstacionamento tipoLugar = p.getTipo();
 		if(tipoLugar == null)
@@ -155,9 +153,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param tipoPrecario tipo de lugar de estacionamento ao qual o precario corresponde
 	 */
 	public void removerPrecario(int id_parque, TipoLugarEstacionamento tipoPrecario) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não existe!");
+		Parque parque = getParque(id_parque);
 
 		// Se o tipo de precario nao existe, retorna, porque um parque não o pode ter associado
 		TipoLugarEstacionamento tipoLugarComId = tipoLugarDAO.findByNome(tipoPrecario.getNome());
@@ -173,9 +169,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 */
 	public List<Precario> getPrecarios(int id_parque) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não existe!");
+		Parque parque = getParque(id_parque);
 		return new ArrayList<>(parque.getPrecarios());
 	}
 
@@ -187,18 +181,11 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param data_fim data de fim do periodo
 	 */
 	@Transactional(rollbackOn = Exception.class)
-	public float calcularCusto(int id_parque, int id_lugar, java.util.Date data_inicio, java.util.Date data_fim) throws Exception {
-		LugarEstacionamento lugar = lugarDAO.findById(id_lugar).orElse(null);
-		if (lugar == null)
-			throw new Exception("Lugar não existe!");
-
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não existe!");
-
+	public float calcularCusto(int id_parque, int id_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+		Parque parque = getParque(id_parque);
+		LugarEstacionamento lugar = getLugar(id_lugar);
 		if(lugar.getParqueId() != parque.getId())
 			throw new Exception("Lugar não pertence ao parque!");
-
 		Precario precario = parqueDAO.findPrecarioDoParque(parque.getId(), lugar.getTipo().getNome());
 		return precario.calcular_preco(data_inicio, data_fim);
 	}
@@ -208,9 +195,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 */
 	public Estatisticas getEstatisticasParque(int id_parque) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não existe!");
+		Parque parque = getParque(id_parque);
 		return parque.getEstatisticas();
 	}
 
@@ -243,16 +228,13 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param tipo_lugar tipo de lugar estacionamento
 	 */
 	public void addLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não existe!");
-
+		Parque parque = getParque(id_parque);
 		tipo_lugar = encontraOuPersisteTipoLugar(tipo_lugar);
-
 		LugarEstacionamento lugarEstacionamento = new LugarEstacionamento(0, parque, parque.getId(), tipo_lugar, true, false);
 		Set<LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
 		lugarEstacionamentoSet.add(lugarEstacionamento);
 		parque.setLugaresEspeciais(lugarEstacionamentoSet);
+		parque.setTotal_lugares(parque.getTotal_lugares() + 1);
 		parqueDAO.save(parque);
 	}
 
@@ -263,17 +245,12 @@ public class ParqueServiceBean implements ParqueService {
 	 */
 	@Transactional(rollbackOn = Exception.class)
 	public void removerLugar(int id_parque, int id_lugar) throws Exception {
-		LugarEstacionamento lugar = lugarDAO.findById(id_lugar).orElse(null);
-		if (lugar == null)
-			throw new Exception("Lugar não existe!");
-
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não existe!");
-
+		Parque parque = getParque(id_parque);
+		LugarEstacionamento lugar = getLugar(id_lugar);
 		if(lugar.getParqueId() != parque.getId())
 			throw new Exception("Lugar não pertence ao parque!");
-
+		parque.setTotal_lugares(parque.getTotal_lugares() - 1);
+		parqueDAO.save(parque);
 		lugarDAO.delete(lugar);
 	}
 
@@ -283,10 +260,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param n numero de lugares instantaneos a adicionar ao parque
 	 */
 	public void addLugaresInstantaneos(int id_parque, int n) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não Existe");
-
+		Parque parque = getParque(id_parque);
 		int instantaneos_livres = parque.getInstantaneos_livres();
 		int instantaneos_total = parque.getInstantaneos_total();
 		parque.setInstantaneos_livres(instantaneos_livres + n);
@@ -304,15 +278,13 @@ public class ParqueServiceBean implements ParqueService {
 	 */
 	@Transactional(rollbackOn = Exception.class)
 	public void removeLugaresInstantaneos(int id_parque, int n) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque == null)
-			throw new Exception("Parque não Existe");
+		Parque parque = getParque(id_parque);
 
 		int instantaneos_livres = parque.getInstantaneos_livres();
 		int instantaneos_total = parque.getInstantaneos_total();
-		if (instantaneos_livres - n < 0){
+		if (instantaneos_livres - n < 0)
 			throw new Exception("Não podem ser removidos tantos lugares");
-		}
+
 		parque.setInstantaneos_livres(instantaneos_livres - n);
 		parque.setInstantaneos_total(instantaneos_total - n);
 		parqueDAO.save(parque);
@@ -324,17 +296,10 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_lugar identificador do lugar
 	 */
 	public boolean getEstadoUtilizavelLugar(int id_parque, int id_lugar) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if(parque == null)
-			throw new Exception("Parque não existe!");
-
-		LugarEstacionamento lugar = lugarDAO.findById(id_lugar).orElse(null);
-		if(lugar == null)
-			throw new Exception("Lugar não existe!");
-
+		Parque parque = getParque(id_parque);
+		LugarEstacionamento lugar = getLugar(id_lugar);
 		if(lugar.getParqueId() != parque.getId())
 			throw new Exception("Lugar não pertence ao parque!");
-
 		return lugar.isUtilizavel();
 	}
 
@@ -346,17 +311,10 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param utilizavel -
 	 */
 	public void setEstadoUtilizavelLugar(int id_parque, int id_lugar, boolean utilizavel) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if(parque == null)
-			throw new Exception("Parque não existe!");
-
-		LugarEstacionamento lugar = lugarDAO.findById(id_lugar).orElse(null);
-		if(lugar == null)
-			throw new Exception("Lugar não existe!");
-
+		Parque parque = getParque(id_parque);
+		LugarEstacionamento lugar = getLugar(id_lugar);
 		if(lugar.getParqueId() != parque.getId())
 			throw new Exception("Lugar não pertence ao parque!");
-
 		lugar.setUtilizavel(utilizavel);
 		lugarDAO.save(lugar);
 	}
@@ -369,17 +327,10 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param ocupado -
 	 */
 	public void setEstadoOcupadoLugar(int id_parque, int id_lugar, boolean ocupado) throws Exception {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if(parque == null)
-			throw new Exception("Parque não existe!");
-
-		LugarEstacionamento lugar = lugarDAO.findById(id_lugar).orElse(null);
-		if(lugar == null)
-			throw new Exception("Lugar não existe!");
-
+		Parque parque = getParque(id_parque);
+		LugarEstacionamento lugar = getLugar(id_lugar);
 		if(lugar.getParqueId() != parque.getId())
 			throw new Exception("Lugar não pertence ao parque!");
-
 		lugar.setOcupado(ocupado);
 		lugarDAO.save(lugar);
 	}
@@ -389,81 +340,59 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 * @param h novo horario
 	 */
-	public void setHorario(int id_parque, Horario h) {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque.equals(null)){
-			// TODO: ver exceptions
-			//throw new Exception("Parque não existe!");
-		}
+	public void setHorario(int id_parque, Horario h) throws Exception {
+		Parque parque = getParque(id_parque);
+		Horario horarioAtual = parque.getHorario();
+		if(horarioAtual != null)
+			h.setId(horarioAtual.getId());
 		parque.setHorario(h);
 		parqueDAO.save(parque);
 	}
 
 	/**
 	 * Devolve o horário associado ao parque.
-	 * @param id_parque
+	 * @param id_parque identificador do parque
 	 */
-	public Horario getHorario(int id_parque) {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque.equals(null)){
-			// TODO: ver exceptions
-			//throw new Exception("Parque não existe!");
-		}
+	public Horario getHorario(int id_parque) throws Exception {
+		Parque parque = getParque(id_parque);
 		return parque.getHorario();
 	}
 
-	public List<List<Object>> listarParquesMaisLugaresLivresETotais() {
-		// TODO - implement ParqueService.listarParquesMaisLugaresLivresETotais
-		throw new UnsupportedOperationException();
+	/**
+	 * @return lista de pares. Um par contem como key um parque e como value o numero de lugares livres (instantaneos + especiais)
+	 */
+	public List<Map.Entry<Parque, Integer>> listarParquesMaisLugaresLivres() {
+		return parqueDAO.findAll()
+						.stream()
+						.map(p -> new AbstractMap.SimpleEntry<>(p, p.getLugaresLivres()))
+						.collect(Collectors.toList());
 	}
 
 	/**
 	 * Remove do parque de estacionamento um lugar do tipo especificado
-	 * @param id_parque
-	 * @param tipo_lugar
+	 * @param id_parque identificador do parque
+	 * @param tipo_lugar tipo de lugar de estacionamento a remover
 	 */
-	public void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque.equals(null)){
-			// TODO: ver exceptions
-			//throw new Exception("Parque não existe!");
-		}
-		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
-		for (LugarEstacionamento lugarEstacionamento:lugarEstacionamentoSet){
-			if(lugarEstacionamento.getTipo().getId()==tipo_lugar.getId()) {
-				//TODO : preciso verificar as reservas do lugar ou se está ocupado
-				lugarEstacionamentoSet.remove(lugarEstacionamento);
-				parque.setLugaresEspeciais(lugarEstacionamentoSet);
-				parqueDAO.save(parque);
-				break;
-			}
-		}
-		//throw new Exception("O parque não possui um lugar de estacionamento com esse tipo");
+	@Transactional(rollbackOn = Exception.class)
+	public void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception {
+		Parque parque = getParque(id_parque);
+		List<LugarEstacionamento> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
+		if(lugarEstacionamento.size() == 0)
+			throw new Exception("O parque não possui nenhum lugar de estacionamento com esse tipo que não tenha reservas futuras.");
+		lugarDAO.eliminarLugar(lugarEstacionamento.get(0).getLugarId());
 	}
 
 	/**
-	 * Encontra o primeiro lugar disponível do parque com o tipo especificado
-	 * @param id_parque
-	 * @param tipo
-	 * @param data_inicio
-	 * @param data_fim
+	 * Encontra os lugares disponível do parque com o tipo especificado
+	 * @param id_parque identificador do parque
+	 * @param tipo tipo de lugar
+	 * @param data_inicio data de inicio do periodo onde se pretende efetuar a reserva
+	 * @param data_fim data final do periodo onde se pretende efetuar a reserva
+	 * @return lista com ids dos lugares disponiveis nesse intervalo. Ou lista vazia.
 	 */
-	public Integer procurarLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, java.util.Date data_inicio, java.util.Date data_fim) {
-		Parque parque = parqueDAO.findById(id_parque).orElse(null);
-		if (parque.equals(null)){
-			// TODO: ver exceptions
-			//throw new Exception("Parque não existe!");
-		}
-		Set <LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
-		for (LugarEstacionamento lugarEstacionamento : lugarEstacionamentoSet){
-			if(lugarEstacionamento.getTipo().getId()==tipo.getId()) {
-				//TODO Lógica de ver as reservas
-				return lugarEstacionamento.getLugarId();
-			}
-		}
-		return -1;
+	public List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim){
+		return lugarDAO.procurarLugaresDisponiveis(id_parque, tipo.getNome(), data_inicio, data_fim).stream().map(LugarEstacionamento::getLugarId).toList();
 	}
-
 
 	// ********** Funcoes Auxiliares ********
 
@@ -482,6 +411,13 @@ public class ParqueServiceBean implements ParqueService {
 		if(parque == null)
 			throw new Exception("Parque não existe!");
 		return parque;
+	}
+
+	private LugarEstacionamento getLugar(int id_lugar) throws Exception {
+		LugarEstacionamento lugar = lugarDAO.findById(id_lugar).orElse(null);
+		if(lugar == null)
+			throw new Exception("Lugar não existe!");
+		return lugar;
 	}
 
 }

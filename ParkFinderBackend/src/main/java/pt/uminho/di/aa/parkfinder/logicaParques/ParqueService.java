@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface ParqueService {
 
@@ -71,7 +73,7 @@ public interface ParqueService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	float calcularCusto(int id_parque, int id_lugar, java.util.Date data_inicio, java.util.Date data_fim) throws Exception;
+	float calcularCusto(int id_parque, int id_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
 	/**
 	 * 
@@ -139,22 +141,22 @@ public interface ParqueService {
 	 * @param id_parque
 	 * @param h
 	 */
-	void setHorario(int id_parque, Horario h);
+	void setHorario(int id_parque, Horario h) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 */
-	Horario getHorario(int id_parque);
+	Horario getHorario(int id_parque) throws Exception;
 
-	List<List<Object>> listarParquesMaisLugaresLivresETotais();
+	List<Map.Entry<Parque, Integer>> listarParquesMaisLugaresLivres();
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param tipo_lugar
 	 */
-	void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar);
+	void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception;
 
 	/**
 	 * 
@@ -163,5 +165,5 @@ public interface ParqueService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	Integer procurarLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, java.util.Date data_inicio, java.util.Date data_fim);
+	List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 }
