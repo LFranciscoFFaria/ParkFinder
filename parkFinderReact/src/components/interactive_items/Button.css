@@ -107,12 +107,31 @@
     text-decoration: inherit;
 }
 
+.desc_button{
+    background-color: white;
+    border: 2px solid white;
+    padding: 3px 3px 3px 5px;
+    height: 60px;
+    padding: 20px;
+    color: gray;
+}
 
 
 
 
 
 
+
+
+.desc_button_selected,
+.desc_button:hover{
+    background-color: lightgray;
+    border-bottom: 2px solid lightgray;
+    transition: all 0.1s ease-out;
+    color: black;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
 
 .page_button:hover{
     border-bottom: 2px solid lightgray;
