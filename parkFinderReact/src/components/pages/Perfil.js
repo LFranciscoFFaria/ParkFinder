@@ -24,16 +24,43 @@ function Perfil({
                     </div>
                 </div>
             </div>
-            <div className="perfil_main">
-                <div className='perfil_options'>
+            <div className="perfil_options">
+                <div className='perfil_options_box'>
                     <div className='perfil_options_image'>
-                        <ImageBlock imageLink={'images/icon_1.png'}/>
+                        <ImageBlock imageLink={'images/icon_1.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
                     </div>
                     <div className='perfil_options_text'>
-
+                        <b className='perfil_options_text_title'>Editar Perfil</b>
+                        <label>Atualize a sua informação e saiba como esta é utilizada.</label>
                     </div>
-                    <div className=''></div>
                 </div>
+                <div className='perfil_options_box'>
+                    <div className='perfil_options_image'>
+                        <ImageBlock imageLink={'images/icon_2.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                    </div>
+                    <div className='perfil_options_text'>
+                        <b className='perfil_options_text_title'>Segurança</b>
+                        <label>Ajuste as definições de segurança e configure a autenticação de dois fatores.</label>
+                    </div>
+                </div>
+                <div className='perfil_options_box'>
+                    <div className='perfil_options_image'>
+                        <ImageBlock imageLink={'images/icon_6.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                    </div>
+                    <div className='perfil_options_text'>
+                        <b className='perfil_options_text_title'>Consultar historico de pagamentos</b>
+                        <label>Consulte a informação relativa a métodos de pagamento de forma e facilite e segura as reservas.</label>
+                    </div>
+                </div> 
+                <div className='perfil_options_box'>
+                    <div className='perfil_options_image'>
+                        <ImageBlock imageLink={'images/icon_3.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                    </div>
+                    <div className='perfil_options_text'>
+                        <b className='perfil_options_text_title'>Consultar historico de Reservas</b>
+                        <label>Consulte a informação relativa ao seu histórico de reservas.</label>
+                    </div>
+                </div> 
             </div>
         </div>
     );
