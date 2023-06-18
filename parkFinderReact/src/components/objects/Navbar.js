@@ -23,9 +23,9 @@ function Navbar({
                 </div>
                 <div className={click ? 'navbar_side_group active' : 'navbar_side_group'}>
                     <Button buttonStyle={"navbar_button side_menu login_side_menu"} link={"/login"} onClick={closeMobileMenu}> Login </Button>
-                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("airports"); closeMobileMenu()}} link={'/'}> Airports </Button>
-                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("cities"); closeMobileMenu()}} link={'/'}> Cities </Button>
-                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("train _stations"); closeMobileMenu()}} link={'/'}> Train Stations </Button>
+                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("airports"); closeMobileMenu()}} link={'/'}> Aeroportos </Button>
+                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("cities"); closeMobileMenu()}} link={'/'}> Cidades </Button>
+                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("train _stations"); closeMobileMenu()}} link={'/'}> Estações Ferroviárias</Button>
                 </div>
                 <div className={"navbar_group"}>
                     {setFilter===null?

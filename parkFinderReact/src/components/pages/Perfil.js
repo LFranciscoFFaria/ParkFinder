@@ -42,7 +42,7 @@ function Perfil({
     return (
         <div className='front_page'>
             <Navbar setState={setState} setFilter={null}/>
-            <div className="content_front_page">
+            <div className="front_page_content">
                 <div className="perfil_main">
                     <div className='perfil_block_image'>
                         <img className={'perfil_image'} src={'images/perfil_black.png'} alt={""} />

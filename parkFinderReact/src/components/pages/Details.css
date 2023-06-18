@@ -1,7 +1,28 @@
+
+
+.details_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .park_desc_spaces{
     padding: 20px;
     font-size: large;
 }
+
+.park_fp_spaces{
+    background-color: lawngreen;
+    padding: 10px;
+    border-radius: 15px;
+    align-items: center;
+    height: max-content;
+}
+
+
+
+
+
 
 .image_desc{
     margin: 30px;

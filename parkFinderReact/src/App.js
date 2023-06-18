@@ -65,6 +65,7 @@ function App() {
     useEffect(() => {
         console.log("state = " + state);
         console.log("filter = " + filter);
+        console.log("idParque = " + idParque);
     }, [state,filter]);
 
     return (
