@@ -32,7 +32,7 @@ public interface ParqueReservaService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	List<Integer> getIdLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
+	List<Integer> getIdsDeLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
 
 	/**
 	 * 

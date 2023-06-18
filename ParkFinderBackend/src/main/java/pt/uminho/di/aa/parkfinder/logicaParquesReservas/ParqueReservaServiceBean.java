@@ -1,15 +1,17 @@
 package pt.uminho.di.aa.parkfinder.logicaParquesReservas;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.LugarEstacionamentoDAO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,14 +22,12 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 
 	private final ParqueServiceBean parqueServiceBean;
 	private final ReservaServiceBean reservaServiceBean;
-	// TODO: Acredito que usar o DAO diretamento não seja muito correto,
-	//  mas não sei fazer o que quero de outra maneira
-	private final LugarEstacionamentoDAO lugarEstacionamentoDAO;
+	private final UtilizadorServiceBean utilizadorServiceBean;
 
-	public ParqueReservaServiceBean(ParqueServiceBean parqueServiceBean, ReservaServiceBean reservaServiceBean, LugarEstacionamentoDAO lugarEstacionamentoDAO) {
+	public ParqueReservaServiceBean(ParqueServiceBean parqueServiceBean, ReservaServiceBean reservaServiceBean, UtilizadorServiceBean utilizadorServiceBean) {
 		this.parqueServiceBean = parqueServiceBean;
 		this.reservaServiceBean = reservaServiceBean;
-		this.lugarEstacionamentoDAO = lugarEstacionamentoDAO;
+		this.utilizadorServiceBean = utilizadorServiceBean;
 	}
 
 	/**
@@ -36,16 +36,15 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @param id_parque identificador do parque onde a reserva vai ser efetuada
 	 * @return retorna a reserva criada
 	 */
+	@Transactional(rollbackOn = Exception.class)
 	public Reserva criarReservaInstantanea(int id_user, int id_parque) throws Exception{
-		//Reserva reserva = new Reserva();
 		Parque parque = parqueServiceBean.procurarParque(id_parque);
-		if (parque == null){
+		if (parque == null)
 			throw new Exception("O parque não existe");
-		}
-		if (parque.getInstantaneos_livres()>0) {
-			// TODO: Não estou bem a ver como vou buscar o Condutor
-			// TODO: Não sei como definir o id por isso vou colocá-lo a 0
-			Reserva reserva = new Reserva(0,null,null,parque,0,null,false,null,LocalDateTime.now(),null );
+
+		if (parque.getInstantaneos_livres() > 0) {
+			Utilizador utilizador = utilizadorServiceBean.getUtilizador(id_user);
+			Reserva reserva = new Reserva(0, utilizador,null, parque, EstadoReserva.AGENDADA,null,false,null, LocalDateTime.now(),null);
 			reservaServiceBean.criarReserva(reserva);
 			return reserva;
 		}
@@ -61,20 +60,23 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @param data_inicio data de início da ocupação do lugar
 	 * @param data_fim data de fim da ocupação do lugar
 	 */
+	@Transactional(rollbackOn = Exception.class)
 	public Reserva criarReservaAgendada(int id_user, int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
-		List<Integer> ids_livres_parque = getIdLugarDisponivel(id_parque,tipo,data_inicio,data_fim);
-		if (ids_livres_parque.size()>0) {
+		List<Integer> ids_livres_parque = getIdsDeLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
+		if (ids_livres_parque.size() > 0) {
 			Parque parque = parqueServiceBean.procurarParque(id_parque);
 			if (parque == null)
 				throw new Exception("O parque não existe");
-			// TODO: Não estou bem a ver como vou buscar o Condutor
-			LugarEstacionamento lugarEstacionamento = lugarEstacionamentoDAO.findById(ids_livres_parque.get(0)).orElse(null);
+
+			LugarEstacionamento lugarEstacionamento = parqueServiceBean.getLugarById(ids_livres_parque.get(0));
 			if (lugarEstacionamento == null)
 				throw new Exception("O lugar não existe");
+
 			// Calcular o custo da reserva
 			float custo = parqueServiceBean.calcularCusto(parque.getId(), lugarEstacionamento.getLugarId(), data_inicio,data_fim);
-			// TODO: Verificar se para este tipo de reserva ser criado já necessita de estar paga previamente
-			Reserva reserva = new Reserva(0,null,lugarEstacionamento,parque,0,custo,false,null,data_inicio,data_fim);
+
+			Utilizador utilizador = utilizadorServiceBean.getUtilizador(id_user);
+			Reserva reserva = new Reserva(0,utilizador,lugarEstacionamento,parque,EstadoReserva.PENDENTE_PAGAMENTO, custo,false,null,data_inicio,data_fim);
 			reservaServiceBean.criarReserva(reserva);
 			return reserva;
 		}
@@ -90,7 +92,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @param data_inicio data de início da ocupação pretendida do lugar
 	 * @param data_fim data de fim da ocupação pretendida do lugar
 	 */
-	public List<Integer> getIdLugarDisponivel(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) {
+	public List<Integer> getIdsDeLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) {
 		return parqueServiceBean.procurarLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
 	}
 
@@ -101,26 +103,42 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @return retorna verdadeiro a reserva estiver em condições de ser finalizada
 	 * ou uma exeção se as condições não se verificarem.
 	 */
+
 	public boolean marcarEntradaParque(int id_reserva, String matricula) throws Exception{
-		// TODO: 1- Faz sentido verificar horas de chegada para as reservas agendadas do condutor ?
-		// TODO: 1- Para não o deixar entrar muito cedo no parque ?
-		// TODO: 2- Faz sentido marcar a reserva logo como ocupada ou marcar como agendada e
-		// TODO: 2- ter outra função que marca o estacionamento do carro no parque para mudar o estado para ocupada?
 		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
-		// TODO: Permitir que o lugar da reserva seja nulo ou arrranjar outra maneira de resolver isto
+
+		LocalDateTime agora = LocalDateTime.now();
+		LugarEstacionamento lugar = reserva.getLugar();
+
 		// Caso Reserva Instantânea
-		if (reserva.getEstado() == 0 && reserva.getLugar() == null) {
-			reserva.setEstado(2);
-			reserva.setMatricula(matricula);
-			return true;
-		// Caso Reserva Agendada/Especial
-		} else if (reserva.getEstado() == 1 && reserva.getLugar() != null) {
-			reserva.setEstado(2);
-			reserva.setMatricula(matricula);
-			return true;
+		if(lugar == null){
+			//Precisa apenas de estar com estado em agendada
+			if(reserva.getEstado() == EstadoReserva.AGENDADA){
+				reservaServiceBean.setAll(id_reserva, EstadoReserva.OCUPADA, null, null, null, null, matricula);
+				//reserva.setEstado(EstadoReserva.OCUPADA);
+				//reserva.setMatricula(matricula);
+				//reservaServiceBean.updateReserva(reserva);
+				return true;
+			}
 		}
-		else
-			throw new Exception("A reserva ainda não está paga ou ainda não se encontra marcada como ocupada");
+		// Caso Reserva Agendada/Especial
+		else {
+			//Se o estado está em agendado, então a reserva já foi paga, portanto não é necessário verificar.
+			//Preciso verificar se está a entrar dentro do parque, durante o tempo da sua reserva.
+			if(reserva.getEstado() == EstadoReserva.AGENDADA
+					&& reserva.getDataInicio().isAfter(agora)
+					&& reserva.getDataFim().isBefore(agora)){
+				reservaServiceBean.setAll(id_reserva, EstadoReserva.OCUPADA, null, null, null, null, matricula);
+				//reserva.setEstado(EstadoReserva.OCUPADA);
+				//reserva.setMatricula(matricula);
+				//reservaServiceBean.updateReserva(reserva);
+				return true;
+			}
+		}
+
+		return false;
+		//else
+		//	throw new Exception("A reserva ainda não está paga ou ainda não se encontra marcada como ocupada");
 	}
 
 	/**
@@ -131,12 +149,13 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 */
 	public boolean marcarSaidaParque(int id_reserva) throws Exception{
 		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
-		if (reserva.getEstado() == 2 && reserva.isPago()) {
-			reserva.setEstado(3);
+		if (reserva.getEstado() == EstadoReserva.OCUPADA && reserva.isPago()) {
+			reserva.setEstado(EstadoReserva.CONCLUIDA);
 			return true;
 		}
-		else
-			throw new Exception("A reserva ainda não está paga ou ainda não se encontra marcada como ocupada");
+		return false;
+		//else
+		//	throw new Exception("A reserva ainda não está paga ou ainda não se encontra marcada como ocupada");
 	}
 
 	/**
@@ -144,23 +163,28 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @param id_reserva identificador da reserva
 	 * @return retorna verdadeiro se a operação de atualização da reserva tiver sucesso.
 	 */
+	@Transactional
 	public boolean pagarReserva(int id_reserva) throws Exception{
 		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
-		// TODO: Permitir que o lugar da reserva seja nulo ou arrranjar outra maneira de resolver isto
-		// Lógica Reserva Instantanea
+
 		if (!reserva.isPago()) {
-			if (reserva.getEstado() == 2 && reserva.getLugar() == null) {
-				reserva.setPago(true);
+			// Lógica Reserva Instantanea
+			// Se lugar for nulo, então é reserva instantanea.
+			// Reserva instantanea é paga quando se está dentro do parque.
+			if (reserva.getLugar() == null && reserva.getEstado() == EstadoReserva.OCUPADA) {
+				reservaServiceBean.setPago(id_reserva, true);
 			}
 			// Lógina Reserva Agendada/Especial
-			else if (reserva.getEstado() == 0 && reserva.getLugar() != null) {
-				reserva.setEstado(1);
-				reserva.setPago(true);
-			} else
-				throw new Exception("A reserva não se encontra num estado que permite o pagamento da mesma.");
+			else if (reserva.getLugar() != null && reserva.getEstado() == EstadoReserva.PENDENTE_PAGAMENTO) {
+				//reserva.setEstado(EstadoReserva.AGENDADA);
+				//reserva.setPago(true);
+				reservaServiceBean.setAll(id_reserva, EstadoReserva.AGENDADA, true, null, null, null, null);
+			}
+			else throw new Exception("A reserva não se encontra num estado que permite o pagamento da mesma.");
 		}
 		else
 			throw new Exception("A reserva já foi paga.");
-		return reservaServiceBean.updateReserva(reserva);
+
+		return true;
 	}
 }

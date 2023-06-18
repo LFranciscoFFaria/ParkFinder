@@ -50,13 +50,13 @@ public class Reserva implements Serializable {
 	private String matricula;
 	
 	@Column(name="Data_inicio")
-	@Temporal(TemporalType.DATE)	
-	private LocalDateTime data_inicio;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime dataInicio;
 	
 	@Column(name="Data_fim")
-	@Temporal(TemporalType.DATE)	
-	private LocalDateTime data_fim = null;
-	
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime dataFim = null;
+
 	public String toString() {
 		return String.valueOf(getId());
 	}

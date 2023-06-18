@@ -27,27 +27,19 @@ public interface ReservaService {
 	 *
 	 * @param reserva
 	 */
-	public boolean updateReserva(Reserva reserva) throws Exception;
+	//public boolean updateReserva(Reserva reserva) throws Exception;
 
 	/**
-	 * 
-	 * @param id_user
-	 */
-	List<Reserva> getReservas(int id_user);
-
-	/**
-	 * 
 	 * @param id_reserva
 	 * @param estado
 	 */
-	boolean setEstado(int id_reserva, int estado) throws Exception;
+	void setEstado(int id_reserva, int estado) throws Exception;
 
 	/**
-	 * 
 	 * @param id_reserva
 	 * @param custo
 	 */
-	boolean setCusto(int id_reserva, float custo) throws Exception;
+	void setCusto(int id_reserva, float custo) throws Exception;
 
 	/**
 	 * 
@@ -57,30 +49,27 @@ public interface ReservaService {
 	void setPago(int id_reserva, boolean pago) throws Exception;
 
 	/**
-	 * 
 	 * @param id_reserva
 	 * @param data_inicio
 	 */
-	boolean setDataInicio(int id_reserva, LocalDateTime data_inicio) throws Exception;
+	void setDataInicio(int id_reserva, LocalDateTime data_inicio) throws Exception;
 
 	/**
-	 * 
-	 * @param id_reserva
-	 * @param data_fim
-	 */
-	boolean setDataFim(int id_reserva, LocalDateTime data_fim) throws Exception;
+     * @param id_reserva
+     * @param data_fim
+     */
+	void setDataFim(int id_reserva, LocalDateTime data_fim) throws Exception;
 
 	/**
-	 * 
-	 * @param id_reserva
-	 * @param estado
-	 * @param pago
-	 * @param custo
-	 * @param dataInicio
-	 * @param dataFim
-	 * @param matricula
-	 */
-	boolean setAll(int id_reserva, Integer estado, Boolean pago, Float custo, LocalDateTime dataInicio, LocalDateTime dataFim, String matricula) throws Exception;
+     * @param id_reserva
+     * @param estado
+     * @param pago
+     * @param custo
+     * @param dataInicio
+     * @param dataFim
+     * @param matricula
+     */
+	Reserva setAll(int id_reserva, Integer estado, Boolean pago, Float custo, LocalDateTime dataInicio, LocalDateTime dataFim, String matricula) throws Exception;
 
 	/**
 	 * 
