@@ -8,7 +8,7 @@ public interface ReservaService {
 	 * 
 	 * @param r
 	 */
-	Reserva criarReserva(Reserva r);
+	Reserva criarReserva(Reserva r) throws Exception;
 
 	/**
 	 * 
