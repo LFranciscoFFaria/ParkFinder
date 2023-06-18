@@ -1,8 +1,8 @@
-import './FrontPage.css';
-import Parks from './Parks.js';
+import './FrontPageStaff.css';
+import Parks from './Manager.js';
 import Perfil from './Perfil.js';
 import Details from './Details.js';
-import Navbar from '../objects/Navbar.js'
+import Navbar from '../objects/NavbarStaff.js'
 import { useEffect, useState } from 'react';
 
 const parques = [
@@ -67,7 +67,7 @@ function FrontPage({
               setElementToRender(<Details parque={parques[parseInt(details_park[1])]} filter={filter} setState={setState}/>);
               break;
             default:
-              setElementToRender(<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState}/>);
+              setElementToRender(<Manager parques={parques} filter={filter} setFilter={setFilter} setState={setState}/>);
         }
     }
 
@@ -78,9 +78,11 @@ function FrontPage({
 
 
     return (
-        <div className='front_page'>
-            <Navbar setState={setState} setFilter={() => setFilter(!filter)}/>
-            {elementToRender}
+        <div className='front_page_staff'>
+            <div className='whitebox_staff'>
+                <NavbarStaff setState={setState} setFilter={() => setFilter(!filter)}/>
+                {elementToRender}
+            </div>
         </div>
     );
 }

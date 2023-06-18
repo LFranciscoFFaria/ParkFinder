@@ -1,0 +1,12 @@
+.input_error{
+    color: #ff0036;
+    margin-left: 20px;
+    font-size: 80%;
+    font-weight: bold;
+}
+
+
+.edit_perfil_input_error{
+    border-color: #ff0036;
+    color: #ff0036;
+}

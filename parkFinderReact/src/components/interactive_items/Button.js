@@ -9,12 +9,11 @@ export const Button = ({
     type,
     onClick,
     link,
-    buttonStyle,
-    buttonSize
+    buttonStyle
 }) => {
     return (
         <button
-            className={`button ${buttonStyle} ${buttonSize}`}
+            className={`button ${buttonStyle}`}
             onClick={onClick}
             type={type}
         >

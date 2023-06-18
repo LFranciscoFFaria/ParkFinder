@@ -23,3 +23,17 @@ input:focus{
     outline: none;
     background-color: rgb(220, 220, 220);
 }
+
+
+.content_front_page{
+    display: flex;
+    padding: 30px;
+    justify-content: center;
+    gap: 5%;
+}
+
+.front_page{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}

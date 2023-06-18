@@ -15,7 +15,7 @@ function Navbar({
         <div className='navbar_layer'>
             <header className={"header_default"}>
                 <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}} link={'/'}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
-                <Button buttonStyle={"navbar_perfil_image"} link={'/perfil'}> <img className={'button_image'} src={"images/perfil.png"} alt={""} /> Pessoa </Button>
+                <Button buttonStyle={"navbar_perfil_image"} link={'/perfil'}> <img className={'button_image'} src={"images/perfil_black.png"} alt={""} /> Pessoa </Button>
             </header>
             <div className={'navbar_default'}>
                 <div className='navbar_disappearing_icon' onClick={handleClick}>
@@ -23,9 +23,9 @@ function Navbar({
                 </div>
                 <div className={click ? 'navbar_side_group active' : 'navbar_side_group'}>
                     <Button buttonStyle={"navbar_button side_menu login_side_menu"} link={"/login"} onClick={closeMobileMenu}> Login </Button>
-                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("airports"); closeMobileMenu()}}> Airports </Button>
-                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("cities"); closeMobileMenu()}}> Cities </Button>
-                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("train _stations"); closeMobileMenu()}}> Train Stations </Button>
+                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("airports"); closeMobileMenu()}} link={'/'}> Airports </Button>
+                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("cities"); closeMobileMenu()}} link={'/'}> Cities </Button>
+                    <Button buttonStyle={"navbar_button side_menu"}  onClick={() => {setState("train _stations"); closeMobileMenu()}} link={'/'}> Train Stations </Button>
                 </div>
                 <div className={"navbar_group"}>
                     {setFilter===null?

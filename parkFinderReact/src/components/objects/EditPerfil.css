@@ -1,0 +1,50 @@
+.edit_perfil_form_content{
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    padding-left: 0px;
+    width: 600px;
+}
+
+.edit_perfil_field{
+    display: flex;
+    flex-direction:column;
+    font-size: larger;
+    gap: 15px;
+    padding: 20px;
+    border-top: 1px lightgray solid;
+}
+
+.edit_perfil_input_button{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit_perfil_input{
+    display: flex;
+    width: calc(100% -20px);
+}
+
+
+
+
+
+
+.edit_perfil_color{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    font-size: medium;
+}
+
+.edit_perfil_input_color{
+    display: flex;
+    height: 40px;
+    padding: 5px;
+    border: 0;
+}

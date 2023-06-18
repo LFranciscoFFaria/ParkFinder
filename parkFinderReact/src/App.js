@@ -3,7 +3,6 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/pages/Login.js';
 import Register from './components/pages/Register.js';
-import FrontPage from './components/pages/FrontPage.js';
 import Perfil from './components/pages/Perfil';
 import Details from './components/pages/Details';
 import Parks from './components/pages/Parks';
@@ -62,6 +61,11 @@ function App() {
     const [state, setState] = useState('');
     const [filter, setFilter] = useState(false);
     const [idParque, setIdParque] = useState(-1);
+
+    useEffect(() => {
+        console.log("state = " + state);
+        console.log("filter = " + filter);
+    }, [state,filter]);
 
     return (
         <Router>
