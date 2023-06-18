@@ -34,7 +34,7 @@ public class CondutorServiceBean implements CondutorService {
 	/* ******** Métodos do serviço ******** */
 
 	/**
-	 * 
+	 *
 	 * @param newCondutor Instância com os novos campos do perfil atualizados
 	 */
 	public boolean editarPerfil(Condutor newCondutor) throws Exception {
@@ -46,13 +46,13 @@ public class CondutorServiceBean implements CondutorService {
 		return true;
 	}
 
-	public List<Reserva> listarMinhasReservas() {
+	public List<Reserva> listarMinhasReservas() throws Exception{
 		// TODO - implement CondutorService.listarMinhasReservas
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_parque
 	 */
 	public Reserva fazerReservaInstantanea(int id_parque) {
@@ -61,7 +61,7 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_parque
 	 * @param tipo
 	 * @param data_inicio
@@ -73,7 +73,7 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id_reserva
 	 */
 	public boolean pagarReserva(int id_reserva) {
