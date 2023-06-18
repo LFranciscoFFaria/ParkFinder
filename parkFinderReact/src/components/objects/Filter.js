@@ -44,13 +44,13 @@ function Filter({
             }
             <div className='filter_block_display'>
                 {Object.entries(filter).map(([title, list]) =>
-                <div className="filter_block" key={title}>
-                    <b>{title}</b>
-                    {list.map(element => 
-                        <Checkbox key={element}>{element} </Checkbox>
-                    )}
-                </div>
-            )}
+                    <div className="filter_block" key={title}>
+                        <b>{title}</b>
+                        {list.map(element => 
+                            <Checkbox key={element}>{element} </Checkbox>
+                        )}
+                    </div>
+                )}
             </div>
             <div className='deactivate'> <Button buttonStyle="default">Aplicar Filtros</Button> </div>
         </div>

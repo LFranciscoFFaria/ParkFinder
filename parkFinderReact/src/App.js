@@ -6,7 +6,17 @@ import Register from './components/pages/Register.js';
 import Perfil from './components/pages/Perfil';
 import Details from './components/pages/Details';
 import Parks from './components/pages/Parks';
-
+import Admin from './components/pages/Admin';
+import EditParkAdmin from './components/pages/EditParkAdmin';
+import Manager from './components/pages/Manager';
+import EditParkManager from './components/pages/EditParkManager';
+import CreateAdmin from './components/pages/CreateAdmin';
+import EditAdmin from './components/pages/EditAdmin';
+import Programmer from './components/pages/Programmer';
+import CreatePark from './components/pages/CreatePark';
+import EditParkProgrammer from './components/pages/EditParkProgrammer';
+import CreateManager from './components/pages/CreateManager';
+import EditManager from './components/pages/EditManager';
 
 const parques = [
     {
@@ -71,12 +81,29 @@ function App() {
     return (
         <Router>
             <Routes>
-                {/*Mutual pages*/}
+                {/*Common user*/}
                 <Route path='/login' element={<Login/>} />
                 <Route path='/register' element={<Register/>} />
                 <Route path='/' element={<Parks parques={parques} setIdParque={setIdParque} filter={filter} setFilter={setFilter} setState={setState} state={state}/>} />
                 <Route path='/details' element={<Details parque={parques[idParque]} filter={filter} setState={setState}/>} />
                 <Route path='/perfil' element={<Perfil setState={setState}/>} />
+
+                {/*Admin*/}
+                <Route path='/admin' element={<Admin setState={setState}/>}/>
+                <Route path='/admin/edit_park' element={<EditParkAdmin setState={setState}/>}/>
+
+                {/*Manager*/}
+                <Route path='/manager' element={<Manager setState={setState}/>}/>
+                <Route path='/manager/edit_park' element={<EditParkManager setState={setState}/>}/>
+                <Route path='/manager/create_admin' element={<CreateAdmin setState={setState}/>}/>
+                <Route path='/manager/edit_admin' element={<EditAdmin setState={setState}/>}/>
+
+                {/*Programmer*/}
+                <Route path='/programmer' element={<Programmer setState={setState}/>}/>
+                <Route path='/programmer/create_park' element={<CreatePark setState={setState}/>}/>
+                <Route path='/programmer/edit_park' element={<EditParkProgrammer setState={setState}/>}/>
+                <Route path='/programmer/create_manager' element={<CreateManager setState={setState}/>}/>
+                <Route path='/programmer/edit_manager' element={<EditManager setState={setState}/>}/>
             </Routes>
         </Router>
     );
