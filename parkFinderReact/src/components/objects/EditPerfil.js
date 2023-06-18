@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Button } from '../interactive_items/Button';
-import '../objects/EditPerfil.css';
+import './EditPerfil.css';
 
 function editPerfilField (
     name,

@@ -1,11 +1,17 @@
 
-import '../objects/ReservationHistory.css';
+import './ReservationHistory.css';
 
-function ReservationHistory({
-    children
-}) {
+function ReservationHistory(
+
+) {
     return (
-        <></>
+        <div className='edit_perfil_form_content'>
+
+            <h1>Historico de Reservas</h1>
+            <div className='edit_perfil_field'>
+                
+            </div>
+        </div>
     );
 };
 
