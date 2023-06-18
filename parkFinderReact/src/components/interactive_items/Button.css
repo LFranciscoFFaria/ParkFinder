@@ -122,6 +122,8 @@
 
 .sex_button_selected,
 .sex_button:hover{
+    width: 60px;
+    display: flex;
     border: 2px solid gray;
     border-radius: 15px;
     transition: all 0.2s ease-out;

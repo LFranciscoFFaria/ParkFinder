@@ -56,11 +56,10 @@
 
 
 
-
 .perfil_options{
     display: flex;
-    width: 500px;
     padding-top: 80px;
+    width: 500px;
     flex-direction: column;
     align-items: center;
     gap: 25px;
@@ -94,4 +93,31 @@
 
 .perfil_options_text_title{
     font-size: 140%;
+}
+
+
+
+
+
+.perfil_options_open{
+    margin-top: 20px;
+    width: max-content;
+    border-top: 1px solid lightgray;
+    padding-top: 20px;
+}
+
+.perfil_options_box_open{
+    width: 275px;
+    gap: 5px;
+    padding: 10px;
+    font-size: 90%;
+}
+
+.perfil_open,
+.perfil_open{
+    padding: 0px;
+}
+
+.perfil_selected{
+    border-color: orangered;
 }
