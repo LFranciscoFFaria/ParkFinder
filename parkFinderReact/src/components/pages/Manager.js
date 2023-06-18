@@ -1,6 +1,7 @@
 import './Manager.css'
 import Filter from '../objects/Filter';
-import Navbar from '../objects/Navbar';
+import NavbarStaff from '../objects/NavbarStaff';
+import ManagerCompressedParkInfo from '../objects/ManagerCompressedParkInfo';
 import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import '../interactive_items/select.css'
@@ -25,7 +26,8 @@ function Manager({
     admins,
     stats,
     filter,
-    setState
+    setState,
+    setIdParque,
 }) {
 
     function Parks() {
@@ -46,7 +48,7 @@ function Manager({
         document.getElementById("stats").style.display = "none";
 
         document.getElementById("charButton").classList.remove("desc_button_hover");
-        document.getElementById("descrButton").classList.add("desc_button_hover");~
+        document.getElementById("descrButton").classList.add("desc_button_hover");
         document.getElementById("statButton").classList.remove("desc_button_hover");
 
     }
