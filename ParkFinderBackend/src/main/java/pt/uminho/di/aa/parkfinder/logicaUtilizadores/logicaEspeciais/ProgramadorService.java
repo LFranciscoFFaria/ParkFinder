@@ -19,7 +19,7 @@ public interface ProgramadorService {
 	 * 
 	 * @param id_gestor
 	 */
-	void removerGestor(int id_gestor);
+	void removerGestor(int id_gestor) throws Exception;
 
 	/**
 	 * 

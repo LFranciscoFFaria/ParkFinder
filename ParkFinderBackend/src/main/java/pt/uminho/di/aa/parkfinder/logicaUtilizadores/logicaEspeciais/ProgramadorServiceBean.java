@@ -5,11 +5,13 @@ import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,10 +36,13 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param ids_parques lista com os identificadores dos parques que vão ser atribuidos ao gestor
 	 */
 	public void criarGestor(Gestor g, List<Integer> ids_parques) throws Exception {
-		Utilizador u = utilizadorServiceBean.getUtilizador(g.getId());
+		if (g == null)
+			throw new Exception("O gestor não pode ser nulo.");
+		Utilizador u = utilizadorServiceBean.getUtilizador(g.getEmail());
 		if (u == null){
 			Set<Parque> parques = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
 			g.setParques(parques);
+			g.setDiscriminator("Gestor");
 			utilizadorServiceBean.criarUtilizador(g);
 		}
 		else
@@ -48,7 +53,12 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * Remove o gestor com o identificador passado por argumento da base de dados.
 	 * @param id_gestor identificador do gestor a ser removido da base de dados
 	 */
-	public void removerGestor(int id_gestor) {
+	public void removerGestor(int id_gestor) throws Exception {
+		Gestor g = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
+		if (g == null)
+			throw new Exception("O identificador do gestor não se encontra na base de dados.");
+		if (!g.getDiscriminator().equals("Gestor"))
+			throw new Exception("O utilizador não é um gestor.");
 		utilizadorServiceBean.removerUtilizador(id_gestor);
 	}
 
@@ -77,7 +87,9 @@ public class ProgramadorServiceBean implements ProgramadorService {
 		Gestor gestor = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
 		if (gestor == null)
 			throw new Exception("O gestor não existe.");
-		Set<Parque> parques_gestor = (Set<Parque>) gestor.getParques();
+		if (!gestor.getDiscriminator().equals("Admin"))
+			throw new Exception("O utilizador não é um gestor.");
+		var parques_gestor = gestor.getParques();
 		Set<Parque> parques_remove = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
 		parques_remove.forEach(parques_gestor::remove);
 		gestor.setParques(parques_gestor);
@@ -120,8 +132,12 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * Retorna a lista de todos os gestores encontrados na base de dados.
 	 */
 	public List<Gestor>  listarGestores() {
-		//return  utilizadorServiceBean.procurarUtilizador("gestor");
-		throw new UnsupportedOperationException();
+		List<Utilizador> utilizadores = utilizadorServiceBean.procurarUtilizador("gestor");
+		List<Gestor> gestores = new ArrayList<Gestor>();
+		for (Utilizador utilizador:utilizadores){
+			gestores.add((Gestor) utilizador);
+		}
+		return gestores;
 	}
 
 	/**

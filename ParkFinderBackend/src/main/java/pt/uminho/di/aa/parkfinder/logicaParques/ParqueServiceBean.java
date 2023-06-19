@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
+import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -391,6 +392,28 @@ public class ParqueServiceBean implements ParqueService {
 	 */
 	public List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim){
 		return lugarDAO.procurarLugaresDisponiveis(id_parque, tipo.getNome(), data_inicio, data_fim).stream().map(LugarEstacionamento::getLugarId).toList();
+	}
+
+	/**
+	 *
+	*/
+	public boolean setAll(int id_parque, String nome, String descricao, Float latitude, Float longitude, boolean disponivel, int instantaneos_livres, int instantaneos_total,int total_lugares, String caminho_foto) throws Exception {
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque == null){
+			throw new Exception("A parque não existe!");
+		}
+		parque.setNome(nome);
+		parque.setDescricao(descricao);
+		parque.setLatitude(latitude);
+		parque.setLongitude(longitude);
+		parque.setDisponivel(disponivel);
+		parque.setInstantaneos_livres(instantaneos_livres);
+		parque.setInstantaneos_total(instantaneos_total);
+		parque.setTotal_lugares(total_lugares);
+		parque.setCaminho_foto(caminho_foto);
+		parqueDAO.save(parque);
+		// TODO: trocar para void o return type
+		return true;
 	}
 
 	// ********** Funcoes Auxiliares ********
