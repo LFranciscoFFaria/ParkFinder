@@ -12,6 +12,7 @@ import Programmer from './components/pages/Programmer';
 import AdminDetails from './components/pages/AdminDetails.js';
 import ManagerDetails from './components/pages/ManagerDetails.js';
 import ProgrammerDetails from './components/pages/ProgrammerDetails';
+import CreateAdmin from './components/pages/CreateAdmin';
 
 const parques = [
     {
@@ -128,6 +129,8 @@ function App() {
                 {/*Manager*/}
                 <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} filter={filter} setState={setState}/>}/>
                 <Route path='/manager/details' element={<ManagerDetails/>}/>
+                <Route path='/manager/create_admin' element={<CreateAdmin/>}/>
+
 
                 {/*Programmer*/}
                 <Route path='/programmer' element={<Programmer parques={parques} filter={filter} setState={setState}/>}/>

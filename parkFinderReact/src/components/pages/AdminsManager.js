@@ -16,7 +16,7 @@ function AdminsManager({
  
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
-                    <Button className='default'>Criar</Button>
+                    <Button className='default' link={'/manager/create_admin'}>Criar</Button>
                     {admins.map(admin => 
                         <ManagerCompressedAdminInfo key={admin['id']} admin={admin}/>
                     )}

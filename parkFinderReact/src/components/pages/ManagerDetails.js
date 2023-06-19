@@ -1,5 +1,5 @@
 import Filter from '../objects/Filter';
-import Navbar from '../objects/Navbar';
+import NavbarStaff from '../objects/NavbarStaff';
 import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import '../interactive_items/select.css'
@@ -75,8 +75,6 @@ function editPerfilField (
 }
 
 function ManagerDetails({
-    parques,
-    useState,
     setState
 }) {
     const [description, setDescription] = useState('');
@@ -122,12 +120,20 @@ function ManagerDetails({
                         </div>
                     </div>
                 );
+                break;
             case 2:
                 setPage(<Description parque={parque}/>);
                 break;
 
-            default:
+            case 3:
                 setPage(<Characteristics parque={parque}/>);
+                break;
+
+            default:
+                setPage(
+                    <>
+                    </>
+                );
                 break;
         }
     }
@@ -142,28 +148,28 @@ function ManagerDetails({
     }
 
     return (
-        <div className='front_page'>
-            <Navbar setState={setState} setFilter={null}/>
-            <div className="front_page_content">
-                <div className="details_display">
-                    <div className="details_header">
-                        <h1>{parque['nome']}</h1>
-                        <div className={'compressed_park_spaces ' + ocupationColor()}>
-                            <b> {parque['lugares_totais'] - parque['lugares_vagos']}/{parque['lugares_totais']} </b>
-                        </div>
+        <div className='staff_bg'>
+            <div className='staff_whitebox'>
+                <NavbarStaff link_logo={'/manager'}/>
+                <div className="details_header">
+                    <h1>{parque['nome']}</h1>
+                    <div className={'compressed_park_spaces ' + ocupationColor()}>
+                        <b> {parque['lugares_totais'] - parque['lugares_vagos']}/{parque['lugares_totais']} </b>
                     </div>
-                    <label>{parque['morada']}</label>
-
-                    <div className="image details_image">
-                        <ImageBlock imageLink={parque['link_imagem']}/>
-                    </div>
-                    <div className="details_options">
-                        <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Edição</Button>
-                        <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Descrição</Button>
-                        <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Caracteristicas</Button>
-                    </div>
-                    {page}
                 </div>
+                <label>{parque['morada']}</label>
+
+                <div className="image details_image">
+                    <ImageBlock imageLink={parque['link_imagem']}/>
+                </div>
+                <div className="details_options">
+                    <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Edição</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Descrição</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Caracteristicas</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Estatisticas</Button>
+
+                </div>
+                {page}
             </div>
         </div>
     );
