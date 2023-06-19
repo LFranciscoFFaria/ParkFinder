@@ -9,7 +9,7 @@ function NavbarStaff({
     return (
         <div className='navbar_staff'>
             <Button buttonStyle={"logo_image"} link={link_logo}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
-            <Button buttonStyle={'default navbar_staff_login_button'} link={'/login'}> Login </Button>
+            <Button buttonStyle={'default navbar_staff_login_button'} link={'/login'}> Logoff </Button>
         </div>
     );
 }

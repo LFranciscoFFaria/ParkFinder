@@ -60,6 +60,44 @@ const parques = [
     },
 ]
 
+const administradores = [
+    {
+        'id': 0,
+        'nome': "joao",
+        'parques': "BRAGA PARQUE\nB&B BRAGA LAMAÇÃES",
+    },
+    {
+        'id': 1,
+        'nome': "miguel",
+        'parques': "BRAGA PARQUE\nB&B BRAGA LAMAÇÃES",
+
+    },
+    {
+        'id': 2,
+        'nome': "antonio",
+        'parques': "BRAGA PARQUE\nB&B BRAGA LAMAÇÃES",
+
+    },
+]
+
+const estatisticas = [
+    {
+        'id': 0,
+        'nome': "PARQUE VISCONDE DO RAIO",
+        'nr': '5',
+    },
+    {
+        'id': 1,
+        'nome': "B&B BRAGA LAMAÇÃES",
+        'nr': '5',
+    },
+    {
+        'id': 2,
+        'nome': "BRAGA PARQUE",
+        'nr': '5',
+    },
+]
+
 function App() {
     /*Possible userStates:
         loggedOff: no current logged user
@@ -89,17 +127,17 @@ function App() {
                 <Route path='/perfil' element={<Perfil setState={setState}/>} />
 
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin setIdParque={setIdParque}/>}/>
+                <Route path='/admin' element={<Admin filter={filter} setState={setState}/>}/>
                 <Route path='/admin/edit_park' element={<EditParkAdmin/>}/>
 
                 {/*Manager*/}
-                <Route path='/manager' element={<Manager/>}/>
+                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} filter={filter} setState={setState}/>}/>
                 <Route path='/manager/edit_park' element={<EditParkManager/>}/>
                 <Route path='/manager/create_admin' element={<CreateAdmin/>}/>
                 <Route path='/manager/edit_admin' element={<EditAdmin/>}/>
 
                 {/*Programmer*/}
-                <Route path='/programmer' element={<Programmer/>}/>
+                <Route path='/programmer' element={<Programmer parques={parques} filter={filter} setState={setState}/>}/>
                 <Route path='/programmer/create_park' element={<CreatePark/>}/>
                 <Route path='/programmer/edit_park' element={<EditParkProgrammer/>}/>
                 <Route path='/programmer/create_manager' element={<CreateManager/>}/>

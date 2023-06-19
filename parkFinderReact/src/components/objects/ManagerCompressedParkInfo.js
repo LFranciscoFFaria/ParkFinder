@@ -19,6 +19,8 @@ function ManagerCompressedParkInfo({
     parque,
     setIdParque
 }) {
+    console.log(parque);
+
     function ocupationColor() {
         if ((parque.lugares_vagos/parque.lugares_totais) > 0.30) {
             return "green"
@@ -33,7 +35,6 @@ function ManagerCompressedParkInfo({
             <div className="compressed_park_header">
                 <div className="compressed_park_title">
                     <h2>{parque.nome}</h2>
-                    <label className='gray_label'>{parque.distancia}</label>
                 </div>
                 <div className={'compressed_park_spaces ' + ocupationColor()}>
                     <b> {parque.lugares_totais - parque.lugares_vagos}/{parque.lugares_totais} </b>
