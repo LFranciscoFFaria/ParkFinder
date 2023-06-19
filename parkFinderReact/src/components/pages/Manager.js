@@ -1,111 +1,55 @@
 import './Manager.css'
-import Filter from '../objects/Filter';
 import NavbarStaff from '../objects/NavbarStaff';
-import ManagerCompressedParkInfo from '../objects/ManagerCompressedParkInfo';
-import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
-import '../interactive_items/select.css'
+import '../pages/Details.css'
+import { useEffect, useState } from 'react';
 
-
-function separateString(string) {
-    let lines = string.split("\n");
-
-    return(
-        <ul>
-            {lines.map((line, index) => (
-                <li key={index}>{line}</li>
-            ))}
-        </ul>
-    )
-}
-
-const bool=true;
 
 function Manager({
-    parques,
-    admins,
-    stats,
-    filter,
-    setState,
-    setIdParque,
+    setIdParque
 }) {
 
-    function Parks() {
-        document.getElementById("parks").style.display = "flex";
-        document.getElementById("admin").style.display = "none";
-        document.getElementById("stats").style.display = "none";
+    const [selected,setSelected] = useState(1);
+    const [page,setPage] = useState(null);
 
+    function renderPage() {
+        switch (selected) {
+            case 1:
+                setPage(<label>{/* função/modulo para renderizar Parques (vê o discord)*/} Parques </label>);
+                break;
 
-        document.getElementById("parkButton").classList.add("desc_button_hover");
-        document.getElementById("adminButton").classList.remove("desc_button_hover");
-        document.getElementById("statButton").classList.remove("desc_button_hover");
+            case 2:
+                setPage(<label>{/* função/modulo para renderizar Administradores (vê o discord)*/} Administradores </label>);
+                break;
 
+            default:
+                setPage(<label>{/* função/modulo para renderizar Estatísticas (vê o discord)*/} Estatísticas </label>);
+                break;
+        }
     }
 
-    function Admins() {
-        document.getElementById("characteristics").style.display = "none";
-        document.getElementById("description").style.display = "flex";
-        document.getElementById("stats").style.display = "none";
+    useEffect (() => {
+        renderPage() 
+    }, [selected]);
 
-        document.getElementById("charButton").classList.remove("desc_button_hover");
-        document.getElementById("descrButton").classList.add("desc_button_hover");
-        document.getElementById("statButton").classList.remove("desc_button_hover");
-
-    }
-
-    function Stats() {
-        document.getElementById("characteristics").style.display = "none";
-        document.getElementById("description").style.display = "none";
-        document.getElementById("stats").style.display = "flex";
-
-        document.getElementById("charButton").classList.remove("desc_button_hover");
-        document.getElementById("descrButton").classList.remove("desc_button_hover");
-        document.getElementById("statButton").classList.add("desc_button_hover");
-
-    }
-    
     return (
-        <div className='front_page_staff'>
-            <NavbarStaff setState={setState} setFilter={null}/>
-            <div className="whitebox_staff">
-
-                    <div className="options_desc">
-                        <button className="desc_button desc_button_hover" id="parkButton"
-                            onClick={()=>{Parks()}}>Parques</button>
-                        <button className="desc_button" id="adminButton"
-                            onClick={()=>{Admins()}}>Administradores</button>
-                        <button className="desc_button" id="statButton"
-                            onClick={()=>{Stats()}}>Estatísticas</button>
-                    </div>
-
-                <div className="desc_desc" id="parks">
-                    <div className='parks_info_display'>
-                        <div className='parks_header'>
-                            <h1>[Local De Pesquisa]</h1>
-                        </div>
-                        {parques.map(parque => 
-                            <ManagerCompressedParkInfo key={parque.id} parque={parque} setIdParque={setIdParque}/>
-                        )}
-                        <div className='pageNumb'>
-                            <button className='page_button'> {'<<'} </button>
-                            <button className='page_button'> 1 </button>
-                            <button className='page_button'> 2 </button>
-                            <button className='page_button'> 3  </button>
-                            <button className='page_button'> {'>>'} </button>
-                        </div>
-                    </div>  
+        <div className='staff_bg'>
+            <div className='staff_whitebox'>
+                <NavbarStaff link_logo={'/manager'}/>
+                <div className='details_options'>
+                    <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Parques</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Administradores</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Estatísticas</Button>
                 </div>
 
-                <div className="desc_desc_none" id="admin">
+                {page}
 
-                </div>
-
-                <div className="desc_desc_none" id="stats">
-
-                </div>
-
-                <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
-                    <Filter dates={true}/>
+                <div className='pageNumb'>
+                    <button className='page_button'> {'<<'} </button>
+                    <button className='page_button'> 1 </button>
+                    <button className='page_button'> 2 </button>
+                    <button className='page_button'> 3  </button>
+                    <button className='page_button'> {'>>'} </button>
                 </div>
             </div>
         </div>
@@ -113,3 +57,6 @@ function Manager({
 }
 
 export default Manager;
+
+
+

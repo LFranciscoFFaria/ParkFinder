@@ -5,13 +5,9 @@ import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import '../interactive_items/select.css'
 
-function Admin({
-    parques,
-    admins,
-    stats,
-    filter,
-    setState
-}) {
+function Admin(
+    
+) {
     <>
     
     </> 

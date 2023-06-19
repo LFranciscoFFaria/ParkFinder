@@ -89,21 +89,21 @@ function App() {
                 <Route path='/perfil' element={<Perfil setState={setState}/>} />
 
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin setState={setState}/>}/>
-                <Route path='/admin/edit_park' element={<EditParkAdmin setState={setState}/>}/>
+                <Route path='/admin' element={<Admin setIdParque={setIdParque}/>}/>
+                <Route path='/admin/edit_park' element={<EditParkAdmin/>}/>
 
                 {/*Manager*/}
-                <Route path='/manager' element={<Manager setState={setState}/>}/>
-                <Route path='/manager/edit_park' element={<EditParkManager setState={setState}/>}/>
-                <Route path='/manager/create_admin' element={<CreateAdmin setState={setState}/>}/>
-                <Route path='/manager/edit_admin' element={<EditAdmin setState={setState}/>}/>
+                <Route path='/manager' element={<Manager/>}/>
+                <Route path='/manager/edit_park' element={<EditParkManager/>}/>
+                <Route path='/manager/create_admin' element={<CreateAdmin/>}/>
+                <Route path='/manager/edit_admin' element={<EditAdmin/>}/>
 
                 {/*Programmer*/}
-                <Route path='/programmer' element={<Programmer setState={setState}/>}/>
-                <Route path='/programmer/create_park' element={<CreatePark setState={setState}/>}/>
-                <Route path='/programmer/edit_park' element={<EditParkProgrammer setState={setState}/>}/>
-                <Route path='/programmer/create_manager' element={<CreateManager setState={setState}/>}/>
-                <Route path='/programmer/edit_manager' element={<EditManager setState={setState}/>}/>
+                <Route path='/programmer' element={<Programmer/>}/>
+                <Route path='/programmer/create_park' element={<CreatePark/>}/>
+                <Route path='/programmer/edit_park' element={<EditParkProgrammer/>}/>
+                <Route path='/programmer/create_manager' element={<CreateManager/>}/>
+                <Route path='/programmer/edit_manager' element={<EditManager/>}/>
             </Routes>
         </Router>
     );

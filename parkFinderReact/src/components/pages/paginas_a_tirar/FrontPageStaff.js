@@ -1,8 +1,8 @@
 import './FrontPageStaff.css';
-import Parks from './Manager.js';
-import Perfil from './Perfil.js';
-import Details from './Details.js';
-import Navbar from '../objects/NavbarStaff.js'
+import Parks from '../Manager.js';
+import Perfil from '../Perfil.js';
+import Details from '../Details.js';
+import Navbar from '../../objects/NavbarStaff.js'
 import { useEffect, useState } from 'react';
 
 const parques = [

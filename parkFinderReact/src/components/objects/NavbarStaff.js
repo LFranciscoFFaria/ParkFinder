@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../interactive_items/Button';
 import { Link } from 'react-router-dom';
-import './Navbar.css';
+import './NavbarStaff.css';
 
 function NavbarStaff({
-    setState,
-    setFilter
+    link_logo
 }) {
-    const [click, setClick] = useState(false);
-    const handleClick = () => setClick(!click);
-    const closeMobileMenu = () => setClick(false);
-    
     return (
-        <div className='navbar_layer'>
-            <header className={"header_default"}>
-                <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}} link={'/'}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
-                <Button link={'/login'}> Sair </Button>
-            </header>
+        <div className='navbar_staff'>
+            <Button buttonStyle={"logo_image"} link={link_logo}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
+            <Button buttonStyle={'default navbar_staff_login_button'} link={'/login'}> Login </Button>
         </div>
     );
 }

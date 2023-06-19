@@ -1,13 +1,16 @@
 import './Details.css'
-import Navbar from '../objects/Navbar';
-import { Button } from '../interactive_items/Button';
-import '../interactive_items/select.css'
+
 import '../objects/CompressedParkInfo.css'
-import { ImageBlock } from '../interactive_items/ImageBlock';
-import { useEffect, useState } from 'react';
-import Characteristics from '../objects/Caracteristics';
+import '../interactive_items/select.css'
+
 import Description from '../objects/Description';
+import Characteristics from '../objects/Caracteristics';
 import Booking from '../objects/Booking';
+
+import Navbar from '../objects/Navbar';
+import { ImageBlock } from '../interactive_items/ImageBlock';
+import { Button } from '../interactive_items/Button';
+import { useEffect, useState } from 'react';
 
 
 const parques = [
@@ -96,7 +99,7 @@ function Details({
         <div className='front_page'>
             <Navbar setState={setState} setFilter={null}/>
             <div className="front_page_content">
-                <div className="details">
+                <div className="details_display">
                     <div className="details_header">
                         <h1>{parque['nome']}</h1>
                         <div className={'compressed_park_spaces ' + ocupationColor()}>
@@ -105,18 +108,14 @@ function Details({
                     </div>
                     <label>{parque['morada']}</label>
 
-                    <div className="image image_desc">
+                    <div className="image details_image">
                         <ImageBlock imageLink={parque['link_imagem']}/>
                     </div>
-                    <div className="options_desc">
-                        <Button buttonStyle={"desc_button"+(selected===1? ' desc_button_selected':'')} id="descrButton"
-                            onClick={()=>{setSelected(1)}}>Description</Button>
-                        <Button buttonStyle={"desc_button"+(selected===2? ' desc_button_selected':'')} id="charButton"
-                            onClick={()=>{setSelected(2)}}>Characteristics</Button>
+                    <div className="details_options">
+                        <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Descrição</Button>
+                        <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Caracteristicas</Button>
                     </div>
-
                     {page}
-
                 </div>
                 <Booking/>
             </div>

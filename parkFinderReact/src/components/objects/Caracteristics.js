@@ -54,33 +54,29 @@ function getOpeningHours() {
     return(
         <ul>
             {Object.entries(horas2).map(([dia, horario]) =>
-                <li className='details_horario_grid' key={dia}>
-                    <b className='details_dia_grid'>{diasDaSemana[dia]}:</b>
-                    {horario['horas'].length === 0? <label  className='details_horas_1_grid'> Closed </label> : null}
-                    {horario['horas'].length >= 2? <label  className='details_horas_1_grid'> {floatToTime(horario['horas'][0])}-{floatToTime(horario['horas'][1])} </label> : null}
-                    {horario['horas'].length === 4? <label  className='details_horas_2_grid'> {floatToTime(horario['horas'][2])}-{floatToTime(horario['horas'][3])} </label> : null}
+                <li className='caracteristics_horario_grid' key={dia}>
+                    <b className='caracteristics_dia_grid'>{diasDaSemana[dia]}:</b>
+                    {horario['horas'].length === 0? <label  className='caracteristics_horas_1_grid'> Closed </label> : null}
+                    {horario['horas'].length >= 2? <label  className='caracteristics_horas_1_grid'> {floatToTime(horario['horas'][0])}-{floatToTime(horario['horas'][1])} </label> : null}
+                    {horario['horas'].length === 4? <label  className='caracteristics_horas_2_grid'> {floatToTime(horario['horas'][2])}-{floatToTime(horario['horas'][3])} </label> : null}
                 </li>
             )}
         </ul>
     );
 }
 
-function Characteristics(
+function Characteristics({
     parque
-) {
+}) {
     return (
-        <div className="desc_desc">      
+        <div className="details_pages_display">
             <h3>Horário de funcionamento</h3>
             {getOpeningHours()}
-            <h3>Morada</h3>
-            <ul>
-                <li> {parque.parque['morada']} ({parque.parque['distancia']} de si) </li>
-            </ul>
             <h3>Capacidade</h3>
             <ul>
-                <li> Nº de lugares vagos: {parque.parque['lugares_vagos']} </li>
-                <li> Nº de lugares total: {parque.parque['lugares_totais']} </li>
-            </ul>  
+                <li> Nº de lugares vagos: {parque['lugares_vagos']} </li>
+                <li> Nº de lugares total: {parque['lugares_totais']} </li>
+            </ul>
         </div>
     );
 };

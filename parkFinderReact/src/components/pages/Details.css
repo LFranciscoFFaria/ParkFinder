@@ -6,21 +6,8 @@
     align-items: center;
 }
 
-.park_desc_spaces{
-    padding: 20px;
-    font-size: large;
-}
 
-.park_fp_spaces{
-    background-color: lawngreen;
-    padding: 10px;
-    border-radius: 15px;
-    align-items: center;
-    height: max-content;
-}
-
-
-.details_horario_grid{
+.caracteristics_horario_grid{
     display: grid;
     grid-template-areas:
         "fieldName fieldContent1 fieldContent2";
@@ -30,14 +17,14 @@
     padding: 0px 0px 0px 20px;
 }
 
-.details_dia_grid{
+.caracteristics_dia_grid{
     grid-area: fieldName;
 }
 
-.details_horas_1_grid{
+.caracteristics_horas_1_grid{
     grid-area: fieldContent1;
 }
-.details_horas_2_grid{
+.caracteristics_horas_2_grid{
     grid-area: fieldContent2;
 }
 
@@ -45,28 +32,21 @@
 
 
 
-.image_desc{
+.details_image{
     margin: 30px;
     width: 650px;
     height: 300px;
 }
 
-.options_desc{
+.details_options{
     border-bottom: 2px solid lightgrey;
 }
 
 
 
-.desc_desc{
+.details_pages_display{
     padding: 10px 30px 0px 30px;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.desc_desc_none{
-    padding: 10px 30px 0px 30px;
-    display: none;
     flex-direction: column;
     gap: 5px;
 }
@@ -89,6 +69,6 @@ option[value=""][disabled] {
     gap: 20px;
 }
 
-.details{
+.details_display{
     width: 50%;
 }

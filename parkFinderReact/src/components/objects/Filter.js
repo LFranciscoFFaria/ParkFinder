@@ -18,7 +18,7 @@ function Filter({
                 <h2>Filtros</h2>
                 <div className='filter_header_buttons'>
                     <Button buttonStyle="contrast">Limpar filtros</Button>
-                    <div className='activate'> <Button buttonStyle="default">Apply filters</Button> </div>
+                    <div className='activate'> <Button buttonStyle="default">Aplicar Filtros</Button> </div>
                 </div>
             </div>
 
@@ -52,7 +52,10 @@ function Filter({
                     </div>
                 )}
             </div>
-            <div className='deactivate'> <Button buttonStyle="default">Aplicar Filtros</Button> </div>
+            <div className='filter_submit_button deactivate'>
+                <br/>
+                <Button buttonStyle="default">Aplicar Filtros</Button>
+            </div>
         </div>
     );
 }
