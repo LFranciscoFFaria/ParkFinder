@@ -48,7 +48,7 @@ function ManagerCompressedParkInfo({
                     <label>Estimated cost: <b>{parque["custo"].toFixed(2)}€</b></label>
                     <label className='compressed_park_info_description'>{separateString(parque["descricao"])}</label>
                     <div className="compressed_park_buttons">
-                        <Button buttonStyle="default" onClick={() => localStorage.setItem("parqueId", parque["id"])} link={'/manager/edit_park'}>Edit</Button>
+                        <Button buttonStyle="default" onClick={() => localStorage.setItem("parqueId", parque["id"])} link={'/manager/details'}>Edit</Button>
                     </div>
                 </div>
             </div>
