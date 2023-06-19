@@ -1,11 +1,16 @@
-import './Manager.css'
+import '../pages/Details.css'
 import NavbarStaff from '../objects/NavbarStaff';
 import { Button } from '../interactive_items/Button';
-import '../pages/Details.css'
 import { useEffect, useState } from 'react';
-
+import ParksManager from './ParksManager';
+import AdminsManager from './AdminsManager';
+import StatsManager from './StatsManager';
 
 function Manager({
+    parques,
+    administradores,
+    estatisticas,
+    setFilter,
     setIdParque
 }) {
 
@@ -15,15 +20,21 @@ function Manager({
     function renderPage() {
         switch (selected) {
             case 1:
-                setPage(<label>{/* função/modulo para renderizar Parques (vê o discord)*/} Parques </label>);
+                setPage(
+                    <ParksManager parques={parques}/>
+                );
                 break;
 
             case 2:
-                setPage(<label>{/* função/modulo para renderizar Administradores (vê o discord)*/} Administradores </label>);
+                setPage(
+                    <AdminsManager admins={administradores}/>
+                );
                 break;
 
             default:
-                setPage(<label>{/* função/modulo para renderizar Estatísticas (vê o discord)*/} Estatísticas </label>);
+                setPage(
+                    <StatsManager stats={estatisticas}/>
+                );
                 break;
         }
     }
@@ -43,14 +54,6 @@ function Manager({
                 </div>
 
                 {page}
-
-                <div className='pageNumb'>
-                    <button className='page_button'> {'<<'} </button>
-                    <button className='page_button'> 1 </button>
-                    <button className='page_button'> 2 </button>
-                    <button className='page_button'> 3  </button>
-                    <button className='page_button'> {'>>'} </button>
-                </div>
             </div>
         </div>
     );

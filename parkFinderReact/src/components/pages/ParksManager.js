@@ -1,35 +1,25 @@
 import './Parks.css'
 import '../interactive_items/select.css'
-import CompressedParkInfo from '../objects/CompressedParkInfo.js';
+import ManagerCompressedParkInfo from '../objects/ManagerCompressedParkInfo';
 import Filter from '../objects/Filter';
-import Navbar from '../objects/Navbar';
+import NavbarStaff from '../objects/NavbarStaff';
 import { useState } from 'react';
-import PopUp from '../interactive_items/PopUp';
 import { Button } from '../interactive_items/Button';
 
-function Parks({
+function ParksManager({
     parques,
     filter,
     setFilter,
     setState,
 }) {
     const [popUp, setPopUp] = useState(false);
-    
+    console.log(parques);
+
     return (
-        <div className='front_page'>
-            <Navbar userID={'1234567890abc'} setState={setState} setFilter={() => setFilter(!filter)}/>
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
-                    <div className='parks_header'>
-                        <h1>[Local De Pesquisa]</h1>
-                        <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
-                            <option className='disabled_selected' value="default" disabled>Sort by</option>
-                            <option value='distance'>Distance</option>
-                            <option value='price'>Price</option>
-                        </select>
-                    </div>
                     {parques.map(parque => 
-                        <CompressedParkInfo key={parque['id']} parque={parque}/>
+                        <ManagerCompressedParkInfo key={parque['id']} parque={parque}/>
                     )}
                     <div className='pageNumb'>
                         <button className='page_button'> {'<<'} </button>
@@ -43,8 +33,7 @@ function Parks({
                     <Filter dates={true}/>
                 </div>
             </div>
-        </div>
     );
 }
 
-export default Parks;
+export default ParksManager;

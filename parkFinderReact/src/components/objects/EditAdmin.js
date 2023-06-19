@@ -1,11 +1,10 @@
-import './Manager.css'
-import Filter from '../objects/Filter';
-import Navbar from '../objects/Navbar';
+import Filter from './Filter';
+import Navbar from './Navbar';
 import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import '../interactive_items/select.css'
 
-function CreatePark({
+function EditAdmin({
     parques,
     admins,
     stats,
@@ -17,4 +16,4 @@ function CreatePark({
     </> 
 }
 
-export default CreatePark;
+export default EditAdmin;

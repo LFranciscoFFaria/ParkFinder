@@ -7,16 +7,11 @@ import Perfil from './components/pages/Perfil';
 import Details from './components/pages/Details';
 import Parks from './components/pages/Parks';
 import Admin from './components/pages/Admin';
-import EditParkAdmin from './components/pages/EditParkAdmin';
 import Manager from './components/pages/Manager';
-import EditParkManager from './components/pages/EditParkManager';
-import CreateAdmin from './components/pages/CreateAdmin';
-import EditAdmin from './components/pages/EditAdmin';
 import Programmer from './components/pages/Programmer';
-import CreatePark from './components/pages/CreatePark';
-import EditParkProgrammer from './components/pages/EditParkProgrammer';
-import CreateManager from './components/pages/CreateManager';
-import EditManager from './components/pages/EditManager';
+import AdminDetails from './components/pages/AdminDetails.js';
+import ManagerDetails from './components/pages/ManagerDetails.js';
+import ProgrammerDetails from './components/pages/ProgrammerDetails';
 
 const parques = [
     {
@@ -60,6 +55,44 @@ const parques = [
     },
 ]
 
+const administradores = [
+    {
+        'id': 0,
+        'nome': "joao",
+        'parques': "BRAGA PARQUE\nB&B BRAGA LAMAÇÃES",
+    },
+    {
+        'id': 1,
+        'nome': "miguel",
+        'parques': "BRAGA PARQUE\nB&B BRAGA LAMAÇÃES",
+
+    },
+    {
+        'id': 2,
+        'nome': "antonio",
+        'parques': "BRAGA PARQUE\nB&B BRAGA LAMAÇÃES",
+
+    },
+]
+
+const estatisticas = [
+    {
+        'id': 0,
+        'nome': "PARQUE VISCONDE DO RAIO",
+        'nr': '5',
+    },
+    {
+        'id': 1,
+        'nome': "B&B BRAGA LAMAÇÃES",
+        'nr': '5',
+    },
+    {
+        'id': 2,
+        'nome': "BRAGA PARQUE",
+        'nr': '5',
+    },
+]
+
 function App() {
     /*Possible userStates:
         loggedOff: no current logged user
@@ -89,21 +122,16 @@ function App() {
                 <Route path='/perfil' element={<Perfil setState={setState}/>} />
 
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin setIdParque={setIdParque}/>}/>
-                <Route path='/admin/edit_park' element={<EditParkAdmin/>}/>
+                <Route path='/admin' element={<Admin filter={filter} setState={setState}/>}/>
+                <Route path='/admin/details' element={<AdminDetails/>}/>
 
                 {/*Manager*/}
-                <Route path='/manager' element={<Manager/>}/>
-                <Route path='/manager/edit_park' element={<EditParkManager/>}/>
-                <Route path='/manager/create_admin' element={<CreateAdmin/>}/>
-                <Route path='/manager/edit_admin' element={<EditAdmin/>}/>
+                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} filter={filter} setState={setState}/>}/>
+                <Route path='/manager/details' element={<ManagerDetails/>}/>
 
                 {/*Programmer*/}
-                <Route path='/programmer' element={<Programmer/>}/>
-                <Route path='/programmer/create_park' element={<CreatePark/>}/>
-                <Route path='/programmer/edit_park' element={<EditParkProgrammer/>}/>
-                <Route path='/programmer/create_manager' element={<CreateManager/>}/>
-                <Route path='/programmer/edit_manager' element={<EditManager/>}/>
+                <Route path='/programmer' element={<Programmer parques={parques} filter={filter} setState={setState}/>}/>
+                <Route path='/programmer/details' element={<ProgrammerDetails/>}/>
             </Routes>
         </Router>
     );

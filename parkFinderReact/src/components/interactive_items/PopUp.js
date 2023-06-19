@@ -7,6 +7,7 @@ import './PopUp.css'
 
 function PopUp({
     closePopUp,
+    text,
     element
 }) {
 
@@ -18,7 +19,7 @@ function PopUp({
                 <div className="popup_body">
                     <div className="popup_close_button">
                         <br></br>
-                        <h1>Pagamento</h1>
+                        <h1>{text}</h1>
                         <Button buttonStyle={'default close_button'} onClick={() => closePopUp()}> X </Button >
                     </div>
                     {element}

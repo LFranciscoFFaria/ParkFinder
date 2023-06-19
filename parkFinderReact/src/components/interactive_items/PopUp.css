@@ -21,8 +21,7 @@
 }
 
 .popup_body {
-    width: 100%;
-    min-width: max-content;
+    width: max-content;
     text-align: center;
     display: flex;
     flex-direction: column;
