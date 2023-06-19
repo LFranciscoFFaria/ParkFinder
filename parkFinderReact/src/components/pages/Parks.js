@@ -3,20 +3,29 @@ import '../interactive_items/select.css'
 import CompressedParkInfo from '../objects/CompressedParkInfo.js';
 import Filter from '../objects/Filter';
 import Navbar from '../objects/Navbar';
+import { useState } from 'react';
+import PopUp from '../interactive_items/PopUp';
+import { Button } from '../interactive_items/Button';
 
 function Parks({
     parques,
     filter,
     setFilter,
     setState,
-    setIdParque,
 }) {
+    const [popUp, setPopUp] = useState(false);
     
     return (
         <div className='front_page'>
             <Navbar setState={setState} setFilter={() => setFilter(!filter)}/>
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
+                    <Button buttonStyle='default' onClick={() => setPopUp(true)}>popup</Button>
+                    {popUp?
+                        <PopUp closePopUp={() => setPopUp(false)} element={<CompressedParkInfo parque={parques[1]}/>}/>
+                        :
+                        null
+                    }
                     <div className='parks_header'>
                         <h1>[Local De Pesquisa]</h1>
                         <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
@@ -26,7 +35,7 @@ function Parks({
                         </select>
                     </div>
                     {parques.map(parque => 
-                        <CompressedParkInfo key={parque.id} parque={parque} setIdParque={setIdParque}/>
+                        <CompressedParkInfo key={parque['id']} parque={parque}/>
                     )}
                     <div className='pageNumb'>
                         <button className='page_button'> {'<<'} </button>

@@ -56,20 +56,29 @@ const parques = [
 ]
 
 function Details({
-    parque,
     setState
 }) {
 
     const [selected,setSelected] = useState(1);
     const [page,setPage] = useState(1);
+    const [parque,setParque] = useState(parques[1]);
+
     
-    if (parque)
-        localStorage.setItem('parqueId', parque['id']);
-    else{
-        parque = parques[localStorage.getItem('parqueId')];
-    }
-    
-    
+    useEffect(() => {
+        let parque_id = localStorage.getItem('parqueId');
+        if (parque_id===null){
+            parque_id = sessionStorage.getItem('parqueId');
+        } else {
+            localStorage.removeItem('parqueId');
+            sessionStorage.setItem('parqueId', parque_id);
+        }
+        setParque(parques[parque_id]);
+        console.log(parque_id);
+        console.log(parque);
+    }, []);
+
+
+
     function renderPage() {
         switch (selected) {
             case 1:
