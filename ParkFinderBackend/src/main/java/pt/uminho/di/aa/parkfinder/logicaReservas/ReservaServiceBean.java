@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pt.uminho.di.aa.parkfinder.logicaParquesReservas.EstadoReserva;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,13 +48,34 @@ public class ReservaServiceBean implements ReservaService {
 	/**
 	 * Encontra uma reserva existente na base de dados.
 	 * @param id_reserva identificador da reserva a encontrar na base de dados
-	 * @return retorna a reserva encontrada ou lança um exceção se não a encontrar
+	 * @return retorna a reserva encontrada ou lança uma exceção se não a encontrar
 	 */
 	public Reserva getReserva(int id_reserva) throws Exception {
 		Reserva reserva = reservaDAO.findById(id_reserva).orElse(null);
 		if(reserva == null)
 			throw new Exception("A reserva não existe!");
 		return reserva;
+	}
+
+	/**
+	 * Encontra uma reserva existente na base de dados.
+	 * @param matricula matricula que está associada a uma reserva
+	 * @return retorna a reserva encontrada ou lança uma exceção se não a encontrar
+	 */
+	public Reserva getReservaMatricula(String matricula) throws Exception {
+		Reserva reserva = reservaDAO.findReservaByMatriculaAndEstado(matricula, EstadoReserva.OCUPADA).orElse(null);
+		if(reserva == null)
+			throw new Exception("Não existe uma reserva ativa para a matrícula passada por argumento!");
+		return reserva;
+	}
+
+	/**
+	 * Devolve a lista de reservas associadas a um parque.
+	 * @param id_parque identificador do parque
+	 */
+	public List<Reserva> getReservasParque(int id_parque){
+		// TODO: Considerar adicionar estado para obter as reservas OCUPADAS
+		return reservaDAO.findAllByParqueIdOrderByDataInicioDesc(id_parque);
 	}
 
 	/**
@@ -190,7 +212,7 @@ public class ReservaServiceBean implements ReservaService {
 
 	/**
 	 * Devolve a lista com as reservas do utilizador com o identificador especificado
-	 * ordenadas de forma decrescente pela data de inicio.
+	 * ordenadas de forma decrescente pela data de início.
 	 * @param id_user identificador do utilizador
 	 * @return retorna a lista de reservas associadas ao utilizador.
 	 */

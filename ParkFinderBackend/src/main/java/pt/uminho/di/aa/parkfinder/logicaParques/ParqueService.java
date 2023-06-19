@@ -167,5 +167,28 @@ public interface ParqueService {
 	 */
 	List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
+	/**
+	 *
+	 * @param id_parque
+	 * @param disponivel
+	 */
+	public void setDisponivel(int id_parque, boolean disponivel) throws Exception;
+
+	/**
+	 *
+	 * @param id_parque
+	 * @param nome
+	 * @param descricao
+	 * @param latitude
+	 * @param longitude
+	 * @param disponivel
+	 * @param instantaneos_livres
+	 * @param instantaneos_total
+	 * @param total_lugares
+	 * @param caminho_foto
+	 * @return
+	 */
+	public boolean setAll(int id_parque, String nome, String descricao, Float latitude, Float longitude, Boolean disponivel, Integer instantaneos_livres, Integer instantaneos_total,Integer total_lugares, String caminho_foto) throws Exception;
+
 	LugarEstacionamento getLugarById(int id_lugar);
 }

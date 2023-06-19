@@ -2,8 +2,10 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
@@ -14,81 +16,100 @@ import java.util.List;
 @SessionScope
 public class AdministradorServiceBean implements AdministradorService {
 
+	private final ParqueServiceBean parqueServiceBean;
+	private final ReservaServiceBean reservaServiceBean;
 	private Administrador administrador = null;
 
-	/**
-	 * 
-	 * @param N
-	 * @param id_parque
-	 */
-	public void addLugarInstantaneo(int N, int id_parque) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public AdministradorServiceBean(ParqueServiceBean parqueServiceBean, ReservaServiceBean reservaServiceBean) {
+		this.parqueServiceBean = parqueServiceBean;
+		this.reservaServiceBean = reservaServiceBean;
 	}
 
 	/**
-	 * 
-	 * @param N
-	 * @param id_parque
-	 * @param tipo
+	 * Função que adiciona o número de lugares instântaneos especificados ao parque.
+	 * @param id_parque identificador do parque
+	 * @param N número de lugares instantâneos a adicionar
 	 */
-	public void addLugarEspecial(int N, int id_parque, TipoLugarEstacionamento tipo) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public void addLugarInstantaneo(int id_parque,int N) throws Exception {
+		if (N<1)
+			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
+		parqueServiceBean.addLugaresInstantaneos(id_parque, N);
 	}
 
 	/**
-	 * 
-	 * @param N
-	 * @param id_parque
+	 * Função que adiciona o número de lugares especiais especificados ao parque.
+	 * @param id_parque identificador do parque
+	 * @param N número de lugares especiais a adicionar
+	 * @param tipo tipo do lugar especial
 	 */
-	public void removerLugarInstantaneo(int N, int id_parque) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public void addLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception {
+		if (N<1)
+			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
+		int i = 0;
+		while(i<N) {
+			//TODO: Esta função assim parece um crime, mas vou deixar o Alex corrigir :)
+			parqueServiceBean.addLugar(id_parque, tipo);
+			i--;
+		}
 	}
 
 	/**
-	 * 
-	 * @param N
-	 * @param id_parque
-	 * @param tipo
+	 * Função que remove o número de lugares instântaneos especificados ao parque.
+	 * @param id_parque identificador do parque
+	 * @param N número de lugares instantâneos a remover
 	 */
-	public void removerLugarEspecial(int N, int id_parque, TipoLugarEstacionamento tipo) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public void removerLugarInstantaneo(int id_parque,int N) throws Exception {
+		if (N<1)
+			throw new Exception("O número de lugares a remover tem de ser 1 ou maior.");
+		parqueServiceBean.removeLugaresInstantaneos(id_parque, N);
 	}
 
 	/**
-	 * 
-	 * @param matricula
+	 * Função que remove o número de lugares especiais especificados ao parque.
+	 * @param id_parque identificador do parque
+	 * @param N número de lugares especiais a remover
+	 * @param tipo tipo do lugar especial
 	 */
-	public Reserva encontrarReservaPorMatricula(String matricula) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public void removerLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception {
+		if (N<1)
+			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
+		int i = 0;
+		while(i<N) {
+			//TODO: Esta função assim parece um crime, mas vou deixar o Alex corrigir :)
+			parqueServiceBean.removerLugar(id_parque, tipo);
+			i--;
+		}
 	}
 
 	/**
-	 * 
-	 * @param id_reserva
-	 * @param matricula
+	 * Função que retorna uma reserva se a matrícula passada por argumento estiver numa reserva com o estado OCUPADA.
+	 * @param matricula matricula do carro
 	 */
-	public boolean associarMatriculaAReserva(String id_reserva, String matricula) {
-		//TODO
-		throw new UnsupportedOperationException();
+	public Reserva encontrarReservaPorMatricula(String matricula) throws Exception {
+		return reservaServiceBean.getReservaMatricula(matricula);
 	}
 
 	/**
-	 * 
-	 * @param id_parque
+	 * Associa a matrícula passada por argumento à reserva.
+	 * @param id_reserva identificador da reserva à qual queremos alterar a matrícula
+	 * @param matricula matricula nova a associar
+	 */
+	public boolean associarMatriculaAReserva(int id_reserva, String matricula) throws Exception {
+		reservaServiceBean.setMatricula(id_reserva,matricula);
+		return true;
+	}
+
+	/**
+	 * Função que retorna a lista das reservas ativas do parque.
+	 * @param id_parque identificador do parque
 	 */
 	public List<Reserva> verReservasAtivasDeParque(int id_parque) {
-		//TODO
-		throw new UnsupportedOperationException();
+		return reservaServiceBean.getReservasParque(id_parque);
 	}
 
 	public void logout() {
-		// TODO - implement AdministradorService.logout
-		throw new UnsupportedOperationException();
+		// TODO: No condutor está função retorna um boleano não sei qual é suposto ser
+		administrador = null;
 	}
 
     public void setAdministrador(Utilizador u) {

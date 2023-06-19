@@ -35,6 +35,7 @@ public interface GestorService {
 
 	/**
 	 * 
+	 *
 	 * @param a
 	 * @param ids_parques
 	 */
@@ -58,21 +59,21 @@ public interface GestorService {
 	 * @param id_parque
 	 * @param newInfo
 	 */
-	boolean alterarInformacoesParque(int id_parque, Parque newInfo);
+	boolean alterarInformacoesParque(int id_parque, Parque newInfo) throws Exception;
 
 	/**
 	 * 
 	 * @param id_parque
 	 * @param disponivel
 	 */
-	void alterarEstadoDisponivelDeParque(int id_parque, boolean disponivel);
+	void alterarEstadoDisponivelDeParque(int id_parque, boolean disponivel) throws Exception;
 
 	/**
 	 * 
 	 * @param ids_parques
 	 * @param id_admin
 	 */
-	void adicionarParquesAAdmin(List<Integer> ids_parques, int id_admin);
+	void adicionarParquesAAdmin(List<Integer> ids_parques, int id_admin) throws Exception;
 
 	void logout();
 
@@ -81,5 +82,5 @@ public interface GestorService {
 	 * @param id_parque
 	 * @param horario
 	 */
-	boolean criarOuAtualizarHorario(int id_parque, Horario horario);
+	boolean criarOuAtualizarHorario(int id_parque, Horario horario) throws Exception;
 }

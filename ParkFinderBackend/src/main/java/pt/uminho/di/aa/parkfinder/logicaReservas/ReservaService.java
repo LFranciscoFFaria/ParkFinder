@@ -25,6 +25,18 @@ public interface ReservaService {
 
 	/**
 	 *
+	 * @param matricula
+	 */
+	public Reserva getReservaMatricula(String matricula) throws Exception;
+
+	/**
+	 *
+	 * @param id_parque
+	 */
+	public List<Reserva> getReservasParque(int id_parque);
+
+	/**
+	 *
 	 * @param reserva
 	 */
 	//public boolean updateReserva(Reserva reserva) throws Exception;
