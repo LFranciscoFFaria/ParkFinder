@@ -34,30 +34,10 @@ function EditParkAdmin({
     useState,
     setState
 }) {
-    const [email, setAdminEmail] = useState('');
-    const [name, setAdminName] = useState('');
-    const [contact, setAdminContact] = useState('');
-    const [parks, setAdminParks] = useState('');
-    const [password, setAdminPassword] = useState('');
-
-
-    const saveAdmin = (event) => {
-        event.preventDefault()
-        console.log("Save Admin");
-        console.log("name = " + name);
-        console.log("email = " + email);
-        console.log("contact = " + contact);
-        console.log("parks = " + parks);
-        console.log("password = " + password);
-    };
 
     return (
         <div className='edit_perfil_form_content'>
-            {editPerfilField('Nome',null,'Nome',setAdminName,(saveAdmin))}
-            {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
-            {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
-            {editPerfilField('Parks','parks','parks',setAdminParks,saveAdmin)}
-            {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
+
         </div>
     );
 }
