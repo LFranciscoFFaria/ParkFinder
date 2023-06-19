@@ -1,4 +1,4 @@
-import './Manager.css'
+
 import Filter from '../objects/Filter';
 import Navbar from '../objects/Navbar';
 import {ImageBlock} from '../interactive_items/ImageBlock';
