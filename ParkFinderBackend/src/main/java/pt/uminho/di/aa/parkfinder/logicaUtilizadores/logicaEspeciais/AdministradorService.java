@@ -27,7 +27,7 @@ public interface AdministradorService {
 	 * @param N
 	 * @param id_parque
 	 */
-	void removerLugarInstantaneo(int N, int id_parque) throws Exception;
+	void removerLugarInstantaneo(int id_parque, int N) throws Exception;
 
 	/**
 	 * 
@@ -35,7 +35,7 @@ public interface AdministradorService {
 	 * @param id_parque
 	 * @param tipo
 	 */
-	void removerLugarEspecial(int N, int id_parque, TipoLugarEstacionamento tipo) throws Exception;
+	void removerLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception;
 
 	/**
 	 * 
