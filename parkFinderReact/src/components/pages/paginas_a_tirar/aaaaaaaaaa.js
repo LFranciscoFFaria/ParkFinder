@@ -38,3 +38,5 @@ function funcName({
         </div>
     );
 }
+
+export default funcName;
