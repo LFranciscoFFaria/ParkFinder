@@ -11,7 +11,7 @@ import EditParkAdmin from './components/pages/EditParkAdmin';
 import Manager from './components/pages/Manager';
 import EditParkManager from './components/pages/EditParkManager';
 import CreateAdmin from './components/pages/CreateAdmin';
-import EditAdmin from './components/pages/EditAdmin';
+import EditAdmin from './components/objects/EditAdmin';
 import Programmer from './components/pages/Programmer';
 import CreatePark from './components/pages/CreatePark';
 import EditParkProgrammer from './components/pages/EditParkProgrammer';
