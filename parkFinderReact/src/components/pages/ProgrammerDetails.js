@@ -5,10 +5,12 @@ import '../interactive_items/select.css'
 
 import Description from '../objects/Description';
 import Characteristics from '../objects/Caracteristics';
+import Contacts from '../objects/Contacts';
 
 import { ImageBlock } from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import { useEffect, useState } from 'react';
+import NavbarStaff from '../objects/NavbarStaff';
 
 
 const parques = [
@@ -108,7 +110,7 @@ function ProgrammersDetails({
     
     return (
         <div className='front_page'>
-            <Navbar setState={setState} setFilter={null}/>
+            <NavbarStaff setState={setState} setFilter={null}/>
             <div className="front_page_content">
                 <div className="details_display">
                     <div className="details_header">
@@ -129,7 +131,6 @@ function ProgrammersDetails({
                     </div>
                     {page}
                 </div>
-                <Booking/>
             </div>
         </div>
     );

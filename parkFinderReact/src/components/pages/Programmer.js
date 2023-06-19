@@ -3,6 +3,39 @@ import NavbarStaff from '../objects/NavbarStaff';
 import { Button } from '../interactive_items/Button';
 import '../pages/Details.css'
 import { useEffect, useState } from 'react';
+import Contacts from '../objects/Contacts';
+
+
+const gestores = [
+    {
+        'id': 0,
+        'nome': "rui",
+        'email': "rui@gmail.com",
+        'telemovel': "936978575",
+        'password': "rui",
+        'parques': ["BRAGA PARQUE","B&B BRAGA LAMAÇÃES"],
+        'administradores': ["joao","miguel","antonio"],
+    },
+    {
+        'id': 1,
+        'nome': "carlos",
+        'email': "carlos@gmail.com",
+        'telemovel': "936978575",
+        'password': "carlos",
+        'parques': ["Alex_Nao","Sabe_Conduzir"],
+        'administradores': ["Sr. Qual","Sr. Alex","Sr. ???"],
+    },
+    {
+        'id': 2,
+        'nome': "pedro",
+        'email': "pedro@gmail.com",
+        'telemovel': "936978575",
+        'password': "pedro",
+        'parques': ["esquina",],
+        'administradores': ["pedro2","rui2","antonio2"],
+    },
+]
+
 
 
 function Programmer({
@@ -18,7 +51,15 @@ function Programmer({
                 break;
 
             default:
-                setPage(<label>{/* função/modulo para renderizar Administradores (vê o discord)*/} Gestores </label>);
+                setPage(
+                    <Contacts
+                        listUsers={gestores} 
+                        createButton={<Button buttonStyle={"default"} onClick={() => console.log("createButton")}>createButton</Button>} 
+                        editButton={<Button buttonStyle={"default"} onClick={() => console.log("editButton")}>editButton</Button>} 
+                        removeButton={<Button buttonStyle={"default"} onClick={() => console.log("removeButton")}>removeButton</Button>} 
+                        title={"Gestores"}
+                    />
+                );
                 break;
         }
     }
