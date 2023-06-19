@@ -48,7 +48,7 @@ input:focus{
 .staff_bg{
     font-family: system-ui;
     background-image: linear-gradient(to top, rgb(255, 191, 117), rgb(255, 238, 164), rgb(255, 191, 117));
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
 }

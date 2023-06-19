@@ -17,7 +17,6 @@ function separateString(string) {
 
 function CompressedParkInfo({
     parque,
-    setIdParque
 }) {
     function ocupationColor() {
         if ((parque["lugares_vagos"]/parque["lugares_totais"]) > 0.30) {
