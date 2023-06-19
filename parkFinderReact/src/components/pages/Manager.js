@@ -1,4 +1,3 @@
-import './Manager.css'
 import '../pages/Details.css'
 import NavbarStaff from '../objects/NavbarStaff';
 import { Button } from '../interactive_items/Button';

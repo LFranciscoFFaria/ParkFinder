@@ -33,7 +33,8 @@ function editPerfilField (
 function EditParkManager({
     parque,
     useState,
-    setState
+    setState,
+    setId
 }) {
     const [description, setDescription] = useState('');
     const [name, setParkName] = useState('');
