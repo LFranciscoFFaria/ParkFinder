@@ -27,6 +27,8 @@ const parques = [
         'hora_init':"8:00",
         'hora_end':"19:00",
         'descricao': "Public covered parking\n7 min. walk from the heart of the city\nAccessible from Monday to Friday from 8:00 am to 8:00 pm and Saturdays from 10:00 am to 8:00 pm.",
+        'instant':'PG-58-KL\nDH-90-FD',
+
     },
     {
         'id': 1,
@@ -40,6 +42,8 @@ const parques = [
         'hora_init':"8:00",
         'hora_end':"19:00",
         'descricao': "Covered Hotel Parking\n10 min. from University of Minho\ntaxi service Accessible 24/7",
+        'instant':'PG-58-KL\nDH-90-FD',
+
     },
     {
         'id': 2,
@@ -53,6 +57,7 @@ const parques = [
         'hora_init':"8:00",
         'hora_end':"19:00",
         'descricao': "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
+        'instant':'PG-58-KL\nDH-90-FD',
     },
 ]
 
@@ -123,7 +128,7 @@ function App() {
                 <Route path='/perfil' element={<Perfil setState={setState}/>} />
 
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin filter={filter} setState={setState}/>}/>
+                <Route path='/admin' element={<Admin parques={parques} filter={filter} setState={setState}/>}/>
                 <Route path='/admin/details' element={<AdminDetails/>}/>
 
                 {/*Manager*/}

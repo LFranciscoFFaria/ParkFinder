@@ -10,8 +10,7 @@ function Manager({
     parques,
     administradores,
     estatisticas,
-    setFilter,
-    setIdParque
+    setFilter
 }) {
 
     const [selected,setSelected] = useState(1);
