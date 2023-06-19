@@ -25,6 +25,11 @@ input:focus{
 }
 
 
+
+
+
+
+
 .front_page_content{
     display: flex;
     padding: 30px;
@@ -46,9 +51,9 @@ input:focus{
     height: 100vh;
     display: flex;
     justify-content: center;
-  }
-  
-  .staff_whitebox{
+}
+
+.staff_whitebox{
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -58,4 +63,4 @@ input:focus{
     padding: 60px;
     margin: 30px;
     gap: 20px;
-  }
+}
