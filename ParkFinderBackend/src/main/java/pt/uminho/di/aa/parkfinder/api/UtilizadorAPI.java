@@ -67,4 +67,32 @@ public class UtilizadorAPI {
             return new ResponseEntityBadRequest<List<Utilizador>>().createBadRequest(e.getMessage());
         }
     }
+
+    @PutMapping("/criar")
+    //TODO: Verificar se este método vai ser utilizado
+    public ResponseEntity<Utilizador> criarUtilizador(@RequestBody Utilizador utilizador){
+        try{ return new ResponseEntity<>(utilizadorServiceBean.criarUtilizador(utilizador), HttpStatus.OK); }
+        catch (Exception e){
+            return new ResponseEntityBadRequest<Utilizador>().createBadRequest(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/remover")
+    //TODO: Verificar se este método vai ser utilizado
+    public ResponseEntity<Boolean> removerUtilizador(@RequestParam("id_user") int id_user){
+        try{ return new ResponseEntity<>(utilizadorServiceBean.removerUtilizador(id_user), HttpStatus.OK); }
+        catch (Exception e){
+            return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
+        }
+    }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity<Utilizador> atualizarUtilizador(@RequestBody Utilizador utilizador){
+        try{ return new ResponseEntity<>(utilizadorServiceBean.atualizarUtilizador(utilizador), HttpStatus.OK); }
+        catch (Exception e){
+            return new ResponseEntityBadRequest<Utilizador>().createBadRequest(e.getMessage());
+        }
+    }
+
+
 }
