@@ -71,10 +71,12 @@ public class ProgramadorServiceBean implements ProgramadorService {
 		Gestor gestor = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
 		if (gestor == null)
 			throw new Exception("O gestor não existe.");
-		Set<Parque> parques_new = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
-		Set<Parque> parques_juntos = new HashSet<Parque>(gestor.getParques());
-		parques_juntos.addAll(parques_new);
-		gestor.setParques(parques_juntos);
+		if (!gestor.getDiscriminator().equals("Gestor"))
+			throw new Exception("O utilizador não é um gestor.");
+		var parques_novos = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
+		Set<Parque> parques_gestor = new HashSet<Parque>(gestor.getParques());
+		parques_gestor.addAll(parques_novos);
+		gestor.setParques(parques_gestor);
 		utilizadorServiceBean.atualizarUtilizador(gestor);
 	}
 
@@ -87,7 +89,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 		Gestor gestor = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
 		if (gestor == null)
 			throw new Exception("O gestor não existe.");
-		if (!gestor.getDiscriminator().equals("Admin"))
+		if (!gestor.getDiscriminator().equals("Gestor"))
 			throw new Exception("O utilizador não é um gestor.");
 		var parques_gestor = gestor.getParques();
 		Set<Parque> parques_remove = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);

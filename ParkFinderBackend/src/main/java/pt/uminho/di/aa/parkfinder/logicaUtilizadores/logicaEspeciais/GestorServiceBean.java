@@ -127,44 +127,58 @@ public class GestorServiceBean implements GestorService {
 	 * @param id_parque identificador do parque
 	 * @param newInfo nova informação relativa ao parque
 	 */
-	public boolean alterarInformacoesParque(int id_parque, Parque newInfo) {
-		//parqueServiceBean.setAll();
-		throw new UnsupportedOperationException();
+	public boolean alterarInformacoesParque(int id_parque, Parque newInfo) throws Exception {
+		if (id_parque == newInfo.getId())
+			return parqueServiceBean.setAll(id_parque,newInfo.getNome(),
+											newInfo.getDescricao(),newInfo.getLatitude(),
+											newInfo.getLongitude(),newInfo.isDisponivel(),
+											newInfo.getInstantaneos_livres(),newInfo.getInstantaneos_total(),
+											newInfo.getTotal_lugares(),newInfo.getCaminho_foto());
+		return false;
 	}
 
 	/**
-	 * 
-	 * @param id_parque
-	 * @param disponivel
+	 * Função que permite alterar o estado de disponibilidade do parque
+	 * @param id_parque identificador do parque
+	 * @param disponivel valor boleano que representa a disponibilidade do parque
 	 */
-	public void alterarEstadoDisponivelDeParque(int id_parque, boolean disponivel) {
-		// TODO - implement GestorService.alterarEstadoDisponivelDeParque
-		throw new UnsupportedOperationException();
+	public void alterarEstadoDisponivelDeParque(int id_parque, boolean disponivel) throws Exception {
+		parqueServiceBean.setDisponivel(id_parque, disponivel);
 	}
 
 	/**
-	 * 
-	 * @param ids_parques
-	 * @param id_admin
+	 * Adiciona os parques da lista de identificadores ao administrador.
+	 * @param ids_parques lista com os identificadores dos parques a adicionar ao administrador
+	 * @param id_admin ientificador do administrador
 	 */
-	public void adicionarParquesAAdmin(List<Integer> ids_parques, int id_admin) {
-		// TODO - implement GestorService.adicionarParquesAAdmin
-		throw new UnsupportedOperationException();
+	public void adicionarParquesAAdmin(List<Integer> ids_parques, int id_admin) throws Exception {
+		Administrador administrador = (Administrador) utilizadorServiceBean.getUtilizador(id_admin);
+		if (administrador == null)
+			throw new Exception("O administrador não existe.");
+		if (!administrador.getDiscriminator().equals("Admin"))
+			throw new Exception("O utilizador não é um administrador.");
+		var parques_administrador = administrador.getParques();
+		Set<Parque> parques_novos = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
+		parques_administrador.addAll(parques_novos);
+		administrador.setParques(parques_administrador);
+		utilizadorServiceBean.atualizarUtilizador(administrador);
 	}
 
 	public void logout() {
-		// TODO - implement GestorService.logout
-		throw new UnsupportedOperationException();
+		// TODO: No condutor está função retorna um boleano não sei qual é suposto ser
+		gestor = null;
 	}
 
 	/**
-	 * 
-	 * @param id_parque
-	 * @param horario
+	 * Adiciona ou atualiza o horário do parque para o horário passado por argumento.
+	 * @param id_parque identificador da parque
+	 * @param horario novo horário do parque
 	 */
-	public boolean criarOuAtualizarHorario(int id_parque, Horario horario) {
-		// TODO - implement GestorService.criarOuAtualizarHorario
-		throw new UnsupportedOperationException();
+	public boolean criarOuAtualizarHorario(int id_parque, Horario horario) throws Exception {
+		if (horario == null)
+			throw new Exception("O horário não pode ser nulo!");
+		parqueServiceBean.setHorario(id_parque, horario);
+		return true;
 	}
 
     public void setGestor(Utilizador u) {

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
-import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -177,7 +176,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * Calcula o custo de fazer determinada reserva no parque pretendido para um determinado periodo.
 	 * @param id_parque identificador do parque
 	 * @param id_lugar identificador do lugar
-	 * @param data_inicio data de inicio do periodo
+	 * @param data_inicio data de início do período
 	 * @param data_fim data de fim do periodo
 	 */
 	@Transactional(rollbackOn = Exception.class)
@@ -259,7 +258,10 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 * @param n numero de lugares instantaneos a adicionar ao parque
 	 */
+	@Transactional(rollbackOn = Exception.class)
 	public void addLugaresInstantaneos(int id_parque, int n) throws Exception {
+		if (n<1)
+			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
 		Parque parque = getParque(id_parque);
 		int instantaneos_livres = parque.getInstantaneos_livres();
 		int instantaneos_total = parque.getInstantaneos_total();
@@ -278,6 +280,8 @@ public class ParqueServiceBean implements ParqueService {
 	 */
 	@Transactional(rollbackOn = Exception.class)
 	public void removeLugaresInstantaneos(int id_parque, int n) throws Exception {
+		if (n<1)
+			throw new Exception("O número de lugares a remover tem de ser 1 ou maior.");
 		Parque parque = getParque(id_parque);
 
 		int instantaneos_livres = parque.getInstantaneos_livres();
@@ -386,7 +390,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * Encontra os lugares disponível do parque com o tipo especificado
 	 * @param id_parque identificador do parque
 	 * @param tipo tipo de lugar
-	 * @param data_inicio data de inicio do periodo onde se pretende efetuar a reserva
+	 * @param data_inicio data de início do periodo onde se pretende efetuar a reserva
 	 * @param data_fim data final do periodo onde se pretende efetuar a reserva
 	 * @return lista com ids dos lugares disponiveis nesse intervalo. Ou lista vazia.
 	 */
@@ -395,24 +399,57 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 *
-	*/
-	public boolean setAll(int id_parque, String nome, String descricao, Float latitude, Float longitude, boolean disponivel, int instantaneos_livres, int instantaneos_total,int total_lugares, String caminho_foto) throws Exception {
+	 * Muda o estado de disponibilidade do parque para o passado por argumento.
+	 * @param id_parque identificador do parque
+	 * @param disponivel valor boleano que representa a disponibilidade do parque
+	 */
+	public void setDisponivel(int id_parque, boolean disponivel) throws Exception {
 		Parque parque = parqueDAO.findById(id_parque).orElse(null);
 		if (parque == null){
 			throw new Exception("A parque não existe!");
 		}
-		parque.setNome(nome);
-		parque.setDescricao(descricao);
-		parque.setLatitude(latitude);
-		parque.setLongitude(longitude);
 		parque.setDisponivel(disponivel);
-		parque.setInstantaneos_livres(instantaneos_livres);
-		parque.setInstantaneos_total(instantaneos_total);
-		parque.setTotal_lugares(total_lugares);
-		parque.setCaminho_foto(caminho_foto);
 		parqueDAO.save(parque);
-		// TODO: trocar para void o return type
+	}
+
+	/**
+	 * Método a utilizar se queremos alterar mais de duas variáveis do parque simultanemente.
+	 * @param id_parque identificador do parque
+	 * @param nome nome do parque
+	 * @param descricao descrição do parque
+	 * @param latitude latitude do parque
+	 * @param longitude longitude do parque
+	 * @param disponivel disponibilidade do parque
+	 * @param instantaneos_livres número de lugares instantâneos livres do parque
+	 * @param instantaneos_total número de lugares instantâneos totais do parque
+	 * @param total_lugares número de total de lugares do parque
+	 * @param caminho_foto caminho onde está guardada a foto do parque
+	 * @return retorna verdadeiro em caso de sucesso
+	*/
+	public boolean setAll(int id_parque, String nome, String descricao, Float latitude, Float longitude, Boolean disponivel, Integer instantaneos_livres, Integer instantaneos_total,Integer total_lugares, String caminho_foto) throws Exception {
+		Parque parque = parqueDAO.findById(id_parque).orElse(null);
+		if (parque == null){
+			throw new Exception("A parque não existe!");
+		}
+		if(nome != null)
+			parque.setNome(nome);
+		if (descricao != null)
+			parque.setDescricao(descricao);
+		if (latitude != null)
+			parque.setLatitude(latitude);
+		if (longitude != null)
+			parque.setLongitude(longitude);
+		if (disponivel != null)
+			parque.setDisponivel(disponivel);
+		if (instantaneos_livres != null)
+			parque.setInstantaneos_livres(instantaneos_livres);
+		if (instantaneos_total != null)
+			parque.setInstantaneos_total(instantaneos_total);
+		if (total_lugares != null)
+			parque.setTotal_lugares(total_lugares);
+		if (caminho_foto != null)
+			parque.setCaminho_foto(caminho_foto);
+		parqueDAO.save(parque);
 		return true;
 	}
 
