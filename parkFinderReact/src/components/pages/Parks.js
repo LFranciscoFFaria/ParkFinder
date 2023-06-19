@@ -17,15 +17,9 @@ function Parks({
     
     return (
         <div className='front_page'>
-            <Navbar setState={setState} setFilter={() => setFilter(!filter)}/>
+            <Navbar userID={'1234567890abc'} setState={setState} setFilter={() => setFilter(!filter)}/>
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
-                    <Button buttonStyle='default' onClick={() => setPopUp(true)}>popup</Button>
-                    {popUp?
-                        <PopUp closePopUp={() => setPopUp(false)} element={<CompressedParkInfo parque={parques[1]}/>}/>
-                        :
-                        null
-                    }
                     <div className='parks_header'>
                         <h1>[Local De Pesquisa]</h1>
                         <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
