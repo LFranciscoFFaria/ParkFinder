@@ -8,6 +8,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name="PrecarioLinear")
@@ -23,16 +24,10 @@ public class PrecarioLinear extends Precario implements Serializable {
 	@Column(name="PrecoPorMinuto", nullable=false)
 	private float precoPorMinuto;
 
-	//TODO - ver isto depois
-	//public PrecarioLinear(TipoLugarEstacionamento tipoLugar, float precoFixo, float precoPorIntervalo, float intervalo, TimeUnit tipoIntervalo) {
-	//	long duracaoInput = (long) (intervalo * tipoIntervalo.toNanos(1)); // Converte intervalo para nanosegundos
-	//	long duracaoEmMinutos = TimeUnit.MINUTES.convert(duracaoInput, TimeUnit.NANOSECONDS); // Converte duracao de nanosegundos para minutos
-	//
-	//}
-
-	public PrecarioLinear(int id, TipoLugarEstacionamento tipo, float precoFixo, float precoPorMinuto) {
-		super(id, tipo, precoFixo);
-		this.precoPorMinuto = precoPorMinuto;
+	public PrecarioLinear(TipoLugarEstacionamento tipoLugar, float precoFixo, float precoPorIntervalo, LocalTime intervalo) {
+		setTipo(tipoLugar);
+		setPrecoFixo(precoFixo);
+		precoPorMinuto = precoPorIntervalo / (intervalo.getHour() * 60 + intervalo.getMinute());
 	}
 
 	@Override

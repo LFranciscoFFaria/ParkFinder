@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
@@ -27,20 +28,18 @@ public class Horario implements Serializable {
 	@JoinColumn(name="HorarioID", nullable=false)
 	private Set<HorarioPeriodo> periodos = new java.util.HashSet<>();
 
-	public boolean estaAberto(DayOfWeek dayOfWeek, float data_inicio, float data_fim) {
+	public boolean estaAberto(DayOfWeek dayOfWeek, LocalTime data_inicio, LocalTime data_fim) {
 		int dia = dayOfWeek.getValue();
 		return periodos.stream().anyMatch(p -> p.getDia_semana() == dia
-								  			&& p.getHora_inicio() <= data_inicio
-								  			&& p.getHora_fim() >= data_fim);
+								  			&& (p.getHora_inicio().isBefore(data_inicio) || p.getHora_inicio().equals(data_inicio))
+								  			&& (p.getHora_fim().isAfter(data_fim) || p.getHora_fim().equals(data_fim)));
 	}
 
 	public boolean estaAberto(){
 		LocalDateTime agora = LocalDateTime.now();
 		DayOfWeek diaDaSemana = agora.getDayOfWeek();
-		int hora = agora.getHour();
-		int minuto = agora.getMinute();
-		float horas_e_minutos = (float) ((hora * 60 + minuto) / 60);
-		return estaAberto(diaDaSemana, horas_e_minutos, horas_e_minutos);
+		LocalTime agoraTime = agora.toLocalTime();
+		return estaAberto(diaDaSemana, agoraTime, agoraTime);
 	}
 
 	@Override

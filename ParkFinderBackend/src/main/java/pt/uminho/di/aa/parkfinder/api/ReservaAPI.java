@@ -17,7 +17,4 @@ public class ReservaAPI {
         this.context = context;
         this.reservaServiceBean = reservaServiceBean;
     }
-
-
-
 }

@@ -1,46 +1,52 @@
-.park_desc_spaces{
-    padding: 20px;
-    font-size: large;
+
+
+.details_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.image_desc{
+
+.caracteristics_horario_grid{
+    display: grid;
+    grid-template-areas:
+        "fieldName fieldContent1 fieldContent2";
+    width: 100%;
+    grid-template-columns: 33%;
+    align-items: center;
+    padding: 0px 0px 0px 20px;
+}
+
+.caracteristics_dia_grid{
+    grid-area: fieldName;
+}
+
+.caracteristics_horas_1_grid{
+    grid-area: fieldContent1;
+}
+.caracteristics_horas_2_grid{
+    grid-area: fieldContent2;
+}
+
+
+
+
+
+.details_image{
     margin: 30px;
     width: 650px;
     height: 300px;
 }
 
-.options_desc{
+.details_options{
     border-bottom: 2px solid lightgrey;
 }
 
-.desc_button{
-    background-color: white;
-    border: 2px solid white;
-    padding: 3px 3px 3px 5px;
-    height: 60px;
-    padding: 20px;
-    color: gray;
-}
-.desc_button_hover,
-.desc_button:hover{
-    background-color: lightgray;
-    border-bottom: 2px solid lightgray;
-    transition: all 0.1s ease-out;
-    color: black;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
-}
 
-.desc_desc{
+
+.details_pages_display{
     padding: 10px 30px 0px 30px;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.desc_desc_none{
-    padding: 10px 30px 0px 30px;
-    display: none;
     flex-direction: column;
     gap: 5px;
 }
@@ -49,13 +55,13 @@ option[value=""][disabled] {
     display: none;
 }
 
-.aside_desc_section{
+.booking_desc_section{
     border-top: 1px solid lightgrey;
     display: flex;
     flex-direction: column;
 }
 
-.aside_desc_subsection{
+.booking_desc_subsection{
     display: flex;
     flex-direction: row;
     padding: 20px 20px 0px 20px;
@@ -63,6 +69,6 @@ option[value=""][disabled] {
     gap: 20px;
 }
 
-.details{
+.details_display{
     width: 50%;
 }

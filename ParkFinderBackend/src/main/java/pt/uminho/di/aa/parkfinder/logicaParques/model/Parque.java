@@ -31,7 +31,6 @@ public class Parque implements Serializable {
 	@JoinColumn(name="HorarioID", referencedColumnName="ID")
 	private Horario horario;
 
-	// TODO: Alterei a varialvel "name" do Parque para "nome" para ficar em português mas pode dar erro algures
 	@Column(name="Nome")
 	private String nome;
 	

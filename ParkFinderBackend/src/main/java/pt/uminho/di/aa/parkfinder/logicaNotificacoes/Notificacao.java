@@ -7,6 +7,8 @@ import lombok.Setter;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="Notificacao")
 @Getter
@@ -38,8 +40,8 @@ public class Notificacao implements Serializable {
 	private boolean lida;
 	
 	@Column(name="Timestamp")
-	@Temporal(TemporalType.DATE)	
-	private java.util.Date timestamp;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime timestamp;
 
 	public String toString() {
 		return String.valueOf(getId());

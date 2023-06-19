@@ -442,4 +442,8 @@ public class ParqueServiceBean implements ParqueService {
 		return lugar;
 	}
 
+	@Override
+	public LugarEstacionamento getLugarById(int id_lugar) {
+		return lugarDAO.findById(id_lugar).orElse(null);
+	}
 }

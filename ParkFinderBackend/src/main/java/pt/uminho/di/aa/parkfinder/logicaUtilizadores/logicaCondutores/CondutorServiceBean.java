@@ -55,7 +55,7 @@ public class CondutorServiceBean implements CondutorService {
 	 * @return Lista das reservas efetuadas pelo condutor
 	 */
 	public List<Reserva> listarMinhasReservas(){
-		return reservaServiceBean.getReservas(condutor.getId());
+		return reservaServiceBean.listarReservas(condutor.getId());
 	}
 
 	/**

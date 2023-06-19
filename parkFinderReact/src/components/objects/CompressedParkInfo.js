@@ -44,11 +44,11 @@ function CompressedParkInfo({
                     <ImageBlock imageLink={parque.link_imagem}/>
                 </div>
                 <div className="compressed_park_info">
-                    <label>Estimated cost: <b>{parque.custo.toFixed(2)}€</b></label>
+                    <label>Custo estimado: <b>{parque.custo.toFixed(2)}€</b></label>
                     <label className='compressed_park_info_description'>{separateString(parque.descricao)}</label>
                     <div className="compressed_park_buttons">
-                        <Button buttonStyle="page_button see_details_button" onClick={() => setIdParque(parque.id)} link={'/details'}>See details</Button>
-                        <Button buttonStyle="default">Book</Button>
+                        <Button buttonStyle="page_button see_details_button" onClick={() => setIdParque(parque.id)} link={'/details'}>Ver detalhes</Button>
+                        <Button buttonStyle="default">Reservar</Button>
                     </div>
                 </div>
             </div>

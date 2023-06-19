@@ -166,4 +166,6 @@ public interface ParqueService {
 	 * @param data_fim
 	 */
 	List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
+
+	LugarEstacionamento getLugarById(int id_lugar);
 }

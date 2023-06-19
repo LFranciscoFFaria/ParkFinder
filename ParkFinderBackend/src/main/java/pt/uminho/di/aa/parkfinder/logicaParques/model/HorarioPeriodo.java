@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 import java.io.Serializable;
+import java.time.LocalTime;
+
 @Entity
 @Table(name="HorarioPeriodo")
 @Getter
@@ -19,11 +22,13 @@ public class HorarioPeriodo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="Hora_inicio", nullable=false)	
-	private float hora_inicio;
+	@Column(name="Hora_inicio", nullable=false)
+	@Temporal(TemporalType.TIME)
+	private LocalTime hora_inicio;
 	
-	@Column(name="Hora_fim", nullable=false)	
-	private float hora_fim;
+	@Column(name="Hora_fim", nullable=false)
+	@Temporal(TemporalType.TIME)
+	private LocalTime hora_fim;
 	
 	@Column(name="Dia_semana", nullable=false)
 	private int dia_semana;

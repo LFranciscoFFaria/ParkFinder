@@ -22,6 +22,8 @@ public class NotificationServiceBean implements NotificationService {
 	public void addNotificacao(Notificacao n) throws Exception{
 		if(n == null)
 			throw new Exception("A notificação não pode ser nula.");
+		if(n.getUtilizador() == null)
+			throw new Exception("Notificação precisa de estar associada a um utilizador.");
 		notificaoDAO.save(n);
 	}
 
@@ -41,7 +43,7 @@ public class NotificationServiceBean implements NotificationService {
 	 * @return Retorna a lista de notificações do utilizador.
 	 */
 	public List<Notificacao> getNotificacoes(int id_user) {
-		return notificaoDAO.getByUtilizadorID(id_user);
+		return notificaoDAO.findAllByUtilizadorID(id_user);
 	}
 
 	/**
@@ -50,12 +52,7 @@ public class NotificationServiceBean implements NotificationService {
 	 * @return Retorna a lista de notificações não lidas do utilizador.
 	 */
 	public List<Notificacao> getNotificacoesNaoLidas(int id_user) {
-		// TODO: Ver se existe maneira de fazer isto sem buscar todas as notificações
-		List<Notificacao> notificacoes= notificaoDAO.getByUtilizadorID(id_user);
-		if(notificacoes.size()>0) {
-			notificacoes.removeIf(Notificacao::isLida);
-		}
-		return notificacoes;
+		return notificaoDAO.findAllByUtilizadorIDAndLida(id_user, false);
 	}
 
 	/**
@@ -66,9 +63,8 @@ public class NotificationServiceBean implements NotificationService {
 	 * @return Retorna a lista de notificações do utilizador que cumprem o predicado.
 	 */
 	public List<Notificacao> getNotificacoes(int id_user, Predicate<Notificacao> predicate) {
-		// TODO: Ver se existe maneira de fazer isto sem buscar todas as notificações
-		List<Notificacao> notificacoes= notificaoDAO.getByUtilizadorID(id_user);
-		if(notificacoes.size()>0) {
+		List<Notificacao> notificacoes = notificaoDAO.findAllByUtilizadorID(id_user);
+		if(notificacoes.size() > 0) {
 			notificacoes.removeIf(notificacao -> !predicate.test(notificacao));
 		}
 		return notificacoes;
@@ -79,8 +75,7 @@ public class NotificationServiceBean implements NotificationService {
 	 * @param predicate predicado a partir do qual as notificações vão ser removidas da base de dados
 	 */
 	public void removerNotificacoes(Predicate<Notificacao> predicate) {
-		// TODO: Ver se existe maneira de fazer isto sem buscar todas as notificações
-		List<Notificacao> notificacoes= notificaoDAO.findAll();
+		List<Notificacao> notificacoes = notificaoDAO.findAll();
 		if(notificacoes.size()>0) {
 			notificacoes.removeIf(predicate);
 		}
