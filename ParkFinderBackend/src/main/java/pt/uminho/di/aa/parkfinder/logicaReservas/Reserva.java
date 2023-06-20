@@ -19,7 +19,19 @@ import java.time.LocalDateTime;
 public class Reserva implements Serializable {
 	public Reserva() {
 	}
-	
+
+	public Reserva(Utilizador utilizador, LugarEstacionamento lugar, Parque parque, int estado, Float custo, boolean pago, String matricula, LocalDateTime dataInicio, LocalDateTime dataFim) {
+		this.utilizador = utilizador;
+		this.lugar = lugar;
+		this.parque = parque;
+		this.estado = estado;
+		this.custo = custo;
+		this.pago = pago;
+		this.matricula = matricula;
+		this.dataInicio = dataInicio;
+		this.dataFim = dataFim;
+	}
+
 	@Column(name="ID", nullable=false)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +40,23 @@ public class Reserva implements Serializable {
 	@ManyToOne(targetEntity= Utilizador.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="UtilizadorID", referencedColumnName="ID", nullable=false)
 	private Utilizador utilizador;
-	
+
+	@Column(name = "UtilizadorID", updatable = false, nullable = false, insertable = false)
+	private int utilizadorID;
+
 	@ManyToOne(targetEntity= LugarEstacionamento.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="LugarID", referencedColumnName="ID")
 	private LugarEstacionamento lugar;
-	
+
+	@Column(name = "LugarID", updatable = false, nullable = false, insertable = false)
+	private int lugarID;
+
 	@ManyToOne(targetEntity= Parque.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="ParqueID", referencedColumnName="ID", nullable=false)
 	private Parque parque;
+
+	@Column(name = "ParqueID", updatable = false, nullable = false, insertable = false)
+	private int parqueID;
 	
 	@Column(name="Estado", nullable=false)
 	private int estado;

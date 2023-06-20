@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaServiceBean;
@@ -15,6 +16,7 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -44,7 +46,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 
 		if (parque.getInstantaneos_livres() > 0) {
 			Utilizador utilizador = utilizadorServiceBean.getUtilizador(id_user);
-			Reserva reserva = new Reserva(0, utilizador,null, parque, EstadoReserva.AGENDADA,null,false,null, LocalDateTime.now(),null);
+			Reserva reserva = new Reserva(utilizador, null, parque, EstadoReserva.AGENDADA,null,false,null, LocalDateTime.now(),null);
 			reservaServiceBean.criarReserva(reserva);
 			return reserva;
 		}
@@ -76,7 +78,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			float custo = parqueServiceBean.calcularCusto(parque.getId(), lugarEstacionamento.getLugarId(), data_inicio,data_fim);
 
 			Utilizador utilizador = utilizadorServiceBean.getUtilizador(id_user);
-			Reserva reserva = new Reserva(0,utilizador,lugarEstacionamento,parque,EstadoReserva.PENDENTE_PAGAMENTO, custo,false,null,data_inicio,data_fim);
+			Reserva reserva = new Reserva(utilizador,lugarEstacionamento,parque,EstadoReserva.PENDENTE_PAGAMENTO, custo,false,null,data_inicio,data_fim);
 			reservaServiceBean.criarReserva(reserva);
 			return reserva;
 		}
@@ -114,7 +116,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		if(lugar == null){
 			//Precisa apenas de estar com estado em agendada
 			if(reserva.getEstado() == EstadoReserva.AGENDADA){
-				reservaServiceBean.setAll(id_reserva, EstadoReserva.OCUPADA, null, null, null, null, matricula);
+				reservaServiceBean.setAll(id_reserva, Optional.of(EstadoReserva.OCUPADA), null, null, null, null, Optional.of(matricula));
 				//reserva.setEstado(EstadoReserva.OCUPADA);
 				//reserva.setMatricula(matricula);
 				//reservaServiceBean.updateReserva(reserva);
@@ -128,7 +130,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			if(reserva.getEstado() == EstadoReserva.AGENDADA
 					&& reserva.getDataInicio().isAfter(agora)
 					&& reserva.getDataFim().isBefore(agora)){
-				reservaServiceBean.setAll(id_reserva, EstadoReserva.OCUPADA, null, null, null, null, matricula);
+				reservaServiceBean.setAll(id_reserva, Optional.of(EstadoReserva.OCUPADA), null, null, null, null, Optional.of(matricula));
 				//reserva.setEstado(EstadoReserva.OCUPADA);
 				//reserva.setMatricula(matricula);
 				//reservaServiceBean.updateReserva(reserva);
@@ -163,7 +165,8 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @param id_reserva identificador da reserva
 	 * @return retorna verdadeiro se a operação de atualização da reserva tiver sucesso.
 	 */
-	@Transactional
+	@SuppressWarnings("OptionalAssignedToNull")
+	@Transactional(rollbackOn = Exception.class)
 	public boolean pagarReserva(int id_reserva) throws Exception{
 		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
 
@@ -172,13 +175,16 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			// Se lugar for nulo, então é reserva instantanea.
 			// Reserva instantanea é paga quando se está dentro do parque.
 			if (reserva.getLugar() == null && reserva.getEstado() == EstadoReserva.OCUPADA) {
-				reservaServiceBean.setPago(id_reserva, true);
+				Precario precario = parqueServiceBean.getPrecarioByNome(reserva.getParqueID(), "Instantaneo");
+				if(precario == null)
+					throw new Exception("Precario para reservas instantâneas, não foi encontrado para parque onde a reserva ocorreu. " +
+							"Por favor contacte o gestor do parque.");
+				float custo = precario.calcular_preco(reserva.getDataInicio(), LocalDateTime.now());
+				reservaServiceBean.setAll(id_reserva, null, Optional.of(true), Optional.of(custo), null, null, null);
 			}
 			// Lógina Reserva Agendada/Especial
 			else if (reserva.getLugar() != null && reserva.getEstado() == EstadoReserva.PENDENTE_PAGAMENTO) {
-				//reserva.setEstado(EstadoReserva.AGENDADA);
-				//reserva.setPago(true);
-				reservaServiceBean.setAll(id_reserva, EstadoReserva.AGENDADA, true, null, null, null, null);
+				reservaServiceBean.setAll(id_reserva, Optional.of(EstadoReserva.AGENDADA), Optional.of(true), null, null, null, null);
 			}
 			else throw new Exception("A reserva não se encontra num estado que permite o pagamento da mesma.");
 		}

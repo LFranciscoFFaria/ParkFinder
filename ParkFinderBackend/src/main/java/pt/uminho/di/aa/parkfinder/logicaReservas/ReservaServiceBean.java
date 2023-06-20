@@ -9,6 +9,7 @@ import pt.uminho.di.aa.parkfinder.logicaParquesReservas.EstadoReserva;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -174,21 +175,22 @@ public class ReservaServiceBean implements ReservaService {
 	 * @param dataFim    data de fim da reserva
 	 * @param matricula  matrícula do carro associado à reserva
 	 */
-	public Reserva setAll(int id_reserva, Integer estado, Boolean pago, Float custo, LocalDateTime dataInicio, LocalDateTime dataFim, String matricula) throws Exception {
+	public Reserva setAll(int id_reserva, Optional<Integer> estado, Optional<Boolean> pago, Optional<Float> custo,
+						  Optional<LocalDateTime> dataInicio, Optional<LocalDateTime> dataFim, Optional<String> matricula) throws Exception {
 		Reserva reserva = getReservaPrivate(id_reserva);
 
-		if(estado != null)
-			reserva.setEstado(estado);
-		if(pago != null)
-			reserva.setPago(pago);
+		if(estado != null && estado.isPresent())
+			reserva.setEstado(estado.get());
+		if(pago != null && pago.isPresent())
+			reserva.setPago(pago.get());
 		if(custo != null)
-			reserva.setCusto(custo);
+			reserva.setCusto(custo.orElse(null));
 		if(dataInicio != null)
-			reserva.setDataInicio(dataInicio);
+			reserva.setDataInicio(dataInicio.orElse(null));
 		if(dataFim != null)
-			reserva.setDataFim(dataFim);
+			reserva.setDataFim(dataFim.orElse(null));
 		if(matricula != null)
-			reserva.setMatricula(matricula);
+			reserva.setMatricula(matricula.orElse(null));
 
 		var data_inicio_atual = reserva.getDataInicio();
 		var data_fim_atual = reserva.getDataFim();

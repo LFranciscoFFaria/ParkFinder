@@ -33,7 +33,7 @@ public class Notificacao implements Serializable {
 	@Column(name="Titulo")
 	private String titulo;
 	
-	@Column(name="Texto")
+	@Column(name="Texto", columnDefinition = "TEXT")
 	private String texto;
 	
 	@Column(name="Lida", nullable=false, length=1)	

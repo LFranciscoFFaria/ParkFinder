@@ -29,7 +29,16 @@ public class Administrador extends Utilizador implements Serializable {
 	@ManyToMany(targetEntity= Parque.class, fetch= FetchType.LAZY)
 	@JoinTable(name="Parque_Administrador", joinColumns={ @JoinColumn(name="AdminID") }, inverseJoinColumns={ @JoinColumn(name="ParqueID") })
 	private Set<Parque> parques = new HashSet<>();
-	
+
+	public Administrador(String nome, String email, String password, int nrTelemovel, Gestor gestor, Set<Parque> parques) {
+		setNome(nome);
+		setEmail(email);
+		setPassword(password);
+		setNrTelemovel(nrTelemovel);
+		this.gestor = gestor;
+		this.parques = parques;
+	}
+
 	public String toString() {
 		return super.toString();
 	}

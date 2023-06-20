@@ -1,9 +1,11 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import pt.uminho.di.aa.parkfinder.api.DTOs.deserializers.GeneroDeserializer;
 import pt.uminho.di.aa.parkfinder.logicaNotificacoes.Notificacao;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
@@ -31,6 +33,9 @@ public abstract class Utilizador implements Serializable {
 	
 	@Column(name="Email", unique = true)
 	private String email;
+
+	@Column(name="NrTelemovel", nullable=false)
+	private int nrTelemovel;
 	
 	@Column(name="Password")
 	private String password;
@@ -56,6 +61,8 @@ public abstract class Utilizador implements Serializable {
 			return "Um nome pode conter apenas alfanuméricos e espaços. Deve começar com um alfanumérico.";
 		if(!Pattern.matches("^\\w[\\w.]*@\\w+(?:\\.\\w+)+$", this.getEmail()))
 			return "Formato de email incorreto.";
+		if(!Pattern.matches("^\\d{9}$", String.valueOf(this.getNrTelemovel())))
+			return "O número de telemóvel português têm de conter 9 digitos numéricos.";
 		return null;
 	}
 

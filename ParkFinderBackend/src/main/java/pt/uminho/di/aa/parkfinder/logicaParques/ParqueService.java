@@ -66,6 +66,8 @@ public interface ParqueService {
 	 */
 	List<Precario> getPrecarios(int id_parque) throws Exception;
 
+	Precario getPrecarioByNome(int id_parque, String nome) throws Exception;
+
 	/**
 	 * 
 	 * @param id_parque
@@ -91,6 +93,29 @@ public interface ParqueService {
 	 * @param tipo_lugar
 	 */
 	void addLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception;
+
+	/**
+	 *
+	 * @param id_parque
+	 * @param tipo_lugar
+	 * @param n
+	 */
+	void addLugares(int id_parque, TipoLugarEstacionamento tipo_lugar, int n) throws Exception;
+
+	/**
+	 *
+	 * @param id_parque
+	 * @param tipo_lugar
+	 */
+	void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception;
+
+	/**
+	 *
+	 * @param id_parque
+	 * @param tipo_lugar
+	 * @param n
+	 */
+	void removerLugares(int id_parque, TipoLugarEstacionamento tipo_lugar, int n) throws Exception;
 
 	/**
 	 * 
@@ -150,13 +175,6 @@ public interface ParqueService {
 	Horario getHorario(int id_parque) throws Exception;
 
 	List<Map.Entry<Parque, Integer>> listarParquesMaisLugaresLivres();
-
-	/**
-	 * 
-	 * @param id_parque
-	 * @param tipo_lugar
-	 */
-	void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception;
 
 	/**
 	 * 

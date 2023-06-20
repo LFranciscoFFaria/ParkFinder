@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -40,6 +42,10 @@ public class Horario implements Serializable {
 		DayOfWeek diaDaSemana = agora.getDayOfWeek();
 		LocalTime agoraTime = agora.toLocalTime();
 		return estaAberto(diaDaSemana, agoraTime, agoraTime);
+	}
+
+	public void addPeriodos(Collection<HorarioPeriodo> colecaoPeriodos){
+		colecaoPeriodos.stream().filter(Objects::nonNull).forEach(p -> periodos.add(p));
 	}
 
 	@Override

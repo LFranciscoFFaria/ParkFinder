@@ -1,12 +1,12 @@
 package pt.uminho.di.aa.parkfinder.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorEditDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
@@ -20,27 +20,28 @@ import java.util.List;
 @RequestMapping("/apiV1/condutores")
 public class CondutorAPI {
 
-    private final ApplicationContext context;
     private final UtilizadorServiceBean utilizadorServiceBean;
     private final CondutorServiceBean condutorServiceBean;
 
     @Autowired
-    public CondutorAPI(ApplicationContext context, UtilizadorServiceBean utilizadorServiceBean, CondutorServiceBean condutorServiceBean) {
-        this.context = context;
+    public CondutorAPI(UtilizadorServiceBean utilizadorServiceBean, CondutorServiceBean condutorServiceBean) {
         this.utilizadorServiceBean = utilizadorServiceBean;
         this.condutorServiceBean = condutorServiceBean;
     }
 
     @PutMapping
-    public ResponseEntity<Condutor> criarCondutor(@RequestBody Condutor c){
-        try{ return new ResponseEntity<>((Condutor) utilizadorServiceBean.criarUtilizador(c), HttpStatus.OK); }
+    public ResponseEntity<Void> criarCondutor(@RequestBody CondutorDTO dto){
+        try{
+            Condutor condutor = new Condutor(dto.getNome(), dto.getEmail(), dto.getPassword(), dto.getNif(), dto.isGenero(), dto.getNrTelemovel());
+            utilizadorServiceBean.criarUtilizador(condutor);
+            return new ResponseEntity<>(HttpStatus.OK); }
         catch (Exception e){
-            return new ResponseEntityBadRequest<Condutor>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
     @PutMapping("/editarPerfil")
-    public ResponseEntity<Boolean> editarPerfil(@RequestBody Condutor c){
+    public ResponseEntity<Boolean> editarPerfil(@RequestBody CondutorEditDTO c){
         try{ return new ResponseEntity<>(condutorServiceBean.editarPerfil(c), HttpStatus.OK); }
         catch (Exception e){
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
@@ -48,7 +49,7 @@ public class CondutorAPI {
     }
 
     @GetMapping("/minhasReservas")
-    public ResponseEntity<List<Reserva>>  listarMinhasReservas(){
+    public ResponseEntity<List<Reserva>> listarMinhasReservas(){
         try{
             return new ResponseEntity<>(condutorServiceBean.listarMinhasReservas(), HttpStatus.OK);
         }
@@ -68,9 +69,9 @@ public class CondutorAPI {
     }
 
     @PutMapping("/reserva/agendada")
-    public ResponseEntity<Reserva> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") TipoLugarEstacionamento tipo, @RequestParam("data_inicio") LocalDateTime data_inicio, @RequestParam("data_fim") LocalDateTime data_fim){
+    public ResponseEntity<Reserva> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo, @RequestParam("data_inicio") LocalDateTime data_inicio, @RequestParam("data_fim") LocalDateTime data_fim){
         try{
-            return new ResponseEntity<>(condutorServiceBean.fazerReservaAgendada(id_parque,tipo,data_inicio,data_fim), HttpStatus.OK);
+            return new ResponseEntity<>(condutorServiceBean.fazerReservaAgendada(id_parque, tipo, data_inicio, data_fim), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Reserva>().createBadRequest(e.getMessage());
@@ -95,7 +96,5 @@ public class CondutorAPI {
         } catch (Exception e){
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
-
     }
-
 }

@@ -29,6 +29,15 @@ public class Gestor extends Utilizador implements Serializable {
 	@OneToMany(mappedBy="gestor", targetEntity= Administrador.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Administrador> admins = new HashSet<>();
 
+	public Gestor(String nome, String email, String password, int nrTelemovel, Set<Parque> parques, Set<Administrador> admins) {
+		setNome(nome);
+		setEmail(email);
+		setPassword(password);
+		setNrTelemovel(nrTelemovel);
+		this.parques = parques;
+		this.admins = admins;
+	}
+
 	public String toString() {
 		return super.toString();
 	}

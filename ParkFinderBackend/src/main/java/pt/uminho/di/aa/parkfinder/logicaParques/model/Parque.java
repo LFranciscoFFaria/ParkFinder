@@ -22,19 +22,14 @@ public class Parque implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@ManyToOne(targetEntity= Estatisticas.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="EstatisticasID", referencedColumnName="ID", nullable=false)
-	private Estatisticas estatisticas;
-	
-	@ManyToOne(targetEntity= Horario.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="HorarioID", referencedColumnName="ID")
-	private Horario horario;
 
 	@Column(name="Nome")
 	private String nome;
-	
-	@Column(name="Descricao")
+
+	@Column(name="Morada")
+	private String morada;
+
+	@Column(name="Descricao", columnDefinition = "TEXT")
 	private String descricao;
 	
 	@Column(name="Latitude", nullable=false)	
@@ -55,7 +50,7 @@ public class Parque implements Serializable {
 	@Column(name="Total_lugares", nullable=false)
 	private int total_lugares;
 	
-	@Column(name="Caminho_foto")
+	@Column(name="Caminho_foto", columnDefinition = "TEXT")
 	private String caminho_foto;
 	
 	@OneToMany(mappedBy="parque", targetEntity= LugarEstacionamento.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
@@ -64,6 +59,29 @@ public class Parque implements Serializable {
 	@OneToMany(targetEntity= Precario.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="ParqueID", nullable=false)
 	private Set<Precario> precarios = new HashSet<>();
+
+	@ManyToOne(targetEntity= Estatisticas.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="EstatisticasID", referencedColumnName="ID", nullable=false)
+	private Estatisticas estatisticas;
+
+	@ManyToOne(targetEntity= Horario.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="HorarioID", referencedColumnName="ID")
+	private Horario horario;
+
+	public Parque(String nome, String morada, String descricao, float latitude, float longitude, boolean disponivel, int instantaneos_livres, int instantaneos_total, int total_lugares, String caminho_foto) {
+		this.estatisticas = new Estatisticas();
+		this.horario = new Horario();
+		this.nome = nome;
+		this.morada = morada;
+		this.descricao = descricao;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.disponivel = disponivel;
+		this.instantaneos_livres = instantaneos_livres;
+		this.instantaneos_total = instantaneos_total;
+		this.total_lugares = total_lugares;
+		this.caminho_foto = caminho_foto;
+	}
 
 	public void addLugarEstacionamento(LugarEstacionamento lugar){
 		lugaresEspeciais.add(lugar);

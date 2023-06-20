@@ -1,4 +1,4 @@
-package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.auxiliar;
+package pt.uminho.di.aa.parkfinder.api.DTOs.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -12,7 +12,11 @@ public class GeneroDeserializer extends JsonDeserializer<Boolean> {
             throws IOException {
         try {
             String genero = jsonParser.getText().toUpperCase();
-            return "M".equals(genero);
+            switch (genero){
+                case "M" -> { return true; }
+                case "F" -> { return false; }
+                default -> throw new IOException("Género apenas pode ser 'M'(Masculino) ou 'F'(Feminino)");
+            }
         }catch (IOException ioe){
             throw new IOException("Genero inválido.");
         }
