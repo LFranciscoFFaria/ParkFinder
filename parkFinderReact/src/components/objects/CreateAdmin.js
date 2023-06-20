@@ -47,7 +47,7 @@ const pk = [
         "descricao" : "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
     },
     {
-        "id" : 2,
+        "id" : 3,
         "nome" : "BRAGA PARQUE",
         "morada" : "rua dos reis",
         "distancia" : "(1.1km)",
@@ -92,12 +92,27 @@ function CreateAdmin({
     const [email, setAdminEmail] = useState('');
     const [name, setAdminName] = useState('');
     const [contact, setAdminContact] = useState('');
-    const [parks = [], setAdminParks] = useState('');
+    const [parks, setAdminParks] = useState('');
     const [password, setAdminPassword] = useState('');
 
     const [parques,setParques] = useState(pk);
 
-    console.log(parques);
+    const [parkbuff, setAdminParkbuff] = useState('');
+
+    let parklist = [];
+
+    const change_on_list = (event) => {
+        let index = parklist.indexOf(parkbuff);
+        if(parklist.includes(parkbuff)==true){
+            parklist = parklist.slice(0,index).concat(parklist.slice(index+1));
+        }
+        else{
+            parklist.concat([parkbuff]);
+        }
+        setAdminParks(parklist);
+        console.log(parkbuff);
+    };
+
     const saveAdmin = (event) => {
         event.preventDefault()
         console.log("Save Admin");
@@ -112,26 +127,29 @@ function CreateAdmin({
         <div className='staff_bg'>
             <div className='staff_whitebox'>
                 <NavbarStaff link_logo={'/manager'}/>
-                <div className='edit_perfil_form_content'>
-                    {editPerfilField('Nome',null,'Nome',setAdminName,saveAdmin)}
-                    {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
-                    {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
-                    {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
 
-                    <form onSubmit={saveAdmin}>
-                        <div className='edit_perfil_field'>
-                            <b> {name} </b>
-                            <div className='edit_perfil_input_button'>
-                                <div className='admin_grid_container' name='Criterion' id='criterion' defaultValue={"default"}>
-                                    {parques.map((parque, index) => (
-                                        <Checkbox key={index} value={parque['id']} onChange={(e) => {setAdminParks(e.target.value)}}>{parque['nome']}</Checkbox>
-                                    ))}
-                                </div>
-                                <Button type='submit' buttonStyle='contrast'>Gravar</Button>
+                {editPerfilField('Nome',null,'Nome',setAdminName,saveAdmin)}
+                {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
+                {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
+                {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
+
+                <form onSubmit={saveAdmin}>
+                    <div className='edit_perfil_field'>
+                        <b> {name} </b>
+                        <div className='edit_perfil_input_button'>
+                            <div className='admin_grid_container' name='Criterion' id='criterion' defaultValue={"default"}>
+                                {parques.map((parque, index) => (
+                                    <label className="checkbox_label" key={index}>
+                                        <input type="checkbox" className="checkbox"  value={parque['id']} 
+                                            onChange={(e) => {setAdminParkbuff(e.target.value);change_on_list(e.target.value)}}/>
+                                        {parque['nome']}
+                                    </label>
+                                ))}
                             </div>
                         </div>
-                    </form>
-                </div>   
+                            <Button type='submit' buttonStyle='contrast'>Gravar</Button>
+                    </div>
+                </form>
             </div>
         </div>
     );
