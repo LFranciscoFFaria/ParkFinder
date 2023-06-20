@@ -2,8 +2,8 @@ import { Button } from "../interactive_items/Button";
 
 
 function separateString(string) {
-    let lines = string.split("\n");
 
+    let lines = string.split("\n");
     return(
         <table>
               <tr>
@@ -29,6 +29,7 @@ function InstantPark({
     return (
         <div className="details_pages_display">
             <Button class="default">Adicionar</Button>
+            {console.log(parque)} 
             {separateString(parque['instant'])}
         </div>
     );
