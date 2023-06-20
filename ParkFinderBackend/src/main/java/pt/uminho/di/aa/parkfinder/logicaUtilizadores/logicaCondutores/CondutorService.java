@@ -14,7 +14,7 @@ public interface CondutorService {
 	 */
 	boolean editarPerfil(Condutor newCondutor) throws Exception;
 
-	List<Reserva> listarMinhasReservas();
+	List<Reserva> listarMinhasReservas() throws Exception;
 
 	/**
 	 * 
@@ -37,5 +37,5 @@ public interface CondutorService {
 	 */
 	boolean pagarReserva(int id_reserva) throws Exception;
 
-	boolean logout();
+	void logout() throws Exception;
 }

@@ -42,8 +42,7 @@ public class CondutorServiceBean implements CondutorService {
 	 * @param newCondutor Instância com os novos campos do perfil atualizados
 	 */
 	public boolean editarPerfil(Condutor newCondutor) throws Exception {
-		if(condutor == null)
-			throw new Exception("Não tem sessão iniciada.");
+		checkIsLoggedIn();
 		System.out.println("Condutor logged in: " + condutor.getNome());
 		newCondutor.setId(condutor.getId());
 		utilizadorServiceBean.atualizarUtilizador(newCondutor);
@@ -54,7 +53,8 @@ public class CondutorServiceBean implements CondutorService {
 	 * Função que devolve a lista das reservas efetuadas pelo condutor com o 'login' efetuado
 	 * @return Lista das reservas efetuadas pelo condutor
 	 */
-	public List<Reserva> listarMinhasReservas(){
+	public List<Reserva> listarMinhasReservas() throws Exception {
+		checkIsLoggedIn();
 		return reservaServiceBean.listarReservas(condutor.getId());
 	}
 
@@ -63,6 +63,7 @@ public class CondutorServiceBean implements CondutorService {
 	 * @param id_parque identificador do parque onde queremos efetuar uma reserva instantânea
 	 */
 	public Reserva fazerReservaInstantanea(int id_parque) throws Exception{
+		checkIsLoggedIn();
 		return parqueReservaServiceBean.criarReservaInstantanea(condutor.getId(),id_parque);
 	}
 
@@ -74,6 +75,7 @@ public class CondutorServiceBean implements CondutorService {
 	 * @param data_fim data de fim da ocupação do lugar
 	 */
 	public Reserva fazerReservaAgendada(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+		checkIsLoggedIn();
 		return parqueReservaServiceBean.criarReservaAgendada(condutor.getId(),id_parque,tipo,data_inicio,data_fim);
 	}
 
@@ -83,17 +85,20 @@ public class CondutorServiceBean implements CondutorService {
 	 * @return Retorna verdadeiro se o reserva foi paga com sucesso.
 	 */
 	public boolean pagarReserva(int id_reserva) throws Exception {
+		checkIsLoggedIn();
 		return parqueReservaServiceBean.pagarReserva(id_reserva);
 	}
 
 	/**
-	 * @return true if user was logged in. false if the user wasn't authenticated.
+	 *
 	 */
-	public boolean logout() {
-		if(condutor == null)
-			return false;
+	public void logout() throws Exception {
+		checkIsLoggedIn();
 		condutor = null;
-		return true;
 	}
 
+	private void checkIsLoggedIn() throws Exception {
+		if(condutor == null)
+			throw new Exception("Não tem sessão iniciada.");
+	}
 }

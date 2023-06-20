@@ -39,8 +39,13 @@ public class CondutorAPI {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Boolean> logout(){
-        return ResponseEntity.ok(condutorServiceBean.logout());
+    public ResponseEntity<Void> logout(){
+        try{
+            condutorServiceBean.logout();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
+        }
 
     }
 
