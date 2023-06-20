@@ -1,5 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
+import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorEditDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
@@ -10,9 +11,9 @@ public interface CondutorService {
 
 	/**
 	 * 
-	 * @param newCondutor
+	 * @param condutorDTO
 	 */
-	boolean editarPerfil(Condutor newCondutor) throws Exception;
+	boolean editarPerfil(CondutorEditDTO condutorDTO) throws Exception;
 
 	List<Reserva> listarMinhasReservas() throws Exception;
 
@@ -25,11 +26,11 @@ public interface CondutorService {
 	/**
 	 * 
 	 * @param id_parque
-	 * @param tipo
+	 * @param tipo_lugar
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	Reserva fazerReservaAgendada(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
+	Reserva fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
 	/**
 	 * 

@@ -3,6 +3,7 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorEditDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParquesReservas.ParqueReservaServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
@@ -39,13 +40,26 @@ public class CondutorServiceBean implements CondutorService {
 
 	/**
 	 * Função que permite a edição dos campos do perfil do utilizador
-	 * @param newCondutor Instância com os novos campos do perfil atualizados
+	 * @param condutorDTO Instância com os novos campos do perfil atualizados
 	 */
-	public boolean editarPerfil(Condutor newCondutor) throws Exception {
+	public boolean editarPerfil(CondutorEditDTO condutorDTO) throws Exception {
 		checkIsLoggedIn();
-		System.out.println("Condutor logged in: " + condutor.getNome());
-		newCondutor.setId(condutor.getId());
-		utilizadorServiceBean.atualizarUtilizador(newCondutor);
+
+		Condutor newCondutor = condutor.clone();
+		if(condutorDTO.getNome() != null)
+			newCondutor.setNome(condutorDTO.getNome().orElse(null));
+		if(condutorDTO.getEmail() != null)
+			newCondutor.setEmail(condutorDTO.getEmail().orElse(null));
+		if(condutorDTO.getPassword() != null)
+			newCondutor.setPassword(condutorDTO.getPassword().orElse(null));
+		if(condutorDTO.getNif() != null)
+			if(condutorDTO.getNif().isPresent())
+				newCondutor.setNif(condutorDTO.getNif().get());
+		if(condutorDTO.getNrTelemovel() != null)
+			if(condutorDTO.getNrTelemovel().isPresent())
+				newCondutor.setNrTelemovel(condutorDTO.getNrTelemovel().get());
+
+		condutor = (Condutor) utilizadorServiceBean.atualizarUtilizador(newCondutor);
 		return true;
 	}
 
@@ -70,13 +84,13 @@ public class CondutorServiceBean implements CondutorService {
 	/**
 	 * Retorna a reserva agendada criada em caso de sucesso.
 	 * @param id_parque identificador do parque onde a reserva vai ser efetuada
-	 * @param tipo tipo do lugar que se prentende reservar
+	 * @param tipo_lugar tipo do lugar de estacionamento que se prentende reservar
 	 * @param data_inicio data de início da ocupação do lugar
 	 * @param data_fim data de fim da ocupação do lugar
 	 */
-	public Reserva fazerReservaAgendada(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+	public Reserva fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
 		checkIsLoggedIn();
-		return parqueReservaServiceBean.criarReservaAgendada(condutor.getId(),id_parque,tipo,data_inicio,data_fim);
+		return parqueReservaServiceBean.criarReservaAgendada(condutor.getId(),id_parque,new TipoLugarEstacionamento(tipo_lugar),data_inicio,data_fim);
 	}
 
 	/**
@@ -86,6 +100,9 @@ public class CondutorServiceBean implements CondutorService {
 	 */
 	public boolean pagarReserva(int id_reserva) throws Exception {
 		checkIsLoggedIn();
+		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+		if(reserva.getUtilizadorID() != condutor.getId())
+			throw new Exception("A reserva pertence a outro utilizador.");
 		return parqueReservaServiceBean.pagarReserva(id_reserva);
 	}
 

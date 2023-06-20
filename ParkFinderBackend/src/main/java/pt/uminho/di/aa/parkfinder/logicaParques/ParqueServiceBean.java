@@ -173,6 +173,17 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
+	 *
+	 * @param id_parque identificador do parque
+	 * @param nome Tipo de lugar
+	 * @return precario do parque mencionado para o tipo de lugar referido. Null se não existir.
+	 */
+	@Override
+	public Precario getPrecarioByNome(int id_parque, String nome){
+		return parqueDAO.findPrecarioDoParque(id_parque, nome);
+	}
+
+	/**
 	 * Calcula o custo de fazer determinada reserva no parque pretendido para um determinado periodo.
 	 * @param id_parque identificador do parque
 	 * @param id_lugar identificador do lugar
@@ -226,6 +237,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 * @param tipo_lugar tipo de lugar estacionamento
 	 */
+	@Transactional(rollbackOn = Exception.class)
 	public void addLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception {
 		Parque parque = getParque(id_parque);
 		tipo_lugar = encontraOuPersisteTipoLugar(tipo_lugar);
@@ -235,6 +247,37 @@ public class ParqueServiceBean implements ParqueService {
 		parque.setLugaresEspeciais(lugarEstacionamentoSet);
 		parque.setTotal_lugares(parque.getTotal_lugares() + 1);
 		parqueDAO.save(parque);
+	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void addLugares(int id_parque, TipoLugarEstacionamento tipo_lugar, int n) throws Exception {
+		Parque parque = getParque(id_parque);
+		tipo_lugar = encontraOuPersisteTipoLugar(tipo_lugar);
+		Set<LugarEstacionamento> lugarEstacionamentoSet = parque.getLugaresEspeciais();
+		for(int i = 0; i < n; i++) {
+			LugarEstacionamento lugarEstacionamento = new LugarEstacionamento(0, parque, parque.getId(), tipo_lugar, true, false);
+			lugarEstacionamentoSet.add(lugarEstacionamento);
+		}
+		parque.setTotal_lugares(parque.getTotal_lugares() + n);
+		parque.setLugaresEspeciais(lugarEstacionamentoSet);
+		parqueDAO.save(parque);
+	}
+
+	/**
+	 * Remove do parque de estacionamento um lugar do tipo especificado
+	 * @param id_parque identificador do parque
+	 * @param tipo_lugar tipo de lugar de estacionamento a remover
+	 */
+	@Transactional(rollbackOn = Exception.class)
+	public void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception {
+		Parque parque = getParque(id_parque);
+		List<LugarEstacionamento> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
+		if(lugarEstacionamento.size() == 0)
+			throw new Exception("O parque não possui nenhum lugar de estacionamento com esse tipo que não tenha reservas futuras.");
+		parque.setTotal_lugares(parque.getTotal_lugares() - 1);
+		parqueDAO.save(parque);
+		lugarDAO.eliminarLugar(lugarEstacionamento.get(0).getLugarId());
 	}
 
 	/**
@@ -250,7 +293,19 @@ public class ParqueServiceBean implements ParqueService {
 			throw new Exception("Lugar não pertence ao parque!");
 		parque.setTotal_lugares(parque.getTotal_lugares() - 1);
 		parqueDAO.save(parque);
-		lugarDAO.delete(lugar);
+		lugarDAO.eliminarLugar(id_lugar);
+	}
+
+	@Transactional(rollbackOn = Exception.class)
+	public void removerLugares(int id_parque, TipoLugarEstacionamento tipo_lugar, int n) throws Exception {
+		Parque parque = getParque(id_parque);
+		List<LugarEstacionamento> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
+		if(lugarEstacionamento.size() < n)
+			throw new Exception("O parque apenas possui " + lugarEstacionamento.size() + " lugares de estacionamento do tipo referido que não têm reservas futuras.");
+		parque.setTotal_lugares(parque.getTotal_lugares() - n);
+		parqueDAO.save(parque);
+		for(int i = 0; i < n; i++)
+			lugarDAO.eliminarLugar(lugarEstacionamento.get(i).getLugarId());
 	}
 
 	/**
@@ -370,20 +425,6 @@ public class ParqueServiceBean implements ParqueService {
 						.stream()
 						.map(p -> new AbstractMap.SimpleEntry<>(p, p.getLugaresLivres()))
 						.collect(Collectors.toList());
-	}
-
-	/**
-	 * Remove do parque de estacionamento um lugar do tipo especificado
-	 * @param id_parque identificador do parque
-	 * @param tipo_lugar tipo de lugar de estacionamento a remover
-	 */
-	@Transactional(rollbackOn = Exception.class)
-	public void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception {
-		Parque parque = getParque(id_parque);
-		List<LugarEstacionamento> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
-		if(lugarEstacionamento.size() == 0)
-			throw new Exception("O parque não possui nenhum lugar de estacionamento com esse tipo que não tenha reservas futuras.");
-		lugarDAO.eliminarLugar(lugarEstacionamento.get(0).getLugarId());
 	}
 
 	/**

@@ -17,6 +17,10 @@ public class TipoLugarEstacionamento implements Serializable {
 	public TipoLugarEstacionamento() {
 	}
 
+	public TipoLugarEstacionamento(String nome) {
+		this.nome = nome;
+	}
+
 	@Column(name="ID", nullable=false)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

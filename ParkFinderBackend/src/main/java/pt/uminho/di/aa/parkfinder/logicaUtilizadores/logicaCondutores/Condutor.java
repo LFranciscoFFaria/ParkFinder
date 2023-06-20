@@ -2,10 +2,9 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.auxiliar.GeneroDeserializer;
+import pt.uminho.di.aa.parkfinder.api.DTOs.deserializers.GeneroDeserializer;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import jakarta.persistence.*;
@@ -30,11 +29,6 @@ public class Condutor extends Utilizador implements Serializable {
 	@JsonDeserialize(using = GeneroDeserializer.class)
 	private boolean genero;
 
-	// TODO : Adicionei número de telemóvel ao utilizador por pedido do Diogo e porque faz bastante sentido.
-	@Column(name="Numero_telemovel", nullable=false, length=1)
-	@JsonDeserialize(using = GeneroDeserializer.class)
-	private int numero_telemovel;
-
 	public Condutor(@JsonProperty("nome") String nome, @JsonProperty("email") String email, @JsonProperty("password") String password,
 					@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero, @JsonProperty("numero_telemovel") int numero_telemovel) {
 		this.setNome(nome);
@@ -42,7 +36,7 @@ public class Condutor extends Utilizador implements Serializable {
 		this.setPassword(password);
 		this.nif = nif;
 		this.genero = genero;
-		this.numero_telemovel = numero_telemovel;
+		setNrTelemovel(numero_telemovel);
 	}
 
 	/**
@@ -54,10 +48,11 @@ public class Condutor extends Utilizador implements Serializable {
 		if(valido != null) return valido;
 		if(!Pattern.matches("^\\d{9}$", String.valueOf(this.getNif())))
 			return "O NIF contêm 9 digitos numéricos.";
-		// TODO: Copiei a expressão regular do NIF em príncípio está certa
-		if(!Pattern.matches("^\\d{9}$", String.valueOf(this.getNumero_telemovel())))
-			return "O número de telemóvel português têm de conter 9 digitos numéricos.";
 		return null;
+	}
+
+	public Condutor clone(){
+		return new Condutor(getNome(), getEmail(), getPassword(), nif, genero, getNrTelemovel());
 	}
 
 	public String toString() {

@@ -2,6 +2,7 @@ package pt.uminho.di.aa.parkfinder.logicaReservas;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservaService {
 
@@ -81,7 +82,7 @@ public interface ReservaService {
      * @param dataFim
      * @param matricula
      */
-	Reserva setAll(int id_reserva, Integer estado, Boolean pago, Float custo, LocalDateTime dataInicio, LocalDateTime dataFim, String matricula) throws Exception;
+	Reserva setAll(int id_reserva, Optional<Integer> estado, Optional<Boolean> pago, Optional<Float> custo, Optional<LocalDateTime> dataInicio, Optional<LocalDateTime> dataFim, Optional<String> matricula) throws Exception;
 
 	/**
 	 * 
