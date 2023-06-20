@@ -1,11 +1,9 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import pt.uminho.di.aa.parkfinder.api.DTOs.deserializers.GeneroDeserializer;
 import pt.uminho.di.aa.parkfinder.logicaNotificacoes.Notificacao;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorEditDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParquesReservas.ParqueReservaServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
@@ -67,18 +68,22 @@ public class CondutorServiceBean implements CondutorService {
 	 * Função que devolve a lista das reservas efetuadas pelo condutor com o 'login' efetuado
 	 * @return Lista das reservas efetuadas pelo condutor
 	 */
-	public List<Reserva> listarMinhasReservas() throws Exception {
+	public List<ReservaDTO> listarMinhasReservas() throws Exception {
 		checkIsLoggedIn();
-		return reservaServiceBean.listarReservas(condutor.getId());
+		return reservaServiceBean.listarReservas(condutor.getId())
+								 .stream()
+								 .map(this::reservaToDTO)
+								 .toList();
 	}
 
 	/**
 	 * Retorna a reserva instantânea criada em caso de sucesso.
 	 * @param id_parque identificador do parque onde queremos efetuar uma reserva instantânea
 	 */
-	public Reserva fazerReservaInstantanea(int id_parque) throws Exception{
+	public ReservaDTO fazerReservaInstantanea(int id_parque) throws Exception{
 		checkIsLoggedIn();
-		return parqueReservaServiceBean.criarReservaInstantanea(condutor.getId(),id_parque);
+		Reserva r = parqueReservaServiceBean.criarReservaInstantanea(condutor.getId(), id_parque);
+		return reservaToDTO(r);
 	}
 
 	/**
@@ -88,9 +93,10 @@ public class CondutorServiceBean implements CondutorService {
 	 * @param data_inicio data de início da ocupação do lugar
 	 * @param data_fim data de fim da ocupação do lugar
 	 */
-	public Reserva fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+	public ReservaDTO fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
 		checkIsLoggedIn();
-		return parqueReservaServiceBean.criarReservaAgendada(condutor.getId(),id_parque,new TipoLugarEstacionamento(tipo_lugar),data_inicio,data_fim);
+		Reserva r = parqueReservaServiceBean.criarReservaAgendada(condutor.getId(),id_parque,new TipoLugarEstacionamento(tipo_lugar),data_inicio,data_fim);
+		return reservaToDTO(r);
 	}
 
 	/**
@@ -117,5 +123,10 @@ public class CondutorServiceBean implements CondutorService {
 	private void checkIsLoggedIn() throws Exception {
 		if(condutor == null)
 			throw new Exception("Não tem sessão iniciada.");
+	}
+
+	private ReservaDTO reservaToDTO(Reserva r){
+		return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), r.getEstado(),
+				r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
 	}
 }

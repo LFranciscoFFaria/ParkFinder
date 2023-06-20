@@ -14,12 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/apiV1/parques")
 public class ParqueAPI {
-    private final ApplicationContext context;
     private final ParqueServiceBean parqueServiceBean;
 
     @Autowired
-    public ParqueAPI(ApplicationContext context, ParqueServiceBean parqueServiceBean) {
-        this.context = context;
+    public ParqueAPI(ParqueServiceBean parqueServiceBean) {
         this.parqueServiceBean = parqueServiceBean;
     }
 
@@ -27,20 +25,20 @@ public class ParqueAPI {
 
     @PutMapping("/criarparque")
     public ResponseEntity<Parque> criarParque(@RequestBody Parque p){
-        try{ return  new ResponseEntity<>((Parque) parqueServiceBean.criarParque(p), HttpStatus.OK); }
+        try{ return  new ResponseEntity<>(parqueServiceBean.criarParque(p), HttpStatus.OK); }
         catch (Exception e){
             return new ResponseEntityBadRequest<Parque>().createBadRequest(e.getMessage());
         }
     }
 
     @DeleteMapping("")
-    public ResponseEntity removerParque(@RequestBody int id_parque){
+    public ResponseEntity<Void> removerParque(@RequestBody int id_parque){
         try{
             parqueServiceBean.removerParque(id_parque);
-            return  new ResponseEntity(HttpStatus.OK);
+            return  new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e){
-            return new ResponseEntityBadRequest<>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
@@ -72,7 +70,7 @@ public class ParqueAPI {
 
     @GetMapping("/id")
     public ResponseEntity<Parque> procurarParque(@RequestParam int id_parque){
-        try{ return new ResponseEntity<>((Parque) parqueServiceBean.procurarParque(id_parque),HttpStatus.OK);}
+        try{ return new ResponseEntity<>(parqueServiceBean.procurarParque(id_parque),HttpStatus.OK);}
         catch (Exception e){
             return new ResponseEntityBadRequest<Parque>().createBadRequest(e.getMessage());
         }

@@ -175,12 +175,9 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			// Se lugar for nulo, então é reserva instantanea.
 			// Reserva instantanea é paga quando se está dentro do parque.
 			if (reserva.getLugar() == null && reserva.getEstado() == EstadoReserva.OCUPADA) {
-				Precario precario = parqueServiceBean.getPrecarioByNome(reserva.getParqueID(), "Instantaneo");
-				if(precario == null)
-					throw new Exception("Precario para reservas instantâneas, não foi encontrado para parque onde a reserva ocorreu. " +
-							"Por favor contacte o gestor do parque.");
-				float custo = precario.calcular_preco(reserva.getDataInicio(), LocalDateTime.now());
-				reservaServiceBean.setAll(id_reserva, null, Optional.of(true), Optional.of(custo), null, null, null);
+				LocalDateTime fimReserva = LocalDateTime.now();
+				float custo = parqueServiceBean.calcularCusto(reserva.getParqueID(), null, reserva.getDataInicio(), fimReserva);
+				reservaServiceBean.setAll(id_reserva, null, Optional.of(true), Optional.of(custo), null, Optional.of(fimReserva), null);
 			}
 			// Lógina Reserva Agendada/Especial
 			else if (reserva.getLugar() != null && reserva.getEstado() == EstadoReserva.PENDENTE_PAGAMENTO) {

@@ -128,7 +128,6 @@ function AdminDetails({
                 );
                 break;
             case 2:
-                // problema vem do instantePark
                 setPage(<InstantPark parque={parque}/>);
                 break;
             case 3:
@@ -153,7 +152,7 @@ function AdminDetails({
     return (
         <div className='staff_bg'>
             <div className='staff_whitebox'>
-                <NavbarStaff link_logo={'/manager'}/>
+                <NavbarStaff link_logo={'/admin'}/>
                 <div className="details_header">
                     <h1>{parque['nome']}</h1>
                     <div className={'compressed_park_spaces ' + ocupationColor()}>
@@ -169,7 +168,7 @@ function AdminDetails({
                     <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Edição</Button>
                     <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Parque instantâneo</Button>
                     <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Descrição</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Caracteristicas</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Características</Button>
                 </div>
                 {page}
             </div>

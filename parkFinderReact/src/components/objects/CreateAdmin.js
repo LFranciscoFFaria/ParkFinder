@@ -3,8 +3,10 @@ import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import '../interactive_items/select.css'
 import { useEffect, useState } from 'react';
+import './CreateAdmin.css';
+import Checkbox from '../interactive_items/Checkbox';
 
-const parques = [
+const pk = [
     {
         "id" : 0,
         "nome" : "PARQUE VISCONDE DO RAIO",
@@ -44,6 +46,19 @@ const parques = [
         "hora_end" :"19:00",
         "descricao" : "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
     },
+    {
+        "id" : 3,
+        "nome" : "BRAGA PARQUE",
+        "morada" : "rua dos reis",
+        "distancia" : "(1.1km)",
+        "lugares_vagos" : 186,
+        "lugares_totais" : 268,
+        "link_imagem" : "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        "custo" : 2.15,
+        "hora_init" :"8:00",
+        "hora_end" :"19:00",
+        "descricao" : "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
+    },
 ]
 
 function editPerfilField (
@@ -71,38 +86,6 @@ function editPerfilField (
     )
 }
 
-function parkTable(parques, setFunc,saveProfile) {
-
-    let parks = [];
-    return(
-        <table>
-              <tr>
-                <th><b>Parque</b></th>
-                <th>Ação</th>
-            </tr>
-            <tr>
-                <td>
-                    <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
-                        <option className='disabled_selected' value="default" disabled>Park</option>
-                        {parques.map((parque, index) => (
-                            <option value={parque['id']}>{parque['nome']}</option>
-                         ))}
-                    </select>
-                </td>
-                <td><Button className="submit">Adicionar</Button></td> 
-            </tr>
-                        
-            {parks.map((id) => (
-            <tr>
-                <td >{parques[id]['nome']}</td> 
-                <td><Button className="default">Remover</Button></td> 
-            </tr>
-            ))}
-        </table>
-    )
-}
-
-
 
 function CreateAdmin({
 }) {
@@ -112,7 +95,23 @@ function CreateAdmin({
     const [parks, setAdminParks] = useState('');
     const [password, setAdminPassword] = useState('');
 
-    const [parques,setParques] = useState(parques);
+    const [parques,setParques] = useState(pk);
+
+    const [parkbuff, setAdminParkbuff] = useState('');
+
+    let parklist = [];
+
+    const change_on_list = (event) => {
+        let index = parklist.indexOf(parkbuff);
+        if(parklist.includes(parkbuff)==true){
+            parklist = parklist.slice(0,index).concat(parklist.slice(index+1));
+        }
+        else{
+            parklist.concat([parkbuff]);
+        }
+        setAdminParks(parklist);
+        console.log(parkbuff);
+    };
 
     const saveAdmin = (event) => {
         event.preventDefault()
@@ -128,13 +127,29 @@ function CreateAdmin({
         <div className='staff_bg'>
             <div className='staff_whitebox'>
                 <NavbarStaff link_logo={'/manager'}/>
-                <div className='edit_perfil_form_content'>
-                    {editPerfilField('Nome',null,'Nome',setAdminName,saveAdmin)}
-                    {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
-                    {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
-                    {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
-                    {parkTable(parques, setAdminParks,saveAdmin)}
-                </div>
+
+                {editPerfilField('Nome',null,'Nome',setAdminName,saveAdmin)}
+                {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
+                {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
+                {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
+
+                <form onSubmit={saveAdmin}>
+                    <div className='edit_perfil_field'>
+                        <b> {name} </b>
+                        <div className='edit_perfil_input_button'>
+                            <div className='admin_grid_container' name='Criterion' id='criterion' defaultValue={"default"}>
+                                {parques.map((parque, index) => (
+                                    <label className="checkbox_label" key={index}>
+                                        <input type="checkbox" className="checkbox"  value={parque['id']} 
+                                            onChange={(e) => {setAdminParkbuff(e.target.value);change_on_list(e.target.value)}}/>
+                                        {parque['nome']}
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                            <Button type='submit' buttonStyle='contrast'>Gravar</Button>
+                    </div>
+                </form>
             </div>
         </div>
     );

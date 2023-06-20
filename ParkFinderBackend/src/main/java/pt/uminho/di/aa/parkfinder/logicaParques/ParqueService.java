@@ -75,7 +75,7 @@ public interface ParqueService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	float calcularCusto(int id_parque, int id_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
+	float calcularCusto(int id_parque, Integer id_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
 	/**
 	 * 

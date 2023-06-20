@@ -1,7 +1,6 @@
 import '../pages/condutor/Details.css';
 
 
-
 const horas = {
     "periodos" : [
         {"dia": 2, "inicio" : 7.5, "fim" : 13},
@@ -32,7 +31,7 @@ function floatToTime(floatValue) {
 }
 
 function getOpeningHours() {
-        
+
     let horas2 = [
         {"dia": 1, "horas" : []},
         {"dia": 2, "horas" : []},
@@ -42,7 +41,9 @@ function getOpeningHours() {
         {"dia": 6, "horas" : []},
         {"dia": 7, "horas" : []},
     ];
-    let diasDaSemana = ['segunda','terça','quarta','quinta','sexta','sabado','domingo']
+
+    let diasDaSemana = ['segunda','terça','quarta','quinta','sexta','sabado','domingo'];
+
     horas['periodos'].forEach((horario) => {
         horas2[horario['dia'] - 1]['horas'].push(horario['inicio'], horario['fim']);
     });
@@ -69,15 +70,18 @@ function Characteristics({
     parque
 }) {
     return (
+        <>
+            <h1>Características</h1>
         <div className="details_pages_display">
             <h3>Horário de funcionamento</h3>
-            {getOpeningHours()}
-            <h3>Capacidade</h3>
-            <ul>
-                <li> Nº de lugares vagos: {parque['lugares_vagos']} </li>
-                <li> Nº de lugares total: {parque['lugares_totais']} </li>
-            </ul>
-        </div>
+                {getOpeningHours()}
+                <h3>Capacidade</h3>
+                <ul>
+                    <li> Nº de lugares vagos: {parque['lugares_vagos']} </li>
+                    <li> Nº de lugares total: {parque['lugares_totais']} </li>
+                </ul>
+            </div>
+        </>
     );
 };
 

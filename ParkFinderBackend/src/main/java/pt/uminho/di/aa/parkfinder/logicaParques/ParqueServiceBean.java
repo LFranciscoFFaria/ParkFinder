@@ -186,17 +186,25 @@ public class ParqueServiceBean implements ParqueService {
 	/**
 	 * Calcula o custo de fazer determinada reserva no parque pretendido para um determinado periodo.
 	 * @param id_parque identificador do parque
-	 * @param id_lugar identificador do lugar
+	 * @param id_lugar identificador do lugar. Deve ser nulo se for uma reserva instantânea.
 	 * @param data_inicio data de início do período
 	 * @param data_fim data de fim do periodo
 	 */
 	@Transactional(rollbackOn = Exception.class)
-	public float calcularCusto(int id_parque, int id_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+	public float calcularCusto(int id_parque, Integer id_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
 		Parque parque = getParque(id_parque);
-		LugarEstacionamento lugar = getLugar(id_lugar);
-		if(lugar.getParqueId() != parque.getId())
-			throw new Exception("Lugar não pertence ao parque!");
-		Precario precario = parqueDAO.findPrecarioDoParque(parque.getId(), lugar.getTipo().getNome());
+		Precario precario;
+		//reserva instantanea
+		if(id_lugar == null){
+			precario = getPrecarioByNome(id_parque, "Instantaneo");
+		}else {
+			LugarEstacionamento lugar = getLugar(id_lugar);
+			if (lugar.getParqueId() != parque.getId())
+				throw new Exception("Lugar não pertence ao parque!");
+			precario = getPrecarioByNome(parque.getId(), lugar.getTipo().getNome());
+		}
+		if(precario == null)
+			throw new Exception("Precario para o tipo de lugar da reserva não está estabelecido para o respetivo parque. Contacte o gestor do parque.");
 		return precario.calcular_preco(data_inicio, data_fim);
 	}
 
