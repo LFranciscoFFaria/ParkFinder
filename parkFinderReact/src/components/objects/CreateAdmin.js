@@ -3,8 +3,10 @@ import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import '../interactive_items/select.css'
 import { useEffect, useState } from 'react';
+import './CreateAdmin.css';
+import Checkbox from '../interactive_items/Checkbox';
 
-const parques = [
+const pk = [
     {
         "id" : 0,
         "nome" : "PARQUE VISCONDE DO RAIO",
@@ -30,6 +32,19 @@ const parques = [
         "hora_init" :"8:00",
         "hora_end" :"19:00",
         "descricao" : "Covered Hotel Parking\n10 min. from University of Minho\ntaxi service Accessible 24/7",
+    },
+    {
+        "id" : 2,
+        "nome" : "BRAGA PARQUE",
+        "morada" : "rua dos reis",
+        "distancia" : "(1.1km)",
+        "lugares_vagos" : 186,
+        "lugares_totais" : 268,
+        "link_imagem" : "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        "custo" : 2.15,
+        "hora_init" :"8:00",
+        "hora_end" :"19:00",
+        "descricao" : "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
     },
     {
         "id" : 2,
@@ -71,49 +86,18 @@ function editPerfilField (
     )
 }
 
-function parkTable(parques, setFunc,saveProfile) {
-
-    let parks = [];
-    return(
-        <table>
-              <tr>
-                <th><b>Parque</b></th>
-                <th>Ação</th>
-            </tr>
-            <tr>
-                <td>
-                    <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
-                        <option className='disabled_selected' value="default" disabled>Park</option>
-                        {parques.map((parque, index) => (
-                            <option value={parque['id']}>{parque['nome']}</option>
-                         ))}
-                    </select>
-                </td>
-                <td><Button className="submit">Adicionar</Button></td> 
-            </tr>
-                        
-            {parks.map((id) => (
-            <tr>
-                <td >{parques[id]['nome']}</td> 
-                <td><Button className="default">Remover</Button></td> 
-            </tr>
-            ))}
-        </table>
-    )
-}
-
-
 
 function CreateAdmin({
 }) {
     const [email, setAdminEmail] = useState('');
     const [name, setAdminName] = useState('');
     const [contact, setAdminContact] = useState('');
-    const [parks, setAdminParks] = useState('');
+    const [parks = [], setAdminParks] = useState('');
     const [password, setAdminPassword] = useState('');
 
-    const [parques,setParques] = useState(parques);
+    const [parques,setParques] = useState(pk);
 
+    console.log(parques);
     const saveAdmin = (event) => {
         event.preventDefault()
         console.log("Save Admin");
@@ -133,8 +117,21 @@ function CreateAdmin({
                     {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
                     {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
                     {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
-                    {parkTable(parques, setAdminParks,saveAdmin)}
-                </div>
+
+                    <form onSubmit={saveAdmin}>
+                        <div className='edit_perfil_field'>
+                            <b> {name} </b>
+                            <div className='edit_perfil_input_button'>
+                                <div className='admin_grid_container' name='Criterion' id='criterion' defaultValue={"default"}>
+                                    {parques.map((parque, index) => (
+                                        <Checkbox key={index} value={parque['id']} onChange={(e) => {setAdminParks(e.target.value)}}>{parque['nome']}</Checkbox>
+                                    ))}
+                                </div>
+                                <Button type='submit' buttonStyle='contrast'>Gravar</Button>
+                            </div>
+                        </div>
+                    </form>
+                </div>   
             </div>
         </div>
     );
