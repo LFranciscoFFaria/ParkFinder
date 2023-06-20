@@ -1,4 +1,4 @@
-import '../pages/Details.css';
+import '../pages/condutor/Details.css';
 
 
 
@@ -15,16 +15,16 @@ function separateString(string) {
     )
 }
 
-function Description(
+function Description({
     parque
-) {
+}) {
     return (
-        <div className="desc_desc">
-            <b>Informação</b>
-            <label className='compressed_park_info_description'>{separateString(parque.parque['descricao'])}</label>
-            <b>Morada</b>
+        <div className="details_pages_display">
+            <h3>Informação</h3>
+            <label className='compressed_park_info_description'>{separateString(parque['descricao'])}</label>
+            <h3>Morada</h3>
             <ul>
-                <li> {parque.parque['morada']} ({parque.parque['distancia']} de si) </li>
+                <li> {parque['morada']} ({parque['distancia']} de si) </li>
             </ul>
         </div>
     );

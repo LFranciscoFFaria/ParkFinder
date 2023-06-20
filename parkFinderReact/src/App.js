@@ -1,62 +1,144 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/pages/Login.js';
-import Register from './components/pages/Register.js';
-import Perfil from './components/pages/Perfil';
-import Details from './components/pages/Details';
-import Parks from './components/pages/Parks';
-import Admin from './components/pages/Admin';
-import EditParkAdmin from './components/pages/EditParkAdmin';
-import Manager from './components/pages/Manager';
-import EditParkManager from './components/pages/EditParkManager';
-import CreateAdmin from './components/pages/CreateAdmin';
-import EditAdmin from './components/pages/EditAdmin';
-import Programmer from './components/pages/Programmer';
-import CreatePark from './components/pages/CreatePark';
-import EditParkProgrammer from './components/pages/EditParkProgrammer';
-import CreateManager from './components/pages/CreateManager';
-import EditManager from './components/pages/EditManager';
+import Login from './components/pages/condutor/Login.js';
+import Register from './components/pages/condutor/Register.js';
+import Perfil from './components/pages/condutor/Perfil';
+import Details from './components/pages/condutor/Details';
+import Parks from './components/pages/condutor/Parks';
+
+import Admin from './components/pages/admin/Admin';
+import AdminDetails from './components/pages/admin/AdminDetails.js';
+import CreateAdmin from './components/pages/admin/CreateAdmin';
+
+import Manager from './components/pages/manager/Manager';
+import ManagerDetails from './components/pages/manager/ManagerDetails';
+
+import Programmer from './components/pages/programmer/Programmer';
+import ProgrammerDetails from './components/pages/programmer/ProgrammerDetails';
+
+
+
 
 const parques = [
     {
-        id: 0,
-        nome: "PARQUE VISCONDE DO RAIO",
-        morada: "rua dos reis",
-        distancia: "(797 m)",
-        lugares_vagos: 45,
-        lugares_totais: 96,
-        link_imagem: "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
-        custo: 1.30,
-        hora_init:"8:00",
-        hora_end:"19:00",
-        descricao: "Public covered parking\n7 min. walk from the heart of the city\nAccessible from Monday to Friday from 8:00 am to 8:00 pm and Saturdays from 10:00 am to 8:00 pm.",
+        'id': 0,
+        'nome': "PARQUE VISCONDE DO RAIO",
+        'morada': "rua dos reis",
+        'distancia': "(797 m)",
+        'lugares_vagos': 45,
+        'lugares_totais': 96,
+        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'custo': 1.30,
+        'hora_init':"8:00",
+        'hora_end':"19:00",
+        'descricao': "Public covered parking\n7 min. walk from the heart of the city\nAccessible from Monday to Friday from 8:00 am to 8:00 pm and Saturdays from 10:00 am to 8:00 pm.",
+        'instant':"PG-58-KL\nDH-90-FDW",
+
     },
     {
-        id: 1,
-        nome: "B&B BRAGA LAMAÇÃES",
-        morada: "rua dos reis",
-        distancia: "(2.7 km)",
-        lugares_vagos: 22,
-        lugares_totais: 51,
-        link_imagem: "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
-        custo: 7.00,
-        hora_init:"8:00",
-        hora_end:"19:00",
-        descricao: "Covered Hotel Parking\n10 min. from University of Minho\ntaxi service Accessible 24/7",
+        'id': 1,
+        'nome': "B&B BRAGA LAMAÇÃES",
+        'morada': "rua dos reis",
+        'distancia': "(2.7 km)",
+        'lugares_vagos': 22,
+        'lugares_totais': 51,
+        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'custo': 7.00,
+        'hora_init':"8:00",
+        'hora_end':"19:00",
+        'descricao': "Covered Hotel Parking\n10 min. from University of Minho\ntaxi service Accessible 24/7",
+        'instant':"PG-58-KL\nDH-90-FD",
+
     },
     {
-        id: 2,
-        nome: "BRAGA PARQUE",
-        morada: "rua dos reis",
-        distancia: "(1.1km)",
-        lugares_vagos: 186,
-        lugares_totais: 268,
-        link_imagem: "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
-        custo: 2.15,
-        hora_init:"8:00",
-        hora_end:"19:00",
-        descricao: "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
+        'id': 2,
+        'nome': "BRAGA PARQUE",
+        'morada': "rua dos reis",
+        'distancia': "(1.1km)",
+        'lugares_vagos': 186,
+        'lugares_totais': 268,
+        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'custo': 2.15,
+        'hora_init':"8:00",
+        'hora_end':"19:00",
+        'descricao': "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
+        'instant':"PG-58-KL\nDH-90-FD",
+    },
+]
+
+const administradores = [
+    {
+        'id': 0,
+        'nome': "joao",
+        'email': "joao@gmail.com",
+        'telemovel': "936978575",
+        'password': "joao",
+        'parques': ["BRAGA PARQUE","B&B BRAGA LAMAÇÃES"],
+    },
+    {
+        'id': 1,
+        'nome': "miguel",
+        'email': "miguel@gmail.com",
+        'telemovel': "936978575",
+        'password': "miguel",
+        'parques': ["BRAGA PARQUE","B&B BRAGA LAMAÇÃES"],
+    },
+    {
+        'id': 2,
+        'nome': "antonio",
+        'email': "antonio@gmail.com",
+        'telemovel': "936978575",
+        'password': "antonio",
+        'parques': ["BRAGA PARQUE","B&B BRAGA LAMAÇÃES"],
+    },
+]
+
+const managers = [
+    {
+        'id': 0,
+        'nome': "rui",
+        'email': "rui@gmail.com",
+        'telemovel': "936978575",
+        'password': "rui",
+        'parques': ["BRAGA PARQUE","B&B BRAGA LAMAÇÃES"],
+        'administradores': ["joao","miguel","antonio"],
+    },
+    {
+        'id': 1,
+        'nome': "carlos",
+        'email': "carlos@gmail.com",
+        'telemovel': "936978575",
+        'password': "carlos",
+        'parques': ["Alex_Nao","Sabe_Conduzir"],
+        'administradores': ["Sr. Qual","Sr. Alex","Sr. ???"],
+    },
+    {
+        'id': 2,
+        'nome': "pedro",
+        'email': "pedro@gmail.com",
+        'telemovel': "936978575",
+        'password': "pedro",
+        'parques': ["esquina",],
+        'administradores': ["pedro2","rui2","antonio2"],
+    },
+]
+
+const estatisticas = [
+    {
+        'id': 0,
+        'nome': "PARQUE VISCONDE DO RAIO",
+        'nr': '5',
+    },
+    {
+        'id': 1,
+        'nome': "B&B BRAGA LAMAÇÃES",
+        'nr': '5',
+    },
+    {
+        'id': 2,
+        'nome': "BRAGA PARQUE",
+        'nr': '5',
     },
 ]
 
@@ -84,26 +166,26 @@ function App() {
                 {/*Common user*/}
                 <Route path='/login' element={<Login/>} />
                 <Route path='/register' element={<Register/>} />
-                <Route path='/' element={<Parks parques={parques} setIdParque={setIdParque} filter={filter} setFilter={setFilter} setState={setState} state={state}/>} />
-                <Route path='/details' element={<Details parque={parques[idParque]} filter={filter} setState={setState}/>} />
+                <Route path='/' element={<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState} state={state}/>} />
+                <Route path='/details' element={<Details filter={filter} setState={setState}/>} />
                 <Route path='/perfil' element={<Perfil setState={setState}/>} />
 
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin setState={setState}/>}/>
-                <Route path='/admin/edit_park' element={<EditParkAdmin setState={setState}/>}/>
+                <Route path='/admin' element={<Admin parques={parques}/>}/>
+                <Route path='/admin/details' element={<AdminDetails/>}/>
 
                 {/*Manager*/}
-                <Route path='/manager' element={<Manager setState={setState}/>}/>
-                <Route path='/manager/edit_park' element={<EditParkManager setState={setState}/>}/>
-                <Route path='/manager/create_admin' element={<CreateAdmin setState={setState}/>}/>
-                <Route path='/manager/edit_admin' element={<EditAdmin setState={setState}/>}/>
+                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={1}/>}/>
+                <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
+                <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
+                <Route path='/manager/details' element={<ManagerDetails/>}/>
+
+
 
                 {/*Programmer*/}
-                <Route path='/programmer' element={<Programmer setState={setState}/>}/>
-                <Route path='/programmer/create_park' element={<CreatePark setState={setState}/>}/>
-                <Route path='/programmer/edit_park' element={<EditParkProgrammer setState={setState}/>}/>
-                <Route path='/programmer/create_manager' element={<CreateManager setState={setState}/>}/>
-                <Route path='/programmer/edit_manager' element={<EditManager setState={setState}/>}/>
+                <Route path='/programmer' element={<Programmer managers={managers} selected={1}/>}/>
+                <Route path='/programmer/managers' element={<Programmer managers={managers} selected={2}/>}/>
+                <Route path='/programmer/details' element={<ProgrammerDetails/>}/>
             </Routes>
         </Router>
     );

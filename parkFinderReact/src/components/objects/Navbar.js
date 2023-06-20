@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { Button } from '../interactive_items/Button';
-import { Link } from 'react-router-dom';
 import './Navbar.css';
+import PopUp from '../interactive_items/PopUp';
+import {QRCodeSVG} from 'qrcode.react'
+
+
+
 
 function Navbar({
     setState,
-    setFilter
+    setFilter,
+    userID
 }) {
     const [click, setClick] = useState(false);
+    const [popUp, setPopUp] = useState(false);
+    const [element, setElement] = useState(
+        <>
+            <QRCodeSVG value={userID} className="navbar_qrcode"/>
+            <h3>User ID: {userID}</h3>
+        </>);
+
+
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
-    
+
     return (
         <div className='navbar_layer'>
             <header className={"header_default"}>
                 <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}} link={'/'}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
                 <Button buttonStyle={"navbar_perfil_image"} link={'/perfil'}> <img className={'button_image'} src={"images/perfil_black.png"} alt={""} /> Pessoa </Button>
             </header>
+
             <div className={'navbar_default'}>
                 <div className='navbar_disappearing_icon' onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'}/>
@@ -35,10 +50,21 @@ function Navbar({
                             <Button buttonStyle={"navbar_image_button"} onClick={setFilter}> <img className={'button_image'} src={"images/search_icon.png"} alt={""} /> </Button>
                         </div>
                     }
+                    {userID?
+                        <Button buttonStyle={"navbar_image_button"} onClick={() => {closeMobileMenu(); setPopUp(true)}}> <img className={'button_image'} src={"images/qrcode.png"} alt={""} /> </Button>
+                        :
+                        null
+                    }
                     <Button buttonStyle={"navbar_image_button"} onClick={closeMobileMenu}> <img className={'button_image'} src={"images/bell_notification.png"} alt={""} /> </Button>
                     <Button buttonStyle={"navbar_button"} onClick={closeMobileMenu} link={"/login"}> Login </Button>
                 </div>
             </div>
+
+            {popUp && userID?
+                <PopUp closePopUp={() => setPopUp(false)} text='QR Code' element={element} />
+                :
+                null
+            }
         </div>
     );
 }

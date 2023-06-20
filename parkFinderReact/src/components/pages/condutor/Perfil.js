@@ -1,10 +1,10 @@
-import { ImageBlock } from '../interactive_items/ImageBlock';
-import Navbar from '../objects/Navbar';
-import EditPerfil from '../objects/EditPerfil.js';
-import Security from '../objects/Security.js';
-import PaymentHistory from '../objects/PaymentHistory.js';
-import ReservationHistory from '../objects/ReservationHistory.js';
-import '../interactive_items/select.css'
+import { ImageBlock } from '../../interactive_items/ImageBlock';
+import Navbar from '../../objects/Navbar';
+import EditPerfil from '../../objects/EditPerfil.js';
+import Security from '../../objects/Security.js';
+import PaymentHistory from '../../objects/PaymentHistory.js';
+import ReservationHistory from '../../objects/ReservationHistory.js';
+import '../../interactive_items/select.css'
 import './Perfil.css'
 import { useEffect, useState } from 'react';
 
@@ -36,7 +36,7 @@ function Perfil({
 
     useEffect(() => {
         console.log("optionSelected = " + optionSelected);
-        displayPerfilOptions()
+        displayPerfilOptions();
     }, [optionSelected]);
     
     return (
@@ -49,12 +49,12 @@ function Perfil({
                     </div>
                     <div className="perfil_info">
                         <div className="perfil_block_info">
-                            <h2>Basic Information</h2>
-                            <b className='field_name'>Name:</b>
+                            <h2>Informação Básica</h2>
+                            <b className='field_name'>Nome:</b>
                             <label className='field_content'>Alexandre Silva Martins</label>
                             <b className='field_name'>Email:</b>
                             <label className='field_content'>se_o_alex_vir_isto_e_gay@gmail.com</label>
-                            <b className='field_name'>Phone Number:</b>
+                            <b className='field_name'>Numero de Telefone:</b>
                             <label className='field_content'>987654321</label>
                         </div>
                     </div>

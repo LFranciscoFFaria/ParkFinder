@@ -12,7 +12,7 @@ public interface AdministradorService {
 	 * @param N
 	 * @param id_parque
 	 */
-	void addLugarInstantaneo(int N, int id_parque);
+	void addLugarInstantaneo(int id_parque, int N) throws Exception;
 
 	/**
 	 * 
@@ -20,14 +20,14 @@ public interface AdministradorService {
 	 * @param id_parque
 	 * @param tipo
 	 */
-	void addLugarEspecial(int N, int id_parque, TipoLugarEstacionamento tipo);
+	void addLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception;
 
 	/**
 	 * 
 	 * @param N
 	 * @param id_parque
 	 */
-	void removerLugarInstantaneo(int N, int id_parque);
+	void removerLugarInstantaneo(int id_parque, int N) throws Exception;
 
 	/**
 	 * 
@@ -35,20 +35,20 @@ public interface AdministradorService {
 	 * @param id_parque
 	 * @param tipo
 	 */
-	void removerLugarEspecial(int N, int id_parque, TipoLugarEstacionamento tipo);
+	void removerLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception;
 
 	/**
 	 * 
 	 * @param matricula
 	 */
-	Reserva encontrarReservaPorMatricula(String matricula);
+	Reserva encontrarReservaPorMatricula(String matricula) throws Exception;
 
 	/**
 	 * 
 	 * @param id_reserva
 	 * @param matricula
 	 */
-	boolean associarMatriculaAReserva(String id_reserva, String matricula);
+	boolean associarMatriculaAReserva(int id_reserva, String matricula) throws Exception;
 
 	/**
 	 * 

@@ -25,6 +25,11 @@ input:focus{
 }
 
 
+
+
+
+
+
 .front_page_content{
     display: flex;
     padding: 30px;
@@ -36,4 +41,32 @@ input:focus{
     display: flex;
     flex-direction: column;
     margin: 0;
+}
+
+
+
+.staff_bg{
+    font-family: system-ui;
+    background-image: linear-gradient(to top, rgb(255, 191, 117), rgb(255, 238, 164), rgb(255, 191, 117));
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.staff_whitebox{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 180px);
+    min-width: 800px;
+    border-radius: 30px;
+    padding: 60px;
+    margin: 30px;
+    gap: 20px;
+}
+
+
+
+.disabled_selected{
+    display: none;
 }

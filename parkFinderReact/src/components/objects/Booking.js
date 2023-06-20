@@ -1,12 +1,15 @@
 import { Button } from '../interactive_items/Button';
-import '../pages/Details.css';
+import '../pages/condutor/Details.css';
 import '../objects/Filter.css';
+import { useState } from 'react';
 
 
 
-function Booking(
+function Booking({
     parque
-) {
+}) {
+    const [custos,setCustos] = useState([]);
+
     return (
         <div className="filter_box">
             <div className="filter_header">
@@ -33,12 +36,8 @@ function Booking(
                         <label>€1.30</label>
                     </div>
                     <div class="booking_desc_subsection">
-                        <label>Multiple entries and exits</label>
-                        <label>Free</label>
-                    </div>
-                    <div class="booking_desc_subsection">
                         <b>Total</b>
-                        <b>€1.30</b>
+                        <b>€{custos}</b>
                     </div>
                 </div>
             </div>

@@ -67,6 +67,11 @@
     background-color: white;
 }
 
+.filter_submit_button{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
 
 
 .deactivate{

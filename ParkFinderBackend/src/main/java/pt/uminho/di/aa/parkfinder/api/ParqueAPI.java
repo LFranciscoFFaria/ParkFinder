@@ -25,7 +25,7 @@ public class ParqueAPI {
 
     // Métodos do programador
 
-    @PutMapping()
+    @PutMapping("/criarparque")
     public ResponseEntity<Parque> criarParque(@RequestBody Parque p){
         try{ return  new ResponseEntity<>((Parque) parqueServiceBean.criarParque(p), HttpStatus.OK); }
         catch (Exception e){
@@ -33,7 +33,7 @@ public class ParqueAPI {
         }
     }
 
-    @GetMapping("/remove")
+    @DeleteMapping("")
     public ResponseEntity removerParque(@RequestBody int id_parque){
         try{
             parqueServiceBean.removerParque(id_parque);

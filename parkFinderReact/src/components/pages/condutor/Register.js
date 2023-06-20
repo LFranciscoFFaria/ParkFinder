@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Register.css';
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../interactive_items/Button';
+import { Button } from '../../interactive_items/Button';
 
 function Register({
     

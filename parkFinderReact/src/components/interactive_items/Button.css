@@ -107,7 +107,7 @@
     text-decoration: inherit;
 }
 
-.desc_button{
+.ditails_button{
     background-color: white;
     border: 2px solid white;
     padding: 3px 3px 3px 5px;
@@ -116,15 +116,19 @@
     color: gray;
 }
 
+.navbar_staff_login_button,
+.navbar_staff_login_button:hover{
+    padding: 12px 30px;
+    font-size: 130%;
+}
 
 
 
 
 
 
-
-.desc_button_selected,
-.desc_button:hover{
+.ditails_button_selected,
+.ditails_button:hover{
     background-color: lightgray;
     border-bottom: 2px solid lightgray;
     transition: all 0.1s ease-out;

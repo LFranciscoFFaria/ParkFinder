@@ -9,7 +9,7 @@ const filter = {
 };
 
 function Filter({
-    dates
+    showDates = true
 }) {
     
     return (
@@ -18,11 +18,11 @@ function Filter({
                 <h2>Filtros</h2>
                 <div className='filter_header_buttons'>
                     <Button buttonStyle="contrast">Limpar filtros</Button>
-                    <div className='activate'> <Button buttonStyle="default">Apply filters</Button> </div>
+                    <div className='activate'> <Button buttonStyle="default">Aplicar Filtros</Button> </div>
                 </div>
             </div>
 
-            {dates?
+            {showDates?
                 <div className="filter_dates_display">
                     <div className='filter_dates_block'>
                         Data de Início:
@@ -52,7 +52,10 @@ function Filter({
                     </div>
                 )}
             </div>
-            <div className='deactivate'> <Button buttonStyle="default">Aplicar Filtros</Button> </div>
+            <div className='filter_submit_button deactivate'>
+                <br/>
+                <Button buttonStyle="default">Aplicar Filtros</Button>
+            </div>
         </div>
     );
 }

@@ -1,13 +1,16 @@
 import './Details.css'
-import Navbar from '../objects/Navbar';
-import { Button } from '../interactive_items/Button';
-import '../interactive_items/select.css'
-import '../objects/CompressedParkInfo.css'
-import { ImageBlock } from '../interactive_items/ImageBlock';
+
+import '../../objects/CompressedParkInfo.css'
+import '../../interactive_items/select.css'
+
+import Description from '../../objects/Description';
+import Characteristics from '../../objects/Caracteristics';
+import Booking from '../../objects/Booking';
+
+import Navbar from '../../objects/Navbar';
+import { ImageBlock } from '../../interactive_items/ImageBlock';
+import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
-import Characteristics from '../objects/Caracteristics';
-import Description from '../objects/Description';
-import Booking from '../objects/Booking';
 
 
 const parques = [
@@ -23,6 +26,7 @@ const parques = [
         "hora_init" :"8:00",
         "hora_end" :"19:00",
         "descricao" : "Public covered parking\n7 min. walk from the heart of the city\nAccessible from Monday to Friday from 8:00 am to 8:00 pm and Saturdays from 10:00 am to 8:00 pm.",
+        'instant':"PG-58-KL\nDH-90-FDW",
     },
     {
         "id" : 1,
@@ -36,6 +40,7 @@ const parques = [
         "hora_init" :"8:00",
         "hora_end" :"19:00",
         "descricao" : "Covered Hotel Parking\n10 min. from University of Minho\ntaxi service Accessible 24/7",
+        'instant':"PG-58-KL\nDH-90-FDW",
     },
     {
         "id" : 2,
@@ -49,24 +54,34 @@ const parques = [
         "hora_init" :"8:00",
         "hora_end" :"19:00",
         "descricao" : "Public covered Parking\nUnder the citizen's house from Braga\nAccessible 24/7",
+        'instant':"PG-58-KL\nDH-90-FDW",
     },
 ]
 
 function Details({
-    parque,
     setState
 }) {
 
     const [selected,setSelected] = useState(1);
     const [page,setPage] = useState(1);
+    const [parque,setParque] = useState(parques[1]);
+
     
-    if (parque)
-        localStorage.setItem('parqueId', parque['id']);
-    else{
-        parque = parques[localStorage.getItem('parqueId')];
-    }
-    
-    
+    useEffect(() => {
+        let parque_id = localStorage.getItem('parqueId');
+        if (parque_id===null){
+            parque_id = sessionStorage.getItem('parqueId');
+        } else {
+            localStorage.removeItem('parqueId');
+            sessionStorage.setItem('parqueId', parque_id);
+        }
+        setParque(parques[parque_id]);
+        console.log(parque_id);
+        console.log(parque);
+    }, []);
+
+
+
     function renderPage() {
         switch (selected) {
             case 1:
@@ -96,7 +111,7 @@ function Details({
         <div className='front_page'>
             <Navbar setState={setState} setFilter={null}/>
             <div className="front_page_content">
-                <div className="details">
+                <div className="details_display">
                     <div className="details_header">
                         <h1>{parque['nome']}</h1>
                         <div className={'compressed_park_spaces ' + ocupationColor()}>
@@ -105,18 +120,14 @@ function Details({
                     </div>
                     <label>{parque['morada']}</label>
 
-                    <div className="image image_desc">
+                    <div className="image details_image">
                         <ImageBlock imageLink={parque['link_imagem']}/>
                     </div>
-                    <div className="options_desc">
-                        <Button buttonStyle={"desc_button"+(selected===1? ' desc_button_selected':'')} id="descrButton"
-                            onClick={()=>{setSelected(1)}}>Description</Button>
-                        <Button buttonStyle={"desc_button"+(selected===2? ' desc_button_selected':'')} id="charButton"
-                            onClick={()=>{setSelected(2)}}>Characteristics</Button>
+                    <div className="details_options">
+                        <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Descrição</Button>
+                        <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Caracteristicas</Button>
                     </div>
-
                     {page}
-
                 </div>
                 <Booking/>
             </div>
