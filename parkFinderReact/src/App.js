@@ -9,13 +9,14 @@ import Parks from './components/pages/condutor/Parks';
 
 import Admin from './components/pages/admin/Admin';
 import AdminDetails from './components/pages/admin/AdminDetails.js';
-import CreateAdmin from './components/pages/admin/CreateAdmin';
+import CreateAdmin from './components/objects/CreateAdmin';
 
 import Manager from './components/pages/manager/Manager';
 import ManagerDetails from './components/pages/manager/ManagerDetails';
 
 import Programmer from './components/pages/programmer/Programmer';
 import ProgrammerDetails from './components/pages/programmer/ProgrammerDetails';
+import Contacts from './components/objects/Contacts';
 
 
 
@@ -174,11 +175,13 @@ function App() {
                 <Route path='/admin' element={<Admin parques={parques}/>}/>
                 <Route path='/admin/details' element={<AdminDetails/>}/>
 
+
                 {/*Manager*/}
                 <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={1}/>}/>
                 <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
                 <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
                 <Route path='/manager/details' element={<ManagerDetails/>}/>
+                <Route path='/manager/create' element={<Contacts/>}/>
 
 
 

@@ -135,15 +135,8 @@ function AdminDetails({
                 setPage(<Description parque={parque}/>);
                 break;
 
-            case 4:
-                setPage(<Characteristics parque={parque}/>);
-                break;
-
             default:
-                setPage(
-                    <>
-                    </>
-                );
+                setPage(<Characteristics parque={parque}/>);
                 break;
         }
     }
@@ -177,8 +170,6 @@ function AdminDetails({
                     <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Parque instantâneo</Button>
                     <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Descrição</Button>
                     <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Caracteristicas</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===5? ' ditails_button_selected':'')} onClick={()=>{setSelected(5)}}>Estatisticas</Button>
-
                 </div>
                 {page}
             </div>
