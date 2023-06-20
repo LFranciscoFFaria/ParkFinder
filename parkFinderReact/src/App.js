@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/pages/Login.js';
-import Register from './components/pages/Register.js';
-import Perfil from './components/pages/Perfil';
-import Details from './components/pages/Details';
-import Parks from './components/pages/Parks';
-import Admin from './components/pages/Admin';
-import Manager from './components/pages/Manager';
-import Programmer from './components/pages/Programmer';
-import AdminDetails from './components/pages/AdminDetails.js';
-import ManagerDetails from './components/pages/ManagerDetails.js';
-import ProgrammerDetails from './components/pages/ProgrammerDetails';
-import CreateAdmin from './components/pages/CreateAdmin';
+import Login from './components/pages/condutor/Login.js';
+import Register from './components/pages/condutor/Register.js';
+import Perfil from './components/pages/condutor/Perfil';
+import Details from './components/pages/condutor/Details';
+import Parks from './components/pages/condutor/Parks';
+
+import Admin from './components/pages/admin/Admin';
+import AdminDetails from './components/pages/admin/AdminDetails.js';
+import CreateAdmin from './components/pages/admin/CreateAdmin';
+
+import Manager from './components/pages/manager/Manager';
+import ManagerDetails from './components/pages/manager/ManagerDetails';
+
+import Programmer from './components/pages/programmer/Programmer';
+import ProgrammerDetails from './components/pages/programmer/ProgrammerDetails';
+
+
+
 
 const parques = [
     {

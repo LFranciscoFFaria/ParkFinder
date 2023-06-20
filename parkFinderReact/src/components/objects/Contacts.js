@@ -74,6 +74,7 @@ function Contacts({
     createButton = null,
     editButton = null,
     removeButton = null,
+    showPark = false,
     title
 }) {
     return (
@@ -89,13 +90,21 @@ function Contacts({
                     <label className='tel'>Nº Telemovel:</label>
                     <b className='c1'>{user["email"]}</b>
                     <b className='c2'>{user["telemovel"]}</b>
-                    <label className='park'>Parques:</label>
-                    <div className='c3'>{user["parques"].map((parque) => <li> {parque} </li>)}</div>
                     <b className='id'> <div className='contact_id'>User ID: {user["id"]}</div></b>
                     <div className='c4'>
                         <div className='contact_button'>{editButton}</div>
                         <div className='contact_button'>{removeButton}</div>
                     </div>
+
+                    {user["parques"] && showPark?
+                        <>
+                            <label className='park'>Parques:</label>
+                            <div className='c3'>{user["parques"].map((parque) => <li> {parque} </li>)}</div>
+                        </>
+                        :
+                        null
+                    }
+
                 </div>
                 </>
             )}

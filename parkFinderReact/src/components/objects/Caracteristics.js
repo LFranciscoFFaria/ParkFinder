@@ -1,4 +1,4 @@
-import '../pages/Details.css';
+import '../pages/condutor/Details.css';
 
 
 

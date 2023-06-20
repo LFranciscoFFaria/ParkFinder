@@ -1,15 +1,16 @@
-import './Parks.css'
-import '../interactive_items/select.css'
-import AdminCompressedParkInfo from '../objects/AdminCompressedParkInfo';
-import Filter from '../objects/Filter';
-import NavbarStaff from '../objects/NavbarStaff';
-import { useEffect, useState } from 'react';
-import { Button } from '../interactive_items/Button';
+import '../condutor/Parks.css'
+import '../../interactive_items/select.css'
+import ManagerCompressedParkInfo from '../../objects/ManagerCompressedParkInfo';
+import Filter from '../../objects/Filter';
+import NavbarStaff from '../../objects/NavbarStaff';
+import { useState } from 'react';
+import { Button } from '../../interactive_items/Button';
 
-function ParksAdmin({
-    setState,
+function ParksManager({
+    parques,
     filter,
-    parques
+    setFilter,
+    setState,
 }) {
     const [popUp, setPopUp] = useState(false);
     console.log(parques);
@@ -18,7 +19,7 @@ function ParksAdmin({
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
                     {parques.map(parque => 
-                        <AdminCompressedParkInfo key={parque['id']} parque={parque}/>
+                        <ManagerCompressedParkInfo key={parque['id']} parque={parque}/>
                     )}
                     <div className='pageNumb'>
                         <button className='page_button'> {'<<'} </button>
@@ -35,4 +36,4 @@ function ParksAdmin({
     );
 }
 
-export default ParksAdmin;
+export default ParksManager;

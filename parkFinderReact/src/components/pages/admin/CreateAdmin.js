@@ -1,7 +1,7 @@
-import NavbarStaff from '../objects/NavbarStaff';
-import {ImageBlock} from '../interactive_items/ImageBlock';
-import { Button } from '../interactive_items/Button';
-import '../interactive_items/select.css'
+import NavbarStaff from '../../objects/NavbarStaff';
+import {ImageBlock} from '../../interactive_items/ImageBlock';
+import { Button } from '../../interactive_items/Button';
+import '../../interactive_items/select.css'
 import { useEffect, useState } from 'react';
 
 function editPerfilField (
@@ -53,12 +53,11 @@ function CreateAdmin({
             <div className='staff_whitebox'>
                 <NavbarStaff link_logo={'/manager'}/>
                 <div className='edit_perfil_form_content'>
-                {editPerfilField('Nome',null,'Nome',setAdminName,(saveAdmin))}
-                {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
-                {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
-                {editPerfilField('Parks','parks','parks',setAdminParks,saveAdmin)}
-                {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
-
+                    {editPerfilField('Nome',null,'Nome',setAdminName,(saveAdmin))}
+                    {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
+                    {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
+                    {editPerfilField('Parks','parks','parks',setAdminParks,saveAdmin)}
+                    {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
                 </div>
             </div>
         </div>

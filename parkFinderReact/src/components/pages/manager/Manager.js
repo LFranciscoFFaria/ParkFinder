@@ -1,9 +1,9 @@
-import '../pages/Details.css'
-import NavbarStaff from '../objects/NavbarStaff';
-import { Button } from '../interactive_items/Button';
+import '../condutor/Details.css'
+import NavbarStaff from '../../objects/NavbarStaff';
+import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
 import ParksManager from './ParksManager';
-import AdminsManager from './AdminsManager';
+import AdminsManager from '../admin/AdminsManager';
 import StatsManager from './StatsManager';
 
 function Manager({

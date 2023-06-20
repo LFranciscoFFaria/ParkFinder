@@ -1,13 +1,11 @@
-import Filter from '../objects/Filter';
-import NavbarStaff from '../objects/NavbarStaff';
-import {ImageBlock} from '../interactive_items/ImageBlock';
-import { Button } from '../interactive_items/Button';
-import '../interactive_items/select.css'
-import Description from '../objects/Description';
-import Characteristics from '../objects/Caracteristics';
-import InstantPark from '../objects/InstantPark';
+import Filter from '../../objects/Filter';
+import NavbarStaff from '../../objects/NavbarStaff';
+import {ImageBlock} from '../../interactive_items/ImageBlock';
+import { Button } from '../../interactive_items/Button';
+import '../../interactive_items/select.css'
+import Description from '../../objects/Description';
+import Characteristics from '../../objects/Caracteristics';
 import { useEffect, useState } from 'react';
-
 
 const parques = [
     {
@@ -51,7 +49,7 @@ const parques = [
     },
 ]
 
-function editParkField (
+function editPerfilField (
     name,
     type,
     placeholder,
@@ -69,26 +67,25 @@ function editParkField (
                         type={type}
                         onChange={(e) => setFunc(e.target.value)}
                         required/>
-                    <Button type='submit' buttonStyle='contrast'>Adicionar</Button>
-                    <Button type='submit' buttonStyle='contrast'>Remover</Button>
+                    <Button type='submit' buttonStyle='contrast'>Gravar</Button>
                 </div>
             </div>
         </form>
     )
 }
 
-function AdminDetails({
+function ManagerDetails({
     setState
 }) {
-    const [instant, setInstant] = useState('');
-    const [scheduled, setScheduled] = useState('');
+    const [description, setDescription] = useState('');
+    const [name, setParkName] = useState('');
 
 
     const savePark = (event) => {
         event.preventDefault()
         console.log("Save Park");
-        console.log("instant = " + instant);
-        console.log("scheduled = " + scheduled);
+        console.log("description = " + description);
+        console.log("name = " + name);
     };
 
     const [selected,setSelected] = useState(1);
@@ -118,20 +115,17 @@ function AdminDetails({
                 setPage(
                     <div className='details_pages_display'>
                         <div className='edit_perfil_form_content'>
-                            {editParkField('Lugares instantâneos','instant','instant',setInstant,(savePark))}
-                            {editParkField('Lugares para reserva','scheduled','scheduled',setScheduled,savePark)}
+                            {editPerfilField('Nome',null,'Nome',setParkName,(savePark))}
+                            {editPerfilField('Descrição','descricao','descricao',setDescription,savePark)}
                         </div>
                     </div>
                 );
                 break;
-            case 3:
-                setPage(<InstantPark parque={parque}/>);
-                break;
-            case 3:
+            case 2:
                 setPage(<Description parque={parque}/>);
                 break;
 
-            case 4:
+            case 3:
                 setPage(<Characteristics parque={parque}/>);
                 break;
 
@@ -170,10 +164,9 @@ function AdminDetails({
                 </div>
                 <div className="details_options">
                     <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Edição</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Parque instantâneo</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Descrição</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Caracteristicas</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===5? ' ditails_button_selected':'')} onClick={()=>{setSelected(5)}}>Estatisticas</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Descrição</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Caracteristicas</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Estatisticas</Button>
 
                 </div>
                 {page}
@@ -182,4 +175,4 @@ function AdminDetails({
     );
 }
 
-export default AdminDetails;
+export default ManagerDetails;

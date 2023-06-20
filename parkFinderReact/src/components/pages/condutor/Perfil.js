@@ -1,10 +1,10 @@
-import { ImageBlock } from '../interactive_items/ImageBlock';
-import Navbar from '../objects/Navbar';
-import EditPerfil from '../objects/EditPerfil.js';
-import Security from '../objects/Security.js';
-import PaymentHistory from '../objects/PaymentHistory.js';
-import ReservationHistory from '../objects/ReservationHistory.js';
-import '../interactive_items/select.css'
+import { ImageBlock } from '../../interactive_items/ImageBlock';
+import Navbar from '../../objects/Navbar';
+import EditPerfil from '../../objects/EditPerfil.js';
+import Security from '../../objects/Security.js';
+import PaymentHistory from '../../objects/PaymentHistory.js';
+import ReservationHistory from '../../objects/ReservationHistory.js';
+import '../../interactive_items/select.css'
 import './Perfil.css'
 import { useEffect, useState } from 'react';
 

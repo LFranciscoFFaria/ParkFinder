@@ -1,9 +1,8 @@
-import './Manager.css'
-import NavbarStaff from '../objects/NavbarStaff';
-import { Button } from '../interactive_items/Button';
-import '../pages/Details.css'
+import NavbarStaff from '../../objects/NavbarStaff';
+import { Button } from '../../interactive_items/Button';
+import '../condutor/Details.css'
 import { useEffect, useState } from 'react';
-import Contacts from '../objects/Contacts';
+import Contacts from '../../objects/Contacts';
 
 
 const gestores = [
@@ -58,6 +57,7 @@ function Programmer({
                         editButton={<Button buttonStyle={"default"} onClick={() => console.log("editButton")}>editButton</Button>} 
                         removeButton={<Button buttonStyle={"default"} onClick={() => console.log("removeButton")}>removeButton</Button>} 
                         title={"Gestores"}
+                        showPark={true}
                     />
                 );
                 break;

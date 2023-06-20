@@ -1,11 +1,11 @@
 import './Parks.css'
-import '../interactive_items/select.css'
-import CompressedParkInfo from '../objects/CompressedParkInfo.js';
-import Filter from '../objects/Filter';
-import Navbar from '../objects/Navbar';
+import '../../interactive_items/select.css'
+import CompressedParkInfo from '../../objects/CompressedParkInfo.js';
+import Filter from '../../objects/Filter';
+import Navbar from '../../objects/Navbar';
 import { useState } from 'react';
-import PopUp from '../interactive_items/PopUp';
-import { Button } from '../interactive_items/Button';
+import PopUp from '../../interactive_items/PopUp';
+import { Button } from '../../interactive_items/Button';
 
 function Parks({
     parques,

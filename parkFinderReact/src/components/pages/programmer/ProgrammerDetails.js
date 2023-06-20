@@ -1,16 +1,16 @@
-import './Details.css'
+import '../condutor/Details.css'
 
-import '../objects/CompressedParkInfo.css'
-import '../interactive_items/select.css'
+import '../../objects/CompressedParkInfo.css'
+import '../../interactive_items/select.css'
 
-import Description from '../objects/Description';
-import Characteristics from '../objects/Caracteristics';
-import Booking from '../objects/Booking';
+import Description from '../../objects/Description';
+import Characteristics from '../../objects/Caracteristics';
+import Contacts from '../../objects/Contacts';
 
-import Navbar from '../objects/Navbar';
-import { ImageBlock } from '../interactive_items/ImageBlock';
-import { Button } from '../interactive_items/Button';
+import { ImageBlock } from '../../interactive_items/ImageBlock';
+import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
+import NavbarStaff from '../../objects/NavbarStaff';
 
 
 const parques = [
@@ -55,7 +55,7 @@ const parques = [
     },
 ]
 
-function Details({
+function ProgrammersDetails({
     setState
 }) {
 
@@ -85,8 +85,12 @@ function Details({
                 setPage(<Description parque={parque}/>);
                 break;
 
-            default:
+            case 2:
                 setPage(<Characteristics parque={parque}/>);
+                break;
+
+            default:
+                setPage(<Contacts parque={parque}/>);
                 break;
         }
     }
@@ -106,7 +110,7 @@ function Details({
     
     return (
         <div className='front_page'>
-            <Navbar setState={setState} setFilter={null}/>
+            <NavbarStaff setState={setState} setFilter={null}/>
             <div className="front_page_content">
                 <div className="details_display">
                     <div className="details_header">
@@ -123,13 +127,13 @@ function Details({
                     <div className="details_options">
                         <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Descrição</Button>
                         <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Caracteristicas</Button>
+                        <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Contacto do Gestor</Button>
                     </div>
                     {page}
                 </div>
-                <Booking/>
             </div>
         </div>
     );
 }
 
-export default Details;
+export default ProgrammersDetails;

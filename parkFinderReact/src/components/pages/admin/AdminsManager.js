@@ -1,20 +1,24 @@
-import './Parks.css'
-import '../interactive_items/select.css'
-import ManagerCompressedStatInfo from '../objects/ManagerCompressedStatInfo';
-import Filter from '../objects/Filter';
+import '../condutor/Parks.css'
+import '../../interactive_items/select.css'
+import ManagerCompressedAdminInfo from '../../objects/ManagerCompressedAdminInfo';
 import { useState } from 'react';
-import { Button } from '../interactive_items/Button';
+import { Button } from '../../interactive_items/Button';
 
-function StatsManager({
-    stats
+function AdminsManager({
+    admins,
+    filter,
+    setFilter,
+    setState,
 }) {
     const [popUp, setPopUp] = useState(false);
     
     return (
+ 
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
-                    {stats.map(stat => 
-                        <ManagerCompressedStatInfo key={stat['id']} stat={stat}/>
+                    <Button className='default' link={'/manager/create_admin'}>Criar</Button>
+                    {admins.map(admin => 
+                        <ManagerCompressedAdminInfo key={admin['id']} admin={admin}/>
                     )}
                     <div className='pageNumb'>
                         <button className='page_button'> {'<<'} </button>
@@ -28,4 +32,4 @@ function StatsManager({
     );
 }
 
-export default StatsManager;
+export default AdminsManager;

@@ -1,5 +1,5 @@
 import { Button } from '../interactive_items/Button';
-import '../pages/Details.css';
+import '../pages/condutor/Details.css';
 import '../objects/Filter.css';
 import { useState } from 'react';
 
