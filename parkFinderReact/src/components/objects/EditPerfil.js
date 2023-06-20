@@ -37,7 +37,7 @@ function EditPerfil(
     const [name, setName] = useState('');
     const [nif, setNIF] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-
+    const [password, setPassword] = useState('');
 
     const saveProfile = (event) => {
         event.preventDefault()
@@ -46,6 +46,7 @@ function EditPerfil(
         console.log("email = " + email);
         console.log("name = " + name);
         console.log("nif = " + nif);
+        console.log("password = " + password);
         console.log("phoneNumber = " + phoneNumber);
     };
 
@@ -76,6 +77,8 @@ function EditPerfil(
             {editPerfilField('Email','email','Email',setEmail,saveProfile)}
             {editPerfilField('NIF','number','NIF',setNIF,saveProfile)}
             {editPerfilField('PhoneNumber','number','987654321',setPhoneNumber,saveProfile)}
+            {editPerfilField('Palavra-passe','password','*********',setPassword,saveProfile)}
+
         </div>
     );
 };
