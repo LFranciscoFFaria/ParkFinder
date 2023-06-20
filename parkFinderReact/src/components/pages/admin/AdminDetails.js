@@ -124,7 +124,8 @@ function AdminDetails({
                     </div>
                 );
                 break;
-            case 3:
+            case 2:
+                // problema vem do instantePark
                 setPage(<InstantPark parque={parque}/>);
                 break;
             case 3:

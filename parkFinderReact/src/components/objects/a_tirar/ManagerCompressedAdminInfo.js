@@ -1,6 +1,6 @@
 import './CompressedParkInfo.css';
-import { Button } from '../interactive_items/Button';
-import {ImageBlock} from '../interactive_items/ImageBlock';
+import { Button } from '../../interactive_items/Button';
+import {ImageBlock} from '../../interactive_items/ImageBlock';
 
 function separateString(string) {
     let lines = string.split("\n");

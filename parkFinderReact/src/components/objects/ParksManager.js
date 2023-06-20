@@ -1,24 +1,22 @@
-import '../condutor/Parks.css'
-import '../../interactive_items/select.css'
-import ManagerCompressedAdminInfo from '../../objects/ManagerCompressedAdminInfo';
+import '../pages/condutor/Parks.css'
+import '../interactive_items/select.css'
+import ManagerCompressedParkInfo from './ManagerCompressedParkInfo';
+import Filter from './Filter';
+import NavbarStaff from './NavbarStaff';
 import { useState } from 'react';
-import { Button } from '../../interactive_items/Button';
+import { Button } from '../interactive_items/Button';
 
-function AdminsManager({
-    admins,
+function ParksManager({
+    parques,
     filter,
-    setFilter,
-    setState,
 }) {
-    const [popUp, setPopUp] = useState(false);
-    
+    console.log(parques);
+
     return (
- 
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
-                    <Button className='default' link={'/manager/create_admin'}>Criar</Button>
-                    {admins.map(admin => 
-                        <ManagerCompressedAdminInfo key={admin['id']} admin={admin}/>
+                    {parques.map(parque => 
+                        <ManagerCompressedParkInfo key={parque['id']} parque={parque}/>
                     )}
                     <div className='pageNumb'>
                         <button className='page_button'> {'<<'} </button>
@@ -28,8 +26,11 @@ function AdminsManager({
                         <button className='page_button'> {'>>'} </button>
                     </div>
                 </div>
+                <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
+                    <Filter dates={true}/>
+                </div>
             </div>
     );
 }
 
-export default AdminsManager;
+export default ParksManager;

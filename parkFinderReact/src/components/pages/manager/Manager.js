@@ -2,18 +2,18 @@ import '../condutor/Details.css'
 import NavbarStaff from '../../objects/NavbarStaff';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
-import ParksManager from './ParksManager';
-import AdminsManager from '../admin/AdminsManager';
-import StatsManager from './StatsManager';
+import Contacts from '../../objects/Contacts';
+
+import ParksManager from '../../objects/ParksManager';
+import StatsManager from '../../objects/StatsManager';
 
 function Manager({
     parques,
     administradores,
     estatisticas,
-    setFilter
+    selected,
 }) {
 
-    const [selected,setSelected] = useState(1);
     const [page,setPage] = useState(null);
 
     function renderPage() {
@@ -26,7 +26,14 @@ function Manager({
 
             case 2:
                 setPage(
-                    <AdminsManager admins={administradores}/>
+                    <Contacts
+                        listUsers={administradores} 
+                        createButton={<Button buttonStyle={"default"} onClick={() => console.log("createButton")}>Criar Administrador</Button>} 
+                        editButton={<Button buttonStyle={"default"} onClick={() => console.log("editButton")}>Editar</Button>} 
+                        removeButton={<Button buttonStyle={"default"} onClick={() => console.log("removeButton")}>Remover</Button>} 
+                        title={"Administradores"}
+                        showPark={true}
+                    />
                 );
                 break;
 
@@ -47,9 +54,9 @@ function Manager({
             <div className='staff_whitebox'>
                 <NavbarStaff link_logo={'/manager'}/>
                 <div className='details_options'>
-                    <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Parques</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Administradores</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Estatísticas</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} link={'/manager/'}>Parques</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} link={'/manager/admins'}>Administradores</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} link={'/manager/statistics'}>Estatísticas</Button>
                 </div>
 
                 {page}

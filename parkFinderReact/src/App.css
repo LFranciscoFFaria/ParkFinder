@@ -64,3 +64,9 @@ input:focus{
     margin: 30px;
     gap: 20px;
 }
+
+
+
+.disabled_selected{
+    display: none;
+}

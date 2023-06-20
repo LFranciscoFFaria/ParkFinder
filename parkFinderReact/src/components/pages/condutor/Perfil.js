@@ -36,7 +36,7 @@ function Perfil({
 
     useEffect(() => {
         console.log("optionSelected = " + optionSelected);
-        displayPerfilOptions()
+        displayPerfilOptions();
     }, [optionSelected]);
     
     return (

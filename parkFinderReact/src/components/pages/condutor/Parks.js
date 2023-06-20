@@ -4,8 +4,6 @@ import CompressedParkInfo from '../../objects/CompressedParkInfo.js';
 import Filter from '../../objects/Filter';
 import Navbar from '../../objects/Navbar';
 import { useState } from 'react';
-import PopUp from '../../interactive_items/PopUp';
-import { Button } from '../../interactive_items/Button';
 
 function Parks({
     parques,
@@ -40,7 +38,7 @@ function Parks({
                     </div>
                 </div>
                 <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
-                    <Filter dates={true}/>
+                    <Filter/>
                 </div>
             </div>
         </div>

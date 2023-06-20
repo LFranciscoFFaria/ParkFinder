@@ -1,12 +1,12 @@
 .contact_display{
     display: flex;
     flex-direction: column;
+    width: 1100px;
 }
 
 .contact_header{
     display: flex;
     flex-direction: row;
-    width: 1000px;
     justify-content: space-between;
     align-items: end;
     padding: 0px 30px 30px 30px;

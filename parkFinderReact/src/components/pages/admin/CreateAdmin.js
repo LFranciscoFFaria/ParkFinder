@@ -53,7 +53,7 @@ function CreateAdmin({
             <div className='staff_whitebox'>
                 <NavbarStaff link_logo={'/manager'}/>
                 <div className='edit_perfil_form_content'>
-                    {editPerfilField('Nome',null,'Nome',setAdminName,(saveAdmin))}
+                    {editPerfilField('Nome',null,'Nome',setAdminName,saveAdmin)}
                     {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
                     {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
                     {editPerfilField('Parks','parks','parks',setAdminParks,saveAdmin)}

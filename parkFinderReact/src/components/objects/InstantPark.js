@@ -23,11 +23,13 @@ function separateString(string) {
 function InstantPark({
     parque
 }) {
+    // problema vem do separateString(parque['instant'])
+    // string.split("\n") so funciona para listas nao vazias de "abc \n hij... "
+    // parque['instant'] nao sei o que é e estou com sono demais para ver
     return (
         <div className="details_pages_display">
-             <Button class="default">Adicionar</Button>
+            <Button class="default">Adicionar</Button>
             {separateString(parque['instant'])}
-            
         </div>
     );
 };

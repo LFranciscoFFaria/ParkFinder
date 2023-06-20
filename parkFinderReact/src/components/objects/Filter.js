@@ -9,7 +9,7 @@ const filter = {
 };
 
 function Filter({
-    dates
+    showDates = true
 }) {
     
     return (
@@ -22,7 +22,7 @@ function Filter({
                 </div>
             </div>
 
-            {dates?
+            {showDates?
                 <div className="filter_dates_display">
                     <div className='filter_dates_block'>
                         Data de Início:
