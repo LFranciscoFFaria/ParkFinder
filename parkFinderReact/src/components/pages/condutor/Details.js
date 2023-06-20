@@ -125,7 +125,7 @@ function Details({
                     </div>
                     <div className="details_options">
                         <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Descrição</Button>
-                        <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Caracteristicas</Button>
+                        <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Características</Button>
                     </div>
                     {page}
                 </div>

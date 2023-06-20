@@ -122,6 +122,13 @@
     font-size: 130%;
 }
 
+.flex_button,
+.flex_button:hover{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
 
 
 
