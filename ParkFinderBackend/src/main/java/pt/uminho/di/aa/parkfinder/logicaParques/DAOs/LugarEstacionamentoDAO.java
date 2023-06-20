@@ -38,6 +38,12 @@ public interface LugarEstacionamentoDAO extends JpaRepository<LugarEstacionament
     @Query(nativeQuery = true, value="UPDATE reserva r SET r.lugarid = null WHERE r.lugarId = :id_lugar; DELETE FROM lugar_estacionamento WHERE id = :id_lugar")
     void eliminarLugar(@Param("id_lugar") int id_lugar);
 
+    //@Query("SELECT l FROM LugarEstacionamento l WHERE l.tipo.nome = :tipoLugar AND l.parque.id = :id_parque AND NOT IN (SELECT l1.lugarId FROM LugarEstacionamento l1 JOIN Reserva r ON l1.lugarId = r.lugar.lugarId " +
+    //        "WHERE l1.tipo.nome = :tipoLugar " +
+    //        "AND l1.parque.id = :id_parque " +
+    //        "AND NOT (r.dataInicio BETWEEN :data_inicio AND :data_fim) " +
+    //        "AND NOT (r.dataFim BETWEEN :data_inicio AND :data_fim)" +
+    //        "GROUP BY l1.lugarId)")
     @Query("SELECT l FROM LugarEstacionamento l JOIN Reserva r ON l.lugarId = r.lugar.lugarId " +
                                 "WHERE l.tipo.nome = :tipoLugar " +
                                 "AND l.parque.id = :id_parque " +

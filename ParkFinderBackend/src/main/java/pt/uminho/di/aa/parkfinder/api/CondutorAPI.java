@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorEditDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
-import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
@@ -49,32 +49,32 @@ public class CondutorAPI {
     }
 
     @GetMapping("/minhasReservas")
-    public ResponseEntity<List<Reserva>> listarMinhasReservas(){
+    public ResponseEntity<List<ReservaDTO>> listarMinhasReservas(){
         try{
             return new ResponseEntity<>(condutorServiceBean.listarMinhasReservas(), HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<List<Reserva>>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<List<ReservaDTO>>().createBadRequest(e.getMessage());
         }
     }
 
     @PutMapping("/reserva/instantanea")
-    public ResponseEntity<Reserva> fazerReservaInstantanea(@RequestParam("id_parque") int id_parque){
+    public ResponseEntity<ReservaDTO> fazerReservaInstantanea(@RequestParam("id_parque") int id_parque){
         try{
             return new ResponseEntity<>(condutorServiceBean.fazerReservaInstantanea(id_parque), HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<Reserva>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
         }
     }
 
     @PutMapping("/reserva/agendada")
-    public ResponseEntity<Reserva> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo, @RequestParam("data_inicio") LocalDateTime data_inicio, @RequestParam("data_fim") LocalDateTime data_fim){
+    public ResponseEntity<ReservaDTO> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo, @RequestParam("data_inicio") LocalDateTime data_inicio, @RequestParam("data_fim") LocalDateTime data_fim){
         try{
             return new ResponseEntity<>(condutorServiceBean.fazerReservaAgendada(id_parque, tipo, data_inicio, data_fim), HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<Reserva>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
         }
     }
 
