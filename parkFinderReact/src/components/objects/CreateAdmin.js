@@ -1,10 +1,13 @@
-import NavbarStaff from './NavbarStaff';
+import { NavbarStaff } from './Navbar';
 import {ImageBlock} from '../interactive_items/ImageBlock';
 import { Button } from '../interactive_items/Button';
 import '../interactive_items/select.css'
 import { useEffect, useState } from 'react';
 import './CreateAdmin.css';
 import Checkbox from '../interactive_items/Checkbox';
+
+
+
 
 const pk = [
     {

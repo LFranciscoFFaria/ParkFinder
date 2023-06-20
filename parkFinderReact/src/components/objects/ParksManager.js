@@ -1,35 +1,39 @@
 import '../pages/condutor/Parks.css'
-import '../interactive_items/select.css'
-import ManagerCompressedParkInfo from './ManagerCompressedParkInfo';
-import Filter from './Filter';
-import NavbarStaff from './NavbarStaff';
-import { useState } from 'react';
+import './Contacts.css'
+import { FilterStaff } from './Filter';
+import { CompressedParkInfoStaff } from './CompressedParkInfo';
 import { Button } from '../interactive_items/Button';
+import { useState } from 'react';
 
 function ParksManager({
-    parques,
-    filter,
+    parks,
+    createButton = null,
 }) {
-    console.log(parques);
+
+    const [filter,setFilter] = useState(false);
 
     return (
-            <div className='parks_content_display'>
-                <div className='parks_info_display'>
-                    {parques.map(parque => 
-                        <ManagerCompressedParkInfo key={parque['id']} parque={parque}/>
-                    )}
-                    <div className='pageNumb'>
-                        <button className='page_button'> {'<<'} </button>
-                        <button className='page_button'> 1 </button>
-                        <button className='page_button'> 2 </button>
-                        <button className='page_button'> 3  </button>
-                        <button className='page_button'> {'>>'} </button>
-                    </div>
-                </div>
-                <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
-                    <Filter dates={true}/>
-                </div>
+        <div className="contact_display">
+            <div className="contact_header">
+                <h1>Parques</h1>
+                <div className='contact_button'>{createButton}</div>
             </div>
+            <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
+                {/* <FilterStaff dates={true}/> */}
+            </div>
+            {parks.map(parque => 
+                <CompressedParkInfoStaff key={parque['id']} parque={parque} editButton={
+                    <Button buttonStyle={'default'} onClick={() => localStorage.setItem("parqueId", parque["id"])} link={'/manager/details'}>Gerir</Button>
+                }/>
+            )}
+            <div className='pageNumb'>
+                <button className='page_button'> {'<<'} </button>
+                <button className='page_button'> 1 </button>
+                <button className='page_button'> 2 </button>
+                <button className='page_button'> 3  </button>
+                <button className='page_button'> {'>>'} </button>
+            </div>
+        </div>
     );
 }
 

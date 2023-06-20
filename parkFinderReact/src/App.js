@@ -172,22 +172,22 @@ function App() {
                 <Route path='/details' element={<Details filter={filter} setState={setState}/>} />
                 <Route path='/perfil' element={<Perfil setState={setState}/>} />
 
+
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin parques={parques}/>}/>
+                <Route path='/admin' element={<Admin parks={parques} parques={parques}/>}/>
                 <Route path='/admin/details' element={<AdminDetails/>}/>
 
 
                 {/*Manager*/}
-                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={1}/>}/>
+                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} parks={parques} selected={1}/>}/>
                 <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
                 <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
                 <Route path='/manager/details' element={<ManagerDetails/>}/>
                 <Route path='/manager/create' element={<CreateAdmin/>}/>
 
 
-
                 {/*Programmer*/}
-                <Route path='/programmer' element={<Programmer managers={managers} selected={1}/>}/>
+                <Route path='/programmer' element={<Programmer managers={managers} parks={parques} selected={1}/>}/>
                 <Route path='/programmer/managers' element={<Programmer managers={managers} selected={2}/>}/>
                 <Route path='/programmer/details' element={<ProgrammerDetails/>}/>
             </Routes>

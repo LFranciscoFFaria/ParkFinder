@@ -58,7 +58,7 @@ input:focus{
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 180px);
-    min-width: 800px;
+    min-width: 1100px;
     border-radius: 30px;
     padding: 60px;
     margin: 30px;

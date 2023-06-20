@@ -1,5 +1,5 @@
 import { ImageBlock } from '../../interactive_items/ImageBlock';
-import Navbar from '../../objects/Navbar';
+import { Navbar } from '../../objects/Navbar';
 import EditPerfil from '../../objects/EditPerfil.js';
 import Security from '../../objects/Security.js';
 import PaymentHistory from '../../objects/PaymentHistory.js';

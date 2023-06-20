@@ -1,11 +1,11 @@
 import '../condutor/Details.css'
-import NavbarStaff from '../../objects/NavbarStaff';
+import { NavbarStaff } from '../../objects/Navbar';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
 import ParksAdmin from '../../objects/ParksAdmin';
 
 function Admin({
-    parques,
+    parks,
 }) {
 
     return (
@@ -16,7 +16,7 @@ function Admin({
                     <Button buttonStyle={'ditails_button ditails_button_selected'}>Parques</Button>
                 </div>
 
-                {<ParksAdmin parques={parques}/>}
+                {<ParksAdmin parks={parks}/>}
             </div>
         </div>
     );

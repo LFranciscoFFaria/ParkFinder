@@ -1,15 +1,17 @@
-import NavbarStaff from '../../objects/NavbarStaff';
+import { NavbarStaff } from '../../objects/Navbar';
 import { Button } from '../../interactive_items/Button';
 import '../condutor/Details.css'
 import { useEffect, useState } from 'react';
 import Contacts from '../../objects/Contacts';
+import ParksProgrammer from '../../objects/ParksProgrammer';
 
 
 
 
 function Programmer({
     managers,
-    selected
+    selected,
+    parks
 }) {
 
     const [page,setPage] = useState(null);
@@ -17,7 +19,7 @@ function Programmer({
     function renderPage() {
         switch (selected) {
             case 1:
-                setPage(<label>{/* função/modulo para renderizar Parques (vê o discord)*/} Parques </label>);
+                setPage(<ParksProgrammer parks={parks}/>);
                 break;
 
             default:

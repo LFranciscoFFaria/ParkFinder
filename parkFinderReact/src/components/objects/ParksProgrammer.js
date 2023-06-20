@@ -23,7 +23,7 @@ function ParksProgrammer({
             </div>
             {parks.map(parque => 
                 <CompressedParkInfoStaff key={parque['id']} parque={parque} editButton={
-                    <Button buttonStyle={'default'} onClick={() => localStorage.setItem("parqueId", parque["id"])} link={'/admin/details'}>Entrar</Button>
+                    <Button buttonStyle={'default'} onClick={() => {console.log("Parque Removido")}}>Remover</Button>
                 }/>
             )}
             <div className='pageNumb'>
