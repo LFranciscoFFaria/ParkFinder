@@ -21,6 +21,7 @@ import Contacts from './components/objects/Contacts';
 
 
 
+
 const parques = [
     {
         'id': 0,
@@ -181,7 +182,7 @@ function App() {
                 <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
                 <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
                 <Route path='/manager/details' element={<ManagerDetails/>}/>
-                <Route path='/manager/create' element={<Contacts/>}/>
+                <Route path='/manager/create' element={<CreateAdmin/>}/>
 
 
 

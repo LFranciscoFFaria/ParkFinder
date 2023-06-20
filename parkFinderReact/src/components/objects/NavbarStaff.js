@@ -13,8 +13,6 @@ function NavbarStaff({
 
 
     function getPath() {
-        var path = window.location.href.split('/');
-
         return <img className='icon' src={'images/preto.png'} alt={''} />
     }
 

@@ -1,0 +1,11 @@
+.instant_park_display{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    gap:90px
+}
+
+.scanner_box{
+    width: 450px;
+    height: max-content;
+}
