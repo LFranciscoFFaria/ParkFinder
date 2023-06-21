@@ -13,6 +13,7 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,7 +64,7 @@ public class GestorServiceBean implements GestorService {
 	 */
 	public List<Parque> listarMeusParques() throws Exception {
 		checkIsLoggedIn();
-		return (List<Parque>) gestor.getParques();
+		return new ArrayList<>(gestor.getParques());
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class GestorServiceBean implements GestorService {
 	 */
 	public List<Administrador> listarMeusAdministradores() throws Exception {
 		checkIsLoggedIn();
-		return (List<Administrador>) gestor.getAdmins();
+		return new ArrayList<>(gestor.getAdmins());
 	}
 
 	/**
@@ -135,7 +136,7 @@ public class GestorServiceBean implements GestorService {
 		if (!administrador.getDiscriminator().equals("Admin"))
 			throw new Exception("O utilizador não é um administrador.");
 		var parques_administrador = administrador.getParques();
-		Set<Parque> parques_remove = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
+		Set<Parque> parques_remove = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
 		parques_remove.forEach(parques_administrador::remove);
 		gestor.setParques(parques_administrador);
 		utilizadorServiceBean.atualizarUtilizador(administrador);
@@ -177,7 +178,7 @@ public class GestorServiceBean implements GestorService {
 		if (!administrador.getDiscriminator().equals("Admin"))
 			throw new Exception("O utilizador não é um administrador.");
 		var parques_administrador = administrador.getParques();
-		Set<Parque> parques_novos = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
+		Set<Parque> parques_novos = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
 		parques_administrador.addAll(parques_novos);
 		administrador.setParques(parques_administrador);
 		utilizadorServiceBean.atualizarUtilizador(administrador);
