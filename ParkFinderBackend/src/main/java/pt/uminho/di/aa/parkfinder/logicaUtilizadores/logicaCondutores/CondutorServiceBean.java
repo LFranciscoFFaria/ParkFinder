@@ -96,6 +96,20 @@ public class CondutorServiceBean implements CondutorService {
 	}
 
 	/**
+	 * Calcula o valor a pagar pela reserva instantanea. Marca a reserva como pendente de pagamento.
+	 * @param id_reserva identificador da reserva
+	 * @return montante a pagar pela reserva instantanea
+	 * @throws Exception
+	 */
+	public float calculaCustoReservaInstantanea(int id_reserva) throws Exception{
+		checkIsLoggedIn();
+		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+		if(reserva.getUtilizadorID() != condutor.getId())
+			throw new Exception("A reserva pertence a outro utilizador.");
+		return parqueReservaServiceBean.calculaCustoReservaInstantanea(id_reserva);
+	}
+
+	/**
 	 * Função que atualiza uma reserva para paga.
 	 * @param id_reserva identicador da reserva que vai ser paga
 	 * @return Retorna verdadeiro se o reserva foi paga com sucesso.

@@ -84,6 +84,12 @@ public class CondutorAPI {
         }
     }
 
+    @PutMapping("/reserva/instantanea/custo")
+    public ResponseEntity<Float> calcularCustoReservaInstantanea(@RequestParam("id_reserva") int id_reserva){
+        try{ return new ResponseEntity<>(condutorServiceBean.calculaCustoReservaInstantanea(id_reserva), HttpStatus.OK); }
+        catch (Exception e) { return new ResponseEntityBadRequest<Float>().createBadRequest(e.getMessage()); }
+    }
+
     @PutMapping("/reserva/pagar")
     public ResponseEntity<Boolean> pagarReserva(@RequestParam("id_reserva") int id_reserva){
         try{

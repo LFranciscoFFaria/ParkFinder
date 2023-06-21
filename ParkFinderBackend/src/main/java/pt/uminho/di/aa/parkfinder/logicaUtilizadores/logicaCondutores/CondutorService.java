@@ -28,6 +28,8 @@ public interface CondutorService {
 	 */
 	Reserva fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
+	float calculaCustoReservaInstantanea(int id_reserva) throws Exception;
+
 	/**
 	 * 
 	 * @param id_reserva

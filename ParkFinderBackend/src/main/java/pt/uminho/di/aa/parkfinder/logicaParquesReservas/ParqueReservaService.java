@@ -52,4 +52,6 @@ public interface ParqueReservaService {
 	 * @param id_reserva
 	 */
 	boolean pagarReserva(int id_reserva) throws Exception;
+
+    float calculaCustoReservaInstantanea(int idReserva) throws Exception;
 }

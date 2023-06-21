@@ -190,4 +190,33 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 
 		return true;
 	}
+
+	/**
+	 * Calcula o valor a pagar pela reserva instantanea.
+	 * Marca a reserva como pendente de pagamento.
+	 * E define a data final.
+	 * @param idReserva identificador da reserva
+	 * @return montante a pagar pela reserva instantanea
+	 * @throws Exception
+	 */
+	@Transactional
+	public float calculaCustoReservaInstantanea(int idReserva) throws Exception {
+		Reserva reserva = reservaServiceBean.getReserva(idReserva);
+		if(reserva != null &&
+		  !reserva.isPago() &&
+		   reserva.getLugarID() == null &&
+		   reserva.getEstado() == EstadoReserva.OCUPADA) {
+
+			LocalDateTime agora = LocalDateTime.now();
+			String tipoLugar = reserva.getLugar().getTipo().getNome();
+			Precario precario = parqueServiceBean.getPrecarioByParqueIdAndTipoLugar(reserva.getParqueID(), tipoLugar);
+			float custo = precario.calcular_preco(reserva.getDataInicio(), agora);
+
+			reservaServiceBean.setAll(idReserva, Optional.of(EstadoReserva.PENDENTE_PAGAMENTO), null,
+									  Optional.of(custo), null, Optional.of(agora), null);
+
+			return custo;
+		}
+		else throw new Exception("Reserva não pode ser paga.");
+	}
 }
