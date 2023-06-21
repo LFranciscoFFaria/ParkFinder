@@ -21,6 +21,8 @@ import pt.uminho.di.aa.parkfinder.logicaParquesReservas.EstadoReserva;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorService;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
@@ -43,15 +45,17 @@ public class SeedAPI {
     ReservaService reservaService;
     LugarEstacionamentoDAO lugarEstacionamentoDAO;
     NotificationService notificationService;
+    CondutorServiceBean condutorServiceBean;
 
     @Autowired
-    public SeedAPI(ParqueService parqueService, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, UtilizadorService utilizadorService, ReservaService reservaService, LugarEstacionamentoDAO lugarEstacionamentoDAO, NotificationService notificationService) {
+    public SeedAPI(ParqueService parqueService, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, UtilizadorService utilizadorService, ReservaService reservaService, LugarEstacionamentoDAO lugarEstacionamentoDAO, NotificationService notificationService, CondutorServiceBean condutorServiceBean) {
         this.parqueService = parqueService;
         this.tipoLugarEstacionamentoDAO = tipoLugarEstacionamentoDAO;
         this.utilizadorService = utilizadorService;
         this.reservaService = reservaService;
         this.lugarEstacionamentoDAO = lugarEstacionamentoDAO;
         this.notificationService = notificationService;
+        this.condutorServiceBean = condutorServiceBean;
     }
 
     @PostMapping
@@ -154,24 +158,34 @@ public class SeedAPI {
         }
     }
 
+    //private void criarReservas() throws Exception{
+    //    Condutor condutor = (Condutor) utilizadorService.getUtilizador(3);
+    //    Parque parque1 = parqueService.procurarParque(1);
+    //    TipoLugarEstacionamento tipoAgendado = new TipoLugarEstacionamento("Agendado");
+    //    LocalDateTime data_inicio = LocalDateTime.of(2023,6,24,11, 0,0);
+    //    LocalDateTime data_fim = LocalDateTime.of(2023,6,24,12, 0,0);
+    //    List<Integer> lugaresDisponiveis_parque1 = parqueService.procurarLugaresDisponiveis(1,tipoAgendado,data_inicio,data_fim);
+    //    LugarEstacionamento lugarEstacionamento = null;
+    //    Parque parque3 = parqueService.procurarParque(3);
+    //    Reserva reserva_inst = new Reserva(condutor, null, parque3, EstadoReserva.AGENDADA, null, false, null, data_inicio, null);
+    //    reservaService.criarReserva(reserva_inst);
+    //    if(lugaresDisponiveis_parque1.size()>0)
+    //        lugarEstacionamento = lugarEstacionamentoDAO.findById(lugaresDisponiveis_parque1.get(0)).orElse(null);
+    //    else
+    //        throw new Exception("Não existem lugares disponíveis.");
+    //    //Reserva(Utilizador utilizador, LugarEstacionamento lugar, Parque parque, int estado, Float custo, boolean pago, String matricula, LocalDateTime dataInicio, LocalDateTime dataFim)
+    //    Reserva reserva_agendada = new Reserva(condutor, lugarEstacionamento, parque1, EstadoReserva.PENDENTE_PAGAMENTO, null, false, null, data_inicio, data_fim);
+    //    reservaService.criarReserva(reserva_agendada);
+    //}
+
     private void criarReservas() throws Exception{
         Condutor condutor = (Condutor) utilizadorService.getUtilizador(3);
-        Parque parque1 = parqueService.procurarParque(1);
         TipoLugarEstacionamento tipoAgendado = new TipoLugarEstacionamento("Agendado");
         LocalDateTime data_inicio = LocalDateTime.of(2023,6,24,11, 0,0);
         LocalDateTime data_fim = LocalDateTime.of(2023,6,24,12, 0,0);
-        List<Integer> lugaresDisponiveis_parque1 = parqueService.procurarLugaresDisponiveis(1,tipoAgendado,data_inicio,data_fim);
-        LugarEstacionamento lugarEstacionamento = null;
-        Parque parque3 = parqueService.procurarParque(3);
-        Reserva reserva_inst = new Reserva(condutor, null, parque3, EstadoReserva.AGENDADA, null, false, null, data_inicio, null);
-        reservaService.criarReserva(reserva_inst);
-        if(lugaresDisponiveis_parque1.size()>0)
-            lugarEstacionamento = lugarEstacionamentoDAO.findById(lugaresDisponiveis_parque1.get(0)).orElse(null);
-        else
-            throw new Exception("Não existem lugares disponíveis.");
-        //Reserva(Utilizador utilizador, LugarEstacionamento lugar, Parque parque, int estado, Float custo, boolean pago, String matricula, LocalDateTime dataInicio, LocalDateTime dataFim)
-        Reserva reserva_agendada = new Reserva(condutor, lugarEstacionamento, parque1, EstadoReserva.PENDENTE_PAGAMENTO, null, false, null, data_inicio, data_fim);
-        reservaService.criarReserva(reserva_agendada);
+        condutorServiceBean.setCondutor(condutor);
+        condutorServiceBean.fazerReservaInstantanea(3);
+        condutorServiceBean.fazerReservaAgendada(1,tipoAgendado.getNome(),data_inicio,data_fim);
     }
 
     private void criarNotificacoes() throws Exception{
