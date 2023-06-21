@@ -24,16 +24,17 @@ public class ParqueServiceBean implements ParqueService {
 	private final TipoLugarEstacionamentoDAO tipoLugarDAO;
 	private final LugarEstacionamentoDAO lugarDAO;
 	private final EstatisticasDAO estatisticasDAO;
-
 	private final PrecarioDAO precarioDAO;
+	private final HorarioDAO horarioDAO;
 
 	@Autowired
-	public ParqueServiceBean(ParqueDAO parqueDAO, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, LugarEstacionamentoDAO lugarEstacionamentoDAO, EstatisticasDAO estatisticasDAO, PrecarioDAO precarioDAO) {
+	public ParqueServiceBean(ParqueDAO parqueDAO, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, LugarEstacionamentoDAO lugarEstacionamentoDAO, EstatisticasDAO estatisticasDAO, PrecarioDAO precarioDAO, HorarioDAO horarioDAO) {
 		this.parqueDAO = parqueDAO;
 		this.tipoLugarDAO = tipoLugarEstacionamentoDAO;
 		this.lugarDAO = lugarEstacionamentoDAO;
 		this.estatisticasDAO = estatisticasDAO;
 		this.precarioDAO = precarioDAO;
+		this.horarioDAO = horarioDAO;
 	}
 
 	/**
@@ -193,7 +194,8 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 */
 	public List<Precario> getPrecarios(int id_parque) throws Exception {
-		Parque parque = getParque(id_parque);
+		Parque parque = parqueDAO.findByIdWithPrecarios(id_parque);
+		if(parque == null) throw new Exception("Parque não existe!");
 		return new ArrayList<>(parque.getPrecarios());
 	}
 
@@ -238,8 +240,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 */
 	public Estatisticas getEstatisticasParque(int id_parque) throws Exception {
-		Parque parque = getParque(id_parque);
-		return parque.getEstatisticas();
+		return parqueDAO.getEstatisticasDoParque(id_parque);
 	}
 
 	/**
@@ -433,10 +434,11 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param h novo horario
 	 */
 	public void setHorario(int id_parque, Horario h) throws Exception {
-		Parque parque = getParque(id_parque);
+		Parque parque = parqueDAO.findByIdWithHorario(id_parque);
+		if(parque == null) throw new Exception("Parque não existe!");
 		Horario horarioAtual = parque.getHorario();
 		if(horarioAtual != null)
-			h.setId(horarioAtual.getId());
+			horarioDAO.delete(horarioAtual);
 		parque.setHorario(h);
 		parqueDAO.save(parque);
 	}
@@ -446,8 +448,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 */
 	public Horario getHorario(int id_parque) throws Exception {
-		Parque parque = getParque(id_parque);
-		return parque.getHorario();
+		return parqueDAO.getHorarioDoParque(id_parque);
 	}
 
 	/**

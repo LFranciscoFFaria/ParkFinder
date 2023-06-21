@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ReservaDAO extends JpaRepository<Reserva,Integer> {
     List<Reserva> findAllByUtilizadorIdOrderByDataInicioDesc(int id_user);
 
-    Optional<Reserva> findReservaByMatriculaAndEstado(String matricula, int estado);
+    Optional<Reserva> findReservaByParqueIDAndMatriculaAndEstado(int parque_id, String matricula, int estado);
 
     List<Reserva> findAllByParqueIdOrderByDataInicioDesc(int id_parque);
 

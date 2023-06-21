@@ -2,7 +2,6 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
@@ -32,6 +31,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * @param N número de lugares instantâneos a adicionar
 	 */
 	public void addLugarInstantaneo(int id_parque,int N) throws Exception {
+		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
 		parqueServiceBean.addLugaresInstantaneos(id_parque, N);
@@ -44,14 +44,10 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * @param tipo tipo do lugar especial
 	 */
 	public void addLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception {
+		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
-		int i = 0;
-		while(i<N) {
-			//TODO: Esta função assim parece um crime, mas vou deixar o Alex corrigir :)
-			parqueServiceBean.addLugar(id_parque, tipo);
-			i--;
-		}
+		parqueServiceBean.addLugares(id_parque, tipo, N);
 	}
 
 	/**
@@ -60,6 +56,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * @param N número de lugares instantâneos a remover
 	 */
 	public void removerLugarInstantaneo(int id_parque,int N) throws Exception {
+		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a remover tem de ser 1 ou maior.");
 		parqueServiceBean.removeLugaresInstantaneos(id_parque, N);
@@ -72,23 +69,21 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * @param tipo tipo do lugar especial
 	 */
 	public void removerLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception {
+		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
-		int i = 0;
-		while(i<N) {
-			//TODO: Esta função assim parece um crime, mas vou deixar o Alex corrigir :)
-			parqueServiceBean.removerLugar(id_parque, tipo);
-			i--;
-		}
+		parqueServiceBean.removerLugares(id_parque, tipo, N);
 	}
 
 	/**
 	 * Função que retorna uma reserva se a matrícula passada por argumento estiver numa reserva com o estado OCUPADA.
 	 *
+	 * @param id_parque identificador do parque onde se pretende procurar
 	 * @param matricula matricula do carro
 	 */
-	public Reserva encontrarReservaPorMatricula(String matricula) throws Exception {
-		return reservaServiceBean.getReservaMatricula(matricula);
+	public Reserva encontrarReservaPorMatricula(int id_parque, String matricula) throws Exception {
+		checkIsLoggedIn();
+		return reservaServiceBean.getReservaMatricula(id_parque, matricula);
 	}
 
 	/**
@@ -97,6 +92,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * @param matricula matricula nova a associar
 	 */
 	public boolean associarMatriculaAReserva(int id_reserva, String matricula) throws Exception {
+		checkIsLoggedIn();
 		reservaServiceBean.setMatricula(id_reserva,matricula);
 		return true;
 	}
@@ -105,16 +101,22 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * Função que retorna a lista das reservas ativas do parque.
 	 * @param id_parque identificador do parque
 	 */
-	public List<Reserva> verReservasAtivasDeParque(int id_parque) {
+	public List<Reserva> verReservasAtivasDeParque(int id_parque) throws Exception {
+		checkIsLoggedIn();
 		return reservaServiceBean.getReservasParque(id_parque);
 	}
 
-	public void logout() {
-		// TODO: No condutor está função retorna um boleano não sei qual é suposto ser
+	public void logout() throws Exception{
+		checkIsLoggedIn();
 		administrador = null;
 	}
 
     public void setAdministrador(Utilizador u) {
 		this.administrador = (Administrador) u;
     }
+
+	private void checkIsLoggedIn() throws Exception {
+		if(administrador == null)
+			throw new Exception("Não tem sessão iniciada.");
+	}
 }

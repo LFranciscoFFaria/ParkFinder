@@ -59,12 +59,12 @@ public class ReservaServiceBean implements ReservaService {
 	}
 
 	/**
-	 * Encontra uma reserva existente na base de dados.
+	 * @param id_parque id de parque
 	 * @param matricula matricula que está associada a uma reserva
-	 * @return retorna a reserva encontrada ou lança uma exceção se não a encontrar
+	 * @return retorna uma reserva cujo estado se encontre em "OCUPADA", e que corresponda a um certo parque.
 	 */
-	public Reserva getReservaMatricula(String matricula) throws Exception {
-		Reserva reserva = reservaDAO.findReservaByMatriculaAndEstado(matricula, EstadoReserva.OCUPADA).orElse(null);
+	public Reserva getReservaMatricula(int id_parque, String matricula) throws Exception {
+		Reserva reserva = reservaDAO.findReservaByParqueIDAndMatriculaAndEstado(id_parque, matricula, EstadoReserva.OCUPADA).orElse(null);
 		if(reserva == null)
 			throw new Exception("Não existe uma reserva ativa para a matrícula passada por argumento!");
 		return reserva;

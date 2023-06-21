@@ -25,6 +25,9 @@ public class Administrador extends Utilizador implements Serializable {
 	@ManyToOne(targetEntity= Gestor.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="GestorID", referencedColumnName="UtilizadorID", nullable=false)
 	private Gestor gestor;
+
+	@Column(name = "GestorID", insertable = false, updatable = false, nullable = false)
+	private Integer gestorID;
 	
 	@ManyToMany(targetEntity= Parque.class, fetch= FetchType.LAZY)
 	@JoinTable(name="Parque_Administrador", joinColumns={ @JoinColumn(name="AdminID") }, inverseJoinColumns={ @JoinColumn(name="ParqueID") })

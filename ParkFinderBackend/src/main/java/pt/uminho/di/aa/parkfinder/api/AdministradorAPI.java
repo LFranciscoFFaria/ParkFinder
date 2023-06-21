@@ -69,7 +69,7 @@ public class AdministradorAPI {
     @GetMapping("/encontrar_reserva")
     public ResponseEntity<ReservaDTO> encontrarReservaPorMatricula(@RequestParam("matricula") String matricula) {
         try{
-            Reserva r = administradorServiceBean.encontrarReservaPorMatricula(matricula);
+            Reserva r = administradorServiceBean.encontrarReservaPorMatricula(0, matricula);
             return new ResponseEntity<>(reservaToDTO(r),HttpStatus.OK);
         }
         catch (Exception e) {
@@ -100,9 +100,13 @@ public class AdministradorAPI {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout(){
-        administradorServiceBean.logout();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Void> logout() {
+        try{
+            administradorServiceBean.logout();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
+        }
     }
 
     private ReservaDTO reservaToDTO(Reserva r){

@@ -1,8 +1,10 @@
 package pt.uminho.di.aa.parkfinder.api;
 
+import org.hibernate.LazyInitializationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.AdminDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioDecLinearCriarDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioLinearCriarDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
@@ -13,6 +15,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,9 +80,9 @@ public class GestorAPI {
     };
 
     @DeleteMapping("/remover_precario")
-    public ResponseEntity<Void> removerPrecario(@RequestParam int id_parque, @RequestBody TipoLugarEstacionamento tipoLugar){
+    public ResponseEntity<Void> removerPrecario(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo_lugar){
         try{
-            gestorServiceBean.removerPrecario(id_parque, tipoLugar);
+            gestorServiceBean.removerPrecario(id_parque, new TipoLugarEstacionamento(tipo_lugar));
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -88,19 +91,21 @@ public class GestorAPI {
     }
 
     @GetMapping("/meus_administradores")
-    public ResponseEntity<List<Administrador>> listarMeusAdministradores(){
+    public ResponseEntity<List<AdminDTO>> listarMeusAdministradores(){
         try{
-            return new ResponseEntity<>(gestorServiceBean.listarMeusAdministradores(), HttpStatus.OK);
+            List<Administrador> administradores = gestorServiceBean.listarMeusAdministradores();
+            List<AdminDTO> adminDTOS = administradores.stream().map(this::adminToDTO).toList();
+            return new ResponseEntity<>(adminDTOS, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<List<Administrador>>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<List<AdminDTO>>().createBadRequest(e.getMessage());
         }
     };
 
     @PutMapping("/criar_administrador")
-    public ResponseEntity<Void> criarAdmin(@RequestBody Administrador a, @RequestBody List<Integer> ids_parques){
+    public ResponseEntity<Void> criarAdmin(@RequestBody AdminDTO a){
         try{
-            gestorServiceBean.criarAdmin(a,ids_parques);
+            gestorServiceBean.criarAdmin(a.getNome(), a.getEmail(), a.getPassword(), a.getNr_telemovel(), a.getIds_parques());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -141,7 +146,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/alterar_disponibilidade_parque")
-    public ResponseEntity<Void> alterarEstadoDisponivelDeParque(@RequestParam int id_parque, @RequestBody boolean disponivel){
+    public ResponseEntity<Void> alterarEstadoDisponivelDeParque(@RequestParam int id_parque, @RequestParam boolean disponivel){
         try{
             gestorServiceBean.alterarEstadoDisponivelDeParque(id_parque, disponivel);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -173,7 +178,7 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout(){
+    public ResponseEntity<Void> logout() throws Exception {
         gestorServiceBean.logout();
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -184,5 +189,15 @@ public class GestorAPI {
                 Optional.of(parque.isDisponivel()), Optional.of(parque.getInstantaneos_livres()),
                 Optional.of(parque.getInstantaneos_total()), Optional.of(parque.getTotal_lugares()),
                 Optional.of(parque.getCaminho_foto()));
+    }
+
+    private AdminDTO adminToDTO(Administrador a){
+        List<Integer> ids_parques = null;
+
+        //Se a load initialize exception for invocada, então ignora e envia uma lista a null.
+        try{ ids_parques = a.getParques().stream().map(Parque::getId).toList(); }
+        catch (LazyInitializationException ignored){}
+
+        return new AdminDTO(a.getNome(), a.getEmail(), a.getNrTelemovel(), a.getPassword(), a.getGestorID(), ids_parques);
     }
 }

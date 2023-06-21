@@ -22,7 +22,7 @@ public interface GestorService {
 	 */
 	void adicionarPrecario(int id_parque, TipoLugarEstacionamento tipoLugar, Precario precario) throws Exception;
 
-	List<Parque> listarMeusParques();
+	List<Parque> listarMeusParques() throws Exception;
 
 	/**
 	 * 
@@ -31,15 +31,18 @@ public interface GestorService {
 	 */
 	void removerPrecario(int id_parque, TipoLugarEstacionamento tipoLugar) throws Exception;
 
-	List<Administrador> listarMeusAdministradores();
+	List<Administrador> listarMeusAdministradores() throws Exception;
 
 	/**
-	 * 
 	 *
-	 * @param a
+	 * @param nome
+	 * @param email
+	 * @param password
+	 * @param nrTelemovel
 	 * @param ids_parques
+	 * @throws Exception
 	 */
-	void criarAdmin(Administrador a, List<Integer> ids_parques) throws Exception;
+	void criarAdmin(String nome, String email, String password, int nrTelemovel, List<Integer> ids_parques) throws Exception;
 
 	/**
 	 * 
@@ -75,7 +78,7 @@ public interface GestorService {
 	 */
 	void adicionarParquesAAdmin(List<Integer> ids_parques, int id_admin) throws Exception;
 
-	void logout();
+	void logout() throws Exception;
 
 	/**
 	 * 

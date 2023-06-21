@@ -38,9 +38,10 @@ public interface AdministradorService {
 	void removerLugarEspecial(int id_parque, int N, TipoLugarEstacionamento tipo) throws Exception;
 
 	/**
+	 * @param id_parque
 	 * @param matricula
 	 */
-	Reserva encontrarReservaPorMatricula(String matricula) throws Exception;
+	Reserva encontrarReservaPorMatricula(int id_parque, String matricula) throws Exception;
 
 	/**
 	 * 
@@ -53,7 +54,7 @@ public interface AdministradorService {
 	 * 
 	 * @param id_parque
 	 */
-	List<Reserva> verReservasAtivasDeParque(int id_parque);
+	List<Reserva> verReservasAtivasDeParque(int id_parque) throws Exception;
 
-	void logout();
+	void logout() throws Exception;
 }

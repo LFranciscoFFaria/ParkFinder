@@ -1,5 +1,7 @@
 package pt.uminho.di.aa.parkfinder.logicaParques.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +26,12 @@ public class Horario implements Serializable {
 	@Column(name="ID", nullable=false)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private int id;
 	
 	@OneToMany(targetEntity= HorarioPeriodo.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="HorarioID", nullable=false)
+	@JsonProperty("periodos")
 	private Set<HorarioPeriodo> periodos = new java.util.HashSet<>();
 
 	public boolean estaAberto(DayOfWeek dayOfWeek, LocalTime data_inicio, LocalTime data_fim) {

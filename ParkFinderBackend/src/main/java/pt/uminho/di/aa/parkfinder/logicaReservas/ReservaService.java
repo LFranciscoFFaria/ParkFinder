@@ -28,7 +28,7 @@ public interface ReservaService {
 	 *
 	 * @param matricula
 	 */
-	public Reserva getReservaMatricula(String matricula) throws Exception;
+	public Reserva getReservaMatricula(int parque_id, String matricula) throws Exception;
 
 	/**
 	 *
