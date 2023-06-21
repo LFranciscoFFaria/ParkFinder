@@ -9,7 +9,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ParqueEdit {
+public class ParqueDTO {
     Optional<Integer> id;
     Optional<String> nome;
     Optional<String> morada;

@@ -35,6 +35,14 @@
     min-width: max-content;
 }
 
+.compressed_park_tooltip{
+    display: flex;
+    padding: 0px 10px;
+    height: 40px;
+    font-size: 120%;
+    justify-content: center;
+    align-items: center;
+}
 
 .compressed_park_spaces{
     padding: 10px;

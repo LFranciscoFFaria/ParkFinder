@@ -62,7 +62,7 @@ public interface GestorService {
 	 * @param id_parque
 	 * @param newInfo
 	 */
-	boolean alterarInformacoesParque(int id_parque, ParqueEdit newInfo) throws Exception;
+	boolean alterarInformacoesParque(int id_parque, ParqueDTO newInfo) throws Exception;
 
 	/**
 	 * 

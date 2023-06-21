@@ -27,6 +27,7 @@ const reservations = [
         "estado" : "Pagamento Pendente",
         "custo" : 4.35,
         "pago" : false,
+        "tipo_lugar" : "Agendado",
         "matricula" : "XA-21-AZ",
         "data_inicio": "2023-06-22 15:30",
         "data_fim": "2023-06-24 20:42"
@@ -38,6 +39,7 @@ const reservations = [
         "estado" : "Agendada",
         "custo" : 1.52,
         "pago" : true,
+        "tipo_lugar" : "Agendado",
         "matricula" : "XA-21-AZ",
         "data_inicio": "2023-06-20 9:30",
         "data_fim": "2023-06-20 9:42"
@@ -49,6 +51,7 @@ const reservations = [
         "estado" :"Ocupada",
         "custo" : 31.52,
         "pago" : true,
+        "tipo_lugar" : "Agendado",
         "matricula" : "XA-21-AZ",
         "data_inicio": "2023-03-17 7:30",
         "data_fim": "2023-03-17 20:02"
@@ -57,9 +60,34 @@ const reservations = [
         "id": 3,
         "nome_utilizador" : "Ricardo Gomes",
         "nome_parque" : "PARQUE VISCONDE DO RAIO",
+        "estado" :"Ocupada",
+        "custo" : 31.52,
+        "pago" : false,
+        "tipo_lugar" : "Instantaneo",
+        "matricula" : "XA-21-AZ",
+        "data_inicio": "2023-03-17 7:30",
+        "data_fim": "2023-03-17 20:02"
+    },
+    {
+        "id": 4,
+        "nome_utilizador" : "Ricardo Gomes",
+        "nome_parque" : "PARQUE VISCONDE DO RAIO",
         "estado" : "Concluida",
         "custo" : 3.11,
         "pago" : true,
+        "tipo_lugar" : "Agendado",
+        "matricula" : "XA-21-AZ",
+        "data_inicio": "2023-01-20 19:30",
+        "data_fim": "2023-01-20 20:42"
+    },
+    {
+        "id": 5,
+        "nome_utilizador" : "Ricardo Gomes",
+        "nome_parque" : "PARQUE VISCONDE DO RAIO",
+        "estado" : "Concluida",
+        "custo" : 3.11,
+        "pago" : true,
+        "tipo_lugar" : "Instantaneo",
         "matricula" : "XA-21-AZ",
         "data_inicio": "2023-01-20 19:30",
         "data_fim": "2023-01-20 20:42"

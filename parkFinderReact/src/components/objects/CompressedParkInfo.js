@@ -2,6 +2,8 @@ import './CompressedParkInfoStaff.css';
 import './CompressedParkInfo.css';
 import { Button } from '../interactive_items/Button';
 import {ImageBlock} from '../interactive_items/ImageBlock';
+import "rc-tooltip/assets/bootstrap.css";
+import Tooltip from 'rc-tooltip';
 
 function separateString(string) {
     let lines = string.split("\n");
@@ -35,9 +37,13 @@ export function CompressedParkInfo({
                     <h2>{parque["nome"]}</h2>
                     <label className='gray_label'>{parque["distancia"]}</label>
                 </div>
-                <div className={'compressed_park_spaces ' + ocupationColor()}>
-                    <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
-                </div>
+                <Tooltip placement="top" overlay={
+                    <div className='compressed_park_tooltip'> <b>Lugares Instantaneos Ocupados</b></div>
+                } >
+                    <div className={'compressed_park_spaces ' + ocupationColor()}>
+                        <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
+                    </div>
+                </Tooltip>
             </div>
             <div className="compressed_park_image_info">
                 <div className='compressed_park_block_image'>
@@ -81,9 +87,13 @@ export function CompressedParkInfoStaff({
             <div className="compressed_park_staff_info">
                 <div className="compressed_park_staff_header">
                     <h2>{parque["nome"]}</h2>
-                    <div className={'compressed_park_staff_spaces ' + ocupationColor()}>
-                        <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
-                    </div>
+                    <Tooltip placement="top" overlay={
+                        <div className='compressed_park_tooltip'> <b>Lugares Instantaneos Ocupados</b></div>
+                    } >
+                        <div className={'compressed_park_staff_spaces ' + ocupationColor()}>
+                            <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
+                        </div>
+                    </Tooltip>
                 </div>
                 <div className="compressed_park_staff_content">
                     <div className='compressed_park_staff_street'>

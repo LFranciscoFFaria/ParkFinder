@@ -33,10 +33,10 @@ public class Parque implements Serializable {
 	private String descricao;
 	
 	@Column(name="Latitude", nullable=false)	
-	private float latitude;
+	private Float latitude;
 	
 	@Column(name="Longitude", nullable=false)	
-	private float longitude;
+	private Float longitude;
 	
 	@Column(name="Disponivel", nullable=false, length=1)	
 	private boolean disponivel;
@@ -68,7 +68,7 @@ public class Parque implements Serializable {
 	@JoinColumn(name="HorarioID", referencedColumnName="ID")
 	private Horario horario;
 
-	public Parque(String nome, String morada, String descricao, float latitude, float longitude, boolean disponivel, int instantaneos_livres, int instantaneos_total, int total_lugares, String caminho_foto) {
+	public Parque(String nome, String morada, String descricao, Float latitude, Float longitude, boolean disponivel, int instantaneos_livres, int instantaneos_total, int total_lugares, String caminho_foto) {
 		this.estatisticas = new Estatisticas();
 		this.horario = new Horario();
 		this.nome = nome;

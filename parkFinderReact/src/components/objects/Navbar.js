@@ -17,8 +17,8 @@ export function Navbar({
     const [popUp, setPopUp] = useState(false);
     const [element, setElement] = useState(
         <>
-            <QRCodeSVG value={userID} className="navbar_qrcode"/>
-            <h3>User ID: {userID}</h3>
+            <QRCodeSVG value={'userID:' + userID} className="navbar_qrcode"/>
+            <h3>Código: {'userID:' + userID}</h3>
         </>);
 
 

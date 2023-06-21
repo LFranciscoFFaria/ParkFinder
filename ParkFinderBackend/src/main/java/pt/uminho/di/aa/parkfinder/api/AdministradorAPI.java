@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.AdministradorServiceBean;
@@ -110,7 +111,12 @@ public class AdministradorAPI {
     }
 
     private ReservaDTO reservaToDTO(Reserva r){
-        return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), r.getEstado(),
+        if(r == null) return null;
+        String tipo_lugar;
+        LugarEstacionamento lugarEstacionamento = r.getLugar();
+        if(lugarEstacionamento == null) tipo_lugar = "Instantaneo";
+        else tipo_lugar = lugarEstacionamento.getTipo().getNome();
+        return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), tipo_lugar, r.getEstado(),
                 r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
     }
 }
