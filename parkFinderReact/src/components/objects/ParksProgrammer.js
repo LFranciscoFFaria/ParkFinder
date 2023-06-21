@@ -7,7 +7,6 @@ import { useState } from 'react';
 
 function ParksProgrammer({
     parks,
-    createButton = null,
 }) {
 
     const [filter,setFilter] = useState(false);
@@ -16,11 +15,12 @@ function ParksProgrammer({
         <div className="contact_display">
             <div className="contact_header">
                 <h1>Parques</h1>
-                <div className='contact_button'>{createButton}</div>
+                <div className='contact_button compressed_park_staff_create_button'>
+                    <Button buttonStyle={(!filter? "sex_button":"sex_button_selected") + " compressed_park_staff_filter_button"} onClick={() => setFilter(!filter)}>Filtro</Button>
+                    <Button buttonStyle={"default"} onClick={() => console.log("Novo Parque")}>Criar Parque</Button>
+                </div>
             </div>
-            <div className={filter? 'parks_filter_display active': 'parks_filter_display'}>
-                {/* <FilterStaff dates={true}/> */}
-            </div>
+            {filter? <FilterStaff/> : null}
             {parks.map(parque => 
                 <CompressedParkInfoStaff key={parque['id']} parque={parque} editButton={
                     <Button buttonStyle={'default'} onClick={() => {console.log("Parque Removido")}}>Remover</Button>

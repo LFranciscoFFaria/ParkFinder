@@ -6,6 +6,7 @@ import '../../interactive_items/select.css'
 import Description from '../../objects/Description';
 import Characteristics from '../../objects/Caracteristics';
 import { useEffect, useState } from 'react';
+import StatsManager from '../../objects/StatsManager';
 
 const parques = [
     {
@@ -49,6 +50,32 @@ const parques = [
     },
 ]
 
+const estatisticas = [
+    {
+        'id': 0,
+        'nome': "PARQUE VISCONDE DO RAIO",
+        'nr': '5',
+    },
+    {
+        'id': 1,
+        'nome': "B&B BRAGA LAMAÇÃES",
+        'nr': '5',
+    },
+    {
+        'id': 2,
+        'nome': "BRAGA PARQUE",
+        'nr': '5',
+    },
+]
+
+
+
+
+
+
+
+
+
 function editPerfilField (
     name,
     type,
@@ -79,6 +106,10 @@ function ManagerDetails({
 }) {
     const [description, setDescription] = useState('');
     const [name, setParkName] = useState('');
+    const [selected,setSelected] = useState(1);
+    const [page,setPage] = useState(1);
+    const [parque,setParque] = useState(parques[1]);
+    const [estatistica,setEstatistica] = useState(estatisticas[1]);
 
 
     const savePark = (event) => {
@@ -88,9 +119,6 @@ function ManagerDetails({
         console.log("name = " + name);
     };
 
-    const [selected,setSelected] = useState(1);
-    const [page,setPage] = useState(1);
-    const [parque,setParque] = useState(parques[1]);
 
     useEffect(() => {
         let parque_id = localStorage.getItem('parqueId');
@@ -112,6 +140,9 @@ function ManagerDetails({
     function renderPage() {
         switch (selected) {
             case 1:
+                setPage(<StatsManager stats={[estatistica]}/>);
+                break;
+            case 2:
                 setPage(
                     <div className='details_pages_display'>
                         <div className='edit_perfil_form_content'>
@@ -121,19 +152,13 @@ function ManagerDetails({
                     </div>
                 );
                 break;
-            case 2:
+
+            case 3:
                 setPage(<Description parque={parque}/>);
                 break;
 
-            case 3:
-                setPage(<Characteristics parque={parque}/>);
-                break;
-
             default:
-                setPage(
-                    <>
-                    </>
-                );
+                setPage(<Characteristics parque={parque}/>);
                 break;
         }
     }
@@ -163,10 +188,10 @@ function ManagerDetails({
                     <ImageBlock imageLink={parque['link_imagem']}/>
                 </div>
                 <div className="details_options">
-                    <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Edição</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Descrição</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Caracteristicas</Button>
-                    <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Estatisticas</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Estatisticas</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===2? ' ditails_button_selected':'')} onClick={()=>{setSelected(2)}}>Edição</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===3? ' ditails_button_selected':'')} onClick={()=>{setSelected(3)}}>Descrição</Button>
+                    <Button buttonStyle={"ditails_button"+(selected===4? ' ditails_button_selected':'')} onClick={()=>{setSelected(4)}}>Caracteristicas</Button>
 
                 </div>
                 {page}

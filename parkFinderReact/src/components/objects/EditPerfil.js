@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '../interactive_items/Button';
 import './EditPerfil.css';
 
-function editPerfilField (
+ export function editPerfilField (
     name,
     type,
     placeholder,
@@ -29,7 +29,7 @@ function editPerfilField (
 }
 
 
-function EditPerfil(
+export function EditPerfil(
 
 ) {
     const [color, setColor] = useState(null);
@@ -82,6 +82,3 @@ function EditPerfil(
         </div>
     );
 };
-
-
-export default EditPerfil;
