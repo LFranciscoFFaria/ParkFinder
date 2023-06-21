@@ -207,14 +207,13 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 *
 	 * @param id_parque identificador do parque
-	 * @param nome Tipo de lugar
+	 * @param tipoLugar Tipo de lugar
 	 * @return precario do parque mencionado para o tipo de lugar referido. Null se não existir.
 	 */
 	@Override
-	public Precario getPrecarioByNome(int id_parque, String nome){
-		return parqueDAO.findPrecarioDoParque(id_parque, nome);
+	public Precario getPrecarioByParqueIdAndTipoLugar(int id_parque, String tipoLugar){
+		return parqueDAO.findPrecarioDoParque(id_parque, tipoLugar);
 	}
 
 	/**
@@ -230,12 +229,12 @@ public class ParqueServiceBean implements ParqueService {
 		Precario precario;
 		//reserva instantanea
 		if(id_lugar == null){
-			precario = getPrecarioByNome(id_parque, "Instantaneo");
+			precario = getPrecarioByParqueIdAndTipoLugar(id_parque, "Instantaneo");
 		}else {
 			LugarEstacionamento lugar = getLugar(id_lugar);
 			if (lugar.getParqueId() != parque.getId())
 				throw new Exception("Lugar não pertence ao parque!");
-			precario = getPrecarioByNome(parque.getId(), lugar.getTipo().getNome());
+			precario = getPrecarioByParqueIdAndTipoLugar(parque.getId(), lugar.getTipo().getNome());
 		}
 		if(precario == null)
 			throw new Exception("Precario para o tipo de lugar da reserva não está estabelecido para o respetivo parque. Contacte o gestor do parque.");

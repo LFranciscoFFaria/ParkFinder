@@ -128,8 +128,8 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			//Se o estado está em agendado, então a reserva já foi paga, portanto não é necessário verificar.
 			//Preciso verificar se está a entrar dentro do parque, durante o tempo da sua reserva.
 			if(reserva.getEstado() == EstadoReserva.AGENDADA
-					&& reserva.getDataInicio().isAfter(agora)
-					&& reserva.getDataFim().isBefore(agora)){
+					&& reserva.getDataInicio().isBefore(agora)
+					&& reserva.getDataFim().isAfter(agora)){
 				reservaServiceBean.setAll(id_reserva, Optional.of(EstadoReserva.OCUPADA), null, null, null, null, Optional.of(matricula));
 				//reserva.setEstado(EstadoReserva.OCUPADA);
 				//reserva.setMatricula(matricula);
@@ -152,7 +152,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	public boolean marcarSaidaParque(int id_reserva) throws Exception{
 		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
 		if (reserva.getEstado() == EstadoReserva.OCUPADA && reserva.isPago()) {
-			reserva.setEstado(EstadoReserva.CONCLUIDA);
+			reservaServiceBean.setEstado(id_reserva,EstadoReserva.CONCLUIDA);
 			return true;
 		}
 		return false;
