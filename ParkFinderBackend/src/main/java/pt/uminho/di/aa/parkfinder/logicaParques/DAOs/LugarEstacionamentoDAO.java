@@ -15,35 +15,18 @@ import java.util.Set;
 
 @Repository
 public interface LugarEstacionamentoDAO extends JpaRepository<LugarEstacionamento,Integer> {
-    //@Modifying
-    //@Query("DELETE FROM LugarEstacionamento " +
-    //            "WHERE lugarId IN (SELECT l.lugarId FROM LugarEstacionamento l " +
-    //                                          "LEFT JOIN Reserva r ON l.lugarId = r.lugar.lugarId " +
-    //                                                "WHERE l.tipo.nome = :tipoLugar " +
-    //                                                  "AND r.data_fim >= current_timestamp " +
-    //                                                "HAVING COUNT(r.id) = 0 " +
-    //                                                "LIMIT 1)")
-    //void eliminar1LugarSemReservasFuturas(@Param("tipoLugar") String tipoLugar);
 
-    @Query("SELECT l.lugarId FROM LugarEstacionamento l " +
-                       "LEFT JOIN Reserva r ON l.lugarId = r.lugar.lugarId " +
-                       "WHERE l.tipo.nome = :tipoLugar " +
-                       "AND l.parque.id = :id_parque " +
-                       "AND r.dataFim >= current_timestamp() " +
-                       "GROUP BY l " +
-                       "HAVING COUNT(r.id) = 0 ")
-    List<LugarEstacionamento> findLugaresSemReservasFuturas(@Param("id_parque") int id_parque, @Param("tipoLugar") String tipoLugar);
+    @Query(nativeQuery = true, value = "SELECT id from (SELECT l.id,MAX(r.data_fim) as max from lugar_estacionamento l " +
+                                        "LEFT JOIN reserva r on l.id = r.lugarid " +
+                                        "JOIN tipo_lugar_estacionamento tle on l.tipo_lugarid = tle.id " +
+                                        "WHERE tle.nome = :tipo_Lugar AND l.parqueid = :id_parque GROUP BY l.id) " +
+                                        "as r where r.max < current_timestamp() or r.max IS NULL")
+    List<Integer> findLugaresSemReservasFuturas(@Param("id_parque") int id_parque, @Param("tipo_Lugar") String tipo_Lugar);
 
     @Modifying
-    @Query(nativeQuery = true, value="UPDATE reserva r SET r.lugarid = null WHERE r.lugarId = :id_lugar; DELETE FROM lugar_estacionamento WHERE id = :id_lugar")
-    void eliminarLugar(@Param("id_lugar") int id_lugar);
+    @Query(value="UPDATE Reserva r SET r.lugar.lugarId = null WHERE r.lugar.lugarId = :id_lugar")
+    void requisitoEliminarLugar(@Param("id_lugar") int id_lugar);
 
-    //@Query("SELECT l FROM LugarEstacionamento l WHERE l.tipo.nome = :tipoLugar AND l.parque.id = :id_parque AND NOT IN (SELECT l1.lugarId FROM LugarEstacionamento l1 JOIN Reserva r ON l1.lugarId = r.lugar.lugarId " +
-    //        "WHERE l1.tipo.nome = :tipoLugar " +
-    //        "AND l1.parque.id = :id_parque " +
-    //        "AND NOT (r.dataInicio BETWEEN :data_inicio AND :data_fim) " +
-    //        "AND NOT (r.dataFim BETWEEN :data_inicio AND :data_fim)" +
-    //        "GROUP BY l1.lugarId)")
     @Query("SELECT l FROM LugarEstacionamento l JOIN Reserva r ON l.lugarId = r.lugar.lugarId " +
                                 "WHERE l.tipo.nome = :tipoLugar " +
                                 "AND l.parque.id = :id_parque " +
@@ -51,4 +34,6 @@ public interface LugarEstacionamentoDAO extends JpaRepository<LugarEstacionament
                                 "AND NOT (r.dataFim BETWEEN :data_inicio AND :data_fim)")
     Set<LugarEstacionamento> procurarLugaresDisponiveis(@Param("id_parque") int id_parque, @Param("tipoLugar") String tipoLugar,
                                                      @Param("data_inicio") LocalDateTime data_inicio, @Param("data_fim") LocalDateTime data_fim);
+
+    List<LugarEstacionamento> findAllByParqueId(int id_parque);
 }
