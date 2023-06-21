@@ -127,14 +127,11 @@ public class GestorServiceBean implements GestorService {
 	 * @param id_parque identificador do parque
 	 * @param newInfo nova informação relativa ao parque
 	 */
-	public boolean alterarInformacoesParque(int id_parque, Parque newInfo) throws Exception {
-		if (id_parque == newInfo.getId())
-			return parqueServiceBean.setAll(id_parque,newInfo.getNome(),
-											newInfo.getDescricao(),newInfo.getLatitude(),
-											newInfo.getLongitude(),newInfo.isDisponivel(),
-											newInfo.getInstantaneos_livres(),newInfo.getInstantaneos_total(),
-											newInfo.getTotal_lugares(),newInfo.getCaminho_foto());
-		return false;
+	public boolean alterarInformacoesParque(int id_parque, ParqueEdit newInfo) throws Exception {
+		return parqueServiceBean.setAll(id_parque,newInfo.getNome(),
+								newInfo.getDescricao(),newInfo.getLatitude(),
+								newInfo.getLongitude(),newInfo.getDisponivel(),
+								newInfo.getCaminho_foto());
 	}
 
 	/**

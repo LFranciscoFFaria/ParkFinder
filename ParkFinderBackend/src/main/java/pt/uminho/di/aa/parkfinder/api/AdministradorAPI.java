@@ -69,7 +69,8 @@ public class AdministradorAPI {
     @GetMapping("/encontrar_reserva")
     public ResponseEntity<ReservaDTO> encontrarReservaPorMatricula(@RequestParam("matricula") String matricula) {
         try{
-            return new ResponseEntity<>(administradorServiceBean.encontrarReservaPorMatricula(matricula),HttpStatus.OK);
+            Reserva r = administradorServiceBean.encontrarReservaPorMatricula(matricula);
+            return new ResponseEntity<>(reservaToDTO(r),HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
@@ -89,7 +90,9 @@ public class AdministradorAPI {
     @GetMapping("/reservas_ativas")
     public ResponseEntity<List<ReservaDTO>> verReservasAtivasDeParque(@RequestParam("id_parque") int id_parque){
         try{
-            return new ResponseEntity<>(administradorServiceBean.verReservasAtivasDeParque(id_parque),HttpStatus.OK);
+            List<Reserva> reservas = administradorServiceBean.verReservasAtivasDeParque(id_parque);
+            List<ReservaDTO> reservaDTOS = reservas.stream().map(this::reservaToDTO).toList();
+            return new ResponseEntity<>(reservaDTOS,HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<List<ReservaDTO>>().createBadRequest(e.getMessage());
@@ -100,5 +103,10 @@ public class AdministradorAPI {
     public ResponseEntity<Void> logout(){
         administradorServiceBean.logout();
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private ReservaDTO reservaToDTO(Reserva r){
+        return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), r.getEstado(),
+                r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
     }
 }

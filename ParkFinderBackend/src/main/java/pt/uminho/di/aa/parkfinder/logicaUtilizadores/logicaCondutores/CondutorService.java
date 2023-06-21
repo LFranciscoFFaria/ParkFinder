@@ -1,8 +1,5 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
-import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorEditDTO;
-import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 import java.time.LocalDateTime;
@@ -14,24 +11,22 @@ public interface CondutorService {
 	 * 
 	 * @param condutorDTO
 	 */
-	boolean editarPerfil(CondutorEditDTO condutorDTO) throws Exception;
+	boolean editarPerfil(CondutorEdit condutorDTO) throws Exception;
 
-	List<ReservaDTO> listarMinhasReservas() throws Exception;
+	List<Reserva> listarMinhasReservas() throws Exception;
 
 	/**
-	 * 
 	 * @param id_parque
 	 */
-	ReservaDTO fazerReservaInstantanea(int id_parque) throws Exception;
+	Reserva fazerReservaInstantanea(int id_parque) throws Exception;
 
 	/**
-	 * 
 	 * @param id_parque
 	 * @param tipo_lugar
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	ReservaDTO fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
+	Reserva fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
 	/**
 	 * 

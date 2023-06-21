@@ -84,11 +84,11 @@ public class AdministradorServiceBean implements AdministradorService {
 
 	/**
 	 * Função que retorna uma reserva se a matrícula passada por argumento estiver numa reserva com o estado OCUPADA.
+	 *
 	 * @param matricula matricula do carro
 	 */
-	public ReservaDTO encontrarReservaPorMatricula(String matricula) throws Exception {
-		Reserva r = reservaServiceBean.getReservaMatricula(matricula);
-		return reservaToDTO(r);
+	public Reserva encontrarReservaPorMatricula(String matricula) throws Exception {
+		return reservaServiceBean.getReservaMatricula(matricula);
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * Função que retorna a lista das reservas ativas do parque.
 	 * @param id_parque identificador do parque
 	 */
-	public List<ReservaDTO> verReservasAtivasDeParque(int id_parque) {
-		return reservaServiceBean.getReservasParque(id_parque).stream().map(this::reservaToDTO).toList();
+	public List<Reserva> verReservasAtivasDeParque(int id_parque) {
+		return reservaServiceBean.getReservasParque(id_parque);
 	}
 
 	public void logout() {
@@ -117,9 +117,4 @@ public class AdministradorServiceBean implements AdministradorService {
     public void setAdministrador(Utilizador u) {
 		this.administrador = (Administrador) u;
     }
-
-	private ReservaDTO reservaToDTO(Reserva r){
-		return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), r.getEstado(),
-				r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
-	}
 }

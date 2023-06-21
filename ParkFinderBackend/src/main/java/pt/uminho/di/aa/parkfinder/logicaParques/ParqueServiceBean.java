@@ -489,35 +489,26 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param latitude latitude do parque
 	 * @param longitude longitude do parque
 	 * @param disponivel disponibilidade do parque
-	 * @param instantaneos_livres número de lugares instantâneos livres do parque
-	 * @param instantaneos_total número de lugares instantâneos totais do parque
-	 * @param total_lugares número de total de lugares do parque
 	 * @param caminho_foto caminho onde está guardada a foto do parque
 	 * @return retorna verdadeiro em caso de sucesso
 	*/
-	public boolean setAll(int id_parque, String nome, String descricao, Float latitude, Float longitude, Boolean disponivel, Integer instantaneos_livres, Integer instantaneos_total,Integer total_lugares, String caminho_foto) throws Exception {
+	public boolean setAll(int id_parque, Optional<String> nome, Optional<String> descricao, Optional<Float> latitude, Optional<Float> longitude, Optional<Boolean> disponivel, Optional<String> caminho_foto) throws Exception {
 		Parque parque = parqueDAO.findById(id_parque).orElse(null);
 		if (parque == null){
 			throw new Exception("A parque não existe!");
 		}
 		if(nome != null)
-			parque.setNome(nome);
+			nome.ifPresent(parque::setNome);
 		if (descricao != null)
-			parque.setDescricao(descricao);
+			descricao.ifPresent(parque::setDescricao);
 		if (latitude != null)
-			parque.setLatitude(latitude);
+			latitude.ifPresent(parque::setLatitude);
 		if (longitude != null)
-			parque.setLongitude(longitude);
+			longitude.ifPresent(parque::setLongitude);
 		if (disponivel != null)
-			parque.setDisponivel(disponivel);
-		if (instantaneos_livres != null)
-			parque.setInstantaneos_livres(instantaneos_livres);
-		if (instantaneos_total != null)
-			parque.setInstantaneos_total(instantaneos_total);
-		if (total_lugares != null)
-			parque.setTotal_lugares(total_lugares);
+			disponivel.ifPresent(parque::setDisponivel);
 		if (caminho_foto != null)
-			parque.setCaminho_foto(caminho_foto);
+			caminho_foto.ifPresent(parque::setCaminho_foto);
 		parqueDAO.save(parque);
 		return true;
 	}

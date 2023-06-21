@@ -8,6 +8,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface ParqueService {
 
@@ -200,13 +201,10 @@ public interface ParqueService {
 	 * @param latitude
 	 * @param longitude
 	 * @param disponivel
-	 * @param instantaneos_livres
-	 * @param instantaneos_total
-	 * @param total_lugares
 	 * @param caminho_foto
 	 * @return
 	 */
-	public boolean setAll(int id_parque, String nome, String descricao, Float latitude, Float longitude, Boolean disponivel, Integer instantaneos_livres, Integer instantaneos_total,Integer total_lugares, String caminho_foto) throws Exception;
+	boolean setAll(int id_parque, Optional<String> nome, Optional<String> descricao, Optional<Float> latitude, Optional<Float> longitude, Optional<Boolean> disponivel, Optional<String> caminho_foto) throws Exception;
 
 	LugarEstacionamento getLugarById(int id_lugar);
 }

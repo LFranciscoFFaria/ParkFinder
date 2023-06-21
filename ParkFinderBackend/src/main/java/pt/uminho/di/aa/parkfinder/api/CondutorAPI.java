@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorDTO;
-import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorEditDTO;
+import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorEdit;
 import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
@@ -41,7 +42,7 @@ public class CondutorAPI {
     }
 
     @PutMapping("/editarPerfil")
-    public ResponseEntity<Boolean> editarPerfil(@RequestBody CondutorEditDTO c){
+    public ResponseEntity<Boolean> editarPerfil(@RequestBody CondutorEdit c){
         try{ return new ResponseEntity<>(condutorServiceBean.editarPerfil(c), HttpStatus.OK); }
         catch (Exception e){
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
@@ -51,7 +52,9 @@ public class CondutorAPI {
     @GetMapping("/minhasReservas")
     public ResponseEntity<List<ReservaDTO>> listarMinhasReservas(){
         try{
-            return new ResponseEntity<>(condutorServiceBean.listarMinhasReservas(), HttpStatus.OK);
+            List<Reserva> reservas = condutorServiceBean.listarMinhasReservas();
+            List<ReservaDTO> reservaDTOS = reservas.stream().map(this::reservaToDTO).toList();
+            return new ResponseEntity<>(reservaDTOS, HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<List<ReservaDTO>>().createBadRequest(e.getMessage());
@@ -61,7 +64,8 @@ public class CondutorAPI {
     @PutMapping("/reserva/instantanea")
     public ResponseEntity<ReservaDTO> fazerReservaInstantanea(@RequestParam("id_parque") int id_parque){
         try{
-            return new ResponseEntity<>(condutorServiceBean.fazerReservaInstantanea(id_parque), HttpStatus.OK);
+            Reserva r = condutorServiceBean.fazerReservaInstantanea(id_parque);
+            return new ResponseEntity<>(reservaToDTO(r), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
@@ -71,7 +75,8 @@ public class CondutorAPI {
     @PutMapping("/reserva/agendada")
     public ResponseEntity<ReservaDTO> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo, @RequestParam("data_inicio") LocalDateTime data_inicio, @RequestParam("data_fim") LocalDateTime data_fim){
         try{
-            return new ResponseEntity<>(condutorServiceBean.fazerReservaAgendada(id_parque, tipo, data_inicio, data_fim), HttpStatus.OK);
+            Reserva r = condutorServiceBean.fazerReservaAgendada(id_parque, tipo, data_inicio, data_fim);
+            return new ResponseEntity<>(reservaToDTO(r), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
@@ -96,5 +101,10 @@ public class CondutorAPI {
         } catch (Exception e){
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
+    }
+
+    private ReservaDTO reservaToDTO(Reserva r){
+        return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), r.getEstado(),
+                r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
     }
 }

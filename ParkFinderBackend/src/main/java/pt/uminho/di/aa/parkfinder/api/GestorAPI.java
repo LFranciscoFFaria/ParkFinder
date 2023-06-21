@@ -1,24 +1,20 @@
 package pt.uminho.di.aa.parkfinder.api;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioDecLinearCriarDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioLinearCriarDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.Horario;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioDecrementoLinear;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 
-import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -69,12 +65,14 @@ public class GestorAPI {
     }
 
     @GetMapping("/meus_parques")
-    public ResponseEntity<List<Parque>> listarMeusParques(){
+    public ResponseEntity<List<ParqueEdit>> listarMeusParques(){
         try{
-            return new ResponseEntity<>(gestorServiceBean.listarMeusParques(), HttpStatus.OK);
+            List<Parque> parques = gestorServiceBean.listarMeusParques();
+            List<ParqueEdit> parqueEdits = parques.stream().map(this::parqueToDTO).toList();
+            return new ResponseEntity<>(parqueEdits, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<List<Parque>>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<List<ParqueEdit>>().createBadRequest(e.getMessage());
         }
     };
 
@@ -133,7 +131,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/alterar_parque")
-    public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam int id_parque, @RequestBody Parque newInfo){
+    public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam int id_parque, @RequestBody ParqueEdit newInfo){
         try{
             return new ResponseEntity<>(gestorServiceBean.alterarInformacoesParque(id_parque,newInfo), HttpStatus.OK);
         }
@@ -178,5 +176,13 @@ public class GestorAPI {
     public ResponseEntity<Void> logout(){
         gestorServiceBean.logout();
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private ParqueEdit parqueToDTO(Parque parque){
+        return new ParqueEdit(Optional.of(parque.getId()), Optional.of(parque.getNome()), Optional.of(parque.getMorada()),
+                Optional.of(parque.getDescricao()), Optional.of(parque.getLatitude()), Optional.of(parque.getLongitude()),
+                Optional.of(parque.isDisponivel()), Optional.of(parque.getInstantaneos_livres()),
+                Optional.of(parque.getInstantaneos_total()), Optional.of(parque.getTotal_lugares()),
+                Optional.of(parque.getCaminho_foto()));
     }
 }
