@@ -2,13 +2,13 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.Set;
 @SessionScope
 public class ProgramadorServiceBean implements ProgramadorService {
 
-	private final UtilizadorServiceBean utilizadorServiceBean;
-	private final ParqueServiceBean parqueServiceBean;
+	private final UtilizadorService utilizadorService;
+	private final ParqueService parqueService;
 	private Programador programador;
 
-	public ProgramadorServiceBean(UtilizadorServiceBean utilizadorServiceBean, ParqueServiceBean parqueServiceBean) {
-		this.utilizadorServiceBean = utilizadorServiceBean;
-		this.parqueServiceBean = parqueServiceBean;
+	public ProgramadorServiceBean(UtilizadorService utilizadorService, ParqueService parqueService) {
+		this.utilizadorService = utilizadorService;
+		this.parqueService = parqueService;
 	}
 
 	/**
@@ -37,12 +37,12 @@ public class ProgramadorServiceBean implements ProgramadorService {
 		checkIsLoggedIn();
 		if (g == null)
 			throw new Exception("O gestor não pode ser nulo.");
-		Utilizador u = utilizadorServiceBean.getUtilizador(g.getEmail());
+		Utilizador u = utilizadorService.getUtilizador(g.getEmail());
 		if (u == null){
-			Set<Parque> parques = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
+			Set<Parque> parques = new HashSet<>(parqueService.listarParques(ids_parques));
 			g.setParques(parques);
 			g.setDiscriminator("Gestor");
-			utilizadorServiceBean.criarUtilizador(g);
+			utilizadorService.criarUtilizador(g);
 		}
 		else
 			throw new Exception("O gestor com este identificador já existe na base de dados.");
@@ -54,12 +54,12 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 */
 	public void removerGestor(int id_gestor) throws Exception {
 		checkIsLoggedIn();
-		Gestor g = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
+		Gestor g = (Gestor) utilizadorService.getUtilizador(id_gestor);
 		if (g == null)
 			throw new Exception("O identificador do gestor não se encontra na base de dados.");
 		if (!g.getDiscriminator().equals("Gestor"))
 			throw new Exception("O utilizador não é um gestor.");
-		utilizadorServiceBean.removerUtilizador(id_gestor);
+		utilizadorService.removerUtilizador(id_gestor);
 	}
 
 	/**
@@ -69,16 +69,16 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 */
 	public void adicionarParquesAGestor(List<Integer> ids_parques, int id_gestor) throws Exception {
 		checkIsLoggedIn();
-		Gestor gestor = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
+		Gestor gestor = (Gestor) utilizadorService.getUtilizador(id_gestor);
 		if (gestor == null)
 			throw new Exception("O gestor não existe.");
 		if (!gestor.getDiscriminator().equals("Gestor"))
 			throw new Exception("O utilizador não é um gestor.");
-		var parques_novos = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
+		var parques_novos = new HashSet<>(parqueService.listarParques(ids_parques));
 		Set<Parque> parques_gestor = new HashSet<Parque>(gestor.getParques());
 		parques_gestor.addAll(parques_novos);
 		gestor.setParques(parques_gestor);
-		utilizadorServiceBean.atualizarUtilizador(gestor);
+		utilizadorService.atualizarUtilizador(gestor);
 	}
 
 	/**
@@ -88,16 +88,16 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 */
 	public void removerParquesAGestor(List<Integer> ids_parques, int id_gestor) throws Exception {
 		checkIsLoggedIn();
-		Gestor gestor = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
+		Gestor gestor = (Gestor) utilizadorService.getUtilizador(id_gestor);
 		if (gestor == null)
 			throw new Exception("O gestor não existe.");
 		if (!gestor.getDiscriminator().equals("Gestor"))
 			throw new Exception("O utilizador não é um gestor.");
 		var parques_gestor = gestor.getParques();
-		Set<Parque> parques_remove = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
+		Set<Parque> parques_remove = new HashSet<>(parqueService.listarParques(ids_parques));
 		parques_remove.forEach(parques_gestor::remove);
 		gestor.setParques(parques_gestor);
-		utilizadorServiceBean.atualizarUtilizador(gestor);
+		utilizadorService.atualizarUtilizador(gestor);
 	}
 
 	/**
@@ -106,10 +106,10 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 */
 	public void registarParque(Parque p) throws Exception {
 		checkIsLoggedIn();
-		Parque parque = parqueServiceBean.procurarParque(p.getId());
+		Parque parque = parqueService.procurarParque(p.getId());
 		if (parque != null)
 			throw new Exception("O parque já existe na base de dados.");
-		parqueServiceBean.criarParque(p);
+		parqueService.criarParque(p);
 	}
 
 	/**
@@ -119,10 +119,10 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 */
 	public void removerParque(int id_parque) throws Exception {
 		checkIsLoggedIn();
-		Parque parque = parqueServiceBean.procurarParque(id_parque);
+		Parque parque = parqueService.procurarParque(id_parque);
 		if (parque == null)
 			throw new Exception("O parque não existe.");
-		parqueServiceBean.removerParque(id_parque);
+		parqueService.removerParque(id_parque);
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	@SuppressWarnings("unchecked")
 	public List<Gestor>  procurarGestor(String nome) throws Exception {
 		checkIsLoggedIn();
-		return (List<Gestor>) (List<?>) utilizadorServiceBean.procurarUtilizador(nome, "Gestor");
+		return (List<Gestor>) (List<?>) utilizadorService.procurarUtilizador(nome, "Gestor");
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	@SuppressWarnings("unchecked")
 	public List<Gestor>  listarGestores() throws Exception {
 		checkIsLoggedIn();
-		return (List<Gestor>) (List<?>) utilizadorServiceBean.procurarUtilizadores("Gestor");
+		return (List<Gestor>) (List<?>) utilizadorService.procurarUtilizadores("Gestor");
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 */
 	public Estatisticas verEstatisticasGerais() throws Exception {
 		checkIsLoggedIn();
-		return parqueServiceBean.getEstatisticasGeralAgregado();
+		return parqueService.getEstatisticasGeralAgregado();
 	}
 
 	/**

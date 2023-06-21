@@ -1,6 +1,7 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,4 +38,6 @@ public interface CondutorService {
 	boolean pagarReserva(int id_reserva) throws Exception;
 
 	void logout() throws Exception;
+
+	void setCondutor(Utilizador utilizador);
 }

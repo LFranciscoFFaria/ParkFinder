@@ -177,7 +177,6 @@ public interface ParqueService {
 	 */
 	Horario getHorario(int id_parque) throws Exception;
 
-	List<Map.Entry<Parque, Integer>> listarParquesMaisLugaresLivres();
 
 	/**
 	 * 
@@ -186,7 +185,7 @@ public interface ParqueService {
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
+	List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
 
 	/**
 	 *

@@ -12,26 +12,24 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.Administrad
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
-
-import java.util.List;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 @RestController
 @RequestMapping("/apiV1/utilizadores")
 public class UtilizadorAPI {
     private final ApplicationContext context;
-    private final UtilizadorServiceBean utilizadorServiceBean;
+    private final UtilizadorService utilizadorService;
 
     @Autowired
-    public UtilizadorAPI(ApplicationContext context, UtilizadorServiceBean utilizadorServiceBean) {
+    public UtilizadorAPI(ApplicationContext context, UtilizadorService utilizadorService) {
         this.context = context;
-        this.utilizadorServiceBean = utilizadorServiceBean;
+        this.utilizadorService = utilizadorService;
     }
 
     @GetMapping("/login")
     public ResponseEntity<Utilizador> login(@RequestBody LoginDTO loginDTO){
         try{
-            Utilizador u = utilizadorServiceBean.login(loginDTO.getEmail(), loginDTO.getPassword());
+            Utilizador u = utilizadorService.login(loginDTO.getEmail(), loginDTO.getPassword());
             if (u == null)
                 return new ResponseEntityBadRequest<Utilizador>().createBadRequest("Credenciais inválidas.");
 

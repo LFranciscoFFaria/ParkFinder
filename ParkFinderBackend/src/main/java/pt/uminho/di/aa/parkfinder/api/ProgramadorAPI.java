@@ -10,7 +10,7 @@ import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 
@@ -20,18 +20,18 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/apiV1/programador")
 public class ProgramadorAPI {
-    private final ProgramadorServiceBean programadorServiceBean;
+    private final ProgramadorService programadorService;
 
     @Autowired
-    public ProgramadorAPI(ProgramadorServiceBean programadorServiceBean) {
-        this.programadorServiceBean = programadorServiceBean;
+    public ProgramadorAPI(ProgramadorService programadorService) {
+        this.programadorService = programadorService;
     }
 
     @PutMapping("/criar_gestor")
     public ResponseEntity<Void> criarGestor(@RequestBody GestorDTO gDTO) {
         try{
             Gestor g = new Gestor(gDTO.getNome(), gDTO.getEmail(), gDTO.getPassword(), gDTO.getNr_telemovel());
-            programadorServiceBean.criarGestor(g, gDTO.getIds_parques());
+            programadorService.criarGestor(g, gDTO.getIds_parques());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -42,7 +42,7 @@ public class ProgramadorAPI {
     @DeleteMapping("/remover_gestor")
     public ResponseEntity<Void> removerGestor(@RequestParam("id_gestor") int id_gestor) {
         try{
-            programadorServiceBean.removerGestor(id_gestor);
+            programadorService.removerGestor(id_gestor);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -53,7 +53,7 @@ public class ProgramadorAPI {
     @PutMapping("/adicionar_parques")
     public ResponseEntity<Void> adicionarParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
-            programadorServiceBean.adicionarParquesAGestor(ids_parques,id_gestor);
+            programadorService.adicionarParquesAGestor(ids_parques,id_gestor);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -64,7 +64,7 @@ public class ProgramadorAPI {
     @DeleteMapping("/remover_parques")
     public ResponseEntity<Void> removerParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
-            programadorServiceBean.removerParquesAGestor(ids_parques,id_gestor);
+            programadorService.removerParquesAGestor(ids_parques,id_gestor);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -83,7 +83,7 @@ public class ProgramadorAPI {
                     pDTO.getLongitude().orElse(null),
                     true, 0, 0, 0,
                     pDTO.getCaminho_foto().orElse(null));
-            programadorServiceBean.registarParque(p);
+            programadorService.registarParque(p);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException nue){
             return new ResponseEntityBadRequest<Void>().createBadRequest("Parque não pode ser criado. Campos em falta!");
@@ -95,7 +95,7 @@ public class ProgramadorAPI {
     @DeleteMapping("/remover_parque")
     public ResponseEntity<Void> removerParque(@RequestParam int id_parque) {
         try{
-            programadorServiceBean.removerParque(id_parque);
+            programadorService.removerParque(id_parque);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -106,7 +106,7 @@ public class ProgramadorAPI {
     @GetMapping("/procurar_gestor")
     public ResponseEntity<List<GestorDTO>> procurarGestor(@RequestParam("nome") String nome) {
         try{
-            List<Gestor> gestores = programadorServiceBean.procurarGestor(nome);
+            List<Gestor> gestores = programadorService.procurarGestor(nome);
             List<GestorDTO> gestorDTOS = gestores.stream().map(this::gestorToDTO).toList();
             return new ResponseEntity<>(gestorDTOS, HttpStatus.OK);
         }
@@ -118,7 +118,7 @@ public class ProgramadorAPI {
     @GetMapping("/lista_gestores")
     public ResponseEntity<List<GestorDTO>> listarGestores() {
         try{
-            List<Gestor> gestores = programadorServiceBean.listarGestores();
+            List<Gestor> gestores = programadorService.listarGestores();
             List<GestorDTO> gestorDTOS = gestores.stream().map(this::gestorToDTO).toList();
             return new ResponseEntity<>(gestorDTOS, HttpStatus.OK);
         }
@@ -130,7 +130,7 @@ public class ProgramadorAPI {
     @GetMapping("/estatisticas_gerais")
     public ResponseEntity<Estatisticas> verEstatisticasGerais() {
         try{
-            return new ResponseEntity<>(programadorServiceBean.verEstatisticasGerais(), HttpStatus.OK);
+            return new ResponseEntity<>(programadorService.verEstatisticasGerais(), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Estatisticas>().createBadRequest(e.getMessage());
@@ -140,7 +140,7 @@ public class ProgramadorAPI {
     @DeleteMapping("/logout")
     public ResponseEntity<Void> logout() {
         try{
-            programadorServiceBean.logout();
+            programadorService.logout();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());

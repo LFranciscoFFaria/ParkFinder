@@ -11,7 +11,9 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorEd
 import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
 import java.time.LocalDateTime;
@@ -22,20 +24,20 @@ import java.util.List;
 @RequestMapping("/apiV1/condutores")
 public class CondutorAPI {
 
-    private final UtilizadorServiceBean utilizadorServiceBean;
-    private final CondutorServiceBean condutorServiceBean;
+    private final UtilizadorService utilizadorService;
+    private final CondutorService condutorService;
 
     @Autowired
-    public CondutorAPI(UtilizadorServiceBean utilizadorServiceBean, CondutorServiceBean condutorServiceBean) {
-        this.utilizadorServiceBean = utilizadorServiceBean;
-        this.condutorServiceBean = condutorServiceBean;
+    public CondutorAPI(UtilizadorService utilizadorService, CondutorService condutorService) {
+        this.utilizadorService = utilizadorService;
+        this.condutorService = condutorService;
     }
 
     @PutMapping
     public ResponseEntity<Void> criarCondutor(@RequestBody CondutorDTO dto){
         try{
             Condutor condutor = new Condutor(dto.getNome(), dto.getEmail(), dto.getPassword(), dto.getNif(), dto.isGenero(), dto.getNr_telemovel());
-            utilizadorServiceBean.criarUtilizador(condutor);
+            utilizadorService.criarUtilizador(condutor);
             return new ResponseEntity<>(HttpStatus.OK); }
         catch (Exception e){
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
@@ -44,7 +46,7 @@ public class CondutorAPI {
 
     @PutMapping("/editarPerfil")
     public ResponseEntity<Boolean> editarPerfil(@RequestBody CondutorEdit c){
-        try{ return new ResponseEntity<>(condutorServiceBean.editarPerfil(c), HttpStatus.OK); }
+        try{ return new ResponseEntity<>(condutorService.editarPerfil(c), HttpStatus.OK); }
         catch (Exception e){
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
         }
@@ -53,7 +55,7 @@ public class CondutorAPI {
     @GetMapping("/minhasReservas")
     public ResponseEntity<List<ReservaDTO>> listarMinhasReservas(){
         try{
-            List<Reserva> reservas = condutorServiceBean.listarMinhasReservas();
+            List<Reserva> reservas = condutorService.listarMinhasReservas();
             List<ReservaDTO> reservaDTOS = reservas.stream().map(this::reservaToDTO).toList();
             return new ResponseEntity<>(reservaDTOS, HttpStatus.OK);
         }
@@ -65,7 +67,7 @@ public class CondutorAPI {
     @PutMapping("/reserva/instantanea")
     public ResponseEntity<ReservaDTO> fazerReservaInstantanea(@RequestParam("id_parque") int id_parque){
         try{
-            Reserva r = condutorServiceBean.fazerReservaInstantanea(id_parque);
+            Reserva r = condutorService.fazerReservaInstantanea(id_parque);
             return new ResponseEntity<>(reservaToDTO(r), HttpStatus.OK);
         }
         catch (Exception e) {
@@ -76,7 +78,7 @@ public class CondutorAPI {
     @PutMapping("/reserva/agendada")
     public ResponseEntity<ReservaDTO> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo, @RequestParam("data_inicio") LocalDateTime data_inicio, @RequestParam("data_fim") LocalDateTime data_fim){
         try{
-            Reserva r = condutorServiceBean.fazerReservaAgendada(id_parque, tipo, data_inicio, data_fim);
+            Reserva r = condutorService.fazerReservaAgendada(id_parque, tipo, data_inicio, data_fim);
             return new ResponseEntity<>(reservaToDTO(r), HttpStatus.OK);
         }
         catch (Exception e) {
@@ -86,14 +88,14 @@ public class CondutorAPI {
 
     @PutMapping("/reserva/instantanea/custo")
     public ResponseEntity<Float> calcularCustoReservaInstantanea(@RequestParam("id_reserva") int id_reserva){
-        try{ return new ResponseEntity<>(condutorServiceBean.calculaCustoReservaInstantanea(id_reserva), HttpStatus.OK); }
+        try{ return new ResponseEntity<>(condutorService.calculaCustoReservaInstantanea(id_reserva), HttpStatus.OK); }
         catch (Exception e) { return new ResponseEntityBadRequest<Float>().createBadRequest(e.getMessage()); }
     }
 
     @PutMapping("/reserva/pagar")
     public ResponseEntity<Boolean> pagarReserva(@RequestParam("id_reserva") int id_reserva){
         try{
-            return new ResponseEntity<>(condutorServiceBean.pagarReserva(id_reserva), HttpStatus.OK);
+            return new ResponseEntity<>(condutorService.pagarReserva(id_reserva), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
@@ -103,7 +105,7 @@ public class CondutorAPI {
     @DeleteMapping("/logout")
     public ResponseEntity<Void> logout(){
         try{
-            condutorServiceBean.logout();
+            condutorService.logout();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());

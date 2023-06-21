@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
-import pt.uminho.di.aa.parkfinder.logicaParquesReservas.ParqueReservaServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaParquesReservas.ParqueReservaService;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
-import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,16 +18,16 @@ import java.util.List;
 @SessionScope
 public class CondutorServiceBean implements CondutorService {
 
-	private final UtilizadorServiceBean utilizadorServiceBean;
-	private final ReservaServiceBean reservaServiceBean;
-	private final ParqueReservaServiceBean parqueReservaServiceBean;
+	private final UtilizadorService utilizadorService;
+	private final ReservaService reservaService;
+	private final ParqueReservaService parqueReservaService;
 	private Condutor condutor = null;
 
 	@Autowired
-	public CondutorServiceBean(UtilizadorServiceBean utilizadorServiceBean, ReservaServiceBean reservaServiceBean, ParqueReservaServiceBean parqueReservaServiceBean) {
-		this.utilizadorServiceBean = utilizadorServiceBean;
-		this.reservaServiceBean = reservaServiceBean;
-		this.parqueReservaServiceBean = parqueReservaServiceBean;
+	public CondutorServiceBean(UtilizadorService utilizadorService, ReservaService reservaService, ParqueReservaService parqueReservaService) {
+		this.utilizadorService = utilizadorService;
+		this.reservaService = reservaService;
+		this.parqueReservaService = parqueReservaService;
 	}
 
 	public void setCondutor(Utilizador utilizador) {
@@ -58,7 +58,7 @@ public class CondutorServiceBean implements CondutorService {
 			if(condutorEdit.getNr_telemovel().isPresent())
 				newCondutor.setNrTelemovel(condutorEdit.getNr_telemovel().get());
 
-		condutor = (Condutor) utilizadorServiceBean.atualizarUtilizador(newCondutor);
+		condutor = (Condutor) utilizadorService.atualizarUtilizador(newCondutor);
 		return true;
 	}
 
@@ -69,7 +69,7 @@ public class CondutorServiceBean implements CondutorService {
 	 */
 	public List<Reserva> listarMinhasReservas() throws Exception {
 		checkIsLoggedIn();
-		return reservaServiceBean.listarReservas(condutor.getId());
+		return reservaService.listarReservas(condutor.getId());
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class CondutorServiceBean implements CondutorService {
 	 */
 	public Reserva fazerReservaInstantanea(int id_parque) throws Exception{
 		checkIsLoggedIn();
-		return parqueReservaServiceBean.criarReservaInstantanea(condutor.getId(), id_parque);
+		return parqueReservaService.criarReservaInstantanea(condutor.getId(), id_parque);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class CondutorServiceBean implements CondutorService {
 	 */
 	public Reserva fazerReservaAgendada(int id_parque, String tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
 		checkIsLoggedIn();
-		return parqueReservaServiceBean.criarReservaAgendada(condutor.getId(),id_parque,new TipoLugarEstacionamento(tipo_lugar),data_inicio,data_fim);
+		return parqueReservaService.criarReservaAgendada(condutor.getId(),id_parque,new TipoLugarEstacionamento(tipo_lugar),data_inicio,data_fim);
 	}
 
 	/**
@@ -103,10 +103,10 @@ public class CondutorServiceBean implements CondutorService {
 	 */
 	public float calculaCustoReservaInstantanea(int id_reserva) throws Exception{
 		checkIsLoggedIn();
-		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+		Reserva reserva = reservaService.getReserva(id_reserva);
 		if(reserva.getUtilizadorID() != condutor.getId())
 			throw new Exception("A reserva pertence a outro utilizador.");
-		return parqueReservaServiceBean.calculaCustoReservaInstantanea(id_reserva);
+		return parqueReservaService.calculaCustoReservaInstantanea(id_reserva);
 	}
 
 	/**
@@ -116,10 +116,10 @@ public class CondutorServiceBean implements CondutorService {
 	 */
 	public boolean pagarReserva(int id_reserva) throws Exception {
 		checkIsLoggedIn();
-		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+		Reserva reserva = reservaService.getReserva(id_reserva);
 		if(reserva.getUtilizadorID() != condutor.getId())
 			throw new Exception("A reserva pertence a outro utilizador.");
-		return parqueReservaServiceBean.pagarReserva(id_reserva);
+		return parqueReservaService.pagarReserva(id_reserva);
 	}
 
 	/**

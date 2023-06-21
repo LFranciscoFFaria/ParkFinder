@@ -1,6 +1,5 @@
 package pt.uminho.di.aa.parkfinder.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,19 +12,14 @@ import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.LugarEstacionamentoDAO;
 import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.TipoLugarEstacionamentoDAO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.HorarioPeriodo;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
-import pt.uminho.di.aa.parkfinder.logicaParquesReservas.EstadoReserva;
-import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorService;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 import java.time.DayOfWeek;
@@ -45,17 +39,17 @@ public class SeedAPI {
     final ReservaService reservaService;
     final LugarEstacionamentoDAO lugarEstacionamentoDAO;
     final NotificationService notificationService;
-    final CondutorServiceBean condutorServiceBean;
+    final CondutorService condutorService;
 
     @Autowired
-    public SeedAPI(ParqueService parqueService, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, UtilizadorService utilizadorService, ReservaService reservaService, LugarEstacionamentoDAO lugarEstacionamentoDAO, NotificationService notificationService, CondutorServiceBean condutorServiceBean) {
+    public SeedAPI(ParqueService parqueService, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, UtilizadorService utilizadorService, ReservaService reservaService, LugarEstacionamentoDAO lugarEstacionamentoDAO, NotificationService notificationService, CondutorService condutorService) {
         this.parqueService = parqueService;
         this.tipoLugarEstacionamentoDAO = tipoLugarEstacionamentoDAO;
         this.utilizadorService = utilizadorService;
         this.reservaService = reservaService;
         this.lugarEstacionamentoDAO = lugarEstacionamentoDAO;
         this.notificationService = notificationService;
-        this.condutorServiceBean = condutorServiceBean;
+        this.condutorService = condutorService;
     }
 
     @PostMapping
@@ -183,9 +177,9 @@ public class SeedAPI {
         TipoLugarEstacionamento tipoAgendado = new TipoLugarEstacionamento("Agendado");
         LocalDateTime data_inicio = LocalDateTime.of(2023,6,24,11, 0,0);
         LocalDateTime data_fim = LocalDateTime.of(2023,6,24,12, 0,0);
-        condutorServiceBean.setCondutor(condutor);
-        condutorServiceBean.fazerReservaInstantanea(3);
-        condutorServiceBean.fazerReservaAgendada(1,tipoAgendado.getNome(),data_inicio,data_fim);
+        condutorService.setCondutor(condutor);
+        condutorService.fazerReservaInstantanea(3);
+        condutorService.fazerReservaAgendada(1,tipoAgendado.getNome(),data_inicio,data_fim);
     }
 
     private void criarNotificacoes() throws Exception{

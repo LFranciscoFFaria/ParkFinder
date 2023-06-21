@@ -2,10 +2,11 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
+import pt.uminho.di.aa.parkfinder.logicaParquesReservas.ParqueReservaService;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
-import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
@@ -16,13 +17,15 @@ import java.util.List;
 @SessionScope
 public class AdministradorServiceBean implements AdministradorService {
 
-	private final ParqueServiceBean parqueServiceBean;
-	private final ReservaServiceBean reservaServiceBean;
+	private final ParqueService parqueService;
+	private final ReservaService reservaService;
+	private final ParqueReservaService parqueReservaService;
 	private Administrador administrador = null;
 
-	public AdministradorServiceBean(ParqueServiceBean parqueServiceBean, ReservaServiceBean reservaServiceBean) {
-		this.parqueServiceBean = parqueServiceBean;
-		this.reservaServiceBean = reservaServiceBean;
+	public AdministradorServiceBean(ParqueService parqueService, ReservaService reservaService, ParqueReservaService parqueReservaService) {
+		this.parqueService = parqueService;
+		this.reservaService = reservaService;
+		this.parqueReservaService = parqueReservaService;
 	}
 
 	/**
@@ -34,7 +37,7 @@ public class AdministradorServiceBean implements AdministradorService {
 		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
-		parqueServiceBean.addLugaresInstantaneos(id_parque, N);
+		parqueService.addLugaresInstantaneos(id_parque, N);
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class AdministradorServiceBean implements AdministradorService {
 		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
-		parqueServiceBean.addLugares(id_parque, tipo, N);
+		parqueService.addLugares(id_parque, tipo, N);
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class AdministradorServiceBean implements AdministradorService {
 		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a remover tem de ser 1 ou maior.");
-		parqueServiceBean.removeLugaresInstantaneos(id_parque, N);
+		parqueService.removeLugaresInstantaneos(id_parque, N);
 	}
 
 	/**
@@ -72,7 +75,7 @@ public class AdministradorServiceBean implements AdministradorService {
 		checkIsLoggedIn();
 		if (N<1)
 			throw new Exception("O número de lugares a adicionar tem de ser 1 ou maior.");
-		parqueServiceBean.removerLugares(id_parque, tipo, N);
+		parqueService.removerLugares(id_parque, tipo, N);
 	}
 
 	/**
@@ -83,7 +86,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 */
 	public Reserva encontrarReservaPorMatricula(int id_parque, String matricula) throws Exception {
 		checkIsLoggedIn();
-		return reservaServiceBean.getReservaMatricula(id_parque, matricula);
+		return reservaService.getReservaMatricula(id_parque, matricula);
 	}
 
 	/**
@@ -93,7 +96,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 */
 	public boolean associarMatriculaAReserva(int id_reserva, String matricula) throws Exception {
 		checkIsLoggedIn();
-		reservaServiceBean.setMatricula(id_reserva,matricula);
+		reservaService.setMatricula(id_reserva,matricula);
 		return true;
 	}
 
@@ -103,7 +106,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 */
 	public List<Reserva> verReservasAtivasDeParque(int id_parque) throws Exception {
 		checkIsLoggedIn();
-		return reservaServiceBean.getReservasParque(id_parque);
+		return reservaService.getReservasParque(id_parque);
 	}
 
 	public void logout() throws Exception{
@@ -111,7 +114,17 @@ public class AdministradorServiceBean implements AdministradorService {
 		administrador = null;
 	}
 
-    public void setAdministrador(Utilizador u) {
+	public void marcarEntradaParque(int idReserva, String matricula) throws Exception {
+		checkIsLoggedIn();
+		parqueReservaService.marcarEntradaParque(idReserva, matricula);
+	}
+
+	public void marcarSaidaParque(int idReserva) throws Exception {
+		checkIsLoggedIn();
+		parqueReservaService.marcarSaidaParque(idReserva);
+	}
+
+	public void setAdministrador(Utilizador u) {
 		this.administrador = (Administrador) u;
     }
 

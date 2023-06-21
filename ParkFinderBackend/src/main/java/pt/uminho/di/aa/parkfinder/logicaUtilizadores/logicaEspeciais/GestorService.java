@@ -4,6 +4,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.util.List;
 
@@ -87,4 +88,6 @@ public interface GestorService {
 	 * @param horario
 	 */
 	boolean criarOuAtualizarHorario(int id_parque, Horario horario) throws Exception;
+
+	void setGestor(Utilizador utilizador);
 }

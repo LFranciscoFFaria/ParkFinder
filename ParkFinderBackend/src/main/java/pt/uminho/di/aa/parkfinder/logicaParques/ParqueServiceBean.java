@@ -474,16 +474,6 @@ public class ParqueServiceBean implements ParqueService {
 	}
 
 	/**
-	 * @return lista de pares. Um par contem como key um parque e como value o numero de lugares livres (instantaneos + especiais)
-	 */
-	public List<Map.Entry<Parque, Integer>> listarParquesMaisLugaresLivres() {
-		return parqueDAO.findAll()
-						.stream()
-						.map(p -> new AbstractMap.SimpleEntry<>(p, p.getLugaresLivres()))
-						.collect(Collectors.toList());
-	}
-
-	/**
 	 * Encontra os lugares disponível do parque com o tipo especificado
 	 * @param id_parque identificador do parque
 	 * @param tipo tipo de lugar

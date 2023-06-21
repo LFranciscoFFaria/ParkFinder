@@ -13,7 +13,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioDecrementoLinear;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 
 import java.util.List;
@@ -23,16 +23,16 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("/apiV1/gestores")
 public class GestorAPI {
-    private final GestorServiceBean gestorServiceBean;
+    private final GestorService gestorService;
 
-    public GestorAPI(GestorServiceBean gestorServiceBean) {
-        this.gestorServiceBean = gestorServiceBean;
+    public GestorAPI(GestorService gestorService) {
+        this.gestorService = gestorService;
     }
 
     @GetMapping("/estatisticas_parque")
     public ResponseEntity<Estatisticas> verEstatisticasParque(@RequestParam("id_parque") int id_parque){
         try{
-            return new ResponseEntity<>(gestorServiceBean.verEstatisticasParque(id_parque), HttpStatus.OK);
+            return new ResponseEntity<>(gestorService.verEstatisticasParque(id_parque), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Estatisticas>().createBadRequest(e.getMessage());
@@ -45,7 +45,7 @@ public class GestorAPI {
             TipoLugarEstacionamento tipoLugar = new TipoLugarEstacionamento(precarioDTO.getTipo_lugar());
             Precario p = new PrecarioDecrementoLinear(tipoLugar, precarioDTO.getPreco_fixo(), precarioDTO.getPreco_max_por_intervalo(),
                     precarioDTO.getPreco_min_por_intervalo(), precarioDTO.getIntervalo(), precarioDTO.getIntervalo_ate_min());
-            gestorServiceBean.adicionarPrecario(id_parque, tipoLugar, p);
+            gestorService.adicionarPrecario(id_parque, tipoLugar, p);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -59,7 +59,7 @@ public class GestorAPI {
             TipoLugarEstacionamento tipoLugar = new TipoLugarEstacionamento(precarioDTO.getTipo_lugar());
             Precario precario = new PrecarioLinear(tipoLugar, precarioDTO.getPreco_fixo(),
                                                     precarioDTO.getPreco_por_intervalo(), precarioDTO.getIntervalo());
-            gestorServiceBean.adicionarPrecario(id_parque, tipoLugar, precario);
+            gestorService.adicionarPrecario(id_parque, tipoLugar, precario);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -70,7 +70,7 @@ public class GestorAPI {
     @GetMapping("/meus_parques")
     public ResponseEntity<List<ParqueDTO>> listarMeusParques(){
         try{
-            List<Parque> parques = gestorServiceBean.listarMeusParques();
+            List<Parque> parques = gestorService.listarMeusParques();
             List<ParqueDTO> parqueDTOS = parques.stream().map(this::parqueToDTO).toList();
             return new ResponseEntity<>(parqueDTOS, HttpStatus.OK);
         }
@@ -82,7 +82,7 @@ public class GestorAPI {
     @DeleteMapping("/remover_precario")
     public ResponseEntity<Void> removerPrecario(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo_lugar){
         try{
-            gestorServiceBean.removerPrecario(id_parque, new TipoLugarEstacionamento(tipo_lugar));
+            gestorService.removerPrecario(id_parque, new TipoLugarEstacionamento(tipo_lugar));
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -93,7 +93,7 @@ public class GestorAPI {
     @GetMapping("/meus_administradores")
     public ResponseEntity<List<AdminDTO>> listarMeusAdministradores(){
         try{
-            List<Administrador> administradores = gestorServiceBean.listarMeusAdministradores();
+            List<Administrador> administradores = gestorService.listarMeusAdministradores();
             List<AdminDTO> adminDTOS = administradores.stream().map(this::adminToDTO).toList();
             return new ResponseEntity<>(adminDTOS, HttpStatus.OK);
         }
@@ -105,7 +105,7 @@ public class GestorAPI {
     @PutMapping("/criar_administrador")
     public ResponseEntity<Void> criarAdmin(@RequestBody AdminDTO a){
         try{
-            gestorServiceBean.criarAdmin(a.getNome(), a.getEmail(), a.getPassword(), a.getNr_telemovel(), a.getIds_parques());
+            gestorService.criarAdmin(a.getNome(), a.getEmail(), a.getPassword(), a.getNr_telemovel(), a.getIds_parques());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -116,7 +116,7 @@ public class GestorAPI {
     @DeleteMapping("/remover_administrador")
     public ResponseEntity<Void> removerAdmin(@RequestParam int id_admin){
         try{
-            gestorServiceBean.removerAdmin(id_admin);
+            gestorService.removerAdmin(id_admin);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -127,7 +127,7 @@ public class GestorAPI {
     @DeleteMapping("/remover_permissao_administrador")
     public ResponseEntity<Void> removerPermissaoAdminSobreParques(@RequestParam int id_admin, @RequestBody List<Integer> ids_parques){
         try{
-            gestorServiceBean.removerPermissaoAdminSobreParques(id_admin, ids_parques);
+            gestorService.removerPermissaoAdminSobreParques(id_admin, ids_parques);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -138,7 +138,7 @@ public class GestorAPI {
     @PutMapping("/alterar_parque")
     public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam int id_parque, @RequestBody ParqueDTO newInfo){
         try{
-            return new ResponseEntity<>(gestorServiceBean.alterarInformacoesParque(id_parque,newInfo), HttpStatus.OK);
+            return new ResponseEntity<>(gestorService.alterarInformacoesParque(id_parque,newInfo), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
@@ -148,7 +148,7 @@ public class GestorAPI {
     @PutMapping("/alterar_disponibilidade_parque")
     public ResponseEntity<Void> alterarEstadoDisponivelDeParque(@RequestParam int id_parque, @RequestParam boolean disponivel){
         try{
-            gestorServiceBean.alterarEstadoDisponivelDeParque(id_parque, disponivel);
+            gestorService.alterarEstadoDisponivelDeParque(id_parque, disponivel);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -159,7 +159,7 @@ public class GestorAPI {
     @PutMapping("/adicionar_permissao_administrador")
     public ResponseEntity<Void> adicionarParquesAAdmin(@RequestBody List<Integer> ids_parques, @RequestParam int id_admin){
         try{
-            gestorServiceBean.adicionarParquesAAdmin(ids_parques, id_admin);
+            gestorService.adicionarParquesAAdmin(ids_parques, id_admin);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -170,7 +170,7 @@ public class GestorAPI {
     @PutMapping("/adiciona_horario")
     public ResponseEntity<Boolean> criarOuAtualizarHorario(@RequestParam int id_parque, @RequestBody Horario horario){
         try{
-            return new ResponseEntity<>(gestorServiceBean.criarOuAtualizarHorario(id_parque, horario), HttpStatus.OK);
+            return new ResponseEntity<>(gestorService.criarOuAtualizarHorario(id_parque, horario), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
@@ -180,7 +180,7 @@ public class GestorAPI {
     @DeleteMapping("/logout")
     public ResponseEntity<Void> logout() {
         try{
-            gestorServiceBean.logout();
+            gestorService.logout();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
