@@ -7,16 +7,17 @@ export const ImageBlock = ({
     no_shadow,
     no_scale,
     no_border_radius,
+    image_icon,
     imageSize = "image"
 }) => {
     return (
         <div className={
             'block_image' +
-            (no_border_radius? '' : ' border_radius') +
-            (no_scale? '' : ' scale') +
-            (no_shadow? '' : ' shadow')
+            (no_border_radius || image_icon? '' : ' border_radius') +
+            (no_scale || image_icon? '' : ' scale') +
+            (no_shadow || image_icon? '' : ' shadow')
         }>
-            <img className={`${imageSize}`} src={imageLink} alt={""} />
+            <img className={`${imageSize}` + (image_icon? ' image_icon' : '')} src={imageLink} alt={""} />
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { Navbar } from '../../objects/Navbar';
 import { EditPerfil } from '../../objects/EditPerfil.js';
 import Security from '../../objects/Security.js';
 import PaymentHistory from '../../objects/PaymentHistory.js';
-import ReservationHistory from '../../objects/ReservationHistory.js';
+import { Reservation, ReservationHistory } from '../../objects/ReservationHistory.js';
 import '../../interactive_items/select.css'
 import './Perfil.css'
 import { useEffect, useState } from 'react';
@@ -23,12 +23,15 @@ function Perfil({
                 break;
             case 2:
                 setOptionDisplayed(<Security/>);
-                break;
+            break;
             case 3:
-                setOptionDisplayed(<PaymentHistory reservations={reservations}/>);
+                setOptionDisplayed(<Reservation reservations={reservations}/>);
                 break;
             case 4:
                 setOptionDisplayed(<ReservationHistory reservations={reservations}/>);
+                break;
+            case 5:
+                setOptionDisplayed(<PaymentHistory reservations={reservations}/>);
                 break;
             default:
                 setOptionDisplayed(<></>);
@@ -62,7 +65,7 @@ function Perfil({
                     <div className={optionSelected===-1? "disabled_selected":"perfil_options perfil_options_open"}>
                         <div className={'perfil_options_box perfil_options_box_open' + (optionSelected===1? ' perfil_selected' : '')}  onClick={() => setOptionSelected(1)}>
                             <div className='perfil_options_image perfil_open'>
-                                <ImageBlock imageLink={'images/icon_1.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                                <ImageBlock imageLink={'images/icon_1.png'} image_icon={true} />
                             </div>
                             <div className='perfil_options_text'>
                                 <b className='perfil_options_text_title perfil_options_text_title_open'>Editar Perfil</b>
@@ -70,7 +73,7 @@ function Perfil({
                         </div>
                         <div className={'perfil_options_box perfil_options_box_open' + (optionSelected===2? ' perfil_selected' : '')}  onClick={() => setOptionSelected(2)}>
                             <div className='perfil_options_image perfil_open'>
-                                <ImageBlock imageLink={'images/icon_2.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                                <ImageBlock imageLink={'images/icon_2.png'} image_icon={true} />
                             </div>
                             <div className='perfil_options_text'>
                                 <b className='perfil_options_text_title perfil_options_text_title_open'>Segurança</b>
@@ -78,26 +81,34 @@ function Perfil({
                         </div>
                         <div className={'perfil_options_box perfil_options_box_open' + (optionSelected===3? ' perfil_selected' : '')}  onClick={() => setOptionSelected(3)}>
                             <div className='perfil_options_image perfil_open'>
-                                <ImageBlock imageLink={'images/icon_6.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                                <ImageBlock imageLink={'images/icon_6.png'} image_icon={true} />
                             </div>
                             <div className='perfil_options_text'>
-                                <b className='perfil_options_text_title perfil_options_text_title_open'>Historico de Pagamentos</b>
+                                <b className='perfil_options_text_title perfil_options_text_title_open'>Minhas Reservas</b>
                             </div>
-                        </div> 
+                        </div>
                         <div className={'perfil_options_box perfil_options_box_open' + (optionSelected===4? ' perfil_selected' : '')}  onClick={() => setOptionSelected(4)}>
                             <div className='perfil_options_image perfil_open'>
-                                <ImageBlock imageLink={'images/icon_3.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                                <ImageBlock imageLink={'images/icon_3.png'} image_icon={true} />
                             </div>
                             <div className='perfil_options_text'>
                                 <b className='perfil_options_text_title perfil_options_text_title_open'>Historico de Reservas</b>
                             </div>
-                        </div> 
+                        </div>
+                        <div className={'perfil_options_box perfil_options_box_open' + (optionSelected===5? ' perfil_selected' : '')}  onClick={() => setOptionSelected(5)}>
+                            <div className='perfil_options_image perfil_open'>
+                                <ImageBlock imageLink={'images/icon_6.png'} image_icon={true} />
+                            </div>
+                            <div className='perfil_options_text'>
+                                <b className='perfil_options_text_title perfil_options_text_title_open'>Historico de Pagamentos</b>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className={optionSelected===-1? "perfil_options":"disabled_selected"}>
                     <div className='perfil_options_box' onClick={() => setOptionSelected(1)}>
                         <div className={'perfil_options_image'}>
-                            <ImageBlock imageLink={'images/icon_1.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                            <ImageBlock imageLink={'images/icon_1.png'} image_icon={true} />
                         </div>
                         <div className='perfil_options_text'>
                             <b className='perfil_options_text_title'>Editar Perfil</b>
@@ -106,7 +117,7 @@ function Perfil({
                     </div>
                     <div className='perfil_options_box' onClick={() => setOptionSelected(2)}>
                         <div className={'perfil_options_image'}>
-                            <ImageBlock imageLink={'images/icon_2.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                            <ImageBlock imageLink={'images/icon_2.png'} image_icon={true} />
                         </div>
                         <div className='perfil_options_text'>
                             <b className='perfil_options_text_title'>Segurança</b>
@@ -115,22 +126,31 @@ function Perfil({
                     </div>
                     <div className='perfil_options_box' onClick={() => setOptionSelected(3)}>
                         <div className={'perfil_options_image'}>
-                            <ImageBlock imageLink={'images/icon_6.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                            <ImageBlock imageLink={'images/icon_6.png'} image_icon={true} />
                         </div>
                         <div className='perfil_options_text'>
-                            <b className='perfil_options_text_title'>Historico de Pagamentos</b>
-                            <label className={'perfil_options_text_info'}>Consulte a informação relativa a métodos de pagamento de forma e facilite e segura as reservas.</label>
+                            <b className='perfil_options_text_title'>Minhas Reservas</b>
+                            <label className={'perfil_options_text_info'}>Ver as minhas reservas agendadas.</label>
                         </div>
-                    </div> 
+                    </div>
                     <div className='perfil_options_box' onClick={() => setOptionSelected(4)}>
                         <div className={'perfil_options_image'}>
-                            <ImageBlock imageLink={'images/icon_3.png'} no_shadow={true} no_scale={true} no_border_radius={true}/>
+                            <ImageBlock imageLink={'images/icon_3.png'} image_icon={true} />
                         </div>
                         <div className='perfil_options_text'>
                             <b className='perfil_options_text_title'>Historico de Reservas</b>
                             <label className={'perfil_options_text_info'}>Consulte a informação relativa ao seu histórico de reservas.</label>
                         </div>
-                    </div> 
+                    </div>
+                    <div className='perfil_options_box' onClick={() => setOptionSelected(5)}>
+                        <div className={'perfil_options_image'}>
+                            <ImageBlock imageLink={'images/icon_7.png'} image_icon={true} />
+                        </div>
+                        <div className='perfil_options_text'>
+                            <b className='perfil_options_text_title'>Historico de Pagamentos</b>
+                            <label className={'perfil_options_text_info'}>Consulte a informação relativa a métodos de pagamento de forma e facilite e segura as reservas.</label>
+                        </div>
+                    </div>
                 </div>
                 {optionDisplayed}
             </div>

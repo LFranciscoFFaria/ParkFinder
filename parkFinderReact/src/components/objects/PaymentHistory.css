@@ -1,0 +1,29 @@
+.payment_history_grid_content{
+    display: grid;
+    padding: 0px 15px;
+    grid-template-columns: 100px auto;
+    gap: 8px;
+    column-gap: 13px;
+    font-size: 90%;
+}
+
+.payment_history_name_value{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.payment_history_value{
+    font-size: 130%;
+}
+
+.payment_history_align_bot{
+    align-items: end;
+    display: flex;
+    height: 100%;
+}
+
+.payment_history_description{
+    display: flex;
+    flex-direction: column;
+}
