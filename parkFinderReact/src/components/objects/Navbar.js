@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { useState } from 'react';
 import { Button } from '../interactive_items/Button';
 import './Navbar.css';
+import './NavbarStaff.css';
 import PopUp from '../interactive_items/PopUp';
-import {QRCodeSVG} from 'qrcode.react'
+import { QRCodeSVG } from 'qrcode.react'
 
 
 
 
-function Navbar({
+export function Navbar({
     setState,
     setFilter,
     userID
@@ -69,4 +69,23 @@ function Navbar({
     );
 }
 
-export default Navbar;
+
+
+
+
+export function NavbarStaff({
+    link_logo
+}) {
+
+    function getPath() {
+        return <img className='icon' src={'images/preto.png'} alt={''} />
+    }
+
+    return (
+        <div className='navbar_staff'>
+            <Button buttonStyle={"logo_image"} link={link_logo}><img className={'button_image'} src={getPath()} alt={""} /></Button>
+            <Button buttonStyle={'default navbar_staff_login_button'} link={'/login'}> Logoff </Button>
+        </div>
+    );
+}
+

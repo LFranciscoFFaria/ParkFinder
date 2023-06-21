@@ -23,11 +23,11 @@ public class Condutor extends Utilizador implements Serializable {
 	}
 	
 	@Column(name="Nif", nullable=false)
-	private int nif;
+	private Integer nif;
 	
 	@Column(name="Genero", nullable=false, length=1)
 	@JsonDeserialize(using = GeneroDeserializer.class)
-	private boolean genero;
+	private Boolean genero;
 
 	public Condutor(@JsonProperty("nome") String nome, @JsonProperty("email") String email, @JsonProperty("password") String password,
 					@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero, @JsonProperty("numero_telemovel") int numero_telemovel) {
@@ -46,6 +46,10 @@ public class Condutor extends Utilizador implements Serializable {
 	public String validarAtributos(){
 		String valido = super.validarAtributos();
 		if(valido != null) return valido;
+		if(nif == null)
+			return "O NIF não pode ser nulo!";
+		if(genero == null)
+			return "O genero não pode ser nulo!";
 		if(!Pattern.matches("^\\d{9}$", String.valueOf(this.getNif())))
 			return "O NIF contêm 9 digitos numéricos.";
 		return null;

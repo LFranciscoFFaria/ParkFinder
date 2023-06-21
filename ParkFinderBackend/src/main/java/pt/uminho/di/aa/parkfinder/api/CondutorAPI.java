@@ -32,7 +32,7 @@ public class CondutorAPI {
     @PutMapping
     public ResponseEntity<Void> criarCondutor(@RequestBody CondutorDTO dto){
         try{
-            Condutor condutor = new Condutor(dto.getNome(), dto.getEmail(), dto.getPassword(), dto.getNif(), dto.isGenero(), dto.getNrTelemovel());
+            Condutor condutor = new Condutor(dto.getNome(), dto.getEmail(), dto.getPassword(), dto.getNif(), dto.isGenero(), dto.getNr_telemovel());
             utilizadorServiceBean.criarUtilizador(condutor);
             return new ResponseEntity<>(HttpStatus.OK); }
         catch (Exception e){

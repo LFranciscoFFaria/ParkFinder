@@ -2,6 +2,7 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
@@ -85,8 +86,9 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * Função que retorna uma reserva se a matrícula passada por argumento estiver numa reserva com o estado OCUPADA.
 	 * @param matricula matricula do carro
 	 */
-	public Reserva encontrarReservaPorMatricula(String matricula) throws Exception {
-		return reservaServiceBean.getReservaMatricula(matricula);
+	public ReservaDTO encontrarReservaPorMatricula(String matricula) throws Exception {
+		Reserva r = reservaServiceBean.getReservaMatricula(matricula);
+		return reservaToDTO(r);
 	}
 
 	/**
@@ -103,8 +105,8 @@ public class AdministradorServiceBean implements AdministradorService {
 	 * Função que retorna a lista das reservas ativas do parque.
 	 * @param id_parque identificador do parque
 	 */
-	public List<Reserva> verReservasAtivasDeParque(int id_parque) {
-		return reservaServiceBean.getReservasParque(id_parque);
+	public List<ReservaDTO> verReservasAtivasDeParque(int id_parque) {
+		return reservaServiceBean.getReservasParque(id_parque).stream().map(this::reservaToDTO).toList();
 	}
 
 	public void logout() {
@@ -115,4 +117,9 @@ public class AdministradorServiceBean implements AdministradorService {
     public void setAdministrador(Utilizador u) {
 		this.administrador = (Administrador) u;
     }
+
+	private ReservaDTO reservaToDTO(Reserva r){
+		return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), r.getEstado(),
+				r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
+	}
 }

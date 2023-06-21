@@ -16,7 +16,7 @@ public class CondutorEditDTO {
     Optional<String> email;
 
     @JsonProperty
-    Optional<Integer> nrTelemovel;
+    Optional<Integer> nr_telemovel;
 
     @JsonProperty
     Optional<String> password;

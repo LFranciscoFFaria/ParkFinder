@@ -5,7 +5,7 @@ import { CompressedParkInfoStaff } from './CompressedParkInfo';
 import { Button } from '../interactive_items/Button';
 import { useState } from 'react';
 
-function ParksManager({
+function ParksProgrammer({
     parks,
 }) {
 
@@ -17,12 +17,13 @@ function ParksManager({
                 <h1>Parques</h1>
                 <div className='contact_button compressed_park_staff_create_button'>
                     <Button buttonStyle={(!filter? "sex_button":"sex_button_selected") + " compressed_park_staff_filter_button"} onClick={() => setFilter(!filter)}>Filtro</Button>
+                    <Button buttonStyle={"default"} onClick={() => console.log("Novo Parque")}>Criar Parque</Button>
                 </div>
             </div>
             {filter? <FilterStaff/> : null}
             {parks.map(parque => 
                 <CompressedParkInfoStaff key={parque['id']} parque={parque} editButton={
-                    <Button buttonStyle={'default'} onClick={() => localStorage.setItem("parqueId", parque["id"])} link={'/manager/details'}>Gerir</Button>
+                    <Button buttonStyle={'default'} onClick={() => {console.log("Parque Removido")}}>Remover</Button>
                 }/>
             )}
             <div className='pageNumb'>
@@ -36,4 +37,4 @@ function ParksManager({
     );
 }
 
-export default ParksManager;
+export default ParksProgrammer;

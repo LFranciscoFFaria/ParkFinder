@@ -26,16 +26,16 @@ public abstract class Utilizador implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="Nome")
+	@Column(name="Nome", nullable = false)
 	private String nome;
 	
-	@Column(name="Email", unique = true)
+	@Column(name="Email", unique = true, nullable = false)
 	private String email;
 
 	@Column(name="NrTelemovel", nullable=false)
-	private int nrTelemovel;
+	private Integer nrTelemovel;
 	
-	@Column(name="Password")
+	@Column(name="Password", nullable = false)
 	private String password;
 	
 	@OneToMany(mappedBy="utilizador", targetEntity= Reserva.class, cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
@@ -55,6 +55,14 @@ public abstract class Utilizador implements Serializable {
 	 * @return "null" se todos os atributos estiveram corretos ou uma string que contém o erro
 	 */
 	public String validarAtributos(){
+		if(nome == null)
+			return "Nome não pode ser nulo.";
+		if(email == null)
+			return "Email não pode ser nulo.";
+		if(password == null)
+			return "Palavra-passe não pode ser nula.";
+		if(nrTelemovel == null)
+			return "Número de telemóvel não pode ser nulo.";
 		if(!Pattern.matches("^\\w[\\w ]*$", this.getNome()))
 			return "Um nome pode conter apenas alfanuméricos e espaços. Deve começar com um alfanumérico.";
 		if(!Pattern.matches("^\\w[\\w.]*@\\w+(?:\\.\\w+)+$", this.getEmail()))

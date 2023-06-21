@@ -1,16 +1,19 @@
 
 import './ReservationHistory.css';
 
-function ReservationHistory(
-
-) {
+function ReservationHistory({
+    reservations
+}) {
+    console.log(reservations);
     return (
         <div className='edit_perfil_form_content'>
 
             <h1>Historico de Reservas</h1>
-            <div className='edit_perfil_field'>
-                
-            </div>
+            {reservations.map((reservation, index) => 
+                <div key={index} className='edit_perfil_field'>
+                    <b>{reservation['nome_utilizador']}</b>
+                </div>
+            )}
         </div>
     );
 };

@@ -3,6 +3,7 @@ package pt.uminho.di.aa.parkfinder.api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
@@ -22,7 +23,7 @@ public class AdministradorAPI {
     }
 
     @PutMapping("/adicionar_instantaneo")
-    public ResponseEntity<Void> addLugarInstantaneo(@RequestParam int id_parque,@RequestParam int N) {
+    public ResponseEntity<Void> addLugarInstantaneo(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N) {
         try{
             administradorServiceBean.addLugarInstantaneo(id_parque,N);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -33,9 +34,9 @@ public class AdministradorAPI {
     }
 
     @PutMapping("/adicionar_especial")
-    public ResponseEntity<Void> addLugarEspecial(@RequestParam int id_parque,@RequestParam int N,@RequestBody TipoLugarEstacionamento tipo) {
+    public ResponseEntity<Void> addLugarEspecial(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N, @RequestParam("tipo_lugar") String tipo) {
         try{
-            administradorServiceBean.addLugarEspecial(id_parque,N,tipo);
+            administradorServiceBean.addLugarEspecial(id_parque,N,new TipoLugarEstacionamento(tipo));
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -44,7 +45,7 @@ public class AdministradorAPI {
     }
 
     @DeleteMapping("/remover_instantaneo")
-    public ResponseEntity<Void> removerLugarInstantaneo(@RequestParam int id_parque, @RequestParam int N) {
+    public ResponseEntity<Void> removerLugarInstantaneo(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N) {
         try{
             administradorServiceBean.removerLugarInstantaneo(id_parque,N);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -55,9 +56,9 @@ public class AdministradorAPI {
     }
 
     @DeleteMapping("/remover_especial")
-    public ResponseEntity<Void> removerLugarEspecial(@RequestParam int id_parque, @RequestParam int N, @RequestBody TipoLugarEstacionamento tipo) {
+    public ResponseEntity<Void> removerLugarEspecial(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N, @RequestParam("tipo_lugar") String tipo) {
         try{
-            administradorServiceBean.removerLugarEspecial(id_parque,N,tipo);
+            administradorServiceBean.removerLugarEspecial(id_parque, N, new TipoLugarEstacionamento(tipo));
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -66,19 +67,19 @@ public class AdministradorAPI {
     }
 
     @GetMapping("/encontrar_reserva")
-    public ResponseEntity<Reserva> encontrarReservaPorMatricula(@RequestParam String matricula) {
+    public ResponseEntity<ReservaDTO> encontrarReservaPorMatricula(@RequestParam("matricula") String matricula) {
         try{
-            return new ResponseEntity<Reserva>(administradorServiceBean.encontrarReservaPorMatricula(matricula),HttpStatus.OK);
+            return new ResponseEntity<>(administradorServiceBean.encontrarReservaPorMatricula(matricula),HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<Reserva>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
         }
     }
 
     @PutMapping("/associar_matricula_reserva")
-    public ResponseEntity<Boolean> associarMatriculaAReserva(@RequestParam int id_reserva,@RequestParam String matricula) {
+    public ResponseEntity<Boolean> associarMatriculaAReserva(@RequestParam("id_reserva") int id_reserva, @RequestParam("matricula") String matricula) {
         try{
-            return new ResponseEntity<Boolean>(administradorServiceBean.associarMatriculaAReserva(id_reserva, matricula),HttpStatus.OK);
+            return new ResponseEntity<>(administradorServiceBean.associarMatriculaAReserva(id_reserva, matricula),HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
@@ -86,12 +87,12 @@ public class AdministradorAPI {
     }
 
     @GetMapping("/reservas_ativas")
-    public ResponseEntity<List<Reserva>> verReservasAtivasDeParque(@RequestParam int id_parque){
+    public ResponseEntity<List<ReservaDTO>> verReservasAtivasDeParque(@RequestParam("id_parque") int id_parque){
         try{
-            return new ResponseEntity<List<Reserva>>(administradorServiceBean.verReservasAtivasDeParque(id_parque),HttpStatus.OK);
+            return new ResponseEntity<>(administradorServiceBean.verReservasAtivasDeParque(id_parque),HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<List<Reserva>>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<List<ReservaDTO>>().createBadRequest(e.getMessage());
         }
     }
 

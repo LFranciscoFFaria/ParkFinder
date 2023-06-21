@@ -13,22 +13,16 @@ import pt.uminho.di.aa.parkfinder.api.DTOs.serializers.GeneroSerializer;
 @Setter
 @AllArgsConstructor
 public class CondutorDTO {
-    @JsonProperty(required = true)
     String nome;
 
-    @JsonProperty(required = true)
     String email;
 
-    @JsonProperty(required = true)
-    int nrTelemovel;
+    Integer nr_telemovel;
 
-    @JsonProperty(required = true)
     String password;
 
-    @JsonProperty(required = true)
-    int nif;
+    Integer nif;
 
-    @JsonProperty(required = true)
     @JsonSerialize(using = GeneroSerializer.class)
     @JsonDeserialize(using = GeneroDeserializer.class)
     boolean genero;

@@ -1,4 +1,5 @@
 import './Filter.css'
+import './FilterStaff.css'
 import Checkbox from "../interactive_items/Checkbox"
 import { Button } from '../interactive_items/Button';
 
@@ -8,7 +9,7 @@ const filter = {
     "Reservas": ["Reserva agendada disponível"]
 };
 
-function Filter({
+export function Filter({
     showDates = true
 }) {
     
@@ -58,6 +59,39 @@ function Filter({
             </div>
         </div>
     );
-}
+};
 
-export default Filter;
+
+
+
+
+
+
+export function FilterStaff({
+}) {
+    return (
+        <div className="filter_staff_box">
+            <div className="filter_staff_header">
+                <h2>Filtros</h2>
+                <div className='filter_header_buttons'>
+                    <Button buttonStyle="contrast">Limpar filtros</Button>
+                    <div className='activate'> <Button buttonStyle="default">Aplicar Filtros</Button> </div>
+                </div>
+            </div>
+            <div className='filter_staff_block_display'>
+                {Object.entries(filter).map(([title, list]) =>
+                    <div className="filter_staff_block" key={title}>
+                        <b>{title}</b>
+                        {list.map(element => 
+                            <Checkbox key={element}>{element} </Checkbox>
+                        )}
+                    </div>
+                )}
+            </div>
+            <div className='filter_submit_button deactivate'>
+                <br/>
+                <Button buttonStyle="default">Aplicar Filtros</Button>
+            </div>
+        </div>
+    );
+};

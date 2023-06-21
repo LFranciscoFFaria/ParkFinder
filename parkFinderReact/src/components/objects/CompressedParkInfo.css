@@ -1,5 +1,5 @@
 .compressed_park{
-    border-top: 1px solid gray;
+    border-top: 1px solid lightgray;
     padding: 0px 20px 20px 20px;
     display: flex;
     flex-direction: column;

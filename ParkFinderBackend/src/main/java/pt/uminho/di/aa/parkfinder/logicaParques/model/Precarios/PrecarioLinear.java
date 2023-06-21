@@ -1,5 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class PrecarioLinear extends Precario implements Serializable {
 	}
 
 	@Column(name="PrecoPorMinuto", nullable=false)
+	@JsonProperty("preco_por_minuto")
 	private float precoPorMinuto;
 
 	public PrecarioLinear(TipoLugarEstacionamento tipoLugar, float precoFixo, float precoPorIntervalo, LocalTime intervalo) {
@@ -36,7 +38,8 @@ public class PrecarioLinear extends Precario implements Serializable {
 	}
 
 	public String toString() {
-		return super.toString();
+		return super.toString() +
+				", precoPorMinuto= " + precoPorMinuto;
 	}
 	
 }
