@@ -166,21 +166,26 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param tipoPrecario tipo de lugar de estacionamento ao qual o precario corresponde
 	 */
 	public void removerPrecario(int id_parque, TipoLugarEstacionamento tipoPrecario) throws Exception {
-		Parque parque = getParque(id_parque);
+		Parque parque = parqueDAO.findByIdWithPrecarios(id_parque);
+
+		if(parque == null)
+			throw new Exception("Esse identificador de parque não existe");
 
 		// Se o tipo de precario nao existe, retorna, porque um parque não o pode ter associado
 		TipoLugarEstacionamento tipoLugarComId = tipoLugarDAO.findByNome(tipoPrecario.getNome());
 		if(tipoLugarComId == null) return;
 
+		System.out.println(parque.getPrecarios());
+
 		Set<Precario> precarios = parque.getPrecarios();
 		for (Iterator<Precario> it = precarios.iterator();it.hasNext();){
 			Precario precario = it.next();
-			if (precario.getTipo().getNome().equals(tipoLugarComId.getNome())){
+			String tipoNome = precario.getTipo().getNome();
+			if (tipoNome.equals(tipoLugarComId.getNome())){
 				it.remove();
 				precarioDAO.delete(precario);
 			}
 		}
-		parqueDAO.save(parque);
 	}
 
 	/**
