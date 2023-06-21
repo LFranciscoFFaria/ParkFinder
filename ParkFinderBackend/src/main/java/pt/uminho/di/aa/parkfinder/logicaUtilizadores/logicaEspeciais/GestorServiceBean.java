@@ -146,7 +146,7 @@ public class GestorServiceBean implements GestorService {
 	 * @param id_parque identificador do parque
 	 * @param newInfo nova informação relativa ao parque
 	 */
-	public boolean alterarInformacoesParque(int id_parque, ParqueEdit newInfo) throws Exception {
+	public boolean alterarInformacoesParque(int id_parque, ParqueDTO newInfo) throws Exception {
 		checkIsLoggedIn();
 		return parqueServiceBean.setAll(id_parque,newInfo.getNome(),
 								newInfo.getDescricao(),newInfo.getLatitude(),

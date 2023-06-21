@@ -111,6 +111,7 @@ public class AdministradorAPI {
     }
 
     private ReservaDTO reservaToDTO(Reserva r){
+        if(r == null) return null;
         String tipo_lugar;
         LugarEstacionamento lugarEstacionamento = r.getLugar();
         if(lugarEstacionamento == null) tipo_lugar = "Instantaneo";

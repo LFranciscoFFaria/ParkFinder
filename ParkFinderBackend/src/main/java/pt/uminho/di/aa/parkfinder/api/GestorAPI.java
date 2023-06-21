@@ -15,7 +15,6 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,14 +67,14 @@ public class GestorAPI {
     }
 
     @GetMapping("/meus_parques")
-    public ResponseEntity<List<ParqueEdit>> listarMeusParques(){
+    public ResponseEntity<List<ParqueDTO>> listarMeusParques(){
         try{
             List<Parque> parques = gestorServiceBean.listarMeusParques();
-            List<ParqueEdit> parqueEdits = parques.stream().map(this::parqueToDTO).toList();
-            return new ResponseEntity<>(parqueEdits, HttpStatus.OK);
+            List<ParqueDTO> parqueDTOS = parques.stream().map(this::parqueToDTO).toList();
+            return new ResponseEntity<>(parqueDTOS, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<List<ParqueEdit>>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<List<ParqueDTO>>().createBadRequest(e.getMessage());
         }
     };
 
@@ -136,7 +135,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/alterar_parque")
-    public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam int id_parque, @RequestBody ParqueEdit newInfo){
+    public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam int id_parque, @RequestBody ParqueDTO newInfo){
         try{
             return new ResponseEntity<>(gestorServiceBean.alterarInformacoesParque(id_parque,newInfo), HttpStatus.OK);
         }
@@ -183,8 +182,9 @@ public class GestorAPI {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private ParqueEdit parqueToDTO(Parque parque){
-        return new ParqueEdit(Optional.of(parque.getId()), Optional.of(parque.getNome()), Optional.of(parque.getMorada()),
+    private ParqueDTO parqueToDTO(Parque parque){
+        if(parque == null) return null;
+        return new ParqueDTO(Optional.of(parque.getId()), Optional.of(parque.getNome()), Optional.of(parque.getMorada()),
                 Optional.of(parque.getDescricao()), Optional.of(parque.getLatitude()), Optional.of(parque.getLongitude()),
                 Optional.of(parque.isDisponivel()), Optional.of(parque.getInstantaneos_livres()),
                 Optional.of(parque.getInstantaneos_total()), Optional.of(parque.getTotal_lugares()),
@@ -192,6 +192,7 @@ public class GestorAPI {
     }
 
     private AdminDTO adminToDTO(Administrador a){
+        if(a == null) return null;
         List<Integer> ids_parques = null;
 
         //Se a load initialize exception for invocada, então ignora e envia uma lista a null.
