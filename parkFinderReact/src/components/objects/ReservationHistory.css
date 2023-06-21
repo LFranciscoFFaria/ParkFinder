@@ -1,0 +1,27 @@
+.reservation_history_field{
+    display: flex;
+    flex-direction:column;
+    font-size: larger;
+    padding: 20px;
+    gap: 7px;
+    border-top: 1px lightgray solid;
+}
+
+.reservation_history_grid_content{
+    display: grid;
+    padding: 0px 15px;
+    grid-template-columns: 190px auto;
+    gap: 5px;
+    font-size: 90%;
+}
+
+.reservation_history_park_qrcode{
+    width: 100%;
+    display: flex;
+}
+
+.reservation_history_park{
+    width: 100%;
+    display: flex;
+    font-size: 106%;
+}

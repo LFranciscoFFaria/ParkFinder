@@ -30,3 +30,8 @@
 .image_small{
     max-width: 240px;
 }
+
+.image_icon{
+    height: 45px;
+    width: 50px;
+}
