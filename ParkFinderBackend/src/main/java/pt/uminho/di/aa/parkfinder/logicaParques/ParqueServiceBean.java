@@ -116,8 +116,15 @@ public class ParqueServiceBean implements ParqueService {
 	 * Remove o parque da base de dados da aplicação se existir.
 	 * @param id_parque identificador do parque
 	 */
+	@Transactional(rollbackOn = Exception.class)
 	public void removerParque(int id_parque) {
-		parqueDAO.deleteById(id_parque);
+		if (parqueDAO.existsById(id_parque)) {
+			List<LugarEstacionamento> l = lugarDAO.findAllByParqueId(id_parque);
+			l.forEach(lugarEstacionamento -> {
+				eliminarLugar(lugarEstacionamento.getLugarId());
+			});
+			parqueDAO.deleteById(id_parque);
+		}
 	}
 
 	/**
@@ -306,12 +313,12 @@ public class ParqueServiceBean implements ParqueService {
 	@Transactional(rollbackOn = Exception.class)
 	public void removerLugar(int id_parque, TipoLugarEstacionamento tipo_lugar) throws Exception {
 		Parque parque = getParque(id_parque);
-		List<LugarEstacionamento> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
+		List<Integer> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
 		if(lugarEstacionamento.size() == 0)
 			throw new Exception("O parque não possui nenhum lugar de estacionamento com esse tipo que não tenha reservas futuras.");
 		parque.setTotal_lugares(parque.getTotal_lugares() - 1);
 		parqueDAO.save(parque);
-		lugarDAO.eliminarLugar(lugarEstacionamento.get(0).getLugarId());
+		eliminarLugar(lugarEstacionamento.get(0));
 	}
 
 	/**
@@ -327,19 +334,19 @@ public class ParqueServiceBean implements ParqueService {
 			throw new Exception("Lugar não pertence ao parque!");
 		parque.setTotal_lugares(parque.getTotal_lugares() - 1);
 		parqueDAO.save(parque);
-		lugarDAO.eliminarLugar(id_lugar);
+		eliminarLugar(id_lugar);
 	}
 
 	@Transactional(rollbackOn = Exception.class)
 	public void removerLugares(int id_parque, TipoLugarEstacionamento tipo_lugar, int n) throws Exception {
 		Parque parque = getParque(id_parque);
-		List<LugarEstacionamento> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
+		List<Integer> lugarEstacionamento = lugarDAO.findLugaresSemReservasFuturas(parque.getId(), tipo_lugar.getNome());
 		if(lugarEstacionamento.size() < n)
 			throw new Exception("O parque apenas possui " + lugarEstacionamento.size() + " lugares de estacionamento do tipo referido que não têm reservas futuras.");
 		parque.setTotal_lugares(parque.getTotal_lugares() - n);
 		parqueDAO.save(parque);
 		for(int i = 0; i < n; i++)
-			lugarDAO.eliminarLugar(lugarEstacionamento.get(i).getLugarId());
+			eliminarLugar(lugarEstacionamento.get(i));
 	}
 
 	/**
@@ -354,8 +361,10 @@ public class ParqueServiceBean implements ParqueService {
 		Parque parque = getParque(id_parque);
 		int instantaneos_livres = parque.getInstantaneos_livres();
 		int instantaneos_total = parque.getInstantaneos_total();
+		int total_lugares = parque.getTotal_lugares();
 		parque.setInstantaneos_livres(instantaneos_livres + n);
 		parque.setInstantaneos_total(instantaneos_total + n);
+		parque.setTotal_lugares(total_lugares + n);
 		parqueDAO.save(parque);
 	}
 
@@ -375,11 +384,13 @@ public class ParqueServiceBean implements ParqueService {
 
 		int instantaneos_livres = parque.getInstantaneos_livres();
 		int instantaneos_total = parque.getInstantaneos_total();
+		int total_lugares = parque.getTotal_lugares();
 		if (instantaneos_livres - n < 0)
 			throw new Exception("Não podem ser removidos tantos lugares");
 
 		parque.setInstantaneos_livres(instantaneos_livres - n);
 		parque.setInstantaneos_total(instantaneos_total - n);
+		parque.setTotal_lugares(total_lugares - n);
 		parqueDAO.save(parque);
 	}
 
@@ -548,5 +559,10 @@ public class ParqueServiceBean implements ParqueService {
 	@Override
 	public LugarEstacionamento getLugarById(int id_lugar) {
 		return lugarDAO.findById(id_lugar).orElse(null);
+	}
+
+	private void eliminarLugar(int lugar_id){
+		lugarDAO.requisitoEliminarLugar(lugar_id);
+		lugarDAO.deleteById(lugar_id);
 	}
 }
