@@ -8,7 +8,10 @@ import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.ParqueDTO;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +19,7 @@ import java.util.Optional;
 @RequestMapping("/apiV1/parques")
 public class ParqueAPI {
     private final ParqueServiceBean parqueServiceBean;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
     public ParqueAPI(ParqueServiceBean parqueServiceBean) {
@@ -62,6 +66,35 @@ public class ParqueAPI {
             return new ResponseEntity<>(parqueToDTO(p),HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntityBadRequest<ParqueDTO>().createBadRequest(e.getMessage());
+        }
+    }
+
+    /**
+     *
+     * @param id_parque identificador do parque
+     * @param tipo tipo de lugar de estacionamento / tipo de reserva
+     * @param data_inicio_s string com data que marca o início do intervalo. Formato: "yyyy-MM-dd HH:mm"
+     * @param data_fim_s string com data que marca o fim do intervalo. Formato: "yyyy-MM-dd HH:mm"
+     * @return simula o custo de um certo tipo de reserva para um dado intervalo.
+     */
+    @GetMapping("/simular_custo")
+    public ResponseEntity<Float> simularCustoReserva(@RequestParam("id_parque") int id_parque,
+                                                     @RequestParam("tipo") String tipo,
+                                                     @RequestParam("data_inicio") String data_inicio_s,
+                                                     @RequestParam("data_fim") String data_fim_s){
+        LocalDateTime data_inicio, data_fim;
+        try {
+            data_inicio = LocalDateTime.parse(data_inicio_s, dateTimeFormatter);
+            data_fim = LocalDateTime.parse(data_fim_s, dateTimeFormatter);
+        }catch (Exception e){
+            return new ResponseEntityBadRequest<Float>().createBadRequest("Uma das datas não se apresenta na forma correta.");
+        }
+
+        try {
+            Float custo = parqueServiceBean.simularCusto(id_parque, new TipoLugarEstacionamento(tipo), data_inicio, data_fim);
+            return new ResponseEntity<>(custo, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntityBadRequest<Float>().createBadRequest(e.getMessage());
         }
     }
 

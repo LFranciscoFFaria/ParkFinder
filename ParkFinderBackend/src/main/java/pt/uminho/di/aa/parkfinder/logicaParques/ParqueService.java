@@ -69,6 +69,8 @@ public interface ParqueService {
 
 	Precario getPrecarioByParqueIdAndTipoLugar(int id_parque, String tipoLugar) throws Exception;
 
+	float simularCusto(int id_parque, TipoLugarEstacionamento tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
+
 	/**
 	 * 
 	 * @param id_parque

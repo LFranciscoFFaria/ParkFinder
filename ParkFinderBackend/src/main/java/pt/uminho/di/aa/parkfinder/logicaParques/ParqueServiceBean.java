@@ -216,6 +216,17 @@ public class ParqueServiceBean implements ParqueService {
 		return parqueDAO.findPrecarioDoParque(id_parque, tipoLugar);
 	}
 
+	public float simularCusto(int id_parque, TipoLugarEstacionamento tipo_lugar, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+		if(tipo_lugar == null || tipo_lugar.getNome() == null)
+			throw new Exception("Tipo de lugar de estacionamento inválido.");
+		if(data_inicio == null || data_fim == null)
+			throw new Exception("Datas não podem ser nulas, para se poder simular o preço para um intervalo.");
+		Precario precario = getPrecarioByParqueIdAndTipoLugar(id_parque, tipo_lugar.getNome());
+		if(precario == null)
+			throw new Exception("O parque não possui precario para esse tipo de lugar.");
+		return precario.calcular_preco(data_inicio, data_fim);
+	}
+
 	/**
 	 * Calcula o custo de fazer determinada reserva no parque pretendido para um determinado periodo.
 	 * @param id_parque identificador do parque
