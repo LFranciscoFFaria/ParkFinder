@@ -191,7 +191,7 @@ public interface ParqueService {
 	 * @param id_parque
 	 * @param disponivel
 	 */
-	public void setDisponivel(int id_parque, boolean disponivel) throws Exception;
+	void setDisponivel(int id_parque, boolean disponivel) throws Exception;
 
 	/**
 	 *

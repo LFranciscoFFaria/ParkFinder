@@ -76,7 +76,7 @@ public class GestorAPI {
         catch (Exception e) {
             return new ResponseEntityBadRequest<List<ParqueDTO>>().createBadRequest(e.getMessage());
         }
-    };
+    }
 
     @DeleteMapping("/remover_precario")
     public ResponseEntity<Void> removerPrecario(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo_lugar){
@@ -99,7 +99,7 @@ public class GestorAPI {
         catch (Exception e) {
             return new ResponseEntityBadRequest<List<AdminDTO>>().createBadRequest(e.getMessage());
         }
-    };
+    }
 
     @PutMapping("/criar_administrador")
     public ResponseEntity<Void> criarAdmin(@RequestBody AdminDTO a){
@@ -177,9 +177,13 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout() throws Exception {
-        gestorServiceBean.logout();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Void> logout() {
+        try{
+            gestorServiceBean.logout();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
+        }
     }
 
     private ParqueDTO parqueToDTO(Parque parque){

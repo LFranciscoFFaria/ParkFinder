@@ -10,7 +10,6 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Progr
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,11 +34,12 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param ids_parques lista com os identificadores dos parques que vão ser atribuidos ao gestor
 	 */
 	public void criarGestor(Gestor g, List<Integer> ids_parques) throws Exception {
+		checkIsLoggedIn();
 		if (g == null)
 			throw new Exception("O gestor não pode ser nulo.");
 		Utilizador u = utilizadorServiceBean.getUtilizador(g.getEmail());
 		if (u == null){
-			Set<Parque> parques = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
+			Set<Parque> parques = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
 			g.setParques(parques);
 			g.setDiscriminator("Gestor");
 			utilizadorServiceBean.criarUtilizador(g);
@@ -53,6 +53,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param id_gestor identificador do gestor a ser removido da base de dados
 	 */
 	public void removerGestor(int id_gestor) throws Exception {
+		checkIsLoggedIn();
 		Gestor g = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
 		if (g == null)
 			throw new Exception("O identificador do gestor não se encontra na base de dados.");
@@ -67,12 +68,13 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param id_gestor identificador do gestor que vai receber mais parques
 	 */
 	public void adicionarParquesAGestor(List<Integer> ids_parques, int id_gestor) throws Exception {
+		checkIsLoggedIn();
 		Gestor gestor = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
 		if (gestor == null)
 			throw new Exception("O gestor não existe.");
 		if (!gestor.getDiscriminator().equals("Gestor"))
 			throw new Exception("O utilizador não é um gestor.");
-		var parques_novos = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
+		var parques_novos = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
 		Set<Parque> parques_gestor = new HashSet<Parque>(gestor.getParques());
 		parques_gestor.addAll(parques_novos);
 		gestor.setParques(parques_gestor);
@@ -85,13 +87,14 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param id_gestor identificador do gestor
 	 */
 	public void removerParquesAGestor(List<Integer> ids_parques, int id_gestor) throws Exception {
+		checkIsLoggedIn();
 		Gestor gestor = (Gestor) utilizadorServiceBean.getUtilizador(id_gestor);
 		if (gestor == null)
 			throw new Exception("O gestor não existe.");
 		if (!gestor.getDiscriminator().equals("Gestor"))
 			throw new Exception("O utilizador não é um gestor.");
 		var parques_gestor = gestor.getParques();
-		Set<Parque> parques_remove = (Set<Parque>) parqueServiceBean.listarParques(ids_parques);
+		Set<Parque> parques_remove = new HashSet<>(parqueServiceBean.listarParques(ids_parques));
 		parques_remove.forEach(parques_gestor::remove);
 		gestor.setParques(parques_gestor);
 		utilizadorServiceBean.atualizarUtilizador(gestor);
@@ -102,6 +105,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param p parque a ser adicionado à base de dados
 	 */
 	public void registarParque(Parque p) throws Exception {
+		checkIsLoggedIn();
 		Parque parque = parqueServiceBean.procurarParque(p.getId());
 		if (parque != null)
 			throw new Exception("O parque já existe na base de dados.");
@@ -110,13 +114,15 @@ public class ProgramadorServiceBean implements ProgramadorService {
 
 	/**
 	 * Função que remove um parque na base de dados.
-	 * @param p parque a ser removido da base de dados
+	 *
+	 * @param id_parque parque a ser removido da base de dados
 	 */
-	public void removerParque(Parque p) throws Exception {
-		Parque parque = parqueServiceBean.procurarParque(p.getId());
+	public void removerParque(int id_parque) throws Exception {
+		checkIsLoggedIn();
+		Parque parque = parqueServiceBean.procurarParque(id_parque);
 		if (parque == null)
-			throw new Exception("O parque não existe na base de dados.");
-		parqueServiceBean.removerParque(p.getId());
+			throw new Exception("O parque não existe.");
+		parqueServiceBean.removerParque(id_parque);
 	}
 
 	/**
@@ -124,37 +130,40 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * @param nome nome do gestor a procurar
 	 * @return Retorna a lista de gestores com o nome especificado.
 	 */
-	public List<Gestor>  procurarGestor(String nome) {
-		//return utilizadorServiceBean.procurarUtilizador(nome, "gestor");
-		throw new UnsupportedOperationException();
+	@SuppressWarnings("unchecked")
+	public List<Gestor>  procurarGestor(String nome) throws Exception {
+		checkIsLoggedIn();
+		return (List<Gestor>) (List<?>) utilizadorServiceBean.procurarUtilizador(nome, "Gestor");
 	}
 
 	/**
 	 * Retorna a lista de todos os gestores encontrados na base de dados.
 	 */
-	public List<Gestor>  listarGestores() {
-		List<Utilizador> utilizadores = utilizadorServiceBean.procurarUtilizadores("gestor");
-		List<Gestor> gestores = new ArrayList<Gestor>();
-		for (Utilizador utilizador:utilizadores){
-			gestores.add((Gestor) utilizador);
-		}
-		return gestores;
+	@SuppressWarnings("unchecked")
+	public List<Gestor>  listarGestores() throws Exception {
+		checkIsLoggedIn();
+		return (List<Gestor>) (List<?>) utilizadorServiceBean.procurarUtilizadores("Gestor");
 	}
 
 	/**
 	 * Retorna as estatisticas gerais agregadas de todos os parques da aplicação.
 	 */
-	public Estatisticas verEstatisticasGerais() {
-		// TODO: Pelo nome não sei se é suposto não serem as agregadas ou não
+	public Estatisticas verEstatisticasGerais() throws Exception {
+		checkIsLoggedIn();
 		return parqueServiceBean.getEstatisticasGeralAgregado();
 	}
 
 	/**
 	 * Função que realiza o logout do programamdor.
 	 */
-	public void logout() {
-		// TODO: No condutor está função retorna um boleano não sei qual é suposto ser
+	public void logout() throws Exception {
+		checkIsLoggedIn();
 		programador = null;
+	}
+
+	private void checkIsLoggedIn() throws Exception {
+		if(programador == null)
+			throw new Exception("Não tem sessão iniciada.");
 	}
 
     public void setProgramador(Utilizador u) {

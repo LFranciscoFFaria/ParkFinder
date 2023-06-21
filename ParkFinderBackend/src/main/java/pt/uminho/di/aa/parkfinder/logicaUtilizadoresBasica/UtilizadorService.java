@@ -14,7 +14,7 @@ public interface UtilizadorService {
 	 *
 	 * @param id_utilizador
 	 */
-	public Utilizador getUtilizador(int id_utilizador);
+    Utilizador getUtilizador(int id_utilizador);
 
 	/**
 	 * 
@@ -51,5 +51,5 @@ public interface UtilizadorService {
 	 *
 	 * @param descriminador
 	 */
-	public List<Utilizador> procurarUtilizadores(String descriminador);
+    List<Utilizador> procurarUtilizadores(String descriminador);
 }

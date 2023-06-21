@@ -22,38 +22,6 @@ public class ParqueAPI {
         this.parqueServiceBean = parqueServiceBean;
     }
 
-    // Métodos do programador
-
-    @PutMapping("/criarparque")
-    public ResponseEntity<ParqueDTO> criarParque(@RequestBody ParqueDTO pDTO){
-        try{
-            Parque p = new Parque(pDTO.getNome().orElse(null),
-                                  pDTO.getMorada().orElse(null),
-                                  pDTO.getDescricao().orElse(null),
-                                  pDTO.getLatitude().orElse(null),
-                                  pDTO.getLongitude().orElse(null),
-                                  true, 0, 0, 0,
-                                  pDTO.getCaminho_foto().orElse(null));
-            p = parqueServiceBean.criarParque(p);
-            return new ResponseEntity<>(parqueToDTO(p), HttpStatus.OK);
-        } catch (NullPointerException nue){
-            return new ResponseEntityBadRequest<ParqueDTO>().createBadRequest("Parque não pode ser criado. Campos em falta!");
-        } catch (Exception e){
-            return new ResponseEntityBadRequest<ParqueDTO>().createBadRequest(e.getMessage());
-        }
-    }
-
-    @DeleteMapping("")
-    public ResponseEntity<Void> removerParque(@RequestBody int id_parque){
-        try{
-            parqueServiceBean.removerParque(id_parque);
-            return  new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
-        }
-    }
-
     @GetMapping("/allparques")
     public ResponseEntity<List<ParqueDTO>> listarParques(){
         try{
@@ -75,8 +43,6 @@ public class ParqueAPI {
             return new ResponseEntityBadRequest<List<ParqueDTO>>().createBadRequest(e.getMessage());
         }
     }
-
-    // Métodos de todos os utilizadores
 
     @GetMapping("/nome")
     public ResponseEntity<List<ParqueDTO>> procurarParque(@RequestParam String nome){

@@ -1,14 +1,19 @@
 package pt.uminho.di.aa.parkfinder.api;
 
+import org.hibernate.LazyInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.AdminDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.GestorDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 
 import java.util.List;
@@ -25,9 +30,10 @@ public class ProgramadorAPI {
     }
 
     @PutMapping("/criar_gestor")
-    public ResponseEntity<Void> criarGestor(@RequestBody Gestor g, @RequestBody List<Integer> ids_parques) {
+    public ResponseEntity<Void> criarGestor(@RequestBody GestorDTO gDTO) {
         try{
-            programadorServiceBean.criarGestor(g, ids_parques);
+            Gestor g = new Gestor(gDTO.getNome(), gDTO.getEmail(), gDTO.getPassword(), gDTO.getNr_telemovel());
+            programadorServiceBean.criarGestor(g, gDTO.getIds_parques());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -70,20 +76,28 @@ public class ProgramadorAPI {
 
 
     @PutMapping("/registar_parque")
-    public ResponseEntity<Void> registarParque(@RequestBody Parque p) {
+    public ResponseEntity<Void> registarParque(@RequestBody ParqueDTO pDTO) {
         try{
+            Parque p = new Parque(pDTO.getNome().orElse(null),
+                    pDTO.getMorada().orElse(null),
+                    pDTO.getDescricao().orElse(null),
+                    pDTO.getLatitude().orElse(null),
+                    pDTO.getLongitude().orElse(null),
+                    true, 0, 0, 0,
+                    pDTO.getCaminho_foto().orElse(null));
             programadorServiceBean.registarParque(p);
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (Exception e) {
+        } catch (NullPointerException nue){
+            return new ResponseEntityBadRequest<Void>().createBadRequest("Parque não pode ser criado. Campos em falta!");
+        } catch (Exception e) {
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
     @DeleteMapping("/remover_parque")
-    public ResponseEntity<Void> removerParque(@RequestBody Parque p) {
+    public ResponseEntity<Void> removerParque(@RequestParam int id_parque) {
         try{
-            programadorServiceBean.removerParque(p);
+            programadorServiceBean.removerParque(id_parque);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -92,29 +106,33 @@ public class ProgramadorAPI {
     }
 
     @GetMapping("/procurar_gestor")
-    public ResponseEntity<List<Gestor>> procurarGestor(@RequestParam("nome") String nome) {
+    public ResponseEntity<List<GestorDTO>> procurarGestor(@RequestParam("nome") String nome) {
         try{
-            return new ResponseEntity<List<Gestor>>(programadorServiceBean.procurarGestor(nome), HttpStatus.OK);
+            List<Gestor> gestores = programadorServiceBean.procurarGestor(nome);
+            List<GestorDTO> gestorDTOS = gestores.stream().map(this::gestorToDTO).toList();
+            return new ResponseEntity<>(gestorDTOS, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<List<Gestor>>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<List<GestorDTO>>().createBadRequest(e.getMessage());
         }
     }
 
     @GetMapping("/lista_gestores")
-    public ResponseEntity<List<Gestor>> listarGestores() {
+    public ResponseEntity<List<GestorDTO>> listarGestores() {
         try{
-            return new ResponseEntity<List<Gestor>>(programadorServiceBean.listarGestores(), HttpStatus.OK);
+            List<Gestor> gestores = programadorServiceBean.listarGestores();
+            List<GestorDTO> gestorDTOS = gestores.stream().map(this::gestorToDTO).toList();
+            return new ResponseEntity<>(gestorDTOS, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest<List<Gestor>>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<List<GestorDTO>>().createBadRequest(e.getMessage());
         }
     }
 
     @GetMapping("/estatisticas_gerais")
     public ResponseEntity<Estatisticas> verEstatisticasGerais() {
         try{
-            return new ResponseEntity<Estatisticas>(programadorServiceBean.verEstatisticasGerais(), HttpStatus.OK);
+            return new ResponseEntity<>(programadorServiceBean.verEstatisticasGerais(), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Estatisticas>().createBadRequest(e.getMessage());
@@ -122,8 +140,25 @@ public class ProgramadorAPI {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout(){
-        programadorServiceBean.logout();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Void> logout() {
+        try{
+            programadorServiceBean.logout();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
+        }
+    }
+
+    private GestorDTO gestorToDTO(Gestor g){
+        if(g == null) return null;
+        List<Integer> ids_parques = null, ids_admins = null;
+
+        //Se a load initialize exception for invocada, então ignora e envia uma lista a null.
+        try{
+            ids_parques = g.getParques().stream().map(Parque::getId).toList();
+            ids_admins = g.getAdmins().stream().map(Administrador::getId).toList();
+        } catch (LazyInitializationException ignored){}
+
+        return new GestorDTO(g.getNome(), g.getEmail(), g.getNrTelemovel(), g.getPassword(), ids_parques, ids_admins);
     }
 }

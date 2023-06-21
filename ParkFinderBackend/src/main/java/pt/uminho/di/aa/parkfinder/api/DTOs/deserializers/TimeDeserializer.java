@@ -13,7 +13,7 @@ public class TimeDeserializer extends JsonDeserializer<LocalTime> {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     @Override
-    public LocalTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public LocalTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         try{
             return LocalTime.parse(jsonParser.getText(), dateTimeFormatter);
         }catch (Exception e){

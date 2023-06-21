@@ -22,19 +22,19 @@ public interface ReservaService {
 	 *
 	 * @param id_reserva
 	 */
-	public Reserva getReserva(int id_reserva) throws Exception;
+	Reserva getReserva(int id_reserva) throws Exception;
 
 	/**
 	 *
 	 * @param matricula
 	 */
-	public Reserva getReservaMatricula(int parque_id, String matricula) throws Exception;
+	Reserva getReservaMatricula(int parque_id, String matricula) throws Exception;
 
 	/**
 	 *
 	 * @param id_parque
 	 */
-	public List<Reserva> getReservasParque(int id_parque);
+	List<Reserva> getReservasParque(int id_parque);
 
 	/**
 	 *

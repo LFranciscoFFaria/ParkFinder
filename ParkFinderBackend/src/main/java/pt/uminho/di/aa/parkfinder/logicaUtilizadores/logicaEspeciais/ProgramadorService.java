@@ -42,20 +42,19 @@ public interface ProgramadorService {
 	void registarParque(Parque p) throws Exception;
 
 	/**
-	 * 
-	 * @param p
-	 */
-	void removerParque(Parque p) throws Exception;
+     * @param id_parque
+     */
+	void removerParque(int id_parque) throws Exception;
 
 	/**
 	 * 
 	 * @param nome
 	 */
-	List<Gestor> procurarGestor(String nome);
+	List<Gestor> procurarGestor(String nome) throws Exception;
 
-	List<Gestor>  listarGestores();
+	List<Gestor>  listarGestores() throws Exception;
 
-	Estatisticas verEstatisticasGerais();
+	Estatisticas verEstatisticasGerais() throws Exception;
 
-	void logout();
+	void logout() throws Exception;
 }

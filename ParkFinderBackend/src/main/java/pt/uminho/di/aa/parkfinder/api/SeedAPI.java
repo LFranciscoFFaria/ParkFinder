@@ -39,13 +39,13 @@ import java.util.List;
 @RequestMapping("/apiV1/seed")
 public class SeedAPI {
 
-    ParqueService parqueService;
-    TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO;
-    UtilizadorService utilizadorService;
-    ReservaService reservaService;
-    LugarEstacionamentoDAO lugarEstacionamentoDAO;
-    NotificationService notificationService;
-    CondutorServiceBean condutorServiceBean;
+    final ParqueService parqueService;
+    final TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO;
+    final UtilizadorService utilizadorService;
+    final ReservaService reservaService;
+    final LugarEstacionamentoDAO lugarEstacionamentoDAO;
+    final NotificationService notificationService;
+    final CondutorServiceBean condutorServiceBean;
 
     @Autowired
     public SeedAPI(ParqueService parqueService, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, UtilizadorService utilizadorService, ReservaService reservaService, LugarEstacionamentoDAO lugarEstacionamentoDAO, NotificationService notificationService, CondutorServiceBean condutorServiceBean) {
