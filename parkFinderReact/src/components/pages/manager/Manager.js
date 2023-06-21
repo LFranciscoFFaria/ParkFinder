@@ -29,7 +29,7 @@ function Manager({
                     setPage(
                         <Contacts
                             listUsers={administradores} 
-                            createButton={<Button buttonStyle={"default"} onClick={() => console.log("createButton")} link={'/manager/create'}>Criar Administrador</Button>} 
+                            createButton={<Button buttonStyle={"default"} onClick={() => console.log("createButton")} link={'/manager/admin/create'}>Criar Administrador</Button>} 
                             editButton={<Button buttonStyle={"default"} onClick={() => console.log("editButton")}>Editar</Button>} 
                             removeButton={<Button buttonStyle={"default"} onClick={() => console.log("removeButton")}>Remover</Button>} 
                             title={"Administradores"}

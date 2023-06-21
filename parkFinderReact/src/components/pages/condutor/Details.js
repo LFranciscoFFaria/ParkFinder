@@ -59,7 +59,8 @@ const parques = [
 ]
 
 function Details({
-    setState
+    setState,
+    userID
 }) {
 
     const [selected,setSelected] = useState(1);
@@ -109,7 +110,7 @@ function Details({
     
     return (
         <div className='front_page'>
-            <Navbar setState={setState} setFilter={null}/>
+            <Navbar setState={setState} setFilter={null} userID={userID}/>
             <div className="front_page_content">
                 <div className="details_display">
                     <div className="details_header">

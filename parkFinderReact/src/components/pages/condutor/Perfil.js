@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 function Perfil({
     setState,
     reservations,
+    userID,
 }) {
     const [optionSelected, setOptionSelected] = useState(-1);
     const [optionDisplayed, setOptionDisplayed] = useState(null);
@@ -45,7 +46,7 @@ function Perfil({
     
     return (
         <div className='front_page'>
-            <Navbar setState={setState} setFilter={null}/>
+            <Navbar setState={setState} setFilter={null} userID={userID}/>
             <div className="front_page_content">
                 <div className="perfil_main">
                     <div className='perfil_block_image'>

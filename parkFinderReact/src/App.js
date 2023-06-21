@@ -228,6 +228,7 @@ function App() {
     const [state, setState] = useState('');
     const [filter, setFilter] = useState(false);
     const [idParque, setIdParque] = useState(-1);
+    const [userId, setUserID] = useState('1234567890abc');
 
     useEffect(() => {
         console.log("state = " + state);
@@ -241,9 +242,9 @@ function App() {
                 {/*Common user*/}
                 <Route path='/login' element={<Login/>} />
                 <Route path='/register' element={<Register/>} />
-                <Route path='/' element={<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState} state={state}/>} />
-                <Route path='/details' element={<Details filter={filter} setState={setState}/>} />
-                <Route path='/perfil' element={<Perfil setState={setState} reservations={reservations}/>} />
+                <Route path='/' element={<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState} state={state} userID={userId}/>} />
+                <Route path='/details' element={<Details filter={filter} setState={setState} userID={userId}/>} />
+                <Route path='/perfil' element={<Perfil setState={setState} reservations={reservations} userID={userId}/>} />
 
 
                 {/*Admin*/}
@@ -256,7 +257,7 @@ function App() {
                 <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
                 <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
                 <Route path='/manager/details' element={<ManagerDetails/>}/>
-                <Route path='/manager/create' element={<CreateAdmin/>}/>
+                <Route path='/manager/admin/create' element={<CreateAdmin/>}/>
 
 
                 {/*Programmer*/}

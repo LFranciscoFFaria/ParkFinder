@@ -10,10 +10,11 @@ function Parks({
     filter,
     setFilter,
     setState,
+    userID,
 }) {
     return (
         <div className='front_page'>
-            <Navbar userID={'1234567890abc'} setState={setState} setFilter={() => setFilter(!filter)}/>
+            <Navbar userID={userID} setState={setState} setFilter={() => setFilter(!filter)}/>
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
                     <div className='parks_header'>

@@ -52,7 +52,7 @@ export function Reservation({
         return(
             <>
                 <QRCodeSVG value={'reserva:' + popUp} className="navbar_qrcode"/>
-                <h3>Código: {'RESERVATION:' + popUp}</h3>
+                <h3>Código: {'RES:' + popUp}</h3>
             </>
         );
     };

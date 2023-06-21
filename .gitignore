@@ -5,3 +5,4 @@ parkFinderReact/node_modules/*
 .iml
 .idea/
 *.class
+ParkFinderBackend/target/classes/application.properties

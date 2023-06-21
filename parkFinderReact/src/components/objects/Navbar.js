@@ -18,7 +18,7 @@ export function Navbar({
     const [element, setElement] = useState(
         <>
             <QRCodeSVG value={'userID:' + userID} className="navbar_qrcode"/>
-            <h3>Código: {'userID:' + userID}</h3>
+            <h3>Código: {'USERID:' + userID}</h3>
         </>);
 
 
