@@ -1,21 +1,36 @@
 package pt.uminho.di.aa.parkfinder.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pt.uminho.di.aa.parkfinder.logicaNotificacoes.Notificacao;
+import pt.uminho.di.aa.parkfinder.logicaNotificacoes.NotificationService;
+import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.LugarEstacionamentoDAO;
 import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.TipoLugarEstacionamentoDAO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.HorarioPeriodo;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
+import pt.uminho.di.aa.parkfinder.logicaParquesReservas.EstadoReserva;
+import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaService;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -24,17 +39,28 @@ public class SeedAPI {
 
     ParqueService parqueService;
     TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO;
+    UtilizadorService utilizadorService;
+    ReservaService reservaService;
+    LugarEstacionamentoDAO lugarEstacionamentoDAO;
+    NotificationService notificationService;
 
     @Autowired
-    public SeedAPI(ParqueService parqueService, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO) {
+    public SeedAPI(ParqueService parqueService, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, UtilizadorService utilizadorService, ReservaService reservaService, LugarEstacionamentoDAO lugarEstacionamentoDAO, NotificationService notificationService) {
         this.parqueService = parqueService;
         this.tipoLugarEstacionamentoDAO = tipoLugarEstacionamentoDAO;
+        this.utilizadorService = utilizadorService;
+        this.reservaService = reservaService;
+        this.lugarEstacionamentoDAO = lugarEstacionamentoDAO;
+        this.notificationService = notificationService;
     }
 
     @PostMapping
     public ResponseEntity<String> seed(){
         try {
             criarTiposLugarEParques();
+            criarUtilizadoresSimples();
+            criarReservas();
+            criarNotificacoes();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -81,4 +107,80 @@ public class SeedAPI {
         }
         return horarioPeriodos;
     }
+
+    private void criarUtilizadoresSimples() throws Exception{
+        //Criar Gestor
+        //public Gestor(String nome,String email,String password, int nrTelemovel, Set<Parque> parques, Set<Administrador> admins)
+         Gestor gestor = new Gestor("Gestor" + 1, "gestor" + 1 + "@yahoo.com", "g" + 1, 960000000 + 1, new HashSet<>(), new HashSet<>());
+        utilizadorService.criarUtilizador(gestor);
+        //Criar Admins
+        //Administrador(String nome, String email, String password, int nrTelemovel, Gestor gestor, Set<Parque> parques)
+        Administrador administrador = new Administrador("Administrador" + 2, "administrador" + 2 + "@hotmail.com", "a" + 2, 930000000 + 2, gestor, new HashSet<>());
+        utilizadorService.criarUtilizador(administrador);
+        //Criar Condutores
+        //Condutor condutor = new Condutor(@JsonProperty("nome") String nome, @JsonProperty("email") String email, @JsonProperty("password") String password,
+        //@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero, @JsonProperty("numero_telemovel") int numero_telemovel));
+        Condutor condutor = new Condutor("Condutor" + 3, "condutor" + 3 + "@gmail.com", "c" + 3, 100000000 + 3,true, 910000000 + 3);
+        utilizadorService.criarUtilizador(condutor);
+    }
+
+    /**
+     * Introduzir multiplos de 10 nesta função
+     * @param n numero de utilizadores a criar
+     */
+    private void criarUtilizadores (int n) throws Exception{
+        for (int j = 0; j < n/10; j++) {
+            Gestor gestor = new Gestor();
+            for (int i = 1; i < 11; i++) {
+                int k = (i + 10 * j);
+                if (i % 10 == 1) {
+                    //Criar Gestor
+                    //public Gestor(String nome,String email,String password, int nrTelemovel, Set<Parque> parques, Set<Administrador> admins)
+                    gestor = new Gestor("Gestor" + k, "gestor" + k + "@yahoo.com", "g" + k, 960000000 + k, new HashSet<>(), new HashSet<>());
+                    utilizadorService.criarUtilizador(gestor);
+                } else if (i % 10 == 2 || i % 10 == 3) {
+                    //Criar Admins
+                    //Administrador(String nome, String email, String password, int nrTelemovel, Gestor gestor, Set<Parque> parques)
+                    Administrador administrador = new Administrador("Administrador" + k, "administrador" + k + "@hotmail.com", "a" + k, 930000000 + k, gestor, new HashSet<>());
+                    utilizadorService.criarUtilizador(administrador);
+                } else {
+                    //Criar Condutores
+                    //Condutor condutor = new Condutor(@JsonProperty("nome") String nome, @JsonProperty("email") String email, @JsonProperty("password") String password,
+                    //@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero, @JsonProperty("numero_telemovel") int numero_telemovel));
+                    Condutor condutor = new Condutor("Condutor" + k, "condutor" + k + "@gmail.com", "c" + k, 100000000 + k, i % 2 == 1, 910000000 + k);
+                    utilizadorService.criarUtilizador(condutor);
+                }
+            }
+        }
+    }
+
+    private void criarReservas() throws Exception{
+        Condutor condutor = (Condutor) utilizadorService.getUtilizador(3);
+        Parque parque1 = parqueService.procurarParque(1);
+        TipoLugarEstacionamento tipoAgendado = new TipoLugarEstacionamento("Agendado");
+        LocalDateTime data_inicio = LocalDateTime.of(2023,6,24,11, 0,0);
+        LocalDateTime data_fim = LocalDateTime.of(2023,6,24,12, 0,0);
+        List<Integer> lugaresDisponiveis_parque1 = parqueService.procurarLugaresDisponiveis(1,tipoAgendado,data_inicio,data_fim);
+        LugarEstacionamento lugarEstacionamento = null;
+        Parque parque3 = parqueService.procurarParque(3);
+        Reserva reserva_inst = new Reserva(condutor, null, parque3, EstadoReserva.AGENDADA, null, false, null, data_inicio, null);
+        reservaService.criarReserva(reserva_inst);
+        if(lugaresDisponiveis_parque1.size()>0)
+            lugarEstacionamento = lugarEstacionamentoDAO.findById(lugaresDisponiveis_parque1.get(0)).orElse(null);
+        else
+            throw new Exception("Não existem lugares disponíveis.");
+        //Reserva(Utilizador utilizador, LugarEstacionamento lugar, Parque parque, int estado, Float custo, boolean pago, String matricula, LocalDateTime dataInicio, LocalDateTime dataFim)
+        Reserva reserva_agendada = new Reserva(condutor, lugarEstacionamento, parque1, EstadoReserva.PENDENTE_PAGAMENTO, null, false, null, data_inicio, data_fim);
+        reservaService.criarReserva(reserva_agendada);
+    }
+
+    private void criarNotificacoes() throws Exception{
+        Condutor condutor = (Condutor) utilizadorService.getUtilizador(3);
+        Parque parque1 = parqueService.procurarParque(1);
+        String nome_parque = parque1.getNome();
+        LocalDateTime hora_notificacao = LocalDateTime.of(2023,6,20,11, 55,0);
+        Notificacao notificacao = new Notificacao(0,condutor,condutor.getId(),"Reserva agendada a acabar!", "A sua reserva agendada do "+nome_parque+" vai a acabar em 5 minutos!",false,hora_notificacao);
+        notificationService.addNotificacao(notificacao);
+    }
+
 }

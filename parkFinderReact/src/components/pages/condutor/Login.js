@@ -12,7 +12,7 @@ function Login({
     const validateForm = (event) => {
         event.preventDefault()
         console.log("validate");
-        window.location.href = '/';
+        window.location.href = '/manager';
     };
 
     return (

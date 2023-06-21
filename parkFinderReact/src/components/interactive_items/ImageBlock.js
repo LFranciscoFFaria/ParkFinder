@@ -7,6 +7,7 @@ export const ImageBlock = ({
     no_shadow,
     no_scale,
     no_border_radius,
+    imageSize = "image"
 }) => {
     return (
         <div className={
@@ -15,7 +16,7 @@ export const ImageBlock = ({
             (no_scale? '' : ' scale') +
             (no_shadow? '' : ' shadow')
         }>
-            <img className={'image'} src={imageLink} alt={""} />
+            <img className={`${imageSize}`} src={imageLink} alt={""} />
         </div>
     );
 };

@@ -10,7 +10,7 @@ import Contacts from '../../objects/Contacts';
 import { ImageBlock } from '../../interactive_items/ImageBlock';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
-import NavbarStaff from '../../objects/NavbarStaff';
+import { NavbarStaff } from '../../objects/Navbar';
 
 
 const parques = [

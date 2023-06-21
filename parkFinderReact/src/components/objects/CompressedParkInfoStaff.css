@@ -1,0 +1,100 @@
+.compressed_park_staff_create_button{
+    margin-right: 30px;
+    gap: 10px;
+    display: flex;
+}
+
+.compressed_park_staff{
+    border-top: 1px solid lightgray;
+    padding: 20px 60px;
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+}
+
+
+.compressed_park_staff_block_image{
+    display: flex;
+    max-width: 300px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.compressed_park_staff_info{
+    display: flex;
+    width: 100%;
+    height: inherit;
+    flex-direction: column;
+}
+
+.compressed_park_staff_content,
+.compressed_park_staff_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+}
+
+.compressed_park_staff_content{
+    align-items: end;
+}
+
+
+.compressed_park_staff_spaces{
+    padding: 10px;
+    border-radius: 15px;
+    align-items: center;
+    height: max-content;
+}
+
+.compressed_park_staff_spaces.green{
+    background-color: lawngreen;
+}
+.compressed_park_staff_spaces.orange{
+    background-color: orange;
+}
+.compressed_park_staff_spaces.red{
+    background-color: red;
+}
+
+
+.compressed_park_staff_street{
+    display: flex;
+    height: 100%;
+    margin-left: 30px;
+    align-items: start;
+}
+
+.pageNumb{
+    display: flex;
+    justify-content: end;
+}
+
+
+@media screen and (max-width: 700px) {
+    .compressed_park_staff_info_description{
+        display: none;
+    }
+
+    .compressed_park_staff_image_info{
+        flex-direction: column;
+    }
+
+    .compressed_park_staff_info{
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        gap: 30px;
+    }
+    
+    .compressed_park_staff_block_image{
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+}

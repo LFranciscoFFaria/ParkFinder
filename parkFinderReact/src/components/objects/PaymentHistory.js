@@ -1,9 +1,9 @@
 
 import './PaymentHistory.css';
 
-function PaymentHistory(
-    
-    ) {
+function PaymentHistory({
+    reservations
+}) {
         return (
             <div className='edit_perfil_form_content'>
     

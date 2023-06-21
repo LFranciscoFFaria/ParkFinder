@@ -19,7 +19,52 @@ import ProgrammerDetails from './components/pages/programmer/ProgrammerDetails';
 import Contacts from './components/objects/Contacts';
 
 
-
+const reservations = [
+    {
+        "id": 0,
+        "nome_utilizador" : "Ricardo Gomes",
+        "nome_parque" : "PARQUE VISCONDE DO RAIO",
+        "estado" : "Pagamento Pendente",
+        "custo" : 4.35,
+        "pago" : false,
+        "matricula" : "XA-21-AZ",
+        "data_inicio": "2023-06-22 15:30",
+        "data_fim": "2023-06-24 20:42"
+    },
+    {
+        "id": 1,
+        "nome_utilizador" : "Ricardo Gomes",
+        "nome_parque" : "PARQUE VISCONDE DO RAIO",
+        "estado" : "Agendada",
+        "custo" : 1.52,
+        "pago" : true,
+        "matricula" : "XA-21-AZ",
+        "data_inicio": "2023-06-20 9:30",
+        "data_fim": "2023-06-20 9:42"
+    },
+    {
+        "id": 2,
+        "nome_utilizador" : "Ricardo Gomes",
+        "nome_parque" : "PARQUE VISCONDE DO RAIO",
+        "estado" :"Ocupada",
+        "custo" : 31.52,
+        "pago" : true,
+        "matricula" : "XA-21-AZ",
+        "data_inicio": "2023-03-17 7:30",
+        "data_fim": "2023-03-17 20:02"
+    },
+    {
+        "id": 3,
+        "nome_utilizador" : "Ricardo Gomes",
+        "nome_parque" : "PARQUE VISCONDE DO RAIO",
+        "estado" : "Concluida",
+        "custo" : 3.11,
+        "pago" : true,
+        "matricula" : "XA-21-AZ",
+        "data_inicio": "2023-01-20 19:30",
+        "data_fim": "2023-01-20 20:42"
+    }
+]
 
 
 const parques = [
@@ -170,24 +215,24 @@ function App() {
                 <Route path='/register' element={<Register/>} />
                 <Route path='/' element={<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState} state={state}/>} />
                 <Route path='/details' element={<Details filter={filter} setState={setState}/>} />
-                <Route path='/perfil' element={<Perfil setState={setState}/>} />
+                <Route path='/perfil' element={<Perfil setState={setState} reservations={reservations}/>} />
+
 
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin parques={parques}/>}/>
+                <Route path='/admin' element={<Admin parks={parques} parques={parques}/>}/>
                 <Route path='/admin/details' element={<AdminDetails/>}/>
 
 
                 {/*Manager*/}
-                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={1}/>}/>
+                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} parks={parques} selected={1}/>}/>
                 <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
                 <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
                 <Route path='/manager/details' element={<ManagerDetails/>}/>
                 <Route path='/manager/create' element={<CreateAdmin/>}/>
 
 
-
                 {/*Programmer*/}
-                <Route path='/programmer' element={<Programmer managers={managers} selected={1}/>}/>
+                <Route path='/programmer' element={<Programmer managers={managers} parks={parques} selected={1}/>}/>
                 <Route path='/programmer/managers' element={<Programmer managers={managers} selected={2}/>}/>
                 <Route path='/programmer/details' element={<ProgrammerDetails/>}/>
             </Routes>

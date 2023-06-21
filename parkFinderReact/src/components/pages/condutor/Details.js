@@ -7,7 +7,7 @@ import Description from '../../objects/Description';
 import Characteristics from '../../objects/Caracteristics';
 import Booking from '../../objects/Booking';
 
-import Navbar from '../../objects/Navbar';
+import{ Navbar }from '../../objects/Navbar';
 import { ImageBlock } from '../../interactive_items/ImageBlock';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';

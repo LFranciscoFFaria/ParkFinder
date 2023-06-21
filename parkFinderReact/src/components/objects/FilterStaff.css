@@ -1,0 +1,31 @@
+.filter_staff_box{
+    min-width: 250px;
+    justify-content: space-evenly;
+    border-bottom: 1px lightgrey solid;
+    padding: 0px 60px 30px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter_staff_header{
+    border-bottom: 1px lightgrey solid;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter_staff_block_display{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.filter_staff_block{
+    flex-direction: column;
+    padding: 0px 10px;
+    display: flex;
+    gap: 15px;
+}

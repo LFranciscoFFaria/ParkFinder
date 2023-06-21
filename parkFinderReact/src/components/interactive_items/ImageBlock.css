@@ -22,3 +22,11 @@
 .image{
     max-width: 432px;
 }
+
+.image_full{
+    width: fit-content;
+}
+
+.image_small{
+    max-width: 240px;
+}

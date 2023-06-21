@@ -1,6 +1,6 @@
 import { ImageBlock } from '../../interactive_items/ImageBlock';
-import Navbar from '../../objects/Navbar';
-import EditPerfil from '../../objects/EditPerfil.js';
+import { Navbar } from '../../objects/Navbar';
+import { EditPerfil } from '../../objects/EditPerfil.js';
 import Security from '../../objects/Security.js';
 import PaymentHistory from '../../objects/PaymentHistory.js';
 import ReservationHistory from '../../objects/ReservationHistory.js';
@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react';
 
 
 function Perfil({
-    setState
+    setState,
+    reservations,
 }) {
     const [optionSelected, setOptionSelected] = useState(-1);
     const [optionDisplayed, setOptionDisplayed] = useState(null);
@@ -24,10 +25,10 @@ function Perfil({
                 setOptionDisplayed(<Security/>);
                 break;
             case 3:
-                setOptionDisplayed(<PaymentHistory/>);
+                setOptionDisplayed(<PaymentHistory reservations={reservations}/>);
                 break;
             case 4:
-                setOptionDisplayed(<ReservationHistory/>);
+                setOptionDisplayed(<ReservationHistory reservations={reservations}/>);
                 break;
             default:
                 setOptionDisplayed(<></>);

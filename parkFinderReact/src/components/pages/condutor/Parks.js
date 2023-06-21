@@ -1,8 +1,8 @@
 import './Parks.css'
 import '../../interactive_items/select.css'
 import { CompressedParkInfo } from '../../objects/CompressedParkInfo.js';
-import Filter from '../../objects/Filter';
-import Navbar from '../../objects/Navbar';
+import { Filter } from '../../objects/Filter';
+import { Navbar } from '../../objects/Navbar';
 import { useState } from 'react';
 
 function Parks({
@@ -11,8 +11,6 @@ function Parks({
     setFilter,
     setState,
 }) {
-    const [popUp, setPopUp] = useState(false);
-    
     return (
         <div className='front_page'>
             <Navbar userID={'1234567890abc'} setState={setState} setFilter={() => setFilter(!filter)}/>

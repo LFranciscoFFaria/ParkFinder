@@ -1,0 +1,30 @@
+.stats_manager_grid_container{
+    display: grid;
+    column-gap: 45px;
+    row-gap: 25px;
+    grid-template-columns: auto auto;
+    padding: 0px 60px 30px 60px;
+}
+
+.stats_manager_grid_item{
+    border: 1px solid gray;
+    border-radius: 20px;
+    display: flex;
+    padding: 15px 25px 20px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.stats_manager_title{
+    font-size: x-large;
+    display: flex;
+    padding-bottom: 10px;
+}
+
+
+.stats_manager_info{
+    padding-left: 30px;
+}
+
+
