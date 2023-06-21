@@ -1,7 +1,7 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
+import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
-import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public interface AdministradorService {
 	 * 
 	 * @param matricula
 	 */
-	Reserva encontrarReservaPorMatricula(String matricula) throws Exception;
+	ReservaDTO encontrarReservaPorMatricula(String matricula) throws Exception;
 
 	/**
 	 * 
@@ -54,7 +54,7 @@ public interface AdministradorService {
 	 * 
 	 * @param id_parque
 	 */
-	List<Reserva> verReservasAtivasDeParque(int id_parque);
+	List<ReservaDTO> verReservasAtivasDeParque(int id_parque);
 
 	void logout();
 }

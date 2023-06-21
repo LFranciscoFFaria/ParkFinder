@@ -17,80 +17,77 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/apiV1/programador")
 public class ProgramadorAPI {
-    private final ApplicationContext context;
-
     private final ProgramadorServiceBean programadorServiceBean;
 
     @Autowired
-    public ProgramadorAPI(ApplicationContext context, ProgramadorServiceBean programadorServiceBean) {
-        this.context = context;
+    public ProgramadorAPI(ProgramadorServiceBean programadorServiceBean) {
         this.programadorServiceBean = programadorServiceBean;
     }
 
     @PutMapping("/criar_gestor")
-    public ResponseEntity criarGestor(@RequestBody Gestor g, @RequestBody List<Integer> ids_parques) {
+    public ResponseEntity<Void> criarGestor(@RequestBody Gestor g, @RequestBody List<Integer> ids_parques) {
         try{
             programadorServiceBean.criarGestor(g, ids_parques);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
     @DeleteMapping("/remover_gestor")
-    public ResponseEntity removerGestor(@RequestParam("id_gestor") int id_gestor) {
+    public ResponseEntity<Void> removerGestor(@RequestParam("id_gestor") int id_gestor) {
         try{
             programadorServiceBean.removerGestor(id_gestor);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
     @PutMapping("/adicionar_parques")
-    public ResponseEntity adicionarParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
+    public ResponseEntity<Void> adicionarParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
             programadorServiceBean.adicionarParquesAGestor(ids_parques,id_gestor);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
     @DeleteMapping("/remover_parques")
-    public ResponseEntity removerParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
+    public ResponseEntity<Void> removerParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
             programadorServiceBean.removerParquesAGestor(ids_parques,id_gestor);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
 
     @PutMapping("/registar_parque")
-    public ResponseEntity registarParque(@RequestBody Parque p) {
+    public ResponseEntity<Void> registarParque(@RequestBody Parque p) {
         try{
             programadorServiceBean.registarParque(p);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
     @DeleteMapping("/remover_parque")
-    public ResponseEntity removerParque(@RequestBody Parque p) {
+    public ResponseEntity<Void> removerParque(@RequestBody Parque p) {
         try{
             programadorServiceBean.removerParque(p);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntityBadRequest().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
         }
     }
 
@@ -125,7 +122,7 @@ public class ProgramadorAPI {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity logout(){
+    public ResponseEntity<Void> logout(){
         programadorServiceBean.logout();
         return new ResponseEntity<>(HttpStatus.OK);
     }

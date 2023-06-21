@@ -56,9 +56,9 @@ public class CondutorServiceBean implements CondutorService {
 		if(condutorDTO.getNif() != null)
 			if(condutorDTO.getNif().isPresent())
 				newCondutor.setNif(condutorDTO.getNif().get());
-		if(condutorDTO.getNrTelemovel() != null)
-			if(condutorDTO.getNrTelemovel().isPresent())
-				newCondutor.setNrTelemovel(condutorDTO.getNrTelemovel().get());
+		if(condutorDTO.getNr_telemovel() != null)
+			if(condutorDTO.getNr_telemovel().isPresent())
+				newCondutor.setNrTelemovel(condutorDTO.getNr_telemovel().get());
 
 		condutor = (Condutor) utilizadorServiceBean.atualizarUtilizador(newCondutor);
 		return true;

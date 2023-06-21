@@ -5,7 +5,6 @@ import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
@@ -134,7 +133,7 @@ public class ProgramadorServiceBean implements ProgramadorService {
 	 * Retorna a lista de todos os gestores encontrados na base de dados.
 	 */
 	public List<Gestor>  listarGestores() {
-		List<Utilizador> utilizadores = utilizadorServiceBean.procurarUtilizador("gestor");
+		List<Utilizador> utilizadores = utilizadorServiceBean.procurarUtilizadores("gestor");
 		List<Gestor> gestores = new ArrayList<Gestor>();
 		for (Utilizador utilizador:utilizadores){
 			gestores.add((Gestor) utilizador);

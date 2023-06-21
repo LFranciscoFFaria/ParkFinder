@@ -42,8 +42,11 @@ public class TipoLugarEstacionamento implements Serializable {
 		return Objects.hash(id, nome);
 	}
 
+	@Override
 	public String toString() {
-		return String.valueOf(getId());
+		return "TipoLugarEstacionamento{" +
+				"id=" + id +
+				", nome='" + nome + '\'' +
+				'}';
 	}
-	
 }

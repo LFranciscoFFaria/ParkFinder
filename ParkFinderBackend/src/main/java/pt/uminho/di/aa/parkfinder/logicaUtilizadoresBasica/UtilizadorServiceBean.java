@@ -109,7 +109,7 @@ public class UtilizadorServiceBean implements UtilizadorService {
 	 * É necessário fornecer um descriminador válido para obter resultados.
 	 * @param descriminador Tipo de utilizador
 	 */
-	public List<Utilizador> procurarUtilizador(String descriminador) {
+	public List<Utilizador> procurarUtilizadores(String descriminador) {
 		return utilizadorDAO.findUtilizadorByDiscriminator(descriminador);
 	}
 
