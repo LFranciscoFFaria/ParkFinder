@@ -60,6 +60,7 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param ids lista de ids de parque
 	 */
 	public List<Parque> listarParques(List<Integer> ids) {
+		if (ids == null) return new ArrayList<>();
 		return parqueDAO.findAllById(ids);
 	}
 
@@ -513,13 +514,14 @@ public class ParqueServiceBean implements ParqueService {
 	 * @param id_parque identificador do parque
 	 * @param nome nome do parque
 	 * @param descricao descrição do parque
+	 * @param morada morada
 	 * @param latitude latitude do parque
 	 * @param longitude longitude do parque
 	 * @param disponivel disponibilidade do parque
 	 * @param caminho_foto caminho onde está guardada a foto do parque
 	 * @return retorna verdadeiro em caso de sucesso
 	*/
-	public boolean setAll(int id_parque, Optional<String> nome, Optional<String> descricao, Optional<Float> latitude, Optional<Float> longitude, Optional<Boolean> disponivel, Optional<String> caminho_foto) throws Exception {
+	public boolean setAll(int id_parque, Optional<String> nome, Optional<String> descricao, Optional<String> morada, Optional<Float> latitude, Optional<Float> longitude, Optional<Boolean> disponivel, Optional<String> caminho_foto) throws Exception {
 		Parque parque = parqueDAO.findById(id_parque).orElse(null);
 		if (parque == null){
 			throw new Exception("A parque não existe!");
@@ -528,6 +530,8 @@ public class ParqueServiceBean implements ParqueService {
 			nome.ifPresent(parque::setNome);
 		if (descricao != null)
 			descricao.ifPresent(parque::setDescricao);
+		if (morada != null)
+			morada.ifPresent(parque::setMorada);
 		if (latitude != null)
 			latitude.ifPresent(parque::setLatitude);
 		if (longitude != null)

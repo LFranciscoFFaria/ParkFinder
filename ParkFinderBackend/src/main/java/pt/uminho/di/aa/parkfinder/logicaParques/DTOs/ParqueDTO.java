@@ -1,4 +1,4 @@
-package pt.uminho.di.aa.parkfinder.logicaParques.model;
+package pt.uminho.di.aa.parkfinder.logicaParques.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

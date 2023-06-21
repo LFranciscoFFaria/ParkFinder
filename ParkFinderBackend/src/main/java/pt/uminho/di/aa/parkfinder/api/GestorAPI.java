@@ -8,6 +8,7 @@ import pt.uminho.di.aa.parkfinder.api.DTOs.AdminDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioDecLinearCriarDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioLinearCriarDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
+import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioDecrementoLinear;

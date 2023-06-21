@@ -3,6 +3,7 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
@@ -150,7 +151,7 @@ public class GestorServiceBean implements GestorService {
 	public boolean alterarInformacoesParque(int id_parque, ParqueDTO newInfo) throws Exception {
 		checkIsLoggedIn();
 		return parqueServiceBean.setAll(id_parque,newInfo.getNome(),
-								newInfo.getDescricao(),newInfo.getLatitude(),
+								newInfo.getDescricao(), newInfo.getMorada(), newInfo.getLatitude(),
 								newInfo.getLongitude(),newInfo.getDisponivel(),
 								newInfo.getCaminho_foto());
 	}

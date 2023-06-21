@@ -5,6 +5,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Horario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
@@ -15,6 +16,7 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +66,16 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 */
 	@Transactional(rollbackOn = Exception.class)
 	public Reserva criarReservaAgendada(int id_user, int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+		Horario horario = parqueServiceBean.getHorario(id_parque);
+		LocalTime time_inicio = LocalTime.from(data_inicio),
+				  time_fim = LocalTime.from(data_fim);
+
+		if(data_inicio.getDayOfYear() == data_fim.getDayOfYear() && data_inicio.getYear() == data_fim.getYear())
+			throw new Exception("No momento, o sistema não suporta reservas que abrangem múltiplos dias.");
+
+		if(!horario.estaAberto(data_inicio.getDayOfWeek(), time_inicio, time_fim))
+			throw new Exception("O parque não se encontra aberto parcial-/totalmente no período pretendido.");
+
 		List<Integer> ids_livres_parque = getIdsDeLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
 		if (ids_livres_parque.size() > 0) {
 			Parque parque = parqueServiceBean.procurarParque(id_parque);

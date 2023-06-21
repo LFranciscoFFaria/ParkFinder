@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.ParqueDTO;
+import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 
 import java.time.LocalDateTime;

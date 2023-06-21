@@ -206,7 +206,7 @@ public interface ParqueService {
 	 * @param caminho_foto
 	 * @return
 	 */
-	boolean setAll(int id_parque, Optional<String> nome, Optional<String> descricao, Optional<Float> latitude, Optional<Float> longitude, Optional<Boolean> disponivel, Optional<String> caminho_foto) throws Exception;
+	boolean setAll(int id_parque, Optional<String> nome, Optional<String> descricao, Optional<String> morada, Optional<Float> latitude, Optional<Float> longitude, Optional<Boolean> disponivel, Optional<String> caminho_foto) throws Exception;
 
 	LugarEstacionamento getLugarById(int id_lugar);
 
