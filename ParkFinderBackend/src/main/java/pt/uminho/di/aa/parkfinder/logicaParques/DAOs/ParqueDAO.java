@@ -1,5 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaParques.DAOs;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,10 @@ public interface ParqueDAO extends JpaRepository<Parque,Integer> {
 
     @Query(value = "SELECT Precario FROM Parque p JOIN Precario prec WHERE p.id = :id_parque AND prec.tipo.nome = :tipoLugar")
     Precario findPrecarioDoParque(@Param("id_parque") int id_parque, @Param("tipoLugar") String tipoLugar);
+
+    @Query(value = "SELECT p from Parque p WHERE p.id = :id_parque")
+    @EntityGraph(attributePaths = "precarios")
+    Parque findByIdWithPrecarios(@Param("id_parque") int id_parque);
+
+
 }

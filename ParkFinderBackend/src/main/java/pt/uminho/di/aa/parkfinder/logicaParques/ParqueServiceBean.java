@@ -25,12 +25,15 @@ public class ParqueServiceBean implements ParqueService {
 	private final LugarEstacionamentoDAO lugarDAO;
 	private final EstatisticasDAO estatisticasDAO;
 
+	private final PrecarioDAO precarioDAO;
+
 	@Autowired
-	public ParqueServiceBean(ParqueDAO parqueDAO, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, LugarEstacionamentoDAO lugarEstacionamentoDAO, EstatisticasDAO estatisticasDAO) {
+	public ParqueServiceBean(ParqueDAO parqueDAO, TipoLugarEstacionamentoDAO tipoLugarEstacionamentoDAO, LugarEstacionamentoDAO lugarEstacionamentoDAO, EstatisticasDAO estatisticasDAO, PrecarioDAO precarioDAO) {
 		this.parqueDAO = parqueDAO;
 		this.tipoLugarDAO = tipoLugarEstacionamentoDAO;
 		this.lugarDAO = lugarEstacionamentoDAO;
 		this.estatisticasDAO = estatisticasDAO;
+		this.precarioDAO = precarioDAO;
 	}
 
 	/**
@@ -127,7 +130,10 @@ public class ParqueServiceBean implements ParqueService {
 		if(p == null)
 			throw new Exception("Precario não pode ser nulo!");
 
-		Parque parque = getParque(id_parque);
+		Parque parque = parqueDAO.findByIdWithPrecarios(id_parque);
+
+		if(parque == null)
+			throw new Exception("Esse identificador de parque não existe");
 
 		TipoLugarEstacionamento tipoLugar = p.getTipo();
 		if(tipoLugar == null)
@@ -137,9 +143,17 @@ public class ParqueServiceBean implements ParqueService {
 		tipoLugar = encontraOuPersisteTipoLugar(tipoLugar);
 		p.setTipo(tipoLugar);
 
+		System.out.println(parque.getPrecarios());
+
 		//Remove precario que contem o mesmo tipo do novo
 		Set<Precario> precarios = parque.getPrecarios();
-		precarios.removeIf(precario -> precario.equals(p));
+		for (Iterator<Precario> it = precarios.iterator();it.hasNext();){
+			Precario precario = it.next();
+			if (precario.getTipo().getNome().equals(p.getTipo().getNome())){
+				it.remove();
+				precarioDAO.delete(precario);
+			}
+		}
 
 		//Adiciona nodo precario à colecao
 		precarios.add(p);
@@ -159,7 +173,13 @@ public class ParqueServiceBean implements ParqueService {
 		if(tipoLugarComId == null) return;
 
 		Set<Precario> precarios = parque.getPrecarios();
-		precarios.removeIf(precario -> precario.getTipo().equals(tipoPrecario));
+		for (Iterator<Precario> it = precarios.iterator();it.hasNext();){
+			Precario precario = it.next();
+			if (precario.getTipo().getNome().equals(tipoLugarComId.getNome())){
+				it.remove();
+				precarioDAO.delete(precario);
+			}
+		}
 		parqueDAO.save(parque);
 	}
 
