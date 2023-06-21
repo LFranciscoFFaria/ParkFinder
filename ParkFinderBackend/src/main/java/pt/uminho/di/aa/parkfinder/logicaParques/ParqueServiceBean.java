@@ -540,6 +540,19 @@ public class ParqueServiceBean implements ParqueService {
 		return true;
 	}
 
+	@Override
+	public LugarEstacionamento getLugarById(int id_lugar) {
+		return lugarDAO.findById(id_lugar).orElse(null);
+	}
+
+	public void incrementaVolume_E_aumentaFaturacao(int id_parque, float custo) throws Exception {
+		Parque parque = parqueDAO.findByIdWithEstatisticas(id_parque);
+		Estatisticas estatisticas = parque.getEstatisticas();
+		estatisticas.incVolumeDeEstacionamento();
+		estatisticas.setFaturacao_total(estatisticas.getFaturacao_total() + custo);
+		parqueDAO.save(parque);
+	}
+	
 	// ********** Funcoes Auxiliares ********
 
 	private TipoLugarEstacionamento encontraOuPersisteTipoLugar(TipoLugarEstacionamento tipoLugar){
@@ -564,11 +577,6 @@ public class ParqueServiceBean implements ParqueService {
 		if(lugar == null)
 			throw new Exception("Lugar não existe!");
 		return lugar;
-	}
-
-	@Override
-	public LugarEstacionamento getLugarById(int id_lugar) {
-		return lugarDAO.findById(id_lugar).orElse(null);
 	}
 
 	private void eliminarLugar(int lugar_id){

@@ -68,9 +68,9 @@ public class AdministradorAPI {
     }
 
     @GetMapping("/encontrar_reserva")
-    public ResponseEntity<ReservaDTO> encontrarReservaPorMatricula(@RequestParam("matricula") String matricula) {
+    public ResponseEntity<ReservaDTO> encontrarReservaPorMatricula(@RequestParam("id_parque") int id_parque, @RequestParam("matricula") String matricula) {
         try{
-            Reserva r = administradorServiceBean.encontrarReservaPorMatricula(0, matricula);
+            Reserva r = administradorServiceBean.encontrarReservaPorMatricula(id_parque, matricula);
             return new ResponseEntity<>(reservaToDTO(r),HttpStatus.OK);
         }
         catch (Exception e) {

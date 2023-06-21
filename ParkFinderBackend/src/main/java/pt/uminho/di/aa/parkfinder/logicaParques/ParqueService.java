@@ -209,4 +209,6 @@ public interface ParqueService {
 	boolean setAll(int id_parque, Optional<String> nome, Optional<String> descricao, Optional<Float> latitude, Optional<Float> longitude, Optional<Boolean> disponivel, Optional<String> caminho_foto) throws Exception;
 
 	LugarEstacionamento getLugarById(int id_lugar);
+
+	void incrementaVolume_E_aumentaFaturacao(int parqueID, float custo) throws Exception;
 }

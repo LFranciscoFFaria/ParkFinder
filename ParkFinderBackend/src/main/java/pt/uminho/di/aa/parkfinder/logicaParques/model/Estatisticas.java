@@ -27,6 +27,10 @@ public class Estatisticas implements Serializable {
 	
 	@Column(name="Faturacao_total", nullable=false)	
 	private float faturacao_total;
+
+	public void incVolumeDeEstacionamento(){
+		volume_de_estacionamento++;
+	}
 	
 	public String toString() {
 		return String.valueOf(getId());

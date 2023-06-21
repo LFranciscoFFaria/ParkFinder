@@ -169,6 +169,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	@Transactional(rollbackOn = Exception.class)
 	public boolean pagarReserva(int id_reserva) throws Exception{
 		Reserva reserva = reservaServiceBean.getReserva(id_reserva);
+		float custo;
 
 		if (!reserva.isPago()) {
 			// Lógica Reserva Instantanea
@@ -176,17 +177,21 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			// Reserva instantanea é paga quando se está dentro do parque.
 			if (reserva.getLugar() == null && reserva.getEstado() == EstadoReserva.OCUPADA) {
 				LocalDateTime fimReserva = LocalDateTime.now();
-				float custo = parqueServiceBean.calcularCusto(reserva.getParqueID(), null, reserva.getDataInicio(), fimReserva);
+				custo = parqueServiceBean.calcularCusto(reserva.getParqueID(), null, reserva.getDataInicio(), fimReserva);
 				reservaServiceBean.setAll(id_reserva, null, Optional.of(true), Optional.of(custo), null, Optional.of(fimReserva), null);
 			}
 			// Lógina Reserva Agendada/Especial
 			else if (reserva.getLugar() != null && reserva.getEstado() == EstadoReserva.PENDENTE_PAGAMENTO) {
+				custo = reserva.getCusto();
 				reservaServiceBean.setAll(id_reserva, Optional.of(EstadoReserva.AGENDADA), Optional.of(true), null, null, null, null);
 			}
 			else throw new Exception("A reserva não se encontra num estado que permite o pagamento da mesma.");
 		}
 		else
 			throw new Exception("A reserva já foi paga.");
+
+		//Atualiza estatisticas do parque
+		parqueServiceBean.incrementaVolume_E_aumentaFaturacao(reserva.getParqueID(), custo);
 
 		return true;
 	}
