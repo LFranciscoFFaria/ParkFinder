@@ -44,7 +44,7 @@ public class Reserva implements Serializable {
 	@Column(name = "UtilizadorID", updatable = false, nullable = false, insertable = false)
 	private int utilizadorID;
 
-	@ManyToOne(targetEntity= LugarEstacionamento.class, fetch=FetchType.LAZY)
+	@ManyToOne(targetEntity= LugarEstacionamento.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="LugarID", referencedColumnName="ID")
 	private LugarEstacionamento lugar;
 

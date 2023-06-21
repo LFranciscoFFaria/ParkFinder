@@ -23,6 +23,9 @@ public class ReservaDTO {
     @JsonProperty("id_parque")
     int id_parque;
 
+    @JsonProperty("tipo_lugar")
+    String tipo_lugar;
+
     @JsonSerialize(using = ReservaEstadoSerializer.class)
     @JsonProperty("estado")
     int estado;
