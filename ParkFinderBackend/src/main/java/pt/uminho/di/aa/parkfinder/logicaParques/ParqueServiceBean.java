@@ -447,11 +447,11 @@ public class ParqueServiceBean implements ParqueService {
 	public void setHorario(int id_parque, Horario h) throws Exception {
 		Parque parque = parqueDAO.findByIdWithHorario(id_parque);
 		if(parque == null) throw new Exception("Parque não existe!");
-		Horario horarioAtual = parque.getHorario();
-		if(horarioAtual != null)
-			horarioDAO.delete(horarioAtual);
+		Horario horarioAntigo = parque.getHorario();
 		parque.setHorario(h);
 		parqueDAO.save(parque);
+		if(horarioAntigo != null)
+			horarioDAO.delete(horarioAntigo);
 	}
 
 	/**
