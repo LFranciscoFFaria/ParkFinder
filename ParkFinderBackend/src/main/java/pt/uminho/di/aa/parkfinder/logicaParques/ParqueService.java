@@ -67,7 +67,7 @@ public interface ParqueService {
 	 */
 	List<Precario> getPrecarios(int id_parque) throws Exception;
 
-	Precario getPrecarioByNome(int id_parque, String nome) throws Exception;
+	Precario getPrecarioByParqueIdAndTipoLugar(int id_parque, String tipoLugar) throws Exception;
 
 	/**
 	 * 

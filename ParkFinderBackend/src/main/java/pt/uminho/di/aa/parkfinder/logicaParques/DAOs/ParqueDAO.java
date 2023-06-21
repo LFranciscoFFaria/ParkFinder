@@ -16,7 +16,7 @@ import java.util.List;
 public interface ParqueDAO extends JpaRepository<Parque,Integer> {
     List<Parque> findAllByNomeContainingIgnoreCase(String nome);
 
-    @Query(value = "SELECT Precario FROM Parque p JOIN Precario prec WHERE p.id = :id_parque AND prec.tipo.nome = :tipoLugar")
+    @Query(value = "SELECT prec FROM Parque p JOIN Precario prec WHERE p.id = :id_parque AND prec.tipo.nome = :tipoLugar")
     Precario findPrecarioDoParque(@Param("id_parque") int id_parque, @Param("tipoLugar") String tipoLugar);
 
     @Query(value = "SELECT p from Parque p LEFT JOIN FETCH p.precarios WHERE p.id = :id_parque")
