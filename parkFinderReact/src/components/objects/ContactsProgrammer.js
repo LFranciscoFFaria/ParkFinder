@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Button } from '../interactive_items/Button';
 import PopUp from '../interactive_items/PopUp';
@@ -7,19 +6,16 @@ import '../interactive_items/Checkbox.css';
 
 
 const parques = [
-    { id: 1,  park: "PARQUE DA PONTE"},
-    { id: 2,  park: "PARQUE AVENIDA CENTRAL"},
-    { id: 3,  park: "CENTRAL DE CAMIONAGEM"},
-    { id: 4,  park: "ESTAÇÃO"},
-    { id: 5,  park: "SANTISSIMA TRINDADE"},
-    { id: 6,  park: "PARQUE PORTAS"},
-    { id: 7,  park: "ESTACIONAMENTOS CAMPO DA VINHA"},
-    { id: 8,  park: "SRA TAIMANA"},
-    { id: 9,  park: "TAIMANA PEQUENA"},
+    { 'id': 1,  'park': "PARQUE DA PONTE"},
+    { 'id': 2,  'park': "PARQUE AVENIDA CENTRAL"},
+    { 'id': 3,  'park': "CENTRAL DE CAMIONAGEM"},
+    { 'id': 4,  'park': "ESTAÇÃO"},
+    { 'id': 5,  'park': "SANTISSIMA TRINDADE"},
+    { 'id': 6,  'park': "PARQUE PORTAS"},
+    { 'id': 7,  'park': "ESTACIONAMENTOS CAMPO DA VINHA"},
+    { 'id': 8,  'park': "SRA TAIMANA"},
+    { 'id': 9,  'park': "TAIMANA PEQUENA"},
 ]
-
-
-
 
 
 
@@ -49,8 +45,8 @@ function ContactsProgrammer({
                 <div className='contact_popup_list'>
                     {parques.map((parque,index)=>
                         <label key={index} className="checkbox_label">
-                            <input type="checkbox" className="checkbox" value={parque.id} onChange={handleChange}/>
-                            {parque.park}
+                            <input type="checkbox" className="checkbox" value={parque['id']} onChange={handleChange}/>
+                            {parque['park']}
                         </label>
                     )}
                     <div className='contact_popup_list_button'>

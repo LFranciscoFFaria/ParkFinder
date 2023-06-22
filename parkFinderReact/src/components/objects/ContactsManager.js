@@ -5,15 +5,17 @@ import PopUp from '../interactive_items/PopUp';
 
 
 const parques = [
-    { id: 1,  park: "PARQUE DA PONTE"},
-    { id: 2,  park: "PARQUE AVENIDA CENTRAL"},
-    { id: 3,  park: "CENTRAL DE CAMIONAGEM"},
-    { id: 4,  park: "ESTAÇÃO"},
-    { id: 5,  park: "SANTISSIMA TRINDADE"},
-    { id: 6,  park: "PARQUE PORTAS"},
-    { id: 7,  park: "ESTACIONAMENTOS CAMPO DA VINHA"},
-    { id: 8,  park: "SRA TAIMANA"},
-    { id: 9,  park: "TAIMANA PEQUENA"},
+    { 'id': 1,  'park': "PARQUE DA PONTE"},
+    { 'id': 2,  'park': "PARQUE AVENIDA CENTRAL"},
+    { 'id': 3,  'park': "CENTRAL DE CAMIONAGEM"},
+    { 'id': 4,  'park': "ESTAÇÃO"},
+    { 'id': 5,  'park': "SANTISSIMA TRINDADE"},
+    { 'id': 6,  'park': "PARQUE PORTAS"},
+    { 'id': 7,  'park': "ESTACIONAMENTOS CAMPO DA VINHA"},
+    { 'id': 8,  'park': "SRA TAIMANA"},
+    { 'id': 9,  'park': "TAIMANA PEQUENA"},
+    { 'id': 10, 'park': "TAIMANA O QUÊ?"},
+    { 'id': 11, 'park': "THA FUCK IS TAIMANA?"},
 ]
 
 
@@ -44,8 +46,8 @@ function ContactsManager({
                 <div className='contact_popup_list'>
                     {parques.map((parque,index)=>
                         <label key={index} className="checkbox_label">
-                            <input type="checkbox" className="checkbox" value={parque.id} onChange={handleChange}/>
-                            {parque.park}
+                            <input defaultChecked={listParks.includes(parque['id'])} type="checkbox" className="checkbox" value={parque['id']} onChange={handleChange}/>
+                            {parque["park"]}
                         </label>
                     )}
                     <div className='contact_popup_list_button'>
