@@ -25,7 +25,7 @@ function Parks({
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
                     <div className='parks_header'>
-                        <h1>[Local De Pesquisa]</h1>
+                        <h1>Parques</h1>
                         <select className='select' name='Criterion' id='criterion' defaultValue={"default"}>
                             <option className='disabled_selected' value="default" disabled>Sort by</option>
                             <option value='distance'>Distance</option>
