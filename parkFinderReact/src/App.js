@@ -101,10 +101,10 @@ const parques = [
         'nome': "PARQUE VISCONDE DO RAIO",
         'morada': "rua dos reis",
         'distancia': "(797 m)",
-        'lugares_vagos': 45,
+        'instantaneos_livres': 45,
         'instantaneos_total': 93,
         'lugares_totais': 96,
-        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'caminho_foto': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 1.30,
         'hora_init':"8:00",
         'hora_end':"19:00",
@@ -117,10 +117,10 @@ const parques = [
         'nome': "B&B BRAGA LAMAÇÃES",
         'morada': "rua dos reis",
         'distancia': "(2.7 km)",
-        'lugares_vagos': 22,
+        'instantaneos_livres': 22,
         'instantaneos_total': 40,
         'lugares_totais': 51,
-        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'caminho_foto': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 7.00,
         'hora_init':"8:00",
         'hora_end':"19:00",
@@ -133,10 +133,10 @@ const parques = [
         'nome': "BRAGA PARQUE",
         'morada': "rua dos reis",
         'distancia': "(1.1km)",
-        'lugares_vagos': 186,
+        'instantaneos_livres': 186,
         'instantaneos_total': 230,
         'lugares_totais': 268,
-        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'caminho_foto': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 2.15,
         'hora_init':"8:00",
         'hora_end':"19:00",
@@ -251,18 +251,11 @@ function App() {
     */
 
     useEffect(() => {
-        console.log("state = " + state);
-        console.log("filter = " + filter);
-        console.log("idParque = " + idParque);
-        console.log("userId = " + userId);
-    }, [state,filter,userId,idParque]);
-
-    useEffect(() => {
-        setUserID(userId)//localStorage.getItem('userId')
+        setUserID(localStorage.getItem('userId'))
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('userStates', useState)
+        localStorage.setItem('userStates', userStates);
     }, [userStates])
 
     return (
@@ -271,9 +264,9 @@ function App() {
                 {/*Common user*/}
                 <Route path='/login' element={<Login/>} />
                 <Route path='/register' element={<Register/>} />
-                <Route path='/' element={<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState} state={state} userID={userId}/>} />
-                <Route path='/details' element={<Details filter={filter} setState={setState} userID={userId}/>} />
-                <Route path='/perfil' element={<Perfil setState={setState} reservations={reservations} userID={userId}/>} />
+                <Route path='/' element={<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState} state={state}/>} />
+                <Route path='/details' element={<Details filter={filter} setState={setState}/>} />
+                <Route path='/perfil' element={<Perfil setState={setState} reservations={reservations}/>} />
 
 
                 {/*Admin*/}

@@ -13,18 +13,50 @@ function CreatePark({
     selected,
 }) {
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [morada, setMorada] = useState("");
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
 
 
-    const saveProfile = (event) => {
+    const savePark = (event) => {
         event.preventDefault()
         console.log("Save Profile");
-        console.log("email = " + email);
         console.log("name = " + name);
+        console.log("morada = " + morada);
         console.log("latitude = " + latitude);
         console.log("longitude = " + longitude);
+        
+        let park = {
+            "nome": name,
+            "morada": morada,
+            "latitude": latitude,
+            "longitude": longitude,
+        }
+
+        let requestOptions = {
+            method: 'PUT',
+            headers: { "Access-Control-Allow-Origin": "*" ,  "Content-Type": "application/json" },
+            body: JSON.stringify(park)
+        }
+        console.log(park);
+        fetch('http://localhost:8080/apiV1/programador/parques/criar', requestOptions)
+            .then(res => {
+                if (res.status !== 200) {
+                    var errorMsg = res.headers.get("x-error");
+                    if (errorMsg == null)
+                        errorMsg = "Error occured";
+                    alert(errorMsg);
+                }
+                else {
+                    console.log("criar");
+                }
+                return(res.json())
+            })
+            .then(result => {console.log(result);
+                localStorage.setItem('userId',result['id']);
+                window.location.href = '/';
+            })
+            .catch(err => alert(err))
     };
 
     return (
@@ -41,14 +73,14 @@ function CreatePark({
                     </div>
 
                     <div className='edit_park_container'>
-                        <form onSubmit={saveProfile} className='edit_park_fields_container'>
+                        <form onSubmit={savePark} className='edit_park_fields_container'>
                             <div className='security_field'>
                                 <b className='edit_park_title'> {'Nome'} </b>
                                 <input className='edit_perfil_input' placeholder={'Nome'} value={name} onChange={(e) => setName(e.target.value)} required/>
                             </div>
                             <div className='security_field'>
                                 <b className='edit_park_title'> {'Morada'} </b>
-                                <input className='edit_perfil_input' placeholder={'Email'} type={'email'} value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                                <input className='edit_perfil_input' placeholder={'Morada'} type={'morada'} value={morada} onChange={(e) => setMorada(e.target.value)} required/>
                             </div>
                             <div className='security_field'>
                                 <b className='edit_park_title'> {'Localização do parque:'} </b>

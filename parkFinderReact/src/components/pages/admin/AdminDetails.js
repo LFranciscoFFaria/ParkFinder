@@ -18,10 +18,10 @@ const parques = [
         'nome': "PARQUE VISCONDE DO RAIO",
         'morada': "rua dos reis",
         'distancia': "(797 m)",
-        'lugares_vagos': 45,
+        'instantaneos_livres': 45,
         'instantaneos_total': 93,
         'lugares_totais': 96,
-        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'caminho_foto': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 1.30,
         'hora_init':"8:00",
         'hora_end':"19:00",
@@ -34,10 +34,10 @@ const parques = [
         'nome': "B&B BRAGA LAMAÇÃES",
         'morada': "rua dos reis",
         'distancia': "(2.7 km)",
-        'lugares_vagos': 22,
+        'instantaneos_livres': 22,
         'instantaneos_total': 40,
         'lugares_totais': 51,
-        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'caminho_foto': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 7.00,
         'hora_init':"8:00",
         'hora_end':"19:00",
@@ -50,10 +50,10 @@ const parques = [
         'nome': "BRAGA PARQUE",
         'morada': "rua dos reis",
         'distancia': "(1.1km)",
-        'lugares_vagos': 186,
+        'instantaneos_livres': 186,
         'instantaneos_total': 230,
         'lugares_totais': 268,
-        'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
+        'caminho_foto': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 2.15,
         'hora_init':"8:00",
         'hora_end':"19:00",
@@ -146,9 +146,9 @@ function AdminDetails({
     }
     
     function ocupationColor() {
-        if ((parque['lugares_vagos']/parque['lugares_totais']) > 0.30) {
+        if ((parque['instantaneos_livres']/parque['lugares_totais']) > 0.30) {
             return "green"
-        } else if ((parque['lugares_vagos']/parque['lugares_totais']) > 0.10) {
+        } else if ((parque['instantaneos_livres']/parque['lugares_totais']) > 0.10) {
             return "orange"
         }
         return "red"
@@ -164,14 +164,14 @@ function AdminDetails({
                         <div className='compressed_park_tooltip'> <b>Lugares Instantaneos Ocupados</b></div>
                     } >
                         <div className={'compressed_park_spaces ' + ocupationColor()}>
-                            <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
+                            <b> {parque["lugares_totais"] - parque["instantaneos_livres"]}/{parque["lugares_totais"]} </b>
                         </div>
                     </Tooltip>
                 </div>
                 <label>{parque['morada']}</label>
 
                 <div className="image details_image">
-                    <ImageBlock imageLink={parque['link_imagem']}/>
+                    <ImageBlock imageLink={parque['caminho_foto']}/>
                 </div>
                 <div className="details_options">
                     <Button buttonStyle={"ditails_button"+(selected===1? ' ditails_button_selected':'')} onClick={()=>{setSelected(1)}}>Edição</Button>

@@ -33,12 +33,12 @@ function Booking({
                             <input className='booking_date_input_field' id='time_end' type='time' />
                         </div>
                     </div>
-                    <div class='booking_desc_section'>
-                        <div class='booking_desc_subsection'>
+                    <div className='booking_desc_section'>
+                        <div className='booking_desc_subsection'>
                             <label>Tempo utilizado: 2h</label>
                             <label>1.30€</label>
                         </div>
-                        <div class='booking_desc_subsection'>
+                        <div className='booking_desc_subsection'>
                             <b>Total</b>
                             <b>{custos}€</b>
                         </div>
@@ -64,8 +64,8 @@ function Booking({
                         <div className='booking_header_info'>?</div>
                     </Tooltip>
                 </div>
-                <div class='booking_desc_section'>
-                    <div class='booking_desc_subsection'>
+                <div className='booking_desc_section'>
+                    <div className='booking_desc_subsection'>
                         <label>Preço por hora: </label>
                         <b> 1.30€ </b>
                     </div>
