@@ -235,17 +235,25 @@ const users = [
 
 
 function App() {
-    /*Possible userStates:
-        loggedOff: no current logged user
-        gambler: gambler logged in
-        expert: expert logged in
-        admin: admin logged in
-    */
 
     const [state, setState] = useState('');
     const [filter, setFilter] = useState(false);
     const [idParque, setIdParque] = useState(-1);
     const [userId, setUserID] = useState(0);
+    const [userStates, setUserState] = useState('loggoff')
+
+    /*Possible userStates:
+        loggedOff: loggedOff
+        condutor: condutor logged in
+        admin: admin logged in
+        gestor: gestor logged in
+        programador: programador logged in
+    */
+
+    fetch
+
+
+
 
     useEffect(() => {
         console.log("state = " + state);
@@ -257,6 +265,10 @@ function App() {
     useEffect(() => {
         setUserID(localStorage.getItem('userId'))
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem('userStates')
+    }, [userStates])
 
     return (
         <Router>

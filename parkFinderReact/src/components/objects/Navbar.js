@@ -78,12 +78,19 @@ export function NavbarStaff({
 }) {
 
     function getPath() {
-        return <img className='icon' src={'./images/preto.png'} alt={''} />
+        var path = window.location.href.split('/');
+        let difDirectory = path[3] === 'admin';
+        console.log(path);
+    
+        if (difDirectory)
+          return <img className='button_image' src={'../images/preto.png'} alt={''} />
+        else
+          return <img className='button_image' src={'./images/preto.png'} alt={''} />
     }
 
     return (
         <div className='navbar_staff'>
-            <Button buttonStyle={"logo_image"} link={link_logo}><img className='button_image' src={'./images/preto.png'} alt={''} /></Button>
+            <Button buttonStyle={"logo_image"} link={link_logo}>{getPath()}</Button>
             <Button buttonStyle={'default navbar_staff_login_button'} link={'/login'}> Logoff </Button>
         </div>
     );
