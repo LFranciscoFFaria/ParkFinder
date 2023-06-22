@@ -34,6 +34,11 @@ public class CondutorServiceBean implements CondutorService {
 		this.condutor = condutor;
 	}
 
+	@Override
+	public Condutor getCondutorInfo() throws Exception {
+		checkIsLoggedIn();
+		return (Condutor) utilizadorService.getUtilizador(condutor.getId());
+	}
 
 	/* ******** Métodos do serviço ******** */
 
@@ -43,8 +48,8 @@ public class CondutorServiceBean implements CondutorService {
 	 */
 	public boolean editarPerfil(CondutorEdit condutorEdit) throws Exception {
 		checkIsLoggedIn();
-
 		Condutor newCondutor = condutor.clone();
+
 		if(condutorEdit.getNome() != null)
 			newCondutor.setNome(condutorEdit.getNome().orElse(null));
 		if(condutorEdit.getEmail() != null)

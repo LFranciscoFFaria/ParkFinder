@@ -547,6 +547,22 @@ public class ParqueServiceBean implements ParqueService {
 		parqueDAO.save(parque);
 	}
 
+	@Override
+	@Transactional
+	public void incLugaresInstantaneos(int id_parque, int n) throws Exception {
+		Parque parque = getParque(id_parque);
+		parque.incLugaresInstantaneos(n);
+		parqueDAO.save(parque);
+	}
+
+	@Override
+	@Transactional
+	public void decLugaresInstantaneos(int id_parque, int n) throws Exception {
+		Parque parque = getParque(id_parque);
+		parque.decLugaresInstantaneos(n);
+		parqueDAO.save(parque);
+	}
+
 	public List<Parque> getParquesDoGestor(int id_gestor){
 		return parqueDAO.getParquesDoGestor(id_gestor);
 	}

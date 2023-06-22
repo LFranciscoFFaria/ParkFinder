@@ -89,13 +89,14 @@ public class Parque implements Serializable {
 		precarios.add(precario);
 	}
 
-
 	public void addLugarEstacionamento(LugarEstacionamento lugar){
 		lugaresEspeciais.add(lugar);
 	}
-
-	public int getLugaresLivres(){
-		return (int) (instantaneos_livres + lugaresEspeciais.stream().filter(l -> !l.isOcupado()).count());
+	public void incLugaresInstantaneos(int n){
+		this.instantaneos_livres = Math.min(instantaneos_total, instantaneos_livres + n);
+	}
+	public void decLugaresInstantaneos(int n){
+		this.instantaneos_livres = Math.max(0, instantaneos_livres - n);
 	}
 
 	@Override

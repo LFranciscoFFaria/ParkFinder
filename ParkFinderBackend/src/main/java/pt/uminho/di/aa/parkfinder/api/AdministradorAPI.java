@@ -3,12 +3,16 @@ package pt.uminho.di.aa.parkfinder.api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.AdminDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.ProgramadorDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.LugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.AdministradorService;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 
 import java.util.List;
 
@@ -119,6 +123,18 @@ public class AdministradorAPI {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
+        }
+    }
+
+    @GetMapping("/perfil/info")
+    public ResponseEntity<AdminDTO> getGestorInfo(){
+        try{
+            Administrador admin = administradorService.getAdministradorInfo();
+            AdminDTO adminDTO = new AdminDTO(admin.getId(), admin.getNome(), admin.getEmail(), admin.getNrTelemovel(), admin.getPassword(), admin.getGestor().getId(), null);
+            return new ResponseEntity<>(adminDTO, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntityBadRequest<AdminDTO>().createBadRequest(e.getMessage());
         }
     }
 

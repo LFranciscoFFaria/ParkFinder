@@ -105,6 +105,19 @@ public class CondutorAPI {
         }
     }
 
+    @GetMapping("/perfil/info")
+    public ResponseEntity<CondutorDTO> getCondutorInfo(){
+        try{
+            Condutor condutor = condutorService.getCondutorInfo();
+            CondutorDTO condutorDTO = new CondutorDTO(condutor.getId(), condutor.getNome(), condutor.getEmail(), condutor.getNrTelemovel(),
+                    condutor.getPassword(), condutor.getNif(), condutor.getGenero());
+            return new ResponseEntity<>(condutorDTO, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntityBadRequest<CondutorDTO>().createBadRequest(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/logout")
     public ResponseEntity<Void> logout(){
         try{

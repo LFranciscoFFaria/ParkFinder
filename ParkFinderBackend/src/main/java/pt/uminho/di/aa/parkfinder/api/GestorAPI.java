@@ -4,17 +4,17 @@ import org.hibernate.LazyInitializationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.uminho.di.aa.parkfinder.api.DTOs.AdminDTO;
-import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioDecLinearCriarDTO;
-import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioLinearCriarDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.*;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioDecrementoLinear;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 
 import java.util.List;
 import java.util.Optional;
@@ -174,6 +174,19 @@ public class GestorAPI {
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
+        }
+    }
+
+    @GetMapping("/perfil/info")
+    public ResponseEntity<GestorDTO> getGestorInfo(){
+        try{
+            Gestor gestor = gestorService.getGestorInfo();
+            GestorDTO gestorDTO = new GestorDTO(gestor.getId(), gestor.getNome(), gestor.getEmail(), gestor.getNrTelemovel(),
+                                                gestor.getPassword(), null, null);
+            return new ResponseEntity<>(gestorDTO, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntityBadRequest<GestorDTO>().createBadRequest(e.getMessage());
         }
     }
 

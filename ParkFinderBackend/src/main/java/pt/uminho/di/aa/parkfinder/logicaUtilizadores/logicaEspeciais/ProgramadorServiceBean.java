@@ -169,4 +169,10 @@ public class ProgramadorServiceBean implements ProgramadorService {
     public void setProgramador(Utilizador u) {
     	this.programador = (Programador) u;
 	}
+
+	@Override
+	public Programador getProgramadorInfo() throws Exception {
+		checkIsLoggedIn();
+		return (Programador) utilizadorService.getUtilizador(programador.getId());
+	}
 }

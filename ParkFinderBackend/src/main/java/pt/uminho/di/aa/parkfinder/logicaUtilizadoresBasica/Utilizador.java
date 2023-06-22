@@ -72,7 +72,15 @@ public abstract class Utilizador implements Serializable {
 		return null;
 	}
 
+	@Override
 	public String toString() {
-		return String.valueOf(getId());
+		return "Utilizador{" +
+				"id=" + id +
+				", nome='" + nome + '\'' +
+				", email='" + email + '\'' +
+				", nrTelemovel=" + nrTelemovel +
+				", password='" + password + '\'' +
+				", discriminator='" + discriminator + '\'' +
+				'}';
 	}
 }

@@ -7,6 +7,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.*;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.DAOs.GestorDAO;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
@@ -205,6 +206,12 @@ public class GestorServiceBean implements GestorService {
     public void setGestor(Gestor g) {
 		this.gestor = g;
     }
+
+	@Override
+	public Gestor getGestorInfo() throws Exception {
+		checkIsLoggedIn();
+		return (Gestor) utilizadorService.getUtilizador(gestor.getId());
+	}
 
 	private void checkIsLoggedIn() throws Exception {
 		if(gestor == null)

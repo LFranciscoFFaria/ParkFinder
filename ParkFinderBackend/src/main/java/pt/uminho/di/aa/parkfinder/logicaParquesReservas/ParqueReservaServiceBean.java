@@ -62,10 +62,12 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 				throw new Exception("Utilizador não existe!");
 			Reserva reserva = new Reserva(utilizador, null, parque, EstadoReserva.AGENDADA,null,false,null, LocalDateTime.now(),null);
 			reserva = reservaService.criarReserva(reserva);
+
+			parqueService.decLugaresInstantaneos(id_parque, 1);
+
 			return reserva;
 		}
-		else
-			throw new Exception("O parque não possui lugares instantâneos livres");
+		else throw new Exception("O parque não possui lugares instantâneos livres");
 	}
 
 	/**
@@ -173,6 +175,12 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		Reserva reserva = reservaService.getReserva(id_reserva);
 		if (reserva.getEstado() == EstadoReserva.OCUPADA && reserva.isPago()) {
 			reservaService.setEstado(id_reserva,EstadoReserva.CONCLUIDA);
+
+			//Se for uma reserva instantanea, i.e., se o lugar for nulo,
+			// então aumenta o nr de lugares instantaneos novamente
+			if(reserva.getLugar() == null)
+				parqueService.incLugaresInstantaneos(reserva.getParque().getId(), 1);
+
 			return true;
 		}
 		return false;
@@ -236,7 +244,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			Precario precario = parqueService.getPrecarioByParqueIdAndTipoLugar(reserva.getParqueID(), "Instantaneo");
 			float custo = precario.calcular_preco(reserva.getDataInicio(), agora);
 
-			reservaService.setAll(idReserva, Optional.of(EstadoReserva.OCUPADA), Optional.of(true),
+			reservaService.setAll(idReserva, Optional.of(EstadoReserva.PENDENTE_PAGAMENTO), null,
 									  Optional.of(custo), null, Optional.of(agora), null);
 
 			return custo;

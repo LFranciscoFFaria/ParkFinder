@@ -3,6 +3,7 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.util.List;
@@ -60,4 +61,6 @@ public interface ProgramadorService {
 	void logout() throws Exception;
 
 	void setProgramador(Utilizador utilizador);
+
+    Programador getProgramadorInfo() throws Exception;
 }

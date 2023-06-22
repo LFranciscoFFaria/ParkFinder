@@ -91,4 +91,6 @@ public interface GestorService {
 	boolean criarOuAtualizarHorario(int id_parque, Horario horario) throws Exception;
 
 	void setGestor(Gestor gestor);
+
+    Gestor getGestorInfo() throws Exception;
 }

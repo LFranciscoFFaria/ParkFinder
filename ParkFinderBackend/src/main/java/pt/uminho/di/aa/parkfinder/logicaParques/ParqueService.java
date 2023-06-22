@@ -212,4 +212,7 @@ public interface ParqueService {
 	LugarEstacionamento getLugarById(int id_lugar);
 
 	void incrementaVolume_E_aumentaFaturacao(int parqueID, float custo) throws Exception;
+
+	void incLugaresInstantaneos(int id_parque, int n) throws Exception;
+	void decLugaresInstantaneos(int id_parque, int n) throws Exception;
 }

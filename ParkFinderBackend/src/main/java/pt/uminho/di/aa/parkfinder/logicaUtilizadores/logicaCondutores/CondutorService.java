@@ -1,5 +1,7 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores;
 
+import org.springframework.http.ResponseEntity;
+import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorDTO;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
@@ -40,4 +42,6 @@ public interface CondutorService {
 	void logout() throws Exception;
 
 	void setCondutor(Condutor condutor);
+
+	Condutor getCondutorInfo() throws Exception;
 }

@@ -10,7 +10,7 @@ import pt.uminho.di.aa.parkfinder.logicaParquesReservas.ParqueReservaService;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 import java.util.List;
 
@@ -22,12 +22,14 @@ public class AdministradorServiceBean implements AdministradorService {
 	private final ParqueService parqueService;
 	private final ReservaService reservaService;
 	private final ParqueReservaService parqueReservaService;
+	private final UtilizadorService utilizadorService;
 	private Administrador administrador = null;
 
-	public AdministradorServiceBean(ParqueService parqueService, ReservaService reservaService, ParqueReservaService parqueReservaService) {
+	public AdministradorServiceBean(ParqueService parqueService, ReservaService reservaService, ParqueReservaService parqueReservaService, UtilizadorService utilizadorService) {
 		this.parqueService = parqueService;
 		this.reservaService = reservaService;
 		this.parqueReservaService = parqueReservaService;
+		this.utilizadorService = utilizadorService;
 	}
 
 	/**
@@ -116,7 +118,7 @@ public class AdministradorServiceBean implements AdministradorService {
 	 */
 	public List<Reserva> verReservasAtivasDeParque(int id_parque) throws Exception {
 		checkIsLoggedIn();
-		return reservaService.getReservasParque(id_parque);
+		return reservaService.getReservasAtivasDoParque(id_parque);
 	}
 
 	public void logout() throws Exception{
@@ -144,6 +146,12 @@ public class AdministradorServiceBean implements AdministradorService {
 	public void setAdministrador(Administrador a) {
 		this.administrador = a;
     }
+
+	@Override
+	public Administrador getAdministradorInfo() throws Exception {
+		checkIsLoggedIn();
+		return (Administrador) utilizadorService.getUtilizador(administrador.getId());
+	}
 
 	private void checkIsLoggedIn() throws Exception {
 		if(administrador == null)

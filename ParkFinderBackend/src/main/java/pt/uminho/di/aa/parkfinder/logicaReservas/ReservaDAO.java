@@ -19,4 +19,7 @@ public interface ReservaDAO extends JpaRepository<Reserva,Integer> {
     List<Reserva> findAllByParqueIdOrderByDataInicioDesc(int id_parque);
 
     List<Reserva> findAllByUtilizadorId(int id_user);
+
+
+    List<Reserva> findAllByParqueIDAndEstado(@Param("id_parque") int id_parque, @Param("estado") int estado);
 }

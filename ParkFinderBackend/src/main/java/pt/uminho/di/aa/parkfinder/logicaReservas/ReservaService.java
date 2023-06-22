@@ -38,6 +38,12 @@ public interface ReservaService {
 
 	/**
 	 *
+	 * @param id_parque
+	 */
+	List<Reserva> getReservasAtivasDoParque(int id_parque);
+
+	/**
+	 *
 	 * @param reserva
 	 */
 	//public boolean updateReserva(Reserva reserva) throws Exception;

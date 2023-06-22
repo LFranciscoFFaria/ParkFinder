@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.uminho.di.aa.parkfinder.api.DTOs.GestorDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.ProgramadorDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Estatisticas;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
@@ -13,6 +14,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 
 import java.util.List;
 
@@ -133,6 +135,18 @@ public class ProgramadorAPI {
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<Estatisticas>().createBadRequest(e.getMessage());
+        }
+    }
+
+    @GetMapping("/perfil/info")
+    public ResponseEntity<ProgramadorDTO> getProgramadorInfo(){
+        try{
+            Programador prog = programadorService.getProgramadorInfo();
+            ProgramadorDTO progDTO = new ProgramadorDTO(prog.getId(), prog.getNome(), prog.getEmail(), prog.getNrTelemovel(), prog.getPassword());
+            return new ResponseEntity<>(progDTO, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntityBadRequest<ProgramadorDTO>().createBadRequest(e.getMessage());
         }
     }
 

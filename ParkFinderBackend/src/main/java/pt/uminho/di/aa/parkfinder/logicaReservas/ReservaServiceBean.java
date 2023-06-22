@@ -79,6 +79,10 @@ public class ReservaServiceBean implements ReservaService {
 		return reservaDAO.findAllByParqueIdOrderByDataInicioDesc(id_parque);
 	}
 
+	public List<Reserva> getReservasAtivasDoParque(int id_parque) {
+		return reservaDAO.findAllByParqueIDAndEstado(id_parque, EstadoReserva.OCUPADA);
+	}
+
 	/**
 	 * Encontra uma reserva existente na base de dados.
 	 * @param reserva nova reserva que vai substituir a antiga na base de dados

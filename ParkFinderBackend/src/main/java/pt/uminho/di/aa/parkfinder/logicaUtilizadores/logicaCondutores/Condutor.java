@@ -39,6 +39,17 @@ public class Condutor extends Utilizador implements Serializable {
 		setNrTelemovel(numero_telemovel);
 	}
 
+	public Condutor(int id, String nome,  String email,  String password,
+					 int nif, boolean genero, int numero_telemovel) {
+		this.setId(id);
+		this.setNome(nome);
+		this.setEmail(email);
+		this.setPassword(password);
+		this.nif = nif;
+		this.genero = genero;
+		setNrTelemovel(numero_telemovel);
+	}
+
 	/**
 	 * Valida atributos do utilizador
 	 * @return "null" se todos os atributos estiveram corretos ou uma string que contém o erro
@@ -56,11 +67,16 @@ public class Condutor extends Utilizador implements Serializable {
 	}
 
 	public Condutor clone(){
-		return new Condutor(getNome(), getEmail(), getPassword(), nif, genero, getNrTelemovel());
+		return new Condutor(getId(), getNome(), getEmail(), getPassword(), nif, genero, getNrTelemovel());
 	}
 
+	@Override
 	public String toString() {
-		return super.toString();
+		return "Condutor{" +
+				super.toString() +
+				"nif=" + nif +
+				", genero=" + genero +
+				'}';
 	}
-	
+
 }

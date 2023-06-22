@@ -69,4 +69,6 @@ public interface AdministradorService {
 	void marcarSaidaParque(int idReserva) throws Exception;
 
 	void setAdministrador(Administrador a);
+
+    Administrador getAdministradorInfo() throws Exception;
 }
