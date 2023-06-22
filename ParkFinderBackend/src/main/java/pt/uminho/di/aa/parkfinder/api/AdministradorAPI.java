@@ -84,7 +84,7 @@ public class AdministradorAPI {
         }
     }
 
-    @GetMapping("/reservas_ativas")
+    @GetMapping("/reservas/ativas")
     @Operation(summary = "Apresenta a lista de reservas ativas do parque")
     public ResponseEntity<List<ReservaDTO>> verReservasAtivasDeParque(@RequestParam("id_parque") int id_parque){
         try{
