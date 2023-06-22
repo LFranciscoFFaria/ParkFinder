@@ -1,5 +1,8 @@
 package pt.uminho.di.aa.parkfinder.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.LazyInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +33,12 @@ public class ProgramadorAPI {
     }
 
     @PutMapping("/gestores/criar")
+    @Operation(summary = "Cria um gestor",
+               requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true,
+                                                                                   description = "Informação para criar um gestor",
+                                                                                   content = @Content(mediaType = "application/json",
+                                                                                                      schema = @Schema(implementation = GestorDTO.class)))
+    )
     public ResponseEntity<Void> criarGestor(@RequestBody GestorDTO gDTO) {
         try{
             Gestor g = new Gestor(gDTO.getNome(), gDTO.getEmail(), gDTO.getPassword(), gDTO.getNr_telemovel());
@@ -42,6 +51,7 @@ public class ProgramadorAPI {
     }
 
     @DeleteMapping("/gestores/remover")
+    @Operation(summary = "Remove um gestor da aplicação")
     public ResponseEntity<Void> removerGestor(@RequestParam("id_gestor") int id_gestor) {
         try{
             programadorService.removerGestor(id_gestor);
@@ -53,6 +63,7 @@ public class ProgramadorAPI {
     }
 
     @PutMapping("/gestores/adicionar_parques")
+    @Operation(summary = "Adicionar parques a um gestor")
     public ResponseEntity<Void> adicionarParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
             programadorService.adicionarParquesAGestor(ids_parques,id_gestor);
@@ -64,6 +75,7 @@ public class ProgramadorAPI {
     }
 
     @DeleteMapping("/gestores/remover_parques")
+    @Operation(summary = "Remover parques a um gestor")
     public ResponseEntity<Void> removerParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
             programadorService.removerParquesAGestor(ids_parques,id_gestor);
@@ -75,6 +87,7 @@ public class ProgramadorAPI {
     }
 
     @PutMapping("/parques/criar")
+    @Operation(summary = "Registar um parque na aplicação")
     public ResponseEntity<Void> registarParque(@RequestBody ParqueDTO pDTO) {
         try{
             Parque p = new Parque(pDTO.getNome().orElse(null),
@@ -94,6 +107,7 @@ public class ProgramadorAPI {
     }
 
     @DeleteMapping("/parques/remover")
+    @Operation(summary = "Remover um parque da aplicação")
     public ResponseEntity<Void> removerParque(@RequestParam int id_parque) {
         try{
             programadorService.removerParque(id_parque);
@@ -105,6 +119,7 @@ public class ProgramadorAPI {
     }
 
     @GetMapping("/gestores/procurar")
+    @Operation(summary = "Procurar um gestor pelo nome próprio")
     public ResponseEntity<List<GestorDTO>> procurarGestor(@RequestParam("nome") String nome) {
         try{
             List<Gestor> gestores = programadorService.procurarGestor(nome);
@@ -117,6 +132,7 @@ public class ProgramadorAPI {
     }
 
     @GetMapping("/gestores/listar")
+    @Operation(summary = "Apresenta a lista de gestor registados na aplicação")
     public ResponseEntity<List<GestorDTO>> listarGestores() {
         try{
             List<Gestor> gestores = programadorService.listarGestores();
@@ -129,6 +145,7 @@ public class ProgramadorAPI {
     }
 
     @GetMapping("/parques/estatisticas")
+    @Operation(summary = "Apresenta as estatísticas agregadas de todos os parques da aplicação")
     public ResponseEntity<Estatisticas> verEstatisticasGerais() {
         try{
             return new ResponseEntity<>(programadorService.verEstatisticasGerais(), HttpStatus.OK);
@@ -151,6 +168,7 @@ public class ProgramadorAPI {
     }
 
     @DeleteMapping("/logout")
+    @Operation(summary = "Efetua o logout do programador")
     public ResponseEntity<Void> logout() {
         try{
             programadorService.logout();
