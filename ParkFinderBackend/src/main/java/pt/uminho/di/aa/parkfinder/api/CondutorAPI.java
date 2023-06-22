@@ -15,6 +15,7 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorSe
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -24,6 +25,7 @@ public class CondutorAPI {
 
     private final UtilizadorService utilizadorService;
     private final CondutorService condutorService;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
     public CondutorAPI(UtilizadorService utilizadorService, CondutorService condutorService) {
@@ -69,18 +71,20 @@ public class CondutorAPI {
             return new ResponseEntity<>(reservaToDTO(r), HttpStatus.OK);
         }
         catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
         }
     }
 
     @PutMapping("/reserva/agendada")
-    public ResponseEntity<ReservaDTO> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo, @RequestParam("data_inicio") LocalDateTime data_inicio, @RequestParam("data_fim") LocalDateTime data_fim){
+    public ResponseEntity<ReservaDTO> fazerReservaAgendada(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo, @RequestParam("data_inicio") String data_inicio_s, @RequestParam("data_fim") String data_fim_s){
         try{
+            LocalDateTime data_inicio = LocalDateTime.parse(data_inicio_s, dateTimeFormatter),
+                          data_fim = LocalDateTime.parse(data_fim_s, dateTimeFormatter);
             Reserva r = condutorService.fazerReservaAgendada(id_parque, tipo, data_inicio, data_fim);
             return new ResponseEntity<>(reservaToDTO(r), HttpStatus.OK);
         }
         catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
         }
     }

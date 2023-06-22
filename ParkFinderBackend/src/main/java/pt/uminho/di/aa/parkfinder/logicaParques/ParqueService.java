@@ -7,8 +7,8 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ParqueService {
 
@@ -179,13 +179,12 @@ public interface ParqueService {
 
 
 	/**
-	 * 
 	 * @param id_parque
 	 * @param tipo
 	 * @param data_inicio
 	 * @param data_fim
 	 */
-	List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
+	Set<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
 
 	/**
 	 *

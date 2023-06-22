@@ -4,7 +4,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 public interface ParqueReservaService {
 
@@ -26,13 +26,12 @@ public interface ParqueReservaService {
 	Reserva criarReservaAgendada(int id_user, int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception;
 
 	/**
-	 * 
-	 * @param id_parque
-	 * @param tipo
-	 * @param data_inicio
-	 * @param data_fim
-	 */
-	List<Integer> getIdsDeLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
+     * @param id_parque
+     * @param tipo
+     * @param data_inicio
+     * @param data_fim
+     */
+	Set<Integer> getIdsDeLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim);
 
 	/**
 	 * 

@@ -14,7 +14,6 @@ import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -475,14 +474,15 @@ public class ParqueServiceBean implements ParqueService {
 
 	/**
 	 * Encontra os lugares disponível do parque com o tipo especificado
-	 * @param id_parque identificador do parque
-	 * @param tipo tipo de lugar
+	 *
+	 * @param id_parque   identificador do parque
+	 * @param tipo        tipo de lugar
 	 * @param data_inicio data de início do periodo onde se pretende efetuar a reserva
-	 * @param data_fim data final do periodo onde se pretende efetuar a reserva
+	 * @param data_fim    data final do periodo onde se pretende efetuar a reserva
 	 * @return lista com ids dos lugares disponiveis nesse intervalo. Ou lista vazia.
 	 */
-	public List<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim){
-		return lugarDAO.procurarLugaresDisponiveis(id_parque, tipo.getNome(), data_inicio, data_fim).stream().map(LugarEstacionamento::getLugarId).toList();
+	public Set<Integer> procurarLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim){
+		return lugarDAO.procurarLugaresDisponiveis(id_parque, tipo.getNome(), data_inicio, data_fim);
 	}
 
 	/**
