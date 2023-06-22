@@ -1,5 +1,12 @@
 package pt.uminho.di.aa.parkfinder.api;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -20,7 +27,6 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gesto
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
-
 @RestController
 @RequestMapping("/apiV1/utilizadores")
 public class UtilizadorAPI {
@@ -33,7 +39,14 @@ public class UtilizadorAPI {
         this.utilizadorService = utilizadorService;
     }
 
-    @GetMapping("/login")
+
+    @PutMapping("/login")
+    @Operation(summary = "Iniciar sessão",
+               requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true,
+                                                                                   description = "Credenciais para iniciar sessão",
+                                                                                   content = @Content(mediaType = "application/json",
+                                                                                                      schema = @Schema(implementation = LoginDTO.class)))
+    )
     public ResponseEntity<Object> login(@RequestBody LoginDTO loginDTO){
         try{
             Utilizador u = utilizadorService.login(loginDTO.getEmail(), loginDTO.getPassword());
