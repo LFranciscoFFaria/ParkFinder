@@ -66,7 +66,7 @@ function Details({
 
     const [selected,setSelected] = useState(1);
     const [page,setPage] = useState(1);
-    const [parque,setParque] = useState(parques[1]);
+    const [parque,setParque] = useState(null);
 
     
     useEffect(() => {
