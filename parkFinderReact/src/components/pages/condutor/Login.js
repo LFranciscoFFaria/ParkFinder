@@ -10,7 +10,7 @@ function Login({
 
     const validateForm = (event) => {
         event.preventDefault()
-        
+
         let login = {
             "email": email,
             "password": password
@@ -29,17 +29,25 @@ function Login({
                     if (errorMsg == null)
                         errorMsg = "Error occured";
                     alert(errorMsg);
+                    return(null)
                 }
                 else {
                     console.log("login");
+                    return(res.json())
                 }
-                return(res.json())
             })
             .then(result => {console.log(result);
                 localStorage.setItem('userId',result['id']);
+                if (result['nif'])
+                    localStorage.setItem('userStates', 'condutor');
+                else if (result['id_gestor'])
+                    localStorage.setItem('userStates', 'admin');
+                else if (result['ids_admins'])
+                    localStorage.setItem('userStates', 'gestor');
+                else
+                    localStorage.setItem('userStates', 'programador');
                 window.location.href = '/';
             })
-            .catch(err => alert(err))
     };
 
     return (

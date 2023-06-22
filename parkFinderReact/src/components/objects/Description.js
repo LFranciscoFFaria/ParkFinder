@@ -4,7 +4,7 @@ import '../pages/condutor/Details.css';
 
 
 function separateString(string) {
-    let lines = string.split("\n");
+    let lines = string.split("\\n");
 
     return(
         <ul>

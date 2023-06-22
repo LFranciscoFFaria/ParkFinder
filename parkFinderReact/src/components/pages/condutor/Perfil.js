@@ -13,7 +13,7 @@ const users = [
         'id': 1234567890,
         'nome': "Pedro Jorge",
         'email': "pedrojorge@gmail.com",
-        'telemovel': "936978575",
+        'nr_telemovel': "936978575",
         'nif' : '123456789',
         'password': "pedroJ",
     }
@@ -22,7 +22,7 @@ const users = [
 function Perfil({
     setState,
     reservations,
-    userID,
+    userID = 0,
 }) {
     const [optionSelected, setOptionSelected] = useState(-1);
     const [optionDisplayed, setOptionDisplayed] = useState(null);
@@ -71,7 +71,7 @@ function Perfil({
                             <b className='field_name'>Email:</b>
                             <label className='field_content'>{user['email']}</label>
                             <b className='field_name'>Numero de Telefone:</b>
-                            <label className='field_content'>{user['telemovel']}</label>
+                            <label className='field_content'>{user['nr_telemovel']}</label>
                         </div>
                     </div>
                     <div className={optionSelected===-1? "disabled_selected":"perfil_options perfil_options_open"}>

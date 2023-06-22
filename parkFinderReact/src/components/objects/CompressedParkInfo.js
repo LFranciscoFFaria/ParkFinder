@@ -24,12 +24,13 @@ function separateString(string) {
 export function CompressedParkInfo({
     parque,
 }) {
+    console.log(parque);
     const [popUp, setPopUp] = useState(false);
 
     function ocupationColor() {
-        if ((parque["lugares_vagos"]/parque["lugares_totais"]) > 0.30) {
+        if ((parque["instantaneos_livres"]/parque["instantaneos_total"]) > 0.30) {
             return "green"
-        } else if ((parque["lugares_vagos"]/parque["lugares_totais"]) > 0.10) {
+        } else if ((parque["instantaneos_livres"]/parque["instantaneos_total"]) > 0.10) {
             return "orange"
         }
         return "red"
@@ -46,16 +47,16 @@ export function CompressedParkInfo({
                     <div className='compressed_park_tooltip'> <b>Lugares Instantaneos Ocupados</b></div>
                 } >
                     <div className={'compressed_park_spaces ' + ocupationColor()}>
-                        <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
+                        <b> {(parque["instantaneos_total"] - parque["instantaneos_livres"])}/{parque["instantaneos_total"]} </b>
                     </div>
                 </Tooltip>
             </div>
             <div className="compressed_park_image_info">
                 <div className='compressed_park_block_image'>
-                    <ImageBlock imageLink={parque["link_imagem"]}/>
+                    <ImageBlock imageLink={parque["caminho_foto"]}/>
                 </div>
                 <div className="compressed_park_info">
-                    <label>Custo estimado: <b>{parque["custo"].toFixed(2)}€</b></label>
+                    <label>Custo estimado: <b>123€</b></label>
                     <label className='compressed_park_info_description'>{separateString(parque["descricao"])}</label>
                     <div className="compressed_park_buttons">
                         <Button buttonStyle="page_button see_details_button" onClick={() => localStorage.setItem("parqueId", parque["id"])} link={'/details'}>Ver detalhes</Button>
@@ -81,9 +82,9 @@ export function CompressedParkInfoStaff({
     editButton,
 }) {
     function ocupationColor() {
-        if ((parque["lugares_vagos"]/parque["lugares_totais"]) > 0.30) {
+        if ((parque["instantaneos_livres"]/parque["instantaneos_total"]) > 0.30) {
             return "green"
-        } else if ((parque["lugares_vagos"]/parque["lugares_totais"]) > 0.10) {
+        } else if ((parque["instantaneos_livres"]/parque["instantaneos_total"]) > 0.10) {
             return "orange"
         }
         return "red"
@@ -92,7 +93,7 @@ export function CompressedParkInfoStaff({
     return (
         <div className="compressed_park_staff">
             <div className='compressed_park_staff_block_image'>
-                <ImageBlock imageSize='image_small' imageLink={parque["link_imagem"]}/>
+                <ImageBlock imageSize='image_small' imageLink={parque["caminho_foto"]}/>
             </div>
             <div className="compressed_park_staff_info">
                 <div className="compressed_park_staff_header">
@@ -101,7 +102,7 @@ export function CompressedParkInfoStaff({
                         <div className='compressed_park_tooltip'> <b>Lugares Instantaneos Ocupados</b></div>
                     } >
                         <div className={'compressed_park_staff_spaces ' + ocupationColor()}>
-                            <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
+                            <b> {parque["instantaneos_total"] - parque["instantaneos_livres"]}/{parque["instantaneos_total"]} </b>
                         </div>
                     </Tooltip>
                 </div>

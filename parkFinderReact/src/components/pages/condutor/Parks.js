@@ -3,25 +3,43 @@ import '../../interactive_items/select.css'
 import { CompressedParkInfo } from '../../objects/CompressedParkInfo.js';
 import { Filter } from '../../objects/Filter';
 import { Navbar } from '../../objects/Navbar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Parks({
-    parques,
     filter,
     setFilter,
     setState,
-    userID,
 }) {
     
     function success (position){
         console.log(position);
     }
-    
     navigator.geolocation.getCurrentPosition(success)
+    
+
+    const [parques,setParques] = useState([])
+    const userId = localStorage.getItem('userId')
+
+
+    useEffect(()=>{
+        const requestOptions = {
+            method: 'GET',
+            headers: { "Access-Control-Allow-Origin": "*" , "Content-Type": "application/json" }
+        }
+        fetch("http://localhost:8080/apiV1/parques", requestOptions)
+            .then(res => res.json())
+            .then((result) => { console.log(result);
+                setParques(result)
+            })
+    },[]);
+
+    
+
+
 
     return (
         <div className='front_page'>
-            <Navbar userID={userID} setState={setState} setFilter={() => setFilter(!filter)}/>
+            <Navbar userID={userId} setState={setState} setFilter={() => setFilter(!filter)}/>
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
                     <div className='parks_header'>
