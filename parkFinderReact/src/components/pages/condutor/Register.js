@@ -11,15 +11,51 @@ function Register({
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [nif, setNIF] = useState('');
+    const [telemovel, setTelemovel] = useState('');
     const [password, setPassword] = useState('');
     const [cpass, setCPass] = useState('');
+    const [error, setError] = useState(0);
 
+    
     const validateForm = (event) => {
         event.preventDefault()
-        console.log("validate");
-        window.location.href = '/';
-    };
+        if(password === cpass){
 
+            let novoCondutor = {
+                "nome": name,
+                "email": email,
+                "nr_telemovel": parseInt(telemovel),
+                "password": password,
+                "nif": parseInt(nif),
+                "genero": (sex? "m": "f")
+            }
+
+            let requestOptions = {
+                method: 'PUT',
+                headers: { "Access-Control-Allow-Origin": "*" ,  "Content-Type": "application/json" },
+                body: JSON.stringify(novoCondutor)
+            }
+            console.log(novoCondutor);
+            fetch('http://localhost:8080/apiV1/condutores', requestOptions)
+                .then(res => {
+                    if (res.status !== 200) {
+                        var errorMsg = res.headers.get("x-error");
+                        if (errorMsg == null)
+                            errorMsg = "Error occured";
+                        alert(errorMsg);
+                        setError(3);
+                    }
+                    else {
+                        console.log("Registos atualizados");
+                        window.location.href = '/login';
+                    }
+                })
+                .catch(err => {alert(err); setError(2)})
+
+        } else {
+            setError(1);
+        }
+    };
 
     return (
         <div className='bg_color'>
@@ -54,6 +90,13 @@ function Register({
                             placeholder='Email'
                             onChange={(e) => setEmail(e.target.value)}
                             required/>
+                        <b> Telemovel </b>
+                        <input
+                            className='input_register'
+                            type='number'
+                            placeholder='Telemovel'
+                            onChange={(e) => setTelemovel(e.target.value)}
+                            required/>
                         <b> NIF </b>
                         <input
                             className='input_register'
@@ -70,11 +113,12 @@ function Register({
                             required/>
                         <b> Confirm Password </b>
                         <input
-                            className='input_register'
+                            className={'input_register' + (error===1? ' security_input_error':'')}
                             type='password'
                             placeholder='Password'
                             onChange={(e) => setCPass(e.target.value)}
                             required/>
+                        <label className={error===1? 'scurity_error':'disabled_selected'}>*password são diferentes</label>
                     </div>
                     <div className='register_label_login'>
                         <label>By creating an account, you agree </label>

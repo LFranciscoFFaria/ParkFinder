@@ -30,7 +30,7 @@ public class ProgramadorAPI {
         this.programadorService = programadorService;
     }
 
-    @PutMapping("/criar_gestor")
+    @PutMapping("/gestores/criar")
     @Operation(summary = "Cria um gestor",
                requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true,
                                                                                    description = "Informação para criar um gestor",
@@ -48,7 +48,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @DeleteMapping("/remover_gestor")
+    @DeleteMapping("/gestores/remover")
     @Operation(summary = "Remove um gestor da aplicação")
     public ResponseEntity<Void> removerGestor(@RequestParam("id_gestor") int id_gestor) {
         try{
@@ -60,7 +60,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @PutMapping("/adicionar_parques")
+    @PutMapping("/gestores/adicionar_parques")
     @Operation(summary = "Adicionar parques a um gestor")
     public ResponseEntity<Void> adicionarParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
@@ -72,7 +72,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @DeleteMapping("/remover_parques")
+    @DeleteMapping("/gestores/remover_parques")
     @Operation(summary = "Remover parques a um gestor")
     public ResponseEntity<Void> removerParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
@@ -84,8 +84,7 @@ public class ProgramadorAPI {
         }
     }
 
-
-    @PutMapping("/registar_parque")
+    @PutMapping("/parques/criar")
     @Operation(summary = "Registar um parque na aplicação")
     public ResponseEntity<Void> registarParque(@RequestBody ParqueDTO pDTO) {
         try{
@@ -105,7 +104,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @DeleteMapping("/remover_parque")
+    @DeleteMapping("/parques/remover")
     @Operation(summary = "Remover um parque da aplicação")
     public ResponseEntity<Void> removerParque(@RequestParam int id_parque) {
         try{
@@ -117,7 +116,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @GetMapping("/procurar_gestor")
+    @GetMapping("/gestores/procurar")
     @Operation(summary = "Procurar um gestor pelo nome próprio")
     public ResponseEntity<List<GestorDTO>> procurarGestor(@RequestParam("nome") String nome) {
         try{
@@ -130,7 +129,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @GetMapping("/lista_gestores")
+    @GetMapping("/gestores/listar")
     @Operation(summary = "Apresenta a lista de gestor registados na aplicação")
     public ResponseEntity<List<GestorDTO>> listarGestores() {
         try{
@@ -143,7 +142,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @GetMapping("/estatisticas_gerais")
+    @GetMapping("/parques/estatisticas")
     @Operation(summary = "Apresenta as estatísticas agregadas de todos os parques da aplicação")
     public ResponseEntity<Estatisticas> verEstatisticasGerais() {
         try{

@@ -99,7 +99,7 @@ public class CondutorAPI {
     @Operation(summary = "Calcula o custo de uma reserva instantanea")
     public ResponseEntity<Float> calcularCustoReservaInstantanea(@RequestParam("id_reserva") int id_reserva){
         try{ return new ResponseEntity<>(condutorService.calculaCustoReservaInstantanea(id_reserva), HttpStatus.OK); }
-        catch (Exception e) { return new ResponseEntityBadRequest<Float>().createBadRequest(e.getMessage()); }
+        catch (Exception e) { e.printStackTrace();return new ResponseEntityBadRequest<Float>().createBadRequest(e.getMessage()); }
     }
 
     @PutMapping("/reserva/pagar")

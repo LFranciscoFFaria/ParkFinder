@@ -24,7 +24,7 @@ public class AdministradorAPI {
         this.administradorService = administradorService;
     }
 
-    @PutMapping("/adicionar_instantaneo")
+    @PutMapping("/lugares/instantaneo/adicionar")
     @Operation(summary = "Adiciona lugares instantâneos ao parque")
     public ResponseEntity<Void> addLugarInstantaneo(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N) {
         try{
@@ -36,7 +36,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/adicionar_especial")
+    @PutMapping("/lugares/especial/adicionar")
     @Operation(summary = "Adiciona lugares especiais ao parque")
     public ResponseEntity<Void> addLugarEspecial(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N, @RequestParam("tipo_lugar") String tipo) {
         try{
@@ -48,7 +48,7 @@ public class AdministradorAPI {
         }
     }
 
-    @DeleteMapping("/remover_instantaneo")
+    @DeleteMapping("/lugares/instantaneo/remover")
     @Operation(summary = "Remove lugares instantâneos do parque")
     public ResponseEntity<Void> removerLugarInstantaneo(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N) {
         try{
@@ -60,7 +60,7 @@ public class AdministradorAPI {
         }
     }
 
-    @DeleteMapping("/remover_especial")
+    @DeleteMapping("/lugares/especial/remover")
     @Operation(summary = "Remover lugares especiais do parque")
     public ResponseEntity<Void> removerLugarEspecial(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N, @RequestParam("tipo_lugar") String tipo) {
         try{
@@ -72,7 +72,7 @@ public class AdministradorAPI {
         }
     }
 
-    @GetMapping("/encontrar_reserva")
+    @GetMapping("/reservas/encontrar")
     @Operation(summary = "Encontra reserva ativa no parque pela matrícula do carro")
     public ResponseEntity<ReservaDTO> encontrarReservaPorMatricula(@RequestParam("id_parque") int id_parque, @RequestParam("matricula") String matricula) {
         try{
@@ -81,17 +81,6 @@ public class AdministradorAPI {
         }
         catch (Exception e) {
             return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
-        }
-    }
-
-    @PutMapping("/associar_matricula_reserva")
-    @Operation(summary = "Associa uma matricula a uma reserva")
-    public ResponseEntity<Boolean> associarMatriculaAReserva(@RequestParam("id_reserva") int id_reserva, @RequestParam("matricula") String matricula) {
-        try{
-            return new ResponseEntity<>(administradorService.associarMatriculaAReserva(id_reserva, matricula),HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
         }
     }
 
@@ -108,7 +97,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/entrada")
+    @PutMapping("/reservas/marcar/entrada")
     @Operation(summary = "Efetua a entrada num parque")
     public ResponseEntity<Void> marcarEntradaParque(@RequestParam("id_reserva") int id_reserva, @RequestParam("matricula") String matricula){
         try{
@@ -119,7 +108,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/entradaComIdUtilizador")
+    @PutMapping("/reservas/marcar/entrada_com_user")
     @Operation(summary = "Efetua a entrada no parque com o identificador do utilizador")
     public ResponseEntity<Void> criarReservaInstantaneaEMarcaEntrada(@RequestParam("id_utilizador") int idUtilizador,
                                                                      @RequestParam("id_parque") int idParque,
@@ -132,7 +121,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/saida")
+    @PutMapping("/reservas/marcar/saida")
     @Operation(summary = "Efetua a saida de um parque")
     public ResponseEntity<Void> marcarSaidaParque(@RequestParam("id_reserva") int id_reserva){
         try{

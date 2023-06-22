@@ -146,6 +146,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 				reservaService.setAll(id_reserva, Optional.of(EstadoReserva.OCUPADA), null, null, null, null, Optional.of(matricula));
 				return true;
 			}
+			else throw new Exception("Reserva não se encontra num estado que permite entrar no parque.");
 		}
 		// Caso Reserva Agendada/Especial
 		else {
@@ -154,15 +155,12 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			int estado = reserva.getEstado();
 			if((estado == EstadoReserva.AGENDADA || estado == EstadoReserva.CONCLUIDA)
 					&& reserva.getDataInicio().isBefore(agora)
-					&& reserva.getDataFim().isAfter(agora)){
+					&& reserva.getDataFim().isAfter(agora)
+					&& reserva.isPago()){
 				reservaService.setAll(id_reserva, Optional.of(EstadoReserva.OCUPADA), null, null, null, null, Optional.of(matricula));
 				return true;
-			}
+			}else throw new Exception("Não é possível marcar entrada. Possíveis razões: A reserva ainda não está paga, ou o intervalo da sua reserva não o permite.");
 		}
-
-		return false;
-		//else
-		//	throw new Exception("A reserva ainda não está paga ou ainda não se encontra marcada como ocupada");
 	}
 
 	/**
@@ -235,11 +233,10 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		   reserva.getEstado() == EstadoReserva.OCUPADA) {
 
 			LocalDateTime agora = LocalDateTime.now();
-			String tipoLugar = reserva.getLugar().getTipo().getNome();
-			Precario precario = parqueService.getPrecarioByParqueIdAndTipoLugar(reserva.getParqueID(), tipoLugar);
+			Precario precario = parqueService.getPrecarioByParqueIdAndTipoLugar(reserva.getParqueID(), "Instantaneo");
 			float custo = precario.calcular_preco(reserva.getDataInicio(), agora);
 
-			reservaService.setAll(idReserva, Optional.of(EstadoReserva.PENDENTE_PAGAMENTO), null,
+			reservaService.setAll(idReserva, Optional.of(EstadoReserva.OCUPADA), Optional.of(true),
 									  Optional.of(custo), null, Optional.of(agora), null);
 
 			return custo;
