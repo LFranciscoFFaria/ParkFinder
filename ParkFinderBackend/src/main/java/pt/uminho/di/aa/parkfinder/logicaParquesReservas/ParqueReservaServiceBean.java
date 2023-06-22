@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -94,9 +95,10 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		if(!parque.isDisponivel())
 			throw new Exception("O parque não está disponível para reservas.");
 
-		List<Integer> ids_livres_parque = getIdsDeLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
+		Set<Integer> ids_livres_parque = getIdsDeLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
+
 		if (ids_livres_parque.size() > 0) {
-			LugarEstacionamento lugarEstacionamento = parqueService.getLugarById(ids_livres_parque.get(0));
+			LugarEstacionamento lugarEstacionamento = parqueService.getLugarById(ids_livres_parque.stream().findAny().get());
 			if (lugarEstacionamento == null)
 				throw new Exception("O lugar não existe");
 
@@ -114,12 +116,13 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	/**
 	 * Retorna uma lista que contêm os identificadores de todos os lugares disponíveis do tipo
 	 * especificado no periodo estabelecido para o parque escolhido.
-	 * @param id_parque identificador do parque
-	 * @param tipo tipo do lugar que se prentende verificar a disponibilidade
+	 *
+	 * @param id_parque   identificador do parque
+	 * @param tipo        tipo do lugar que se prentende verificar a disponibilidade
 	 * @param data_inicio data de início da ocupação pretendida do lugar
-	 * @param data_fim data de fim da ocupação pretendida do lugar
+	 * @param data_fim    data de fim da ocupação pretendida do lugar
 	 */
-	public List<Integer> getIdsDeLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) {
+	public Set<Integer> getIdsDeLugaresDisponiveis(int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) {
 		return parqueService.procurarLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
 	}
 

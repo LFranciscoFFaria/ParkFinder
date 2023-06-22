@@ -34,7 +34,10 @@ public abstract class Precario implements Serializable {
 	@JsonUnwrapped(prefix = "tipo_lugar_")
 	@JsonIgnoreProperties("id")
 	private TipoLugarEstacionamento tipo;
-	
+
+	@Column(name="ParqueID", updatable = false, insertable = false, nullable = false)
+	private Integer parqueID;
+
 	@Column(name="PrecoFixo", nullable=false)
 	@JsonProperty("preco_fixo")
 	private float precoFixo;

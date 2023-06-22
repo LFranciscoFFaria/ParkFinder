@@ -27,12 +27,11 @@ public interface LugarEstacionamentoDAO extends JpaRepository<LugarEstacionament
     @Query(value="UPDATE Reserva r SET r.lugar.lugarId = null WHERE r.lugar.lugarId = :id_lugar")
     void requisitoEliminarLugar(@Param("id_lugar") int id_lugar);
 
-    @Query("SELECT l FROM LugarEstacionamento l LEFT JOIN Reserva r ON l.lugarId = r.lugar.lugarId " +
-                                               "WHERE l.tipo.nome = :tipoLugar " +
-                                               "AND l.parque.id = :id_parque " +
-                                               "AND NOT (r.dataInicio BETWEEN :data_inicio AND :data_fim) " +
-                                               "AND NOT (r.dataFim BETWEEN :data_inicio AND :data_fim)")
-    Set<LugarEstacionamento> procurarLugaresDisponiveis(@Param("id_parque") int id_parque, @Param("tipoLugar") String tipoLugar,
+    @Query(nativeQuery = true, value = "SELECT l.id FROM lugar_estacionamento l JOIN tipo_lugar_estacionamento tle on l.tipo_lugarid = tle.id\n" +
+            "WHERE tle.nome = :tipoLugar AND l.parqueid = :id_parque AND l.id NOT IN\n" +
+            "(SELECT l.id FROM lugar_estacionamento l JOIN tipo_lugar_estacionamento tle on l.tipo_lugarid = tle.id LEFT JOIN reserva r on l.id = r.lugarid\n" +
+            "    WHERE tle.nome = :tipoLugar AND l.parqueid = :id_parque AND (r.data_inicio BETWEEN :data_inicio AND :data_fim) OR (r.data_fim BETWEEN :data_inicio AND :data_fim));")
+    Set<Integer> procurarLugaresDisponiveis(@Param("id_parque") int id_parque, @Param("tipoLugar") String tipoLugar,
                                                      @Param("data_inicio") LocalDateTime data_inicio, @Param("data_fim") LocalDateTime data_fim);
 
     List<LugarEstacionamento> findAllByParqueId(int id_parque);

@@ -148,7 +148,7 @@ public class AdministradorAPI {
         LugarEstacionamento lugarEstacionamento = r.getLugar();
         if(lugarEstacionamento == null) tipo_lugar = "Instantaneo";
         else tipo_lugar = lugarEstacionamento.getTipo().getNome();
-        return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), tipo_lugar, r.getEstado(),
+        return new ReservaDTO(r.getId(), r.getUtilizador().getId(), r.getParque().getId(), tipo_lugar, r.getEstado(),
                 r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
     }
 }

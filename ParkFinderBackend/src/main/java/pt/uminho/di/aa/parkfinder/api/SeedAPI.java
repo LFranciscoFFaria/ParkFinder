@@ -13,6 +13,7 @@ import pt.uminho.di.aa.parkfinder.logicaParques.DAOs.TipoLugarEstacionamentoDAO;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.HorarioPeriodo;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.ReservaService;
@@ -20,6 +21,7 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
 import java.time.DayOfWeek;
@@ -77,8 +79,13 @@ public class SeedAPI {
                 41.5495639F,-8.4216469F,true, 80,80,80,
                 "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c");
         p1.getHorario().addPeriodos(createHorario(LocalTime.of(9,0), LocalTime.of(18,0)));
+        Precario p1Instant = new PrecarioLinear(tipoInstantaneo, 1F, 1F, LocalTime.of(0,1));
+        Precario p1Agend = new PrecarioLinear(tipoAgendado, 2F, 1F, LocalTime.of(0,1));
+        p1.addPrecario(p1Instant);
+        p1.addPrecario(p1Agend);
         p1 = parqueService.criarParque(p1);
         parqueService.addLugares(p1.getId(), tipoAgendado, 10);
+
 
         //Criacao 2º parque
         Parque p2 = new Parque("B&B BRAGA LAMAÇÃES", "rua das rainhas", "Covered Hotel Parking\\n10 min. from University of Minho\\ntaxi service Accessible 24/7",
@@ -87,6 +94,10 @@ public class SeedAPI {
         p2.getHorario().addPeriodos(createHorario(LocalTime.of(9,0), LocalTime.of(13,0)));
         p2.getHorario().addPeriodos(createHorario(LocalTime.of(14,0), LocalTime.of(19,0)));
         p2 = parqueService.criarParque(p2);
+        Precario p2Instant = new PrecarioLinear(tipoInstantaneo, 1F, 1F, LocalTime.of(0,1));
+        Precario p2Agend = new PrecarioLinear(tipoAgendado, 2F, 1F, LocalTime.of(0,1));
+        p2.addPrecario(p2Instant);
+        p2.addPrecario(p2Agend);
         parqueService.addLugares(p2.getId(), tipoAgendado, 30);
 
         //Criacao 3º parque
@@ -94,6 +105,10 @@ public class SeedAPI {
                 41.5577709F,-8.4086352F,true, 300,300,300,
                 "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c");
         p3.getHorario().addPeriodos(createHorario(LocalTime.of(9,30), LocalTime.of(23,30)));
+        Precario p3Instant = new PrecarioLinear(tipoInstantaneo, 1F, 1F, LocalTime.of(0,1));
+        Precario p3Agend = new PrecarioLinear(tipoAgendado, 2F, 1F, LocalTime.of(0,1));
+        p3.addPrecario(p3Instant);
+        p3.addPrecario(p3Agend);
         p3 = parqueService.criarParque(p3);
     }
 
@@ -107,18 +122,20 @@ public class SeedAPI {
 
     private void criarUtilizadoresSimples() throws Exception{
         //Criar Gestor
-        //public Gestor(String nome,String email,String password, int nrTelemovel, Set<Parque> parques, Set<Administrador> admins)
-         Gestor gestor = new Gestor("Gestor" + 1, "gestor" + 1 + "@yahoo.com", "g" + 1, 960000000 + 1, new HashSet<>(), new HashSet<>());
+        Gestor gestor = new Gestor("Gestor" + 1, "gestor" + 1 + "@gmail.com", "1234", 960000000 + 1, new HashSet<>(), new HashSet<>());
         utilizadorService.criarUtilizador(gestor);
-        //Criar Admins
-        //Administrador(String nome, String email, String password, int nrTelemovel, Gestor gestor, Set<Parque> parques)
-        Administrador administrador = new Administrador("Administrador" + 2, "administrador" + 2 + "@hotmail.com", "a" + 2, 930000000 + 2, gestor, new HashSet<>());
+
+        //Criar Admin
+        Administrador administrador = new Administrador("Administrador" + 1, "administrador" + 1 + "@gmail.com", "1234", 930000000 + 2, gestor, new HashSet<>());
         utilizadorService.criarUtilizador(administrador);
-        //Criar Condutores
-        //Condutor condutor = new Condutor(@JsonProperty("nome") String nome, @JsonProperty("email") String email, @JsonProperty("password") String password,
-        //@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero, @JsonProperty("numero_telemovel") int numero_telemovel));
-        Condutor condutor = new Condutor("Condutor" + 3, "condutor" + 3 + "@gmail.com", "c" + 3, 100000000 + 3,true, 910000000 + 3);
+
+        //Criar Condutor
+        Condutor condutor = new Condutor("Condutor" + 1, "condutor" + 1 + "@gmail.com", "1234", 100000000 + 3,true, 910000000 + 3);
         utilizadorService.criarUtilizador(condutor);
+
+        //Criar programador
+        Programador programador = new Programador("Programador" + 1, "programador" + 1 + "@gmail.com", "1234", 920000000 + 3);
+        utilizadorService.criarUtilizador(programador);
     }
 
     /**
@@ -132,18 +149,14 @@ public class SeedAPI {
                 int k = (i + 10 * j);
                 if (i % 10 == 1) {
                     //Criar Gestor
-                    //public Gestor(String nome,String email,String password, int nrTelemovel, Set<Parque> parques, Set<Administrador> admins)
                     gestor = new Gestor("Gestor" + k, "gestor" + k + "@yahoo.com", "g" + k, 960000000 + k, new HashSet<>(), new HashSet<>());
                     utilizadorService.criarUtilizador(gestor);
                 } else if (i % 10 == 2 || i % 10 == 3) {
                     //Criar Admins
-                    //Administrador(String nome, String email, String password, int nrTelemovel, Gestor gestor, Set<Parque> parques)
                     Administrador administrador = new Administrador("Administrador" + k, "administrador" + k + "@hotmail.com", "a" + k, 930000000 + k, gestor, new HashSet<>());
                     utilizadorService.criarUtilizador(administrador);
                 } else {
                     //Criar Condutores
-                    //Condutor condutor = new Condutor(@JsonProperty("nome") String nome, @JsonProperty("email") String email, @JsonProperty("password") String password,
-                    //@JsonProperty("nif") int nif, @JsonProperty("genero") boolean genero, @JsonProperty("numero_telemovel") int numero_telemovel));
                     Condutor condutor = new Condutor("Condutor" + k, "condutor" + k + "@gmail.com", "c" + k, 100000000 + k, i % 2 == 1, 910000000 + k);
                     utilizadorService.criarUtilizador(condutor);
                 }

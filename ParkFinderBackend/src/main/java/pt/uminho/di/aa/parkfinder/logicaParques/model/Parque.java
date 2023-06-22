@@ -83,6 +83,13 @@ public class Parque implements Serializable {
 		this.caminho_foto = caminho_foto;
 	}
 
+	public void addPrecario(Precario precario){
+		if(precarios == null)
+			precarios = new HashSet<>();
+		precarios.add(precario);
+	}
+
+
 	public void addLugarEstacionamento(LugarEstacionamento lugar){
 		lugaresEspeciais.add(lugar);
 	}
