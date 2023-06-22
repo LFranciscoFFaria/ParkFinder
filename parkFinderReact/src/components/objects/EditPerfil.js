@@ -97,7 +97,7 @@ export function EditPerfil({
                     <b> {'Número de Telemovel'} </b>
                     <input className='edit_perfil_input' placeholder={'987654321'} type={'number'} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required/>
                 </div>
-                <div className='edit_perfil_input_button'>
+                <div className='security_input_button'>
                     <br/>
                     <Button type='submit' buttonStyle='contrast'>Gravar</Button>
                 </div>

@@ -11,6 +11,7 @@ import{ Navbar }from '../../objects/Navbar';
 import { ImageBlock } from '../../interactive_items/ImageBlock';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
+import Tooltip from 'rc-tooltip';
 
 
 const parques = [
@@ -115,9 +116,13 @@ function Details({
                 <div className="details_display">
                     <div className="details_header">
                         <h1>{parque['nome']}</h1>
-                        <div className={'compressed_park_spaces ' + ocupationColor()}>
-                            <b> {parque['lugares_totais'] - parque['lugares_vagos']}/{parque['lugares_totais']} </b>
-                        </div>
+                        <Tooltip placement="top" overlay={
+                            <div className='compressed_park_tooltip'> <b>Lugares Instantaneos Ocupados</b></div>
+                        } >
+                            <div className={'compressed_park_spaces ' + ocupationColor()}>
+                                <b> {parque["lugares_totais"] - parque["lugares_vagos"]}/{parque["lugares_totais"]} </b>
+                            </div>
+                        </Tooltip>
                     </div>
                     <label>{parque['morada']}</label>
 

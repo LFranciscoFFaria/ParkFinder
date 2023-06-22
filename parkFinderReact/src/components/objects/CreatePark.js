@@ -9,13 +9,13 @@ import './Contacts.css';
 
 
 
-function CreateGestor({
+function CreatePark({
     selected,
 }) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState(0);
-    const [nif, setNIF] = useState(0);
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
 
 
     const saveProfile = (event) => {
@@ -23,8 +23,8 @@ function CreateGestor({
         console.log("Save Profile");
         console.log("email = " + email);
         console.log("name = " + name);
-        console.log("nif = " + nif);
-        console.log("phoneNumber = " + phoneNumber);
+        console.log("latitude = " + latitude);
+        console.log("longitude = " + longitude);
     };
 
     return (
@@ -37,26 +37,31 @@ function CreateGestor({
                 </div>
                 <div className="contact_display">
                     <div className="contact_header">
-                        <h1>Criar Gestor</h1>
+                        <h1>Criar Parque</h1>
                     </div>
 
                     <div className='edit_park_container'>
                         <form onSubmit={saveProfile} className='edit_park_fields_container'>
                             <div className='security_field'>
-                                <b> {'Nome'} </b>
+                                <b className='edit_park_title'> {'Nome'} </b>
                                 <input className='edit_perfil_input' placeholder={'Nome'} value={name} onChange={(e) => setName(e.target.value)} required/>
                             </div>
                             <div className='security_field'>
-                                <b> {'Email'} </b>
+                                <b className='edit_park_title'> {'Morada'} </b>
                                 <input className='edit_perfil_input' placeholder={'Email'} type={'email'} value={email} onChange={(e) => setEmail(e.target.value)} required/>
                             </div>
                             <div className='security_field'>
-                                <b> {'NIF'} </b>
-                                <input className='edit_perfil_input' placeholder={'NIF'} type={'number'} value={nif} onChange={(e) => setNIF(e.target.value)} required/>
-                            </div>
-                            <div className='security_field'>
-                                <b> {'Número de Telemovel'} </b>
-                                <input className='edit_perfil_input' placeholder={'987654321'} type={'number'} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required/>
+                                <b className='edit_park_title'> {'Localização do parque:'} </b>
+                                <div className='edit_park_schedule_container'>
+                                    <div className='edit_park_parking_spaces'>
+                                        <b> {'Latitude:'} </b>
+                                        <input className='edit_park_input' placeholder={'Latitude'} type={'number'} value={latitude} onChange={(e) => setLatitude(e.target.value)} required/>
+                                    </div>
+                                    <div className='edit_park_parking_spaces'>
+                                        <b> {'Longitude:'} </b>
+                                        <input className='edit_park_input' placeholder={'Longitude'} type={'number'} value={longitude} onChange={(e) => setLongitude(e.target.value)} required/>
+                                    </div>
+                                </div>
                             </div>
                             <div className='security_input_button'>
                                 <br/>
@@ -70,7 +75,7 @@ function CreateGestor({
     );
 }
 
-export default CreateGestor;
+export default CreatePark;
 
 
 

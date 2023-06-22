@@ -4,7 +4,8 @@ import './Contacts.css';
 function Contacts({
     listUsers,
     createButton = null,
-    editButton = null,
+    revoke = null,
+    add = null,
     removeButton = null,
     showPark = false,
     title
@@ -13,7 +14,7 @@ function Contacts({
         <div className="contact_display">
             <div className="contact_header">
                 <h1>{title}</h1>
-                <div className='contact_button'>{createButton}</div>
+                {createButton}
             </div>
             {listUsers.map((user) =>
                 <div key={user['id']} className="contact_box">
@@ -22,10 +23,10 @@ function Contacts({
                     <label className='tel'>Nº Telemovel:</label>
                     <b className='c1'>{user["email"]}</b>
                     <b className='c2'>{user["telemovel"]}</b>
-                    <b className='id'> <div className='contact_id'>User ID: {user["id"]}</div></b>
                     <div className='c4'>
-                        <div className='contact_button'>{editButton}</div>
-                        <div className='contact_button'>{removeButton}</div>
+                        <div className='contact_buttons'>{revoke}</div>
+                        <div className='contact_buttons'>{add}</div>
+                        <div className='contact_buttons'>{removeButton}</div>
                     </div>
 
                     {user["parques"] && showPark?

@@ -26,9 +26,10 @@ function Programmer({
                 setPage(
                     <Contacts
                         listUsers={managers} 
-                        createButton={<Button buttonStyle={"default"} onClick={() => console.log("Criar Gestor")} link={'/programmer/managers/createGestor'}>Criar Gestor</Button>} 
-                        editButton={<Button buttonStyle={"default"} onClick={() => console.log("Editar Gestor")}>Editar</Button>} 
-                        removeButton={<Button buttonStyle={"default"} onClick={() => console.log("Remove Gestor")}>Remover</Button>}
+                        createButton={<Button buttonStyle={"default compressed_park_staff_filter_button"} onClick={() => console.log("Criar Gestor")} link={'/programmer/managers/create'}>Criar Gestor</Button>} 
+                        revoke={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Gestor")}>Remove Parque</Button>} 
+                        add={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Gestor")}>Adicionar Parque</Button>} 
+                        removeButton={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Remove Gestor")}>Remover</Button>}
                         title={"Gestores"}
                         showPark={true}
                     />

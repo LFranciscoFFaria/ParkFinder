@@ -48,10 +48,10 @@ function EditParkManager({
     parque,
     setParque
 }) {
-    const [nome, setNome] = useState('');
-    const [descricao, setDescricao] = useState('');
-    const [imagem, setImagem] = useState('');
-    const [disponivel, setDisponivel] = useState('');
+    const [nome, setNome] = useState(parque['nome']);
+    const [descricao, setDescricao] = useState(parque['descricao']);
+    const [imagem, setImagem] = useState(parque['link_imagem']);
+    const [disponivel, setDisponivel] = useState(parque['disponivel']);
 
     const [schedule, setSchedule] = useState(horas);
     const [scheduleElement, setScheduleElement] = useState(null);
@@ -62,6 +62,16 @@ function EditParkManager({
 
 
     
+    useEffect(() => {
+        setNome(parque['nome']);
+        setDescricao(parque['descricao']);
+        setImagem(parque['link_imagem']);
+        setDisponivel(parque['disponivel']);
+    },[parque]);
+
+    useEffect(() => {
+        setScheduleElement(getOpeningHours(schedule));
+    },[schedule]);
 
     function getOpeningHours() {
 
@@ -137,13 +147,11 @@ function EditParkManager({
     const savePark = (event) => {
         event.preventDefault();
         console.log("Save Park");
-        console.log("description = " + descricao);
         console.log("name = " + nome);
+        console.log("open = " + disponivel);
+        console.log("url = " + imagem);
+        console.log("description = " + descricao);
     };
-
-    useEffect(() => {
-        setScheduleElement(getOpeningHours(schedule));
-    },[schedule]);
 
     return (
         <>
@@ -153,7 +161,7 @@ function EditParkManager({
             <div className='edit_park_container'>
                 <form onSubmit={savePark} className='edit_park_fields_container'>
                     <div className='security_field edit_park_open_close'>
-                        <Button buttonStyle={'contrast'} onClick={() => setDisponivel(!disponivel)}>{disponivel? 'Fechar Parque':'Abrir Parque'}</Button>
+                        <button type='button' className={'button contrast'} onClick={() => setDisponivel(!disponivel)} required>{disponivel? 'Fechar Parque':'Abrir Parque'}</button>
                         <b className={disponivel? 'edit_park_open' : 'edit_park_close'}> {'Parque ' + (disponivel? 'Aberto':'Fechado')} </b>
                     </div>
                     <div className='security_field'>
@@ -166,11 +174,11 @@ function EditParkManager({
                     </div>
                     <div className='security_field'>
                         <b> {'Descrição'} </b>
-                        <input className='edit_perfil_input' placeholder={'Descrição'} value={descricao} onChange={(e) => setDescricao(e.target.value)} required/>
+                        <textarea className='edit_perfil_input' cols="40" rows="5" placeholder={'Descrição'} value={descricao} onChange={(e) => setDescricao(e.target.value)} required/>
                     </div>
                     <div className='security_input_button'>
                         <br/>
-                        <Button type='submit' buttonStyle='contrast'>Gravar Alterações</Button>
+                        <Button type='submit' buttonStyle='default'>Gravar Alterações</Button>
                     </div>
                 </form>
                 <br/>
@@ -192,7 +200,7 @@ function EditParkManager({
                     </form>
                     <div className='security_input_button'>
                         <br/>
-                        <Button type='submit' buttonStyle='contrast'>Gravar Alterações</Button>
+                        <Button type='submit' buttonStyle='default'>Gravar Alterações</Button>
                     </div>
                 </div>
             </div>

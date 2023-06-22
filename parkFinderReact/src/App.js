@@ -17,6 +17,7 @@ import CreateAdmin from './components/objects/CreateAdmin';
 import Programmer from './components/pages/programmer/Programmer';
 import ProgrammerDetails from './components/pages/programmer/ProgrammerDetails';
 import CreateManager from './components/objects/CreateGestor';
+import CreatePark from './components/objects/CreatePark';
 
 
 const reservations = [
@@ -102,6 +103,7 @@ const parques = [
         'morada': "rua dos reis",
         'distancia': "(797 m)",
         'lugares_vagos': 45,
+        'instantaneos_total': 93,
         'lugares_totais': 96,
         'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 1.30,
@@ -117,6 +119,7 @@ const parques = [
         'morada': "rua dos reis",
         'distancia': "(2.7 km)",
         'lugares_vagos': 22,
+        'instantaneos_total': 40,
         'lugares_totais': 51,
         'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 7.00,
@@ -132,6 +135,7 @@ const parques = [
         'morada': "rua dos reis",
         'distancia': "(1.1km)",
         'lugares_vagos': 186,
+        'instantaneos_total': 230,
         'lugares_totais': 268,
         'link_imagem': "https://assets.onepark.fr/media/W1siZiIsIjIwMTkvMDYvMTcvMTEvMTIvMjAvMjBhOGIxYTgtYjAyMS00NDIzLThmZWItYjQ3MWU1YTRlOGFiL3JhaW8uanBnIl0sWyJwIiwidGh1bWIiLCI3MzZ4NDE0XHUwMDNlIl0sWyJwIiwiYWRkX3doaXRlX2NhbnZhcyJdXQ/Estacionamento%20Público%20PARQUE%20VISCONDE%20DO%20RAIO%20%28Coberto%29?sha=5b791144f5d2971c",
         'custo': 2.15,
@@ -271,14 +275,15 @@ function App() {
                 <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
                 <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
                 <Route path='/manager/details' element={<ManagerDetails/>}/>
-                <Route path='/manager/admin/create' element={<CreateAdmin/>}/>
+                <Route path='/manager/admin/create' element={<CreateAdmin selected={2}/>}/>
 
 
                 {/*Programmer*/}
                 <Route path='/programmer' element={<Programmer managers={managers} parks={parques} selected={1}/>}/>
                 <Route path='/programmer/managers' element={<Programmer managers={managers} selected={2}/>}/>
-                <Route path='/programmer/details' element={<ProgrammerDetails/>}/>
-                <Route path='/programmer/managers/create' element={<CreateManager/>}/>
+                {/* <Route path='/programmer/details' element={<ProgrammerDetails/>}/> */}
+                <Route path='/programmer/managers/create' element={<CreateManager selected={2}/>}/>
+                <Route path='/programmer/park/create' element={<CreatePark selected={1}/>}/>
             </Routes>
         </Router>
     );

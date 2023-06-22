@@ -12,6 +12,13 @@ function Parks({
     setState,
     userID,
 }) {
+    
+    function success (position){
+        console.log(position);
+    }
+    
+    navigator.geolocation.getCurrentPosition(success)
+
     return (
         <div className='front_page'>
             <Navbar userID={userID} setState={setState} setFilter={() => setFilter(!filter)}/>
