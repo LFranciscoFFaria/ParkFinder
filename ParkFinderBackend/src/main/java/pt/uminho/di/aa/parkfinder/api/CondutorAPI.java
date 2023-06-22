@@ -69,6 +69,7 @@ public class CondutorAPI {
             return new ResponseEntity<>(reservaToDTO(r), HttpStatus.OK);
         }
         catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntityBadRequest<ReservaDTO>().createBadRequest(e.getMessage());
         }
     }
@@ -116,7 +117,8 @@ public class CondutorAPI {
         LugarEstacionamento lugarEstacionamento = r.getLugar();
         if(lugarEstacionamento == null) tipo_lugar = "Instantaneo";
         else tipo_lugar = lugarEstacionamento.getTipo().getNome();
-        return new ReservaDTO(r.getId(), r.getUtilizadorID(), r.getParqueID(), tipo_lugar, r.getEstado(),
+        System.out.println("Reserva: " + r);
+        return new ReservaDTO(r.getId(), r.getUtilizador().getId(), r.getParque().getId(), tipo_lugar, r.getEstado(),
                 r.getCusto(), r.isPago(), r.getMatricula(), r.getDataInicio(), r.getDataFim());
     }
 }

@@ -49,10 +49,18 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		if(!parque.isDisponivel())
 			throw new Exception("O parque não está aberto para reservas.");
 
+		Horario horario = parqueService.getHorario(id_parque);
+		boolean estaAberto = horario.estaAberto();
+
+		if(!estaAberto)
+			throw new Exception("O parque não está aberto.");
+
 		if (parque.getInstantaneos_livres() > 0) {
 			Utilizador utilizador = utilizadorService.getUtilizador(id_user);
+			if(utilizador == null)
+				throw new Exception("Utilizador não existe!");
 			Reserva reserva = new Reserva(utilizador, null, parque, EstadoReserva.AGENDADA,null,false,null, LocalDateTime.now(),null);
-			reservaService.criarReserva(reserva);
+			reserva = reservaService.criarReserva(reserva);
 			return reserva;
 		}
 		else
@@ -76,7 +84,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		LocalTime time_inicio = LocalTime.from(data_inicio),
 				  time_fim = LocalTime.from(data_fim);
 
-		if(data_inicio.getDayOfYear() == data_fim.getDayOfYear() && data_inicio.getYear() == data_fim.getYear())
+		if(data_inicio.getDayOfYear() != data_fim.getDayOfYear() || data_inicio.getYear() != data_fim.getYear())
 			throw new Exception("No momento, o sistema não suporta reservas que abrangem múltiplos dias.");
 
 		if(!horario.estaAberto(data_inicio.getDayOfWeek(), time_inicio, time_fim))
@@ -84,7 +92,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 
 		Parque parque = parqueService.procurarParque(id_parque);
 		if(!parque.isDisponivel())
-			throw new Exception("O parque não está aberto para reservas.");
+			throw new Exception("O parque não está disponível para reservas.");
 
 		List<Integer> ids_livres_parque = getIdsDeLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
 		if (ids_livres_parque.size() > 0) {

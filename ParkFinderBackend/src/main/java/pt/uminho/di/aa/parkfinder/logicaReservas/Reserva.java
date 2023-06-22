@@ -78,8 +78,22 @@ public class Reserva implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime dataFim = null;
 
+	@Override
 	public String toString() {
-		return String.valueOf(getId());
+		return "Reserva{" +
+				"id=" + id +
+				", utilizador=" + utilizador.getId() +
+				", utilizadorID=" + utilizadorID +
+				", lugar=" + lugar +
+				", lugarID=" + lugarID +
+				", parque=" + parque.getId() +
+				", parqueID=" + parqueID +
+				", estado=" + estado +
+				", custo=" + custo +
+				", pago=" + pago +
+				", matricula='" + matricula + '\'' +
+				", dataInicio=" + dataInicio +
+				", dataFim=" + dataFim +
+				'}';
 	}
-	
 }

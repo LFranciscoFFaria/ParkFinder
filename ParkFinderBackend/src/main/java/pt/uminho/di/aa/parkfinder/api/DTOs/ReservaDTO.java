@@ -31,7 +31,7 @@ public class ReservaDTO {
     int estado;
 
     @JsonProperty("custo")
-    float custo;
+    Float custo;
 
     @JsonProperty("pago")
     boolean pago;

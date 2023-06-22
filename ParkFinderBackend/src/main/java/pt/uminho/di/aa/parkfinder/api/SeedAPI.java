@@ -79,7 +79,6 @@ public class SeedAPI {
         p1.getHorario().addPeriodos(createHorario(LocalTime.of(9,0), LocalTime.of(18,0)));
         p1 = parqueService.criarParque(p1);
         parqueService.addLugares(p1.getId(), tipoAgendado, 10);
-        PrecarioLinear precarioLinear1 = new PrecarioLinear();
 
         //Criacao 2º parque
         Parque p2 = new Parque("B&B BRAGA LAMAÇÃES", "rua das rainhas", "Covered Hotel Parking\\n10 min. from University of Minho\\ntaxi service Accessible 24/7",
