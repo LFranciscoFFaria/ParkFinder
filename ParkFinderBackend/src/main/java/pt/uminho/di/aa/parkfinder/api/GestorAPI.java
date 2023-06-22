@@ -1,5 +1,6 @@
 package pt.uminho.di.aa.parkfinder.api;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.hibernate.LazyInitializationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class GestorAPI {
     }
 
     @GetMapping("/estatisticas_parque")
+    @Operation(summary = "Mostra as estatíticas do parque especificado")
     public ResponseEntity<Estatisticas> verEstatisticasParque(@RequestParam("id_parque") int id_parque){
         try{
             return new ResponseEntity<>(gestorService.verEstatisticasParque(id_parque), HttpStatus.OK);
@@ -40,6 +42,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/adicionar_precario/dec_linear")
+    @Operation(summary = "Adiciona um precario com decremento linear ao parque")
     public ResponseEntity<Void> adicionarPrecarioDecLinear(@RequestParam("id_parque") int id_parque, @RequestBody PrecarioDecLinearCriarDTO precarioDTO){
         try{
             TipoLugarEstacionamento tipoLugar = new TipoLugarEstacionamento(precarioDTO.getTipo_lugar());
@@ -54,6 +57,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/adicionar_precario/linear")
+    @Operation(summary = "Adiciona um precario linear ao parque")
     public ResponseEntity<Void> adicionarPrecarioLinear(@RequestParam("id_parque") int id_parque, @RequestBody PrecarioLinearCriarDTO precarioDTO){
         try{
             TipoLugarEstacionamento tipoLugar = new TipoLugarEstacionamento(precarioDTO.getTipo_lugar());
@@ -68,6 +72,7 @@ public class GestorAPI {
     }
 
     @GetMapping("/meus_parques")
+    @Operation(summary = "Apresenta a lista de parques associados ao gestor")
     public ResponseEntity<List<ParqueDTO>> listarMeusParques(){
         try{
             List<Parque> parques = gestorService.listarMeusParques();
@@ -80,6 +85,7 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/remover_precario")
+    @Operation(summary = "Remove um precario do parque")
     public ResponseEntity<Void> removerPrecario(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipo_lugar){
         try{
             gestorService.removerPrecario(id_parque, new TipoLugarEstacionamento(tipo_lugar));
@@ -91,6 +97,7 @@ public class GestorAPI {
     }
 
     @GetMapping("/meus_administradores")
+    @Operation(summary = "Apresenta a lista de administradores associados ao gestor")
     public ResponseEntity<List<AdminDTO>> listarMeusAdministradores(){
         try{
             List<Administrador> administradores = gestorService.listarMeusAdministradores();
@@ -103,6 +110,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/criar_administrador")
+    @Operation(summary = "Cria um administrador no sistema")
     public ResponseEntity<Void> criarAdmin(@RequestBody AdminDTO a){
         try{
             gestorService.criarAdmin(a.getNome(), a.getEmail(), a.getPassword(), a.getNr_telemovel(), a.getIds_parques());
@@ -114,6 +122,7 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/remover_administrador")
+    @Operation(summary = "Remove um administrador do sistema")
     public ResponseEntity<Void> removerAdmin(@RequestParam("id_admin") int id_admin){
         try{
             gestorService.removerAdmin(id_admin);
@@ -125,6 +134,7 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/remover_permissao_administrador")
+    @Operation(summary = "Remove parques do administrador")
     public ResponseEntity<Void> removerPermissaoAdminSobreParques(@RequestParam("id_admin") int id_admin, @RequestParam("ids_parques") List<Integer> ids_parques){
         try{
             gestorService.removerPermissaoAdminSobreParques(id_admin, ids_parques);
@@ -136,6 +146,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/alterar_parque")
+    @Operation(summary = "Altera a informação do parque")
     public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam("id_parque") int id_parque, @RequestBody ParqueDTO newInfo){
         try{
             return new ResponseEntity<>(gestorService.alterarInformacoesParque(id_parque,newInfo), HttpStatus.OK);
@@ -146,6 +157,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/alterar_disponibilidade_parque")
+    @Operation(summary = "Altera a disponibilidade do parque")
     public ResponseEntity<Void> alterarEstadoDisponivelDeParque(@RequestParam("id_parque") int id_parque, @RequestParam("disponivel") boolean disponivel){
         try{
             gestorService.alterarEstadoDisponivelDeParque(id_parque, disponivel);
@@ -157,6 +169,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/adicionar_permissao_administrador")
+    @Operation(summary = "Adiciona parques ao administrador")
     public ResponseEntity<Void> adicionarParquesAAdmin(@RequestBody List<Integer> ids_parques, @RequestParam int id_admin){
         try{
             gestorService.adicionarParquesAAdmin(ids_parques, id_admin);
@@ -168,6 +181,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/adiciona_horario")
+    @Operation(summary = "Adiciona um horario ao parque especificado")
     public ResponseEntity<Boolean> criarOuAtualizarHorario(@RequestParam int id_parque, @RequestBody Horario horario){
         try{
             return new ResponseEntity<>(gestorService.criarOuAtualizarHorario(id_parque, horario), HttpStatus.OK);
@@ -178,6 +192,7 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/logout")
+    @Operation(summary = "Efetua o logout do gestor")
     public ResponseEntity<Void> logout() {
         try{
             gestorService.logout();

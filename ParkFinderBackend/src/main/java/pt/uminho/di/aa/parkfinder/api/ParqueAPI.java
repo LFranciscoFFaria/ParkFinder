@@ -1,5 +1,6 @@
 package pt.uminho.di.aa.parkfinder.api;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ public class ParqueAPI {
     }
 
     @GetMapping("")
+    @Operation(summary = "Apresenta a lista de parques da aplicação")
     public ResponseEntity<List<ParqueDTO>> listarParques(){
         try{
             List<Parque> parques = parqueService.listarParques();
@@ -46,6 +48,7 @@ public class ParqueAPI {
     }
 
     @GetMapping("/ids")
+    @Operation(summary = "Apresenta os parques com os identicadores recebidos")
     public ResponseEntity<List<ParqueDTO>> listarParquesIds(@RequestParam("lista_ids") List<Integer> ids){
         try{
             List<Parque> parques = parqueService.listarParques(ids);
@@ -57,6 +60,7 @@ public class ParqueAPI {
     }
 
     @GetMapping("/nome")
+    @Operation(summary = "Procura um parque pelo nome")
     public ResponseEntity<List<ParqueDTO>> procurarParque(@RequestParam String nome){
         try{
             List<Parque> parques = parqueService.procurarParque(nome);
@@ -68,6 +72,7 @@ public class ParqueAPI {
     }
 
     @GetMapping("/id")
+    @Operation(summary = "Apresenta o parque com o identificador recebido")
     public ResponseEntity<ParqueDTO> procurarParque(@RequestParam int id_parque){
         try{
             Parque p = parqueService.procurarParque(id_parque);
@@ -86,6 +91,7 @@ public class ParqueAPI {
      * @return simula o custo de um certo tipo de reserva para um dado intervalo.
      */
     @GetMapping("/simular_custo")
+    @Operation(summary = "Apresenta o custo de uma reserva simulada")
     public ResponseEntity<Float> simularCustoReserva(@RequestParam("id_parque") int id_parque,
                                                      @RequestParam("tipo") String tipo,
                                                      @RequestParam("data_inicio") String data_inicio_s,
@@ -107,6 +113,7 @@ public class ParqueAPI {
     }
 
     @GetMapping("/horario")
+    @Operation(summary = "Apresenta o horário do parque")
     public ResponseEntity<Horario> getHorarioParque(@RequestParam("id_parque") int id_parque){
         try {
             return ResponseEntity.ok().body(parqueService.getHorario(id_parque));
@@ -116,6 +123,7 @@ public class ParqueAPI {
     }
 
     @GetMapping("/precarios/all")
+    @Operation(summary = "Apresenta todos os precarios do parque")
     public ResponseEntity<List<PrecarioBaseDTO>> getPrecariosParque(@RequestParam("id_parque") int id_parque){
         try {
             List<Precario> precarios = parqueService.getPrecarios(id_parque);
@@ -127,6 +135,7 @@ public class ParqueAPI {
     }
 
     @GetMapping("/precarios")
+    @Operation(summary = "Apresenta o precario para o tipo de lugar pretendido")
     public ResponseEntity<PrecarioBaseDTO> getPrecarioParaTipoLugarDoParque(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipoLugar){
         try {
             Precario precario = parqueService.getPrecarioByParqueIdAndTipoLugar(id_parque, tipoLugar);
