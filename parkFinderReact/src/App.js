@@ -251,7 +251,12 @@ function App() {
         console.log("state = " + state);
         console.log("filter = " + filter);
         console.log("idParque = " + idParque);
-    }, [state,filter]);
+        console.log("userId = " + userId);
+    }, [state,filter,userId,idParque]);
+
+    useEffect(() => {
+        setUserID(localStorage.getItem('userId'))
+    }, [])
 
     return (
         <Router>
