@@ -1,4 +1,13 @@
-.input_error{
+.security_field{
+    display: flex;
+    flex-direction:column;
+    font-size: larger;
+    gap: 15px;
+    padding: 20px;
+    border-top: 1px lightgray solid;
+}
+
+.security_error{
     color: #ff0036;
     margin-left: 20px;
     font-size: 80%;
@@ -6,7 +15,24 @@
 }
 
 
-.edit_perfil_input_error{
+.security_input_error{
     border-color: #ff0036;
     color: #ff0036;
+}
+
+
+
+.security_input_button{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.security_input{
+    display: flex;
+    width: calc(100% - 20px);
 }

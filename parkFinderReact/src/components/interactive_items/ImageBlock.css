@@ -23,8 +23,8 @@
     max-width: 432px;
 }
 
-.image_full{
-    width: fit-content;
+.image_edit{
+    max-width: 150px;
 }
 
 .image_small{

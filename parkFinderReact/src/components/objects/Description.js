@@ -19,8 +19,10 @@ function Description({
     parque
 }) {
     return (
-        <>
-            <h1>Descrição</h1>
+        <div>
+            <div className="contact_header">
+                <h1>Descrição</h1>
+            </div>
             <div className="details_pages_display">
                 <h3>Informação</h3>
                 <label className='compressed_park_info_description'>{separateString(parque['descricao'])}</label>
@@ -29,7 +31,7 @@ function Description({
                     <li> {parque['morada']} ({parque['distancia']} de si) </li>
                 </ul>
             </div>
-        </>
+        </div>
     );
 };
 

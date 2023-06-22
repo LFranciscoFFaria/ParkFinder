@@ -26,7 +26,7 @@ function Programmer({
                 setPage(
                     <Contacts
                         listUsers={managers} 
-                        createButton={<Button buttonStyle={"default"} onClick={() => console.log("Criar Gestor")}>Criar Administrador</Button>} 
+                        createButton={<Button buttonStyle={"default"} onClick={() => console.log("Criar Gestor")} link={'/programmer/managers/createGestor'}>Criar Gestor</Button>} 
                         editButton={<Button buttonStyle={"default"} onClick={() => console.log("Editar Gestor")}>Editar</Button>} 
                         removeButton={<Button buttonStyle={"default"} onClick={() => console.log("Remove Gestor")}>Remover</Button>}
                         title={"Gestores"}

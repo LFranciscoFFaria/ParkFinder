@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../interactive_items/Button';
 import './EditPerfil.css';
+import { ImageBlock } from '../interactive_items/ImageBlock';
 
- export function editPerfilField (
+export function editPerfilField (
     name,
     type,
     placeholder,
@@ -12,7 +13,7 @@ import './EditPerfil.css';
     ) {
     return(
         <form onSubmit={saveProfile}>
-            <div className='edit_perfil_field'>
+            <div className='security_field'>
                 <b> {name} </b>
                 <div className='edit_perfil_input_button'>
                     <input
@@ -21,7 +22,6 @@ import './EditPerfil.css';
                         type={type}
                         onChange={(e) => setFunc(e.target.value)}
                         required/>
-                    <Button type='submit' buttonStyle='contrast'>Gravar</Button>
                 </div>
             </div>
         </form>
@@ -29,15 +29,25 @@ import './EditPerfil.css';
 }
 
 
-export function EditPerfil(
-
-) {
+export function EditPerfil({
+    user,
+}) {
     const [color, setColor] = useState(null);
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [nif, setNIF] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [password, setPassword] = useState('');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState(0);
+    const [nif, setNIF] = useState(0);
+
+
+    useEffect(() => {
+        setName(user['nome']);
+        setEmail(user['email']);
+        setPhoneNumber(user['telemovel']);
+        setNIF(user['nif']);
+    },[user]);
+
+
+
 
     const saveProfile = (event) => {
         event.preventDefault()
@@ -46,7 +56,6 @@ export function EditPerfil(
         console.log("email = " + email);
         console.log("name = " + name);
         console.log("nif = " + nif);
-        console.log("password = " + password);
         console.log("phoneNumber = " + phoneNumber);
     };
 
@@ -54,30 +63,45 @@ export function EditPerfil(
         <div className='edit_perfil_form_content'>
 
             <h1>Editar Perfil</h1>
-            <div className='edit_perfil_field'>
+            <div className='security_field '>
                 <b> Editar Foto de Perfil </b>
-                <div className='edit_perfil_input_button'>
+                <div className='edit_perfil_input_image'>
                     <div className='edit_perfil_color'>
-                        Cor de Fundo:
+                        <label>Cor de Fundo:</label>
                         <input
                             className='edit_perfil_input_color'
                             value={color}
                             type='color'
                             onChange={(e) => setColor(e.target.value)}
                             required/>
+                        
                     </div>
+                    <ImageBlock imageLink={'images/perfil_black.png'} no_scale={true} imageSize='image_edit'/>
+                </div>
+            </div>
+
+            <form onSubmit={saveProfile}>
+                <div className='security_field'>
+                    <b> {'Nome'} </b>
+                    <input className='edit_perfil_input' placeholder={'Nome'} value={name} onChange={(e) => setName(e.target.value)} required/>
+                </div>
+                <div className='security_field'>
+                    <b> {'Email'} </b>
+                    <input className='edit_perfil_input' placeholder={'Email'} type={'email'} value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                </div>
+                <div className='security_field'>
+                    <b> {'NIF'} </b>
+                    <input className='edit_perfil_input' placeholder={'NIF'} type={'number'} value={nif} onChange={(e) => setNIF(e.target.value)} required/>
+                </div>
+                <div className='security_field'>
+                    <b> {'Número de Telemovel'} </b>
+                    <input className='edit_perfil_input' placeholder={'987654321'} type={'number'} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required/>
                 </div>
                 <div className='edit_perfil_input_button'>
                     <br/>
                     <Button type='submit' buttonStyle='contrast'>Gravar</Button>
                 </div>
-            </div>
-
-            {editPerfilField('Nome',null,'Nome',setName,(saveProfile))}
-            {editPerfilField('Email','email','Email',setEmail,saveProfile)}
-            {editPerfilField('NIF','number','NIF',setNIF,saveProfile)}
-            {editPerfilField('PhoneNumber','number','987654321',setPhoneNumber,saveProfile)}
-            {editPerfilField('Palavra-passe','password','*********',setPassword,saveProfile)}
+            </form>
 
         </div>
     );

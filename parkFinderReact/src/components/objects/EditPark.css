@@ -1,0 +1,46 @@
+.edit_park_container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.edit_park_fields_container{
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+}
+
+.edit_park_open_close{
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.edit_park_open,
+.edit_park_close{
+    padding: 8px 16px;
+    border-radius: 10px;
+    width: 144px;
+    display: flex;
+    justify-content: center;
+}
+
+.edit_park_open{
+    background-color: lawngreen;
+}
+
+.edit_park_close{
+    background-color: rgb(233, 85, 16);
+}
+
+.edit_park_schedule_container{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.edit_park_new_period{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}

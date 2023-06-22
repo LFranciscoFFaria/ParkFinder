@@ -10,7 +10,7 @@ function PaymentHistory({
             <h1>Histórico de Pagamentos</h1>
             {reservations.map((reservation, index) => (
                 reservation['pago']?
-                    <div key={index} className='edit_perfil_field'>
+                    <div key={index} className='reservation_history_field'>
                         <div className='payment_history_grid_content'>
                             <label className='payment_history_align_bot'>Nome: </label>
                             <div className='payment_history_name_value'>

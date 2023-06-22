@@ -176,6 +176,8 @@
 
 
 
-.compressed_park_staff_filter_button{
+.compressed_park_staff_filter_button,
+.compressed_park_staff_filter_button:hover{
     padding: 10px;
+    width: fit-content;
 }
