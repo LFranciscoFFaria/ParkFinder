@@ -27,7 +27,7 @@ public class ProgramadorAPI {
         this.programadorService = programadorService;
     }
 
-    @PutMapping("/criar_gestor")
+    @PutMapping("/gestores/criar")
     public ResponseEntity<Void> criarGestor(@RequestBody GestorDTO gDTO) {
         try{
             Gestor g = new Gestor(gDTO.getNome(), gDTO.getEmail(), gDTO.getPassword(), gDTO.getNr_telemovel());
@@ -39,7 +39,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @DeleteMapping("/remover_gestor")
+    @DeleteMapping("/gestores/remover")
     public ResponseEntity<Void> removerGestor(@RequestParam("id_gestor") int id_gestor) {
         try{
             programadorService.removerGestor(id_gestor);
@@ -50,7 +50,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @PutMapping("/adicionar_parques")
+    @PutMapping("/gestores/adicionar_parques")
     public ResponseEntity<Void> adicionarParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
             programadorService.adicionarParquesAGestor(ids_parques,id_gestor);
@@ -61,7 +61,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @DeleteMapping("/remover_parques")
+    @DeleteMapping("/gestores/remover_parques")
     public ResponseEntity<Void> removerParquesAGestor(@RequestBody List<Integer> ids_parques, @RequestParam("id_gestor") int id_gestor) {
         try{
             programadorService.removerParquesAGestor(ids_parques,id_gestor);
@@ -72,8 +72,7 @@ public class ProgramadorAPI {
         }
     }
 
-
-    @PutMapping("/registar_parque")
+    @PutMapping("/parques/criar")
     public ResponseEntity<Void> registarParque(@RequestBody ParqueDTO pDTO) {
         try{
             Parque p = new Parque(pDTO.getNome().orElse(null),
@@ -92,7 +91,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @DeleteMapping("/remover_parque")
+    @DeleteMapping("/parques/remover")
     public ResponseEntity<Void> removerParque(@RequestParam int id_parque) {
         try{
             programadorService.removerParque(id_parque);
@@ -103,7 +102,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @GetMapping("/procurar_gestor")
+    @GetMapping("/gestores/procurar")
     public ResponseEntity<List<GestorDTO>> procurarGestor(@RequestParam("nome") String nome) {
         try{
             List<Gestor> gestores = programadorService.procurarGestor(nome);
@@ -115,7 +114,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @GetMapping("/lista_gestores")
+    @GetMapping("/gestores/listar")
     public ResponseEntity<List<GestorDTO>> listarGestores() {
         try{
             List<Gestor> gestores = programadorService.listarGestores();
@@ -127,7 +126,7 @@ public class ProgramadorAPI {
         }
     }
 
-    @GetMapping("/estatisticas_gerais")
+    @GetMapping("/parques/estatisticas")
     public ResponseEntity<Estatisticas> verEstatisticasGerais() {
         try{
             return new ResponseEntity<>(programadorService.verEstatisticasGerais(), HttpStatus.OK);

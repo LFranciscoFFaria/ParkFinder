@@ -83,7 +83,7 @@ public class GestorServiceBean implements GestorService {
 	 */
 	public List<Administrador> listarMeusAdministradores() throws Exception {
 		checkIsLoggedIn();
-		return new ArrayList<>(gestor.getAdmins());
+		return gestorDAO.getAdministradoresDoGestor(gestor.getId());
 	}
 
 	/**

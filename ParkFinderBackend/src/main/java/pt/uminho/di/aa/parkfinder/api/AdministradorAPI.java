@@ -23,7 +23,7 @@ public class AdministradorAPI {
         this.administradorService = administradorService;
     }
 
-    @PutMapping("/adicionar_instantaneo")
+    @PutMapping("/lugares/instantaneo/adicionar")
     public ResponseEntity<Void> addLugarInstantaneo(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N) {
         try{
             administradorService.addLugarInstantaneo(id_parque,N);
@@ -34,7 +34,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/adicionar_especial")
+    @PutMapping("/lugares/especial/adicionar")
     public ResponseEntity<Void> addLugarEspecial(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N, @RequestParam("tipo_lugar") String tipo) {
         try{
             administradorService.addLugarEspecial(id_parque,N,new TipoLugarEstacionamento(tipo));
@@ -45,7 +45,7 @@ public class AdministradorAPI {
         }
     }
 
-    @DeleteMapping("/remover_instantaneo")
+    @DeleteMapping("/lugares/instantaneo/remover")
     public ResponseEntity<Void> removerLugarInstantaneo(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N) {
         try{
             administradorService.removerLugarInstantaneo(id_parque,N);
@@ -56,7 +56,7 @@ public class AdministradorAPI {
         }
     }
 
-    @DeleteMapping("/remover_especial")
+    @DeleteMapping("/lugares/especial/remover")
     public ResponseEntity<Void> removerLugarEspecial(@RequestParam("id_parque") int id_parque, @RequestParam("numero") int N, @RequestParam("tipo_lugar") String tipo) {
         try{
             administradorService.removerLugarEspecial(id_parque, N, new TipoLugarEstacionamento(tipo));
@@ -67,7 +67,7 @@ public class AdministradorAPI {
         }
     }
 
-    @GetMapping("/encontrar_reserva")
+    @GetMapping("/reservas/encontrar")
     public ResponseEntity<ReservaDTO> encontrarReservaPorMatricula(@RequestParam("id_parque") int id_parque, @RequestParam("matricula") String matricula) {
         try{
             Reserva r = administradorService.encontrarReservaPorMatricula(id_parque, matricula);
@@ -78,17 +78,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/associar_matricula_reserva")
-    public ResponseEntity<Boolean> associarMatriculaAReserva(@RequestParam("id_reserva") int id_reserva, @RequestParam("matricula") String matricula) {
-        try{
-            return new ResponseEntity<>(administradorService.associarMatriculaAReserva(id_reserva, matricula),HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntityBadRequest<Boolean>().createBadRequest(e.getMessage());
-        }
-    }
-
-    @GetMapping("/reservas_ativas")
+    @GetMapping("/reservas/ativas")
     public ResponseEntity<List<ReservaDTO>> verReservasAtivasDeParque(@RequestParam("id_parque") int id_parque){
         try{
             List<Reserva> reservas = administradorService.verReservasAtivasDeParque(id_parque);
@@ -100,7 +90,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/entrada")
+    @PutMapping("/reservas/marcar/entrada")
     public ResponseEntity<Void> marcarEntradaParque(@RequestParam("id_reserva") int id_reserva, @RequestParam("matricula") String matricula){
         try{
             administradorService.marcarEntradaParque(id_reserva, matricula);
@@ -110,7 +100,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/entradaComIdUtilizador")
+    @PutMapping("/reservas/marcar/entrada_com_user")
     public ResponseEntity<Void> criarReservaInstantaneaEMarcaEntrada(@RequestParam("id_utilizador") int idUtilizador,
                                                                      @RequestParam("id_parque") int idParque,
                                                                      @RequestParam("matricula") String matricula){
@@ -122,7 +112,7 @@ public class AdministradorAPI {
         }
     }
 
-    @PutMapping("/saida")
+    @PutMapping("/reservas/marcar/saida")
     public ResponseEntity<Void> marcarSaidaParque(@RequestParam("id_reserva") int id_reserva){
         try{
             administradorService.marcarSaidaParque(id_reserva);
