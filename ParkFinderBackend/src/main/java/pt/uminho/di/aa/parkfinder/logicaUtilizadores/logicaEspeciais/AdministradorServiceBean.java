@@ -1,5 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
@@ -119,13 +120,20 @@ public class AdministradorServiceBean implements AdministradorService {
 		parqueReservaService.marcarEntradaParque(idReserva, matricula);
 	}
 
+	@Transactional
+	public void criarReservaInstantaneaEMarcaEntrada(int idUtilizador, int idParque, String matricula) throws Exception{
+		checkIsLoggedIn();
+		Reserva r = parqueReservaService.criarReservaInstantanea(idUtilizador, idParque);
+		marcarEntradaParque(r.getId(), matricula);
+	}
+
 	public void marcarSaidaParque(int idReserva) throws Exception {
 		checkIsLoggedIn();
 		parqueReservaService.marcarSaidaParque(idReserva);
 	}
 
-	public void setAdministrador(Utilizador u) {
-		this.administrador = (Administrador) u;
+	public void setAdministrador(Administrador a) {
+		this.administrador = a;
     }
 
 	private void checkIsLoggedIn() throws Exception {

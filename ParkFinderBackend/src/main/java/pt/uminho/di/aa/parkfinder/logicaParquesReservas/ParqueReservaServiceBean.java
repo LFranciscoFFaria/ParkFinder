@@ -46,6 +46,9 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		if (parque == null)
 			throw new Exception("O parque não existe");
 
+		if(!parque.isDisponivel())
+			throw new Exception("O parque não está aberto para reservas.");
+
 		if (parque.getInstantaneos_livres() > 0) {
 			Utilizador utilizador = utilizadorService.getUtilizador(id_user);
 			Reserva reserva = new Reserva(utilizador, null, parque, EstadoReserva.AGENDADA,null,false,null, LocalDateTime.now(),null);
@@ -66,6 +69,9 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 */
 	@Transactional(rollbackOn = Exception.class)
 	public Reserva criarReservaAgendada(int id_user, int id_parque, TipoLugarEstacionamento tipo, LocalDateTime data_inicio, LocalDateTime data_fim) throws Exception {
+		if(data_inicio == null || data_fim == null || data_inicio.isAfter(data_fim) || data_inicio.isBefore(LocalDateTime.now()))
+			throw new Exception("Introduza um intervalo válido para a reserva.");
+
 		Horario horario = parqueService.getHorario(id_parque);
 		LocalTime time_inicio = LocalTime.from(data_inicio),
 				  time_fim = LocalTime.from(data_fim);
@@ -76,12 +82,12 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		if(!horario.estaAberto(data_inicio.getDayOfWeek(), time_inicio, time_fim))
 			throw new Exception("O parque não se encontra aberto parcial-/totalmente no período pretendido.");
 
+		Parque parque = parqueService.procurarParque(id_parque);
+		if(!parque.isDisponivel())
+			throw new Exception("O parque não está aberto para reservas.");
+
 		List<Integer> ids_livres_parque = getIdsDeLugaresDisponiveis(id_parque,tipo,data_inicio,data_fim);
 		if (ids_livres_parque.size() > 0) {
-			Parque parque = parqueService.procurarParque(id_parque);
-			if (parque == null)
-				throw new Exception("O parque não existe");
-
 			LugarEstacionamento lugarEstacionamento = parqueService.getLugarById(ids_livres_parque.get(0));
 			if (lugarEstacionamento == null)
 				throw new Exception("O lugar não existe");
@@ -94,8 +100,7 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 			reservaService.criarReserva(reserva);
 			return reserva;
 		}
-		else
-			throw new Exception("O parque escolhido não possui lugares livres do tipo escolhido para o periodo estabelecido!");
+		else throw new Exception("O parque escolhido não possui lugares livres do tipo escolhido para o periodo estabelecido!");
 	}
 
 	/**
@@ -117,7 +122,6 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 	 * @return retorna verdadeiro a reserva estiver em condições de ser finalizada
 	 * ou uma exeção se as condições não se verificarem.
 	 */
-
 	public boolean marcarEntradaParque(int id_reserva, String matricula) throws Exception{
 		Reserva reserva = reservaService.getReserva(id_reserva);
 
@@ -136,7 +140,8 @@ public class ParqueReservaServiceBean implements ParqueReservaService {
 		else {
 			//Se o estado está em agendado, então a reserva já foi paga, portanto não é necessário verificar.
 			//Preciso verificar se está a entrar dentro do parque, durante o tempo da sua reserva.
-			if(reserva.getEstado() == EstadoReserva.AGENDADA
+			int estado = reserva.getEstado();
+			if((estado == EstadoReserva.AGENDADA || estado == EstadoReserva.CONCLUIDA)
 					&& reserva.getDataInicio().isBefore(agora)
 					&& reserva.getDataFim().isAfter(agora)){
 				reservaService.setAll(id_reserva, Optional.of(EstadoReserva.OCUPADA), null, null, null, null, Optional.of(matricula));

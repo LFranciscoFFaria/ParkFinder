@@ -39,5 +39,5 @@ public interface CondutorService {
 
 	void logout() throws Exception;
 
-	void setCondutor(Utilizador utilizador);
+	void setCondutor(Condutor condutor);
 }

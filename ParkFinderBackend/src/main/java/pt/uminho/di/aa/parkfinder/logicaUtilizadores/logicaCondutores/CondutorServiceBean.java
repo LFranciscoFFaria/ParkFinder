@@ -30,8 +30,8 @@ public class CondutorServiceBean implements CondutorService {
 		this.parqueReservaService = parqueReservaService;
 	}
 
-	public void setCondutor(Utilizador utilizador) {
-		this.condutor = (Condutor) utilizador;
+	public void setCondutor(Condutor condutor) {
+		this.condutor = condutor;
 	}
 
 

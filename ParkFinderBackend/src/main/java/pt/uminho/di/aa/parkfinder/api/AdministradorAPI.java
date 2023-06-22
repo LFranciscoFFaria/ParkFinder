@@ -110,6 +110,16 @@ public class AdministradorAPI {
         }
     }
 
+    @PutMapping("/entradaComIdUtilizador")
+    public ResponseEntity<Void> criarReservaInstantaneaEMarcaEntrada(int idUtilizador, int idParque, String matricula){
+        try{
+            administradorService.criarReservaInstantaneaEMarcaEntrada(idUtilizador, idParque, matricula);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntityBadRequest<Void>().createBadRequest(e.getMessage());
+        }
+    }
+
     @PutMapping("/saida")
     public ResponseEntity<Void> marcarSaidaParque(@RequestParam("id_reserva") int id_reserva){
         try{

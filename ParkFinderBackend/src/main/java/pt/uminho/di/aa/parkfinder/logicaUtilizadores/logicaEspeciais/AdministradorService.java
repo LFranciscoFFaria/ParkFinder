@@ -2,6 +2,7 @@ package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 
 import java.util.List;
@@ -61,7 +62,8 @@ public interface AdministradorService {
 
     void marcarEntradaParque(int idReserva, String matricula) throws Exception;
 
+	void criarReservaInstantaneaEMarcaEntrada(int idUtilizador, int idParque, String matricula) throws Exception;
 	void marcarSaidaParque(int idReserva) throws Exception;
 
-	void setAdministrador(Utilizador u);
+	void setAdministrador(Administrador a);
 }

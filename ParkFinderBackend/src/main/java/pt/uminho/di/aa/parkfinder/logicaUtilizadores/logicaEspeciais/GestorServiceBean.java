@@ -202,8 +202,8 @@ public class GestorServiceBean implements GestorService {
 		return true;
 	}
 
-    public void setGestor(Utilizador u) {
-		this.gestor = (Gestor) u;
+    public void setGestor(Gestor g) {
+		this.gestor = g;
     }
 
 	private void checkIsLoggedIn() throws Exception {
