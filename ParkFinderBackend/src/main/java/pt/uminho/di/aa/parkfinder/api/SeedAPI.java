@@ -30,6 +30,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/apiV1/seed")
@@ -58,7 +59,6 @@ public class SeedAPI {
     public ResponseEntity<String> seed(){
         try {
             criarTiposLugarEParques();
-            criarUtilizadoresSimples();
             criarReservas();
             criarNotificacoes();
             return new ResponseEntity<>(HttpStatus.OK);
@@ -110,23 +110,21 @@ public class SeedAPI {
         p3.addPrecario(p3Instant);
         p3.addPrecario(p3Agend);
         p3 = parqueService.criarParque(p3);
-    }
 
-    private List<HorarioPeriodo> createHorario(LocalTime inicio, LocalTime fim){
-        List<HorarioPeriodo> horarioPeriodos = new ArrayList<>();
-        for(int dia = DayOfWeek.MONDAY.getValue(); dia <= DayOfWeek.SUNDAY.getValue(); dia++){
-            horarioPeriodos.add(new HorarioPeriodo(0, inicio, fim, dia));
-        }
-        return horarioPeriodos;
-    }
 
-    private void criarUtilizadoresSimples() throws Exception{
-        //Criar Gestor
+        Set<Parque> parqueSet = new HashSet<>();
+        parqueSet.add(p1);
+        parqueSet.add(p2);
+        parqueSet.add(p3);
+
+        // ******  Criar utilizadores  ********
         Gestor gestor = new Gestor("Gestor" + 1, "gestor" + 1 + "@gmail.com", "1234", 960000000 + 1, new HashSet<>(), new HashSet<>());
+        gestor.setParques(parqueSet);
         utilizadorService.criarUtilizador(gestor);
 
         //Criar Admin
         Administrador administrador = new Administrador("Administrador" + 1, "administrador" + 1 + "@gmail.com", "1234", 930000000 + 2, gestor, new HashSet<>());
+        administrador.setParques(parqueSet);
         utilizadorService.criarUtilizador(administrador);
 
         //Criar Condutor
@@ -136,6 +134,14 @@ public class SeedAPI {
         //Criar programador
         Programador programador = new Programador("Programador" + 1, "programador" + 1 + "@gmail.com", "1234", 920000000 + 3);
         utilizadorService.criarUtilizador(programador);
+    }
+
+    private List<HorarioPeriodo> createHorario(LocalTime inicio, LocalTime fim){
+        List<HorarioPeriodo> horarioPeriodos = new ArrayList<>();
+        for(int dia = DayOfWeek.MONDAY.getValue(); dia <= DayOfWeek.SUNDAY.getValue(); dia++){
+            horarioPeriodos.add(new HorarioPeriodo(0, inicio, fim, dia));
+        }
+        return horarioPeriodos;
     }
 
     /**

@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class GestorDTO {
+    Integer id;
     String nome;
     String email;
     Integer nr_telemovel;

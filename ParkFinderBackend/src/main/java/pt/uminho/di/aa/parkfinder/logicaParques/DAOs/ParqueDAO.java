@@ -33,4 +33,10 @@ public interface ParqueDAO extends JpaRepository<Parque,Integer> {
 
     @Query("SELECT p.estatisticas FROM Parque p WHERE p.id = :id_parque")
     Estatisticas getEstatisticasDoParque(int id_parque);
+
+    @Query("SELECT g.parques FROM Gestor g WHERE g.id = :id_gestor")
+    List<Parque> getParquesDoGestor(@Param("id_gestor") int id_gestor);
+
+    @Query("SELECT a.parques FROM Administrador a WHERE a.id = :id_admin")
+    List<Parque> getParquesDoAdministrador(@Param("id_admin") int id_admin);
 }

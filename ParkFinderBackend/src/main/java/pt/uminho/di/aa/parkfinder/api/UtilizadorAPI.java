@@ -59,19 +59,19 @@ public class UtilizadorAPI {
                     CondutorService condutorServiceBean = context.getBean(CondutorService.class);
                     Condutor c = (Condutor) u;
                     condutorServiceBean.setCondutor(c);
-                    ret = new CondutorDTO(c.getNome(), c.getEmail(), c.getNrTelemovel(), c.getPassword(), c.getNif(), c.getGenero());
+                    ret = new CondutorDTO(c.getId(), c.getNome(), c.getEmail(), c.getNrTelemovel(), c.getPassword(), c.getNif(), c.getGenero());
                 }
                 case "Admin" -> {
                     AdministradorService administradorServiceBean = context.getBean(AdministradorService.class);
                     Administrador a = (Administrador) u;
                     administradorServiceBean.setAdministrador(a);
-                    ret = new AdminDTO(a.getNome(), a.getEmail(), a.getNrTelemovel(), a.getPassword(), a.getGestorID(), null);
+                    ret = new AdminDTO(a.getId(), a.getNome(), a.getEmail(), a.getNrTelemovel(), a.getPassword(), a.getGestorID(), null);
                 }
                 case "Gestor" -> {
                     GestorService gestorServiceBean = context.getBean(GestorService.class);
                     Gestor g = (Gestor) u;
                     gestorServiceBean.setGestor(g);
-                    ret = new GestorDTO(g.getNome(), g.getEmail(), g.getNrTelemovel(), g.getPassword(), null, null);
+                    ret = new GestorDTO(g.getId(), g.getNome(), g.getEmail(), g.getNrTelemovel(), g.getPassword(), null, null);
                 }
                 case "Programador" -> {
                     ProgramadorService programadorServiceBean = context.getBean(ProgramadorService.class);
@@ -79,9 +79,10 @@ public class UtilizadorAPI {
                     programadorServiceBean.setProgramador(u);
                     ret = new Programador(p.getNome(), p.getEmail(), p.getPassword(), p.getNrTelemovel());
                 }
+                default -> ret = null;
             }
 
-            return new ResponseEntity<>(u, HttpStatus.OK); }
+            return new ResponseEntity<>(ret, HttpStatus.OK); }
         catch (Exception e){
             return new ResponseEntityBadRequest<>().createBadRequest(e.getMessage());
         }

@@ -11,7 +11,11 @@ import pt.uminho.di.aa.parkfinder.api.DTOs.serializers.GeneroSerializer;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class CondutorDTO {
+    @JsonProperty("id")
+    Integer id;
+
     @JsonProperty("nome")
     String nome;
 

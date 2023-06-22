@@ -204,6 +204,6 @@ public class GestorAPI {
         try{ ids_parques = a.getParques().stream().map(Parque::getId).toList(); }
         catch (LazyInitializationException ignored){}
 
-        return new AdminDTO(a.getNome(), a.getEmail(), a.getNrTelemovel(), a.getPassword(), a.getGestorID(), ids_parques);
+        return new AdminDTO(a.getId(), a.getNome(), a.getEmail(), a.getNrTelemovel(), a.getPassword(), a.getGestorID(), ids_parques);
     }
 }

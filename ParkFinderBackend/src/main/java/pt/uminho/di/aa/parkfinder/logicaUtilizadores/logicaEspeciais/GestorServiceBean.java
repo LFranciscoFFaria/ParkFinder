@@ -65,7 +65,7 @@ public class GestorServiceBean implements GestorService {
 	 */
 	public List<Parque> listarMeusParques() throws Exception {
 		checkIsLoggedIn();
-		return new ArrayList<>(gestor.getParques());
+		return parqueService.getParquesDoGestor(gestor.getId());
 	}
 
 	/**

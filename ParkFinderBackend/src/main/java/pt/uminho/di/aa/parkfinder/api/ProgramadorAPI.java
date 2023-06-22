@@ -157,6 +157,6 @@ public class ProgramadorAPI {
             ids_admins = g.getAdmins().stream().map(Administrador::getId).toList();
         } catch (LazyInitializationException ignored){}
 
-        return new GestorDTO(g.getNome(), g.getEmail(), g.getNrTelemovel(), g.getPassword(), ids_parques, ids_admins);
+        return new GestorDTO(g.getId(), g.getNome(), g.getEmail(), g.getNrTelemovel(), g.getPassword(), ids_parques, ids_admins);
     }
 }

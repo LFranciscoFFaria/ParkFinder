@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ProgramadorDTO {
+    Integer id;
     String nome;
     String email;
     Integer nr_telemovel;

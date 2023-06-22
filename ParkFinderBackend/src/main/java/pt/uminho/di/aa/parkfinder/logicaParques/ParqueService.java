@@ -22,6 +22,9 @@ public interface ParqueService {
 	 */
 	List<Parque> listarParques(List<Integer> ids);
 
+	List<Parque> getParquesDoGestor(int id_gestor);
+
+	List<Parque> getParquesDoAdministrador(int id_admin);
 
 	/**
 	 * 

@@ -1,5 +1,6 @@
 package pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais;
 
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
@@ -8,6 +9,8 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import java.util.List;
 
 public interface AdministradorService {
+
+	List<Parque> listarMeusParques() throws Exception;
 
 	/**
 	 * 

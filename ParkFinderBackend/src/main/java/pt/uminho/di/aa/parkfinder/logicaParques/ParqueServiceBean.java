@@ -546,6 +546,14 @@ public class ParqueServiceBean implements ParqueService {
 		estatisticas.setFaturacao_total(estatisticas.getFaturacao_total() + custo);
 		parqueDAO.save(parque);
 	}
+
+	public List<Parque> getParquesDoGestor(int id_gestor){
+		return parqueDAO.getParquesDoGestor(id_gestor);
+	}
+
+	public List<Parque> getParquesDoAdministrador(int id_admin){
+		return parqueDAO.getParquesDoGestor(id_admin);
+	}
 	
 	// ********** Funcoes Auxiliares ********
 

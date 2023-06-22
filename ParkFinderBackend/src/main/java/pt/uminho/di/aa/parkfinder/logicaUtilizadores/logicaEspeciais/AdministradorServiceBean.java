@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 import pt.uminho.di.aa.parkfinder.logicaParquesReservas.ParqueReservaService;
 import pt.uminho.di.aa.parkfinder.logicaReservas.Reserva;
@@ -27,6 +28,14 @@ public class AdministradorServiceBean implements AdministradorService {
 		this.parqueService = parqueService;
 		this.reservaService = reservaService;
 		this.parqueReservaService = parqueReservaService;
+	}
+
+	/**
+	 * Devolve a lista dos parques associados ao administrador.
+	 */
+	public List<Parque> listarMeusParques() throws Exception {
+		checkIsLoggedIn();
+		return parqueService.getParquesDoAdministrador(administrador.getId());
 	}
 
 	/**
