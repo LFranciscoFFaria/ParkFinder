@@ -3,16 +3,12 @@ package pt.uminho.di.aa.parkfinder.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
-import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
+import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioBaseDTO;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController()
@@ -27,9 +23,8 @@ public class RestAPITest {
         Optional<LocalTime> time;
     }
 
-    @GetMapping
-    Precario randomtest(@RequestBody PrecarioLinear precario){
-        System.out.println(precario);
-        return precario;
+    @PutMapping
+    void randomtest(@RequestBody List<PrecarioBaseDTO> lista){
+        lista.forEach(System.out::println);
     }
 }

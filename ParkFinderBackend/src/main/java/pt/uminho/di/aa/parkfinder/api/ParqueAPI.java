@@ -4,13 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioBaseDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioDecLinearCriarDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.PrecarioLinearCriarDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaParques.ParqueService;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Horario;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.Parque;
 import pt.uminho.di.aa.parkfinder.logicaParques.DTOs.ParqueDTO;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.Precario;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioDecrementoLinear;
+import pt.uminho.di.aa.parkfinder.logicaParques.model.Precarios.PrecarioLinear;
 import pt.uminho.di.aa.parkfinder.logicaParques.model.TipoLugarEstacionamento;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +34,7 @@ public class ParqueAPI {
         this.parqueService = parqueService;
     }
 
-    @GetMapping("/allparques")
+    @GetMapping("")
     public ResponseEntity<List<ParqueDTO>> listarParques(){
         try{
             List<Parque> parques = parqueService.listarParques();
@@ -37,8 +45,8 @@ public class ParqueAPI {
         }
     }
 
-    @GetMapping("/allparquesids")
-    public ResponseEntity<List<ParqueDTO>> listarParquesIds(@RequestBody List<Integer> ids){
+    @GetMapping("/ids")
+    public ResponseEntity<List<ParqueDTO>> listarParquesIds(@RequestParam("lista_ids") List<Integer> ids){
         try{
             List<Parque> parques = parqueService.listarParques(ids);
             List<ParqueDTO> parqueDTOS = parques.stream().map(this::parqueToDTO).toList();
@@ -98,6 +106,36 @@ public class ParqueAPI {
         }
     }
 
+    @GetMapping("/horario")
+    public ResponseEntity<Horario> getHorarioParque(@RequestParam("id_parque") int id_parque){
+        try {
+            return ResponseEntity.ok().body(parqueService.getHorario(id_parque));
+        }catch (Exception e){
+            return new ResponseEntityBadRequest<Horario>().createBadRequest(e.getMessage());
+        }
+    }
+
+    @GetMapping("/precarios/all")
+    public ResponseEntity<List<PrecarioBaseDTO>> getPrecariosParque(@RequestParam("id_parque") int id_parque){
+        try {
+            List<Precario> precarios = parqueService.getPrecarios(id_parque);
+            List<PrecarioBaseDTO> precarioBaseDTOS = precarios.stream().map(p -> precarioToDTO(id_parque, p)).toList();
+            return ResponseEntity.ok().body(precarioBaseDTOS);
+        }catch (Exception e){
+            return new ResponseEntityBadRequest<List<PrecarioBaseDTO>>().createBadRequest(e.getMessage());
+        }
+    }
+
+    @GetMapping("/precarios")
+    public ResponseEntity<PrecarioBaseDTO> getPrecarioParaTipoLugarDoParque(@RequestParam("id_parque") int id_parque, @RequestParam("tipo_lugar") String tipoLugar){
+        try {
+            Precario precario = parqueService.getPrecarioByParqueIdAndTipoLugar(id_parque, tipoLugar);
+            return ResponseEntity.ok().body(precarioToDTO(id_parque, precario));
+        }catch (Exception e){
+            return new ResponseEntityBadRequest<PrecarioBaseDTO>().createBadRequest(e.getMessage());
+        }
+    }
+
     private ParqueDTO parqueToDTO(Parque parque){
         if(parque == null) return null;
         return new ParqueDTO(Optional.of(parque.getId()), Optional.of(parque.getNome()), Optional.of(parque.getMorada()),
@@ -105,5 +143,17 @@ public class ParqueAPI {
                 Optional.of(parque.isDisponivel()), Optional.of(parque.getInstantaneos_livres()),
                 Optional.of(parque.getInstantaneos_total()), Optional.of(parque.getTotal_lugares()),
                 Optional.of(parque.getCaminho_foto()));
+    }
+
+    private PrecarioBaseDTO precarioToDTO(Integer id_parque, Precario precario){
+        if(precario instanceof PrecarioLinear pl){
+            return new PrecarioLinearCriarDTO(id_parque, pl.getTipo().getNome(), pl.getPrecoFixo(),
+                                              pl.getPrecoPorMinuto(), LocalTime.of(0,1));
+        }else /*if(precario instanceof PrecarioDecrementoLinear pdl)*/{
+            PrecarioDecrementoLinear pdl = (PrecarioDecrementoLinear) precario;
+            return new PrecarioDecLinearCriarDTO(id_parque, pdl.getTipo().getNome(), pdl.getPrecoFixo(),
+                                                 pdl.getPrecoPorMinutoMax(), pdl.getPrecoPorMinutoMin(),
+                                                 pdl.getIntervaloParaAtingirMin(), LocalTime.of(0,1));
+        }
     }
 }

@@ -12,9 +12,7 @@ import pt.uminho.di.aa.parkfinder.api.DTOs.ReservaDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorService;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorServiceBean;
 
 import java.time.LocalDateTime;
 import java.util.List;

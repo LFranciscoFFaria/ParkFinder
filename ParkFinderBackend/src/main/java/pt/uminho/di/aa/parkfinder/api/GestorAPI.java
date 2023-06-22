@@ -40,7 +40,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/adicionar_precario/dec_linear")
-    public ResponseEntity<Void> adicionarPrecario(@RequestParam("id_parque") int id_parque, @RequestBody PrecarioDecLinearCriarDTO precarioDTO){
+    public ResponseEntity<Void> adicionarPrecarioDecLinear(@RequestParam("id_parque") int id_parque, @RequestBody PrecarioDecLinearCriarDTO precarioDTO){
         try{
             TipoLugarEstacionamento tipoLugar = new TipoLugarEstacionamento(precarioDTO.getTipo_lugar());
             Precario p = new PrecarioDecrementoLinear(tipoLugar, precarioDTO.getPreco_fixo(), precarioDTO.getPreco_max_por_intervalo(),
@@ -114,7 +114,7 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/remover_administrador")
-    public ResponseEntity<Void> removerAdmin(@RequestParam int id_admin){
+    public ResponseEntity<Void> removerAdmin(@RequestParam("id_admin") int id_admin){
         try{
             gestorService.removerAdmin(id_admin);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -125,7 +125,7 @@ public class GestorAPI {
     }
 
     @DeleteMapping("/remover_permissao_administrador")
-    public ResponseEntity<Void> removerPermissaoAdminSobreParques(@RequestParam int id_admin, @RequestBody List<Integer> ids_parques){
+    public ResponseEntity<Void> removerPermissaoAdminSobreParques(@RequestParam("id_admin") int id_admin, @RequestParam("ids_parques") List<Integer> ids_parques){
         try{
             gestorService.removerPermissaoAdminSobreParques(id_admin, ids_parques);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -136,7 +136,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/alterar_parque")
-    public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam int id_parque, @RequestBody ParqueDTO newInfo){
+    public ResponseEntity<Boolean> alterarInformacoesParque(@RequestParam("id_parque") int id_parque, @RequestBody ParqueDTO newInfo){
         try{
             return new ResponseEntity<>(gestorService.alterarInformacoesParque(id_parque,newInfo), HttpStatus.OK);
         }
@@ -146,7 +146,7 @@ public class GestorAPI {
     }
 
     @PutMapping("/alterar_disponibilidade_parque")
-    public ResponseEntity<Void> alterarEstadoDisponivelDeParque(@RequestParam int id_parque, @RequestParam boolean disponivel){
+    public ResponseEntity<Void> alterarEstadoDisponivelDeParque(@RequestParam("id_parque") int id_parque, @RequestParam("disponivel") boolean disponivel){
         try{
             gestorService.alterarEstadoDisponivelDeParque(id_parque, disponivel);
             return new ResponseEntity<>(HttpStatus.OK);

@@ -111,7 +111,9 @@ public class AdministradorAPI {
     }
 
     @PutMapping("/entradaComIdUtilizador")
-    public ResponseEntity<Void> criarReservaInstantaneaEMarcaEntrada(int idUtilizador, int idParque, String matricula){
+    public ResponseEntity<Void> criarReservaInstantaneaEMarcaEntrada(@RequestParam("id_utilizador") int idUtilizador,
+                                                                     @RequestParam("id_parque") int idParque,
+                                                                     @RequestParam("matricula") String matricula){
         try{
             administradorService.criarReservaInstantaneaEMarcaEntrada(idUtilizador, idParque, matricula);
             return new ResponseEntity<>(HttpStatus.OK);
