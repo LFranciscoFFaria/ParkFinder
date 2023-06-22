@@ -2,10 +2,10 @@ import '../condutor/Details.css'
 import { NavbarStaff } from '../../objects/Navbar';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
-import Contacts from '../../objects/Contacts';
 
 import ParksManager from '../../objects/ParksManager';
 import StatsManager from '../../objects/StatsManager';
+import ContactsManager from '../../objects/ContactsManager';
 
 function Manager({
     parks,
@@ -27,15 +27,7 @@ function Manager({
 
                 case 2:
                     setPage(
-                        <Contacts
-                            listUsers={administradores} 
-                            createButton={<Button buttonStyle={"default compressed_park_staff_filter_button"} onClick={() => console.log("createButton")} link={'/manager/admin/create'}>Criar Administrador</Button>} 
-                            revoke={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Admin")}>Remove Parque</Button>} 
-                            add={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Admin")}>Adicionar Parque</Button>} 
-                            removeButton={<Button buttonStyle={"default flex_button"} onClick={() => console.log("removeButton")}>Remover</Button>} 
-                            title={"Administradores"}
-                            showPark={true}
-                        />
+                        <ContactsManager administradores={administradores} />
                     );
                     break;
 

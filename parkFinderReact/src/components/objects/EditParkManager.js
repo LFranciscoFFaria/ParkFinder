@@ -10,7 +10,7 @@ import { ImageBlock } from '../interactive_items/ImageBlock';
 
 
 
-const horas = {
+var horas = {
     "periodos" : [
         {"dia": 2, "inicio" : 7.5, "fim" : 13},
         {"dia": 3, "inicio" : 14.5, "fim" : 21},
@@ -59,6 +59,20 @@ function EditParkManager({
     const [horaFim, setHoraFim] = useState('');
     const [day, setDay] = useState(diasDaSemana[0]);
     const [buttonPressed, setButtonPressed] = useState('');
+    const [instantaneasLineares, setInstantaneasLineares] = useState(0);
+    const [instantaneas, setInstantaneas] = useState({
+        precoI: 0,
+        precoMin: 0,
+        precoMax: 0,
+        intervalo: '00:00'
+    });
+    const [agendadasLineares, setAgendadasLineares] = useState(0);
+    const [agendadas, setAgendadas] = useState({
+        precoI: 0,
+        precoMin: 0,
+        precoMax: 0,
+        intervalo: '00:00'
+    });
 
 
     
@@ -132,7 +146,17 @@ function EditParkManager({
         );
     }
 
+    const handleChange = event => {
+        const result = ("000" + event.target.value.replace(/\D/g, '')).match(/(000|00[123456789]|0[123456789]\d|[123456789]\d*)$/g).toString();
+        return result.slice(0, -2) + '.' + result.slice(-2)
+    }
 
+    const changePrecarioAgendada = (event) => {
+        event.preventDefault();
+        console.log("Change Schedule");
+        console.log(agendadas);
+        console.log(instantaneas);
+    }
 
     const changeSchedule = (event) => {
         event.preventDefault();
@@ -141,7 +165,6 @@ function EditParkManager({
         console.log("dia = " + day);
         console.log("hora_inicio = " + horaInicio);
         console.log("hora_fim = " + horaFim);
-
     }
 
     const savePark = (event) => {
@@ -203,6 +226,64 @@ function EditParkManager({
                         <Button type='submit' buttonStyle='default'>Gravar Alterações</Button>
                     </div>
                 </div>
+                <br/>
+                <br/>
+                <div className='edit_park_container_precario'>
+                    <form className='edit_park_precario' onSubmit={changePrecarioAgendada}>
+                        <b className='edit_park_precario_title'>Preçário Reservas Instantâneas</b>
+                        <div className='edit_park_percario_fields'>
+                            <label>Valor Inicial: (€)</label>
+                            <input value={instantaneas.precoI} onChange={(e) => setInstantaneas(p => ({...p, precoI: handleChange(e)}))} required/>
+                            {instantaneasLineares?
+                                <>
+                                    <label>Preço por min: (€)</label>
+                                    <input value={instantaneas.precoMax} onChange={(e) => setInstantaneas(p => ({...p, precoMax: handleChange(e)}))} required/>
+                                </>
+                                :
+                                <>
+                                    <label>Preço por min (maximo): (€)</label>
+                                    <input value={instantaneas.precoMax} onChange={(e) => setInstantaneas(p => ({...p, precoMax: handleChange(e)}))} required/>
+                                    <label>Preço por min (minimo): (€)</label>
+                                    <input value={instantaneas.precoMin} onChange={(e) => setInstantaneas(p => ({...p, precoMin: handleChange(e)}))} required/>
+                                    <label>Intrevalo entre limites:</label>
+                                    <input type='time' value={instantaneas.intervalo} onChange={(e) => setInstantaneas(p => ({...p, intervalo: e.target.value}))} required/>
+                                </>
+                            }
+                        </div>
+                        <div className='security_input_button'>
+                            <br/>
+                            <Button type='submit' buttonStyle='default'>Gravar Alterações</Button>
+                        </div>
+                    </form>
+                    <form className='edit_park_precario' onSubmit={changePrecarioAgendada}>
+                        <b className='edit_park_precario_title'>Preçário Reservas Agendadas</b>
+                        <div className='edit_park_percario_fields'>
+                            <label>Valor Inicial: (€)</label>
+                            <input value={agendadas.precoI} onChange={(e) => setAgendadas(p => ({...p, precoI: handleChange(e)}))} required/>
+                            {agendadasLineares?
+                                <>
+                                    <label>Preço por min: (€)</label>
+                                    <input value={agendadas.precoMax} onChange={(e) => setAgendadas(p => ({...p, precoMax: handleChange(e)}))} required/>
+                                </>
+                                :
+                                <>
+                                    <label>Preço por min (maximo): (€)</label>
+                                    <input value={agendadas.precoMax} onChange={(e) => setAgendadas(p => ({...p, precoMax: handleChange(e)}))} required/>
+                                    <label>Preço por min (minimo): (€)</label>
+                                    <input value={agendadas.precoMin} onChange={(e) => setAgendadas(p => ({...p, precoMin: handleChange(e)}))} required/>
+                                    <label>Intrevalo entre limites:</label>
+                                    <input type='time' value={agendadas.intervalo} onChange={(e) => setAgendadas(p => ({...p, intervalo: e.target.value}))} required/>
+                                </>
+                            }
+                        </div>
+                        <div className='security_input_button'>
+                            <br/>
+                            <Button type='submit' buttonStyle='default'>Gravar Alterações</Button>
+                        </div>
+                    </form>
+                </div>
+
+
             </div>
         </>
     );

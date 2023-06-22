@@ -5,12 +5,12 @@ import '../../interactive_items/select.css'
 
 import Description from '../../objects/Description';
 import Characteristics from '../../objects/Caracteristics';
-import Contacts from '../../objects/Contacts';
 
 import { ImageBlock } from '../../interactive_items/ImageBlock';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';
 import { NavbarStaff } from '../../objects/Navbar';
+import ContactsManager from '../../objects/ContactsManager';
 
 
 const parques = [
@@ -90,7 +90,7 @@ function ProgrammersDetails({
                 break;
 
             default:
-                setPage(<Contacts parque={parque}/>);
+                setPage(<ContactsManager parque={parque}/>);
                 break;
         }
     }
