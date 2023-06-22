@@ -4,6 +4,9 @@ import { Button } from '../interactive_items/Button';
 import {ImageBlock} from '../interactive_items/ImageBlock';
 import "rc-tooltip/assets/bootstrap.css";
 import Tooltip from 'rc-tooltip';
+import Booking from './Booking';
+import PopUp from '../interactive_items/PopUp';
+import { useState } from 'react';
 
 function separateString(string) {
     let lines = string.split("\n");
@@ -21,6 +24,8 @@ function separateString(string) {
 export function CompressedParkInfo({
     parque,
 }) {
+    const [popUp, setPopUp] = useState(false);
+
     function ocupationColor() {
         if ((parque["lugares_vagos"]/parque["lugares_totais"]) > 0.30) {
             return "green"
@@ -54,10 +59,15 @@ export function CompressedParkInfo({
                     <label className='compressed_park_info_description'>{separateString(parque["descricao"])}</label>
                     <div className="compressed_park_buttons">
                         <Button buttonStyle="page_button see_details_button" onClick={() => localStorage.setItem("parqueId", parque["id"])} link={'/details'}>Ver detalhes</Button>
-                        <Button buttonStyle="default">Reservar</Button>
+                        <Button buttonStyle="default" onClick={() => setPopUp(true)}>Reservar</Button>
                     </div>
                 </div>
             </div>
+            {popUp?
+                <PopUp closePopUp={() => setPopUp(false)} element={<Booking popUpFormat={true}/>}/>
+                :
+                null
+            }
         </div>
     );
 };

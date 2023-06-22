@@ -1,0 +1,95 @@
+.booking{
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking_reverse{
+    flex-direction: column-reverse;
+    margin: 0px 30px 20px;
+}
+
+.booking_box{
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    height: fit-content;
+    width: 20%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.booking_header{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.booking_dates_display{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.booking_dates_block{
+    display: flex;
+    border-top: 1px lightgrey solid;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 10px 0px 15px;
+    font-weight: bold;
+}
+
+.booking_dates_fields{
+    display: flex;
+    border-color: lightgray;
+    justify-content: space-between;
+}
+
+.booking_date_input_field{
+    font-size: medium;
+    font-weight: 400;
+    border-radius: 0px;
+    border: 0;
+}
+
+.booking_date_input_field:focus{
+    background-color: white;
+}
+
+.booking_submit_button{
+    display: flex;
+    width: 100%;
+    margin-top: 15px;
+    justify-content: space-between;
+}
+
+.booking_popup_format{
+    height: fit-content;
+    width: 20%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.booking_popup_format_line{
+    height: 3px;
+    background-color: lightgray;
+    width: 100%;
+}
+
+.booking_desc_subsection{
+    font-size: 110%;
+}
+
+.booking_header_info{
+    color: gray;
+    padding: 3px 10px;
+    font-size: large;
+    font-weight: bold;
+    background-color: lightgray;
+    border-radius: 10px;
+}

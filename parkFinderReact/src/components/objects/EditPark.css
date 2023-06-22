@@ -35,12 +35,34 @@
 
 .edit_park_schedule_container{
     display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
 }
 
+
+.edit_park_parking_spaces,
 .edit_park_new_period{
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 30px;
 }
+
+
+.edit_park_parking_spaces{
+    font-size: 90%;
+}
+
+
+.edit_park_input{
+    font-size: medium;
+    width: 100px;
+}
+
+
+.edit_park_title{
+    font-size: larger;
+}
+
+

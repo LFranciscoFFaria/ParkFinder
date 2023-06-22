@@ -29,9 +29,10 @@ function Manager({
                     setPage(
                         <Contacts
                             listUsers={administradores} 
-                            createButton={<Button buttonStyle={"default"} onClick={() => console.log("createButton")} link={'/manager/admin/create'}>Criar Administrador</Button>} 
-                            editButton={<Button buttonStyle={"default"} onClick={() => console.log("editButton")}>Editar</Button>} 
-                            removeButton={<Button buttonStyle={"default"} onClick={() => console.log("removeButton")}>Remover</Button>} 
+                            createButton={<Button buttonStyle={"default compressed_park_staff_filter_button"} onClick={() => console.log("createButton")} link={'/manager/admin/create'}>Criar Administrador</Button>} 
+                            revoke={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Admin")}>Remove Parque</Button>} 
+                            add={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Admin")}>Adicionar Parque</Button>} 
+                            removeButton={<Button buttonStyle={"default flex_button"} onClick={() => console.log("removeButton")}>Remover</Button>} 
                             title={"Administradores"}
                             showPark={true}
                         />

@@ -11,7 +11,7 @@ import { QRCodeSVG } from 'qrcode.react'
 export function Navbar({
     setState,
     setFilter,
-    userID
+    userID = -1
 }) {
     const [click, setClick] = useState(false);
     const [popUp, setPopUp] = useState(false);
@@ -28,7 +28,7 @@ export function Navbar({
     return (
         <div className='navbar_layer'>
             <header className={"header_default"}>
-                <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}} link={'/'}><img className={'button_image'} src={"images/preto.png"} alt={""} /></Button>
+                <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}} link={'/'}><img className={'button_image'} src={"./images/preto.png"} alt={""} /></Button>
                 <Button buttonStyle={"navbar_perfil_image"} link={'/perfil'}> <img className={'button_image'} src={"images/perfil_black.png"} alt={""} /> Pessoa </Button>
             </header>
 
@@ -50,7 +50,7 @@ export function Navbar({
                             <Button buttonStyle={"navbar_image_button"} onClick={setFilter}> <img className={'button_image'} src={"images/search_icon.png"} alt={""} /> </Button>
                         </div>
                     }
-                    {userID?
+                    {userID >= 0?
                         <Button buttonStyle={"navbar_image_button"} onClick={() => {closeMobileMenu(); setPopUp(true)}}> <img className={'button_image'} src={"images/qrcode.png"} alt={""} /> </Button>
                         :
                         null
@@ -60,7 +60,7 @@ export function Navbar({
                 </div>
             </div>
 
-            {popUp && userID?
+            {popUp && userID >= 0?
                 <PopUp closePopUp={() => setPopUp(false)} text='QR Code' element={element} />
                 :
                 null
@@ -78,7 +78,7 @@ export function NavbarStaff({
 }) {
 
     function getPath() {
-        return <img className='icon' src={'images/preto.png'} alt={''} />
+        return <img className='icon' src={'./images/preto.png'} alt={''} />
     }
 
     return (

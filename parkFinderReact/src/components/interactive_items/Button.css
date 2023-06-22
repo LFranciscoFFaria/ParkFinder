@@ -127,6 +127,7 @@
     display: flex;
     width: 100%;
     justify-content: center;
+    align-items: center;
 }
 
 
@@ -170,8 +171,6 @@
 .navbar_image_button:hover{
     transform: scale(1.1,1.1);
 }
-
-
 
 
 

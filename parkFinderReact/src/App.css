@@ -12,6 +12,7 @@ body{
     margin: 0;
 }
 
+textarea,
 input{
     font-family: system-ui;
     border-radius: 5px;

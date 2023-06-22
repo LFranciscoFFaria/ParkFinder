@@ -37,8 +37,9 @@
 
 .compressed_park_tooltip{
     display: flex;
+    flex-direction: column;
     padding: 0px 10px;
-    height: 40px;
+    min-height: 40px;
     font-size: 120%;
     justify-content: center;
     align-items: center;

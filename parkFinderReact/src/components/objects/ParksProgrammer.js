@@ -17,7 +17,7 @@ function ParksProgrammer({
                 <h1>Parques</h1>
                 <div className='contact_button compressed_park_staff_create_button'>
                     <Button buttonStyle={(!filter? "sex_button":"sex_button_selected") + " compressed_park_staff_filter_button"} onClick={() => setFilter(!filter)}>Filtro</Button>
-                    <Button buttonStyle={"default"} onClick={() => console.log("Novo Parque")}>Criar Parque</Button>
+                    <Button buttonStyle={"default"} onClick={() => console.log("Novo Parque")} link={'/programmer/park/create'}>Criar Parque</Button>
                 </div>
             </div>
             {filter? <FilterStaff/> : null}
