@@ -56,7 +56,7 @@ export function Navbar({
                         null
                     }
                     <Button buttonStyle={"navbar_image_button"} onClick={closeMobileMenu}> <img className={'button_image'} src={"images/bell_notification.png"} alt={""} /> </Button>
-                    <Button buttonStyle={"navbar_button"} onClick={closeMobileMenu} link={"/login"}> Login </Button>
+                    <Button buttonStyle={"navbar_button"} onClick={closeMobileMenu} link={"/login"}> Sair </Button>
                 </div>
             </div>
 
