@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 public class TestesParqueService {
@@ -292,7 +293,7 @@ public class TestesParqueService {
         TipoLugarEstacionamento tipoAgendado = new TipoLugarEstacionamento("Agendado");
         LocalDateTime data_inicio = LocalDateTime.of(2023,6,24,11, 0,0);
         LocalDateTime data_fim = LocalDateTime.of(2023,6,24,12, 0,0);
-        List<Integer> lugar_ids = parqueServiceBean.procurarLugaresDisponiveis(this.parque.getId(),tipoAgendado,data_inicio,data_fim);
+        Set<Integer> lugar_ids = parqueServiceBean.procurarLugaresDisponiveis(this.parque.getId(),tipoAgendado,data_inicio,data_fim);
         System.out.println(lugar_ids);
 
         System.out.println("\n\n");
