@@ -2,8 +2,8 @@ import { NavbarStaff } from '../../objects/Navbar';
 import { Button } from '../../interactive_items/Button';
 import '../condutor/Details.css'
 import { useEffect, useState } from 'react';
-import Contacts from '../../objects/Contacts';
 import ParksProgrammer from '../../objects/ParksProgrammer';
+import ContactsProgrammer from '../../objects/ContactsProgrammer';
 
 
 
@@ -24,15 +24,7 @@ function Programmer({
 
             default:
                 setPage(
-                    <Contacts
-                        listUsers={managers} 
-                        createButton={<Button buttonStyle={"default compressed_park_staff_filter_button"} onClick={() => console.log("Criar Gestor")} link={'/programmer/managers/create'}>Criar Gestor</Button>} 
-                        revoke={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Gestor")}>Remove Parque</Button>} 
-                        add={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Adiciona parque a Gestor")}>Adicionar Parque</Button>} 
-                        removeButton={<Button buttonStyle={"default flex_button"} onClick={() => console.log("Remove Gestor")}>Remover</Button>}
-                        title={"Gestores"}
-                        showPark={true}
-                    />
+                    <ContactsProgrammer managers={managers} />
                 );
                 break;
         }

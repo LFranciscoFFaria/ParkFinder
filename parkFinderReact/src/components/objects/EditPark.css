@@ -66,3 +66,29 @@
 }
 
 
+.edit_park_container_precario,
+.edit_park_percario_fields{
+    display: grid;
+    grid-template-columns: max-content auto;
+    padding: 20px;
+    gap: 10px;
+    border-top: 1px lightgray solid;
+    align-items: center;
+}
+
+.edit_park_container_precario{
+    width: 800px;
+    gap: 70px;
+}
+
+
+.edit_park_precario{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+}
+
+.edit_park_precario_title{
+    font-size: larger;
+}

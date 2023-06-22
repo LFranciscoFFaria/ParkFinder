@@ -15,7 +15,6 @@ import ManagerDetails from './components/pages/manager/ManagerDetails';
 import CreateAdmin from './components/objects/CreateAdmin';
 
 import Programmer from './components/pages/programmer/Programmer';
-import ProgrammerDetails from './components/pages/programmer/ProgrammerDetails';
 import CreateManager from './components/objects/CreateGestor';
 import CreatePark from './components/objects/CreatePark';
 
