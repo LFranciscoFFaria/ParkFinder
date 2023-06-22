@@ -79,11 +79,13 @@ export function NavbarStaff({
 
     function getPath() {
         var path = window.location.href.split('/');
-        let difDirectory = path[3] === 'admin';
+        let difDirectory = path.length;
         console.log(path);
     
-        if (difDirectory)
-          return <img className='button_image' src={'../images/preto.png'} alt={''} />
+        if (difDirectory === 6)
+          return <img className='button_image' src={'../../images/preto.png'} alt={''} />
+        else if (difDirectory === 5)
+            return <img className='button_image' src={'../images/preto.png'} alt={''} />
         else
           return <img className='button_image' src={'./images/preto.png'} alt={''} />
     }

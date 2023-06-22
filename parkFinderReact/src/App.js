@@ -241,7 +241,7 @@ function App() {
     const [idParque, setIdParque] = useState(-1);
     const [userId, setUserID] = useState(0);
     const [userStates, setUserState] = useState('loggoff')
-
+    
     /*Possible userStates:
         loggedOff: loggedOff
         condutor: condutor logged in
@@ -249,11 +249,6 @@ function App() {
         gestor: gestor logged in
         programador: programador logged in
     */
-
-    fetch
-
-
-
 
     useEffect(() => {
         console.log("state = " + state);
@@ -263,11 +258,11 @@ function App() {
     }, [state,filter,userId,idParque]);
 
     useEffect(() => {
-        setUserID(localStorage.getItem('userId'))
+        setUserID(userId)//localStorage.getItem('userId')
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('userStates')
+        localStorage.setItem('userStates', useState)
     }, [userStates])
 
     return (
