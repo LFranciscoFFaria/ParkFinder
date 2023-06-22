@@ -7,10 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.uminho.di.aa.parkfinder.api.DTOs.LoginDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.AdministradorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorServiceBean;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
@@ -36,15 +39,15 @@ public class UtilizadorAPI {
             switch (u.getDiscriminator()) {
                 case "Condutor" -> {
                     CondutorServiceBean condutorServiceBean = context.getBean(CondutorServiceBean.class);
-                    condutorServiceBean.setCondutor(u);
+                    condutorServiceBean.setCondutor((Condutor) u);
                 }
                 case "Admin" -> {
                     AdministradorServiceBean administradorServiceBean = context.getBean(AdministradorServiceBean.class);
-                    administradorServiceBean.setAdministrador(u);
+                    administradorServiceBean.setAdministrador((Administrador) u);
                 }
                 case "Gestor" -> {
                     GestorServiceBean gestorServiceBean = context.getBean(GestorServiceBean.class);
-                    gestorServiceBean.setGestor(u);
+                    gestorServiceBean.setGestor((Gestor) u);
                 }
                 case "Programador" -> {
                     ProgramadorServiceBean programadorServiceBean = context.getBean(ProgramadorServiceBean.class);
@@ -54,15 +57,8 @@ public class UtilizadorAPI {
 
             return new ResponseEntity<>(u, HttpStatus.OK); }
         catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntityBadRequest<Utilizador>().createBadRequest(e.getMessage());
         }
     }
-
-    //@GetMapping("/procurar")
-    //public ResponseEntity<List<Utilizador>> procurar(@RequestParam String nome){
-    //    try{ return new ResponseEntity<>(utilizadorServiceBean.procurarUtilizador(nome, "Condutor"), HttpStatus.OK); }
-    //    catch (Exception e){
-    //        return new ResponseEntityBadRequest<List<Utilizador>>().createBadRequest(e.getMessage());
-    //    }
-    //}
 }

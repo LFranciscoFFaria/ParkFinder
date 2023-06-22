@@ -11,19 +11,45 @@ import pt.uminho.di.aa.parkfinder.api.DTOs.serializers.GeneroSerializer;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class CondutorDTO {
+    @JsonProperty("nome")
     String nome;
 
+    @JsonProperty("email")
     String email;
 
+    @JsonProperty("nr_telemovel")
     Integer nr_telemovel;
 
+    @JsonProperty("password")
     String password;
 
+    @JsonProperty("nif")
     Integer nif;
 
     @JsonSerialize(using = GeneroSerializer.class)
     @JsonDeserialize(using = GeneroDeserializer.class)
+    @JsonProperty("genero")
     boolean genero;
+
+    public CondutorDTO(@JsonProperty("nome")String nome, @JsonProperty("email") String email,@JsonProperty("nr_telemovel") Integer nr_telemovel, @JsonProperty("password")String password, @JsonProperty("nif")Integer nif,@JsonProperty("genero") boolean genero) {
+        this.nome = nome;
+        this.email = email;
+        this.nr_telemovel = nr_telemovel;
+        this.password = password;
+        this.nif = nif;
+        this.genero = genero;
+    }
+
+    @Override
+    public String toString() {
+        return "CondutorDTO{" +
+                "nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", nr_telemovel=" + nr_telemovel +
+                ", password='" + password + '\'' +
+                ", nif=" + nif +
+                ", genero=" + genero +
+                '}';
+    }
 }
