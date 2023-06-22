@@ -14,8 +14,6 @@ const parques = [
     { id: 7,  park: "ESTACIONAMENTOS CAMPO DA VINHA"},
     { id: 8,  park: "SRA TAIMANA"},
     { id: 9,  park: "TAIMANA PEQUENA"},
-    { id: 10, park: "TAIMANA O QUÊ?"},
-    { id: 11, park: "THA FUCK IS TAIMANA?"},
 ]
 
 
