@@ -5,15 +5,19 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pt.uminho.di.aa.parkfinder.api.DTOs.AdminDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.CondutorDTO;
+import pt.uminho.di.aa.parkfinder.api.DTOs.GestorDTO;
 import pt.uminho.di.aa.parkfinder.api.DTOs.LoginDTO;
 import pt.uminho.di.aa.parkfinder.api.auxiliar.ResponseEntityBadRequest;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.Condutor;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorServiceBean;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.AdministradorServiceBean;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorServiceBean;
-import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorServiceBean;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaCondutores.CondutorService;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.AdministradorService;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.GestorService;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.ProgramadorService;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Administrador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gestor;
+import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
 
@@ -30,35 +34,43 @@ public class UtilizadorAPI {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<Utilizador> login(@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<Object> login(@RequestBody LoginDTO loginDTO){
         try{
             Utilizador u = utilizadorService.login(loginDTO.getEmail(), loginDTO.getPassword());
             if (u == null)
-                return new ResponseEntityBadRequest<Utilizador>().createBadRequest("Credenciais inválidas.");
+                return new ResponseEntityBadRequest<>().createBadRequest("Credenciais inválidas.");
 
+            Object ret;
             switch (u.getDiscriminator()) {
                 case "Condutor" -> {
-                    CondutorServiceBean condutorServiceBean = context.getBean(CondutorServiceBean.class);
-                    condutorServiceBean.setCondutor((Condutor) u);
+                    CondutorService condutorServiceBean = context.getBean(CondutorService.class);
+                    Condutor c = (Condutor) u;
+                    condutorServiceBean.setCondutor(c);
+                    ret = new CondutorDTO(c.getNome(), c.getEmail(), c.getNrTelemovel(), c.getPassword(), c.getNif(), c.getGenero());
                 }
                 case "Admin" -> {
-                    AdministradorServiceBean administradorServiceBean = context.getBean(AdministradorServiceBean.class);
-                    administradorServiceBean.setAdministrador((Administrador) u);
+                    AdministradorService administradorServiceBean = context.getBean(AdministradorService.class);
+                    Administrador a = (Administrador) u;
+                    administradorServiceBean.setAdministrador(a);
+                    ret = new AdminDTO(a.getNome(), a.getEmail(), a.getNrTelemovel(), a.getPassword(), a.getGestorID(), null);
                 }
                 case "Gestor" -> {
-                    GestorServiceBean gestorServiceBean = context.getBean(GestorServiceBean.class);
-                    gestorServiceBean.setGestor((Gestor) u);
+                    GestorService gestorServiceBean = context.getBean(GestorService.class);
+                    Gestor g = (Gestor) u;
+                    gestorServiceBean.setGestor(g);
+                    ret = new GestorDTO(g.getNome(), g.getEmail(), g.getNrTelemovel(), g.getPassword(), null, null);
                 }
                 case "Programador" -> {
-                    ProgramadorServiceBean programadorServiceBean = context.getBean(ProgramadorServiceBean.class);
+                    ProgramadorService programadorServiceBean = context.getBean(ProgramadorService.class);
+                    Programador p = (Programador) u;
                     programadorServiceBean.setProgramador(u);
+                    ret = new Programador(p.getNome(), p.getEmail(), p.getPassword(), p.getNrTelemovel());
                 }
             }
 
             return new ResponseEntity<>(u, HttpStatus.OK); }
         catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntityBadRequest<Utilizador>().createBadRequest(e.getMessage());
+            return new ResponseEntityBadRequest<>().createBadRequest(e.getMessage());
         }
     }
 }
