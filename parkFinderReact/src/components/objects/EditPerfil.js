@@ -32,6 +32,7 @@ export function editPerfilField (
 export function EditPerfil({
     user,
 }) {
+    console.log(user);
     const [color, setColor] = useState(null);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -42,7 +43,7 @@ export function EditPerfil({
     useEffect(() => {
         setName(user['nome']);
         setEmail(user['email']);
-        setPhoneNumber(user['telemovel']);
+        setPhoneNumber(user['nr_telemovel']);
         setNIF(user['nif']);
     },[user]);
 
@@ -94,7 +95,7 @@ export function EditPerfil({
                     <input className='edit_perfil_input' placeholder={'NIF'} type={'number'} value={nif} onChange={(e) => setNIF(e.target.value)} required/>
                 </div>
                 <div className='security_field'>
-                    <b> {'Número de Telemovel'} </b>
+                    <b> {'Número de nr_Telemovel'} </b>
                     <input className='edit_perfil_input' placeholder={'987654321'} type={'number'} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required/>
                 </div>
                 <div className='security_input_button'>

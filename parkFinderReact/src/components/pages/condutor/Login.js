@@ -19,7 +19,8 @@ function Login({
         let requestOptions = {
             method: 'PUT',
             headers: { "Access-Control-Allow-Origin": "*" ,  "Content-Type": "application/json" },
-            body: JSON.stringify(login)
+            body: JSON.stringify(login),
+            credencials: 'include'
         }
         console.log(login);
         fetch('http://localhost:8080/apiV1/utilizadores/login', requestOptions)
