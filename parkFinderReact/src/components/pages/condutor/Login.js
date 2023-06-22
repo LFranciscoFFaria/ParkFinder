@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../interactive_items/Button';
 
 function Login({
-    
 }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -33,10 +32,12 @@ function Login({
                 }
                 else {
                     console.log("login");
-                    console.log(res);
-
-                    // window.location.href = '/';
                 }
+                return(res.json())
+            })
+            .then(result => {console.log(result);
+                localStorage.setItem('userId',result['id']);
+                window.location.href = '/';
             })
             .catch(err => alert(err))
     };
