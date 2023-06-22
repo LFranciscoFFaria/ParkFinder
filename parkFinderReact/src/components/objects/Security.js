@@ -34,34 +34,38 @@ function Security() {
             <h1>Segurança</h1>
 
             <form onSubmit={saveProfile}>
-                <div className='edit_perfil_field'>
-                    <h3> {'Password'} </h3>
+                <div className='security_field'>
+                    <b> {'Password'} </b>
                     <input
-                        className={'edit_perfil_input' + (error===1? ' edit_perfil_input_error':'')}
+                        className={'security_input' + (error===1? ' security_input_error':'')}
                         placeholder='Password'
                         type='password'
                         onChange={(e) => setPass(e.target.value)}
                         required/>
-                    <label className={error===1? 'input_error':'disabled_selected'}>*password incorreta</label>
-                    <h3> {'Nova Password'} </h3>
+                    <label className={error===1? 'scurity_error':'disabled_selected'}>*password incorreta</label>
+                </div>
+                <div className='security_field'>
+                    <b> {'Nova Password'} </b>
                     <input
-                        className='edit_perfil_input'
+                        className='security_input'
                         placeholder='Password'
                         type='password'
                         onChange={(e) => setNewPass(e.target.value)}
                         required/>
-                    <h3> {'Escreva Novamente'} </h3>
+                </div>
+                <div className='security_field'>
+                    <b> {'Escreva Novamente'} </b>
                     <input
-                        className={'edit_perfil_input' + (error===2? ' edit_perfil_input_error':'')}
+                        className={'security_input' + (error===2? ' security_input_error':'')}
                         placeholder='Password'
                         type='password'
                         onChange={(e) => setConfPass(e.target.value)}
                         required/>
-                    <label className={error===2? 'input_error':'disabled_selected'}>*password são diferentes</label>
-                    <div className='edit_perfil_input_button'>
-                        <br/>
-                        <Button type='submit' buttonStyle='contrast'>Gravar</Button>
-                    </div>
+                    <label className={error===2? 'scurity_error':'disabled_selected'}>*password são diferentes</label>
+                </div>
+                <div className='security_input_button'>
+                    <br/>
+                    <Button type='submit' buttonStyle='contrast'>Gravar</Button>
                 </div>
             </form>
         </div>

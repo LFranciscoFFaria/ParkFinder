@@ -6,23 +6,6 @@
     width: 600px;
 }
 
-.edit_perfil_field{
-    display: flex;
-    flex-direction:column;
-    font-size: larger;
-    gap: 15px;
-    padding: 20px;
-    border-top: 1px lightgray solid;
-}
-
-.edit_perfil_input_button{
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-}
 
 .edit_perfil_input{
     display: flex;
@@ -31,7 +14,13 @@
 
 
 
-
+.edit_perfil_input_image{
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
 
 
 .edit_perfil_color{

@@ -9,14 +9,14 @@ import Parks from './components/pages/condutor/Parks';
 
 import Admin from './components/pages/admin/Admin';
 import AdminDetails from './components/pages/admin/AdminDetails.js';
-import CreateAdmin from './components/objects/CreateAdmin';
 
 import Manager from './components/pages/manager/Manager';
 import ManagerDetails from './components/pages/manager/ManagerDetails';
+import CreateAdmin from './components/objects/CreateAdmin';
 
 import Programmer from './components/pages/programmer/Programmer';
 import ProgrammerDetails from './components/pages/programmer/ProgrammerDetails';
-import Contacts from './components/objects/Contacts';
+import CreateManager from './components/objects/CreateGestor';
 
 
 const reservations = [
@@ -217,6 +217,20 @@ const estatisticas = [
     },
 ]
 
+
+const users = [
+    {
+        'id': 1234567890,
+        'nome': "Pedro Jorge",
+        'email': "pedrojorge@gmail.com",
+        'telemovel': "936978575",
+        'password': "pedroJ",
+        'nif' : '123456789',
+    },
+]
+
+
+
 function App() {
     /*Possible userStates:
         loggedOff: no current logged user
@@ -228,7 +242,7 @@ function App() {
     const [state, setState] = useState('');
     const [filter, setFilter] = useState(false);
     const [idParque, setIdParque] = useState(-1);
-    const [userId, setUserID] = useState('1234567890abc');
+    const [userId, setUserID] = useState(0);
 
     useEffect(() => {
         console.log("state = " + state);
@@ -264,6 +278,7 @@ function App() {
                 <Route path='/programmer' element={<Programmer managers={managers} parks={parques} selected={1}/>}/>
                 <Route path='/programmer/managers' element={<Programmer managers={managers} selected={2}/>}/>
                 <Route path='/programmer/details' element={<ProgrammerDetails/>}/>
+                <Route path='/programmer/managers/create' element={<CreateManager/>}/>
             </Routes>
         </Router>
     );

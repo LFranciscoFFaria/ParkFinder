@@ -87,20 +87,32 @@ const pk = [
 
 
 
-function CreateAdmin({
+function CreateManager({
 }) {
-    const [email, setAdminEmail] = useState('');
-    const [name, setAdminName] = useState('');
-    const [contact, setAdminContact] = useState('');
-    const [parks, setAdminParks] = useState('');
-    const [password, setAdminPassword] = useState('');
-
+    const [email, setManagerEmail] = useState('');
+    const [name, setManagerName] = useState('');
+    const [contact, setManagerContact] = useState('');
+    const [parks, setManagerParks] = useState('');
+    const [password, setManagerPassword] = useState('');
     const [parques,setParques] = useState(pk);
+    const [parkbuff, setManagerParkbuff] = useState('');
 
-    const [parkbuff, setAdminParkbuff] = useState('');
+    
 
-    let parklist = [];
 
+    const saveManager = (event) => {
+        event.preventDefault()
+        console.log("Save Manager");
+        console.log("name = " + name);
+        console.log("email = " + email);
+        console.log("contact = " + contact);
+        console.log("parks = " + parks);
+        console.log("password = " + password);
+    };
+
+
+    
+    var parklist = [];
     const change_on_list = (event) => {
         let index = parklist.indexOf(parkbuff);
         if(parklist.includes(parkbuff)==true){
@@ -109,45 +121,39 @@ function CreateAdmin({
         else{
             parklist.concat([parkbuff]);
         }
-        setAdminParks(parklist);
-        console.log(parkbuff);
+        setManagerParks(parklist);
     };
 
-    const saveAdmin = (event) => {
-        event.preventDefault()
-        console.log("Save Admin");
-        console.log("name = " + name);
-        console.log("email = " + email);
-        console.log("contact = " + contact);
-        console.log("parks = " + parks);
-        console.log("password = " + password);
-    };
+    useEffect(() => {
+        console.log(parkbuff);
+    },[parkbuff])
     
+
+
+
     return(
         <div className='staff_bg'>
             <div className='staff_whitebox'>
                 <NavbarStaff link_logo={'/manager'}/>
 
-                {editPerfilField('Nome',null,'Nome',setAdminName,saveAdmin)}
-                {editPerfilField('Email','email','email',setAdminEmail,saveAdmin)}
-                {editPerfilField('Contact','contact','contact',setAdminContact,saveAdmin)}
-                {editPerfilField('Password','password','password',setAdminPassword,saveAdmin)}
+                {editPerfilField('Nome',null,'Nome',setManagerName,saveManager)}
+                {editPerfilField('Email','email','email',setManagerEmail,saveManager)}
+                {editPerfilField('Contact','contact','contact',setManagerContact,saveManager)}
+                {editPerfilField('Password','password','password',setManagerPassword,saveManager)}
 
-                <form onSubmit={saveAdmin}>
+                <form onSubmit={saveManager}>
                     <div className='edit_perfil_field'>
                         <b> {name} </b>
                         <div className='edit_perfil_input_button'>
                             <div className='admin_grid_container' name='Criterion' id='criterion' defaultValue={"default"}>
                                 {parques.map((parque, index) => (
-                                    <label className="checkbox_label" key={index}>
-                                        <input type="checkbox" className="checkbox"  value={parque['id']} 
-                                            onChange={(e) => {setAdminParkbuff(e.target.value);change_on_list(e.target.value)}}/>
+                                    <Checkbox key={index} value={parque['id']} onChange={(e) => {setManagerParkbuff(e.target.value);change_on_list(e.target.value)}}>
                                         {parque['nome']}
-                                    </label>
+                                    </Checkbox>
                                 ))}
                             </div>
                         </div>
-                            <Button type='submit' buttonStyle='contrast'>Gravar</Button>
+                        <Button type='submit' buttonStyle='contrast'>Gravar</Button>
                     </div>
                 </form>
             </div>
@@ -155,4 +161,4 @@ function CreateAdmin({
     );
 }
 
-export default CreateAdmin;
+export default CreateManager;

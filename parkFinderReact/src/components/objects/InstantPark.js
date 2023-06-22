@@ -58,7 +58,9 @@ function InstantPark({
 
     return (
         <>
-            <h1>Entradas e Saidas</h1>
+            <div className="contact_header">
+                <h1>Entradas e Saidas</h1>
+            </div>
             <div className="details_pages_display instant_park_display">
 
                 <Button buttonStyle="contrast navbar_staff_login_button flex_button" onClick={() => {setPopUp(true); setEntry(true)}}>Registar Entrada</Button>

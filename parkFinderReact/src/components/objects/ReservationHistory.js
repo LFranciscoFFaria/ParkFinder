@@ -19,7 +19,7 @@ export function ReservationHistory({
 
             <h1>Histórico de Reservas</h1>
             {reservations.map((reservation, index) => 
-                <div key={index} className='edit_perfil_field'>
+                <div key={index} className='reservation_history_field'>
                     <b className='reservation_history_park'>{reservation['nome_parque']}</b>
                     <div className='reservation_history_grid_content'>
                         <label>Estado da Reserva: </label>
@@ -68,7 +68,7 @@ export function Reservation({
             }
             {reservations.map((reservation, index) => (
                 reservation['estado'] !== "Concluida" && reservation['tipo_lugar'] !== 'Instantaneo'?
-                    <div key={index} className='reservation_history_field'>
+                    <div key={index} className='reservation_field'>
                         <div className='reservation_history_park_qrcode'>
                             <b className='reservation_history_park'>{reservation['nome_parque']}</b>
                             <Button buttonStyle={'default'} onClick={() => setPopUp(reservation['id'])}>Utilizar</Button>

@@ -4,11 +4,13 @@ import './Checkbox.css';
 
 
 function Checkbox({
-    children
+    children,
+    value,
+    onChange
 }) {
     return (
         <label className="checkbox_label">
-            <input type="checkbox" className="checkbox"/>
+            <input type="checkbox" className="checkbox" value={value} onChange={onChange}/>
             {children}
         </label>
     );

@@ -8,6 +8,16 @@ import '../../interactive_items/select.css'
 import './Perfil.css'
 import { useEffect, useState } from 'react';
 
+const users = [
+    {
+        'id': 1234567890,
+        'nome': "Pedro Jorge",
+        'email': "pedrojorge@gmail.com",
+        'telemovel': "936978575",
+        'nif' : '123456789',
+        'password': "pedroJ",
+    }
+]
 
 function Perfil({
     setState,
@@ -16,14 +26,15 @@ function Perfil({
 }) {
     const [optionSelected, setOptionSelected] = useState(-1);
     const [optionDisplayed, setOptionDisplayed] = useState(null);
+    const [user, setUser] = useState(users[userID])
 
     function displayPerfilOptions() {
         switch (optionSelected) {
             case 1:
-                setOptionDisplayed(<EditPerfil/>);
+                setOptionDisplayed(<EditPerfil user={user} setUser={setUser}/>);
                 break;
             case 2:
-                setOptionDisplayed(<Security/>);
+                setOptionDisplayed(<Security user={user} setUser={setUser}/>);
             break;
             case 3:
                 setOptionDisplayed(<Reservation reservations={reservations}/>);
@@ -56,11 +67,11 @@ function Perfil({
                         <div className="perfil_block_info">
                             <h2>Informação Básica</h2>
                             <b className='field_name'>Nome:</b>
-                            <label className='field_content'>Alexandre Silva Martins</label>
+                            <label className='field_content'>{user['nome']}</label>
                             <b className='field_name'>Email:</b>
-                            <label className='field_content'>se_o_alex_vir_isto_e_gay@gmail.com</label>
+                            <label className='field_content'>{user['email']}</label>
                             <b className='field_name'>Numero de Telefone:</b>
-                            <label className='field_content'>987654321</label>
+                            <label className='field_content'>{user['telemovel']}</label>
                         </div>
                     </div>
                     <div className={optionSelected===-1? "disabled_selected":"perfil_options perfil_options_open"}>
