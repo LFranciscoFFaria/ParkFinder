@@ -11,8 +11,34 @@ function Login({
 
     const validateForm = (event) => {
         event.preventDefault()
-        console.log("validate");
-        window.location.href = '/manager';
+        
+        let login = {
+            "email": email,
+            "password": password
+        }
+
+        let requestOptions = {
+            method: 'PUT',
+            headers: { "Access-Control-Allow-Origin": "*" ,  "Content-Type": "application/json" },
+            body: JSON.stringify(login)
+        }
+        console.log(login);
+        fetch('http://localhost:8080/apiV1/utilizadores/login', requestOptions)
+            .then(res => {
+                if (res.status !== 200) {
+                    var errorMsg = res.headers.get("x-error");
+                    if (errorMsg == null)
+                        errorMsg = "Error occured";
+                    alert(errorMsg);
+                }
+                else {
+                    console.log("login");
+                    console.log(res);
+
+                    // window.location.href = '/';
+                }
+            })
+            .catch(err => alert(err))
     };
 
     return (
