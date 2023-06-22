@@ -16,19 +16,7 @@ const parques = [
     { id: 7,  park: "ESTACIONAMENTOS CAMPO DA VINHA"},
     { id: 8,  park: "SRA TAIMANA"},
     { id: 9,  park: "TAIMANA PEQUENA"},
-    { id: 10, park: "TAIMANA O QUÊ?"},
-    { id: 11, park: "THA FUCK IS TAIMANA?"},
 ]
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -57,15 +45,20 @@ function ContactsProgrammer({
 
     function makelist (parques) {
         return(
-            <>
-                {parques.map((parque,index)=>
-                    <label key={index} className="checkbox_label">
-                        <input type="checkbox" className="checkbox" value={parque.id} onChange={handleChange}/>
-                        {parque.park}
-                    </label>
-                )}
-                <Button type={'submit'} buttonStyle={"default flex_button"} onClick={updateManagers}> Gravar Alterações</Button>
-            </>
+            parques.length > 0?
+                <div className='contact_popup_list'>
+                    {parques.map((parque,index)=>
+                        <label key={index} className="checkbox_label">
+                            <input type="checkbox" className="checkbox" value={parque.id} onChange={handleChange}/>
+                            {parque.park}
+                        </label>
+                    )}
+                    <div className='contact_popup_list_button'>
+                        <Button type={'submit'} buttonStyle={"default compressed_park_staff_filter_button flex_button"} onClick={updateManagers}> Gravar Alterações</Button>
+                    </div>
+                </div>
+                :
+                <h1>Não existem parques para apresentar</h1>
         )
     };
 
@@ -117,12 +110,12 @@ function ContactsProgrammer({
                 </div>
             )}
             {popUp && op === "R"?
-                <PopUp closePopUp={() => setPopUp(false)} element={makelist(parques)}/>
+                <PopUp text={'Remover Parques'} closePopUp={() => setPopUp(false)} element={makelist(parques)}/>
                 :
                 null
             }
             {popUp && op === "A"?
-                <PopUp closePopUp={() => setPopUp(false)} element={makelist(parques)}/>
+                <PopUp text={'Adicionar Parques'} closePopUp={() => setPopUp(false)} element={makelist(parques)}/>
                 :
                 null
             }
