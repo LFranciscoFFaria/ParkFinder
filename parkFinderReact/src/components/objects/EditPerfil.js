@@ -4,37 +4,13 @@ import { Button } from '../interactive_items/Button';
 import './EditPerfil.css';
 import { ImageBlock } from '../interactive_items/ImageBlock';
 
-export function editPerfilField (
-    name,
-    type,
-    placeholder,
-    setFunc,
-    saveProfile,
-    ) {
-    return(
-        <form onSubmit={saveProfile}>
-            <div className='security_field'>
-                <b> {name} </b>
-                <div className='edit_perfil_input_button'>
-                    <input
-                        className='edit_perfil_input'
-                        placeholder={placeholder}
-                        type={type}
-                        onChange={(e) => setFunc(e.target.value)}
-                        required/>
-                </div>
-            </div>
-        </form>
-    )
-}
 
 
 export function EditPerfil({
     user,
     setUser
 }) {
-    console.log(user);
-    const [color, setColor] = useState(1);
+    const [color, setColor] = useState("#111111");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState(0);
@@ -49,16 +25,14 @@ export function EditPerfil({
     },[user]);
 
 
-
-
     const saveProfile = (event) => {
-        event.preventDefault()
-        let newUser = user
-        newUser["email"] = email
-        newUser["nome"] = name
-        newUser["nr_telemovel"] = phoneNumber
-        newUser["nif"] = nif
-        setUser(newUser)
+        event.preventDefault();
+        const newUser = {...user};
+        newUser["email"] = email;
+        newUser["nome"] = name;
+        newUser["nr_telemovel"] = phoneNumber;
+        newUser["nif"] = nif;
+        setUser(newUser);
     };
 
     return (
@@ -108,3 +82,7 @@ export function EditPerfil({
         </div>
     );
 };
+
+
+
+

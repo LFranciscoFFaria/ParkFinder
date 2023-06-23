@@ -42,6 +42,7 @@ function Perfil({
     useEffect(() => {
         console.log("optionSelected = " + optionSelected);
         displayPerfilOptions();
+        console.log(optionDisplayed)
     }, [optionSelected]);
 
     useEffect(() => {
