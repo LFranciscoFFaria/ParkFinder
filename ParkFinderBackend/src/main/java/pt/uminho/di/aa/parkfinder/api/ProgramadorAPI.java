@@ -22,7 +22,7 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Progr
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 @RequestMapping("/apiV1/programador")
 public class ProgramadorAPI {
     private final ProgramadorService programadorService;

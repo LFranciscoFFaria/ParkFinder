@@ -27,7 +27,7 @@ import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Gesto
 import pt.uminho.di.aa.parkfinder.logicaUtilizadores.logicaEspeciais.model.Programador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.Utilizador;
 import pt.uminho.di.aa.parkfinder.logicaUtilizadoresBasica.UtilizadorService;
-@CrossOrigin
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 @RestController
 @RequestMapping("/apiV1/utilizadores")
 public class UtilizadorAPI {
