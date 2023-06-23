@@ -31,9 +31,10 @@ export function editPerfilField (
 
 export function EditPerfil({
     user,
+    setUser
 }) {
     console.log(user);
-    const [color, setColor] = useState(null);
+    const [color, setColor] = useState(1);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState(0);
@@ -52,12 +53,12 @@ export function EditPerfil({
 
     const saveProfile = (event) => {
         event.preventDefault()
-        console.log("Save Profile");
-        console.log("color = " + color);
-        console.log("email = " + email);
-        console.log("name = " + name);
-        console.log("nif = " + nif);
-        console.log("phoneNumber = " + phoneNumber);
+        let newUser = user
+        newUser["email"] = email
+        newUser["nome"] = name
+        newUser["nr_telemovel"] = phoneNumber
+        newUser["nif"] = nif
+        setUser(newUser)
     };
 
     return (

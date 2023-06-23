@@ -10,9 +10,14 @@ import { QRCodeSVG } from 'qrcode.react'
 
 export function Navbar({
     setState,
-    setFilter,
-    userID = -1
+    setFilter
 }) {
+    var user = JSON.parse(localStorage.getItem('user'));
+    var userID = user ? user["id"] : 0;
+
+    console.log("user:")
+    console.log(user)
+
     const [click, setClick] = useState(false);
     const [popUp, setPopUp] = useState(false);
     const [element, setElement] = useState(
@@ -29,7 +34,7 @@ export function Navbar({
         <div className='navbar_layer'>
             <header className={"header_default"}>
                 <Button buttonStyle={"logo_image"} onClick={() => {setState("all"); closeMobileMenu()}} link={'/'}><img className={'button_image'} src={"./images/preto.png"} alt={""} /></Button>
-                <Button buttonStyle={"navbar_perfil_image"} link={'/perfil'}> <img className={'button_image'} src={"images/perfil_black.png"} alt={""} /> Pedro Jorge </Button>
+                {user ? <Button buttonStyle={"navbar_perfil_image"} link={'/perfil'}> <img className={'button_image'} src={"images/perfil_black.png"} alt={""} /> {user["nome"]} </Button> : null}
             </header>
 
             <div className={'navbar_default'}>

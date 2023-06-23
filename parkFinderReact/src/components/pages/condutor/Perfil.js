@@ -15,39 +15,8 @@ function Perfil({
 }) {
     const [optionSelected, setOptionSelected] = useState(-1);
     const [optionDisplayed, setOptionDisplayed] = useState(null);
-    const [user, setUser] = useState(null)
-
-    var userId = localStorage.getItem('userId')
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     
-
-    useEffect(() => {
-
-        
-
-        const requestOptions = {
-            method: 'GET',
-            headers: { "Content-Type" : "application/json" ,"Access-Control-Allow-Origin": "*"},
-            credencials: 'include'
-        }
-        fetch("http://localhost:8080/apiV1/condutores/perfil/info", requestOptions)
-            .then(res => {
-                if (res.status !== 200) {
-                    let errorMsg;
-                    if ((errorMsg = res.headers.get("x-error")) == null)
-                        errorMsg = "Error occured"
-                    alert(errorMsg)
-                }
-                else {
-                    return(res.json())
-                }
-            })
-            .then((result) => {
-                setUser(result)
-            })
-    }, []);
-
-
-
     function displayPerfilOptions() {
         switch (optionSelected) {
             case 1:
@@ -75,12 +44,15 @@ function Perfil({
         displayPerfilOptions();
     }, [optionSelected]);
 
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(user));
+    }, [user]);
 
 
     if(user !== null)
         return (
             <div className='front_page'>
-                <Navbar setState={setState} setFilter={null} userID={userId}/>
+                <Navbar setState={setState} setFilter={null}/>
                 <div className="front_page_content">
                     <div className="perfil_main">
                         <div className='perfil_block_image'>

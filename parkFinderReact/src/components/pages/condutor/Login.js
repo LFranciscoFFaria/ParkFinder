@@ -18,9 +18,9 @@ function Login({
 
         let requestOptions = {
             method: 'PUT',
-            headers: { "Access-Control-Allow-Origin": "*" ,  "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin' : '*'},
             body: JSON.stringify(login),
-            credencials: 'include'
+            credentials: 'include'
         }
         console.log(login);
         fetch('http://localhost:8080/apiV1/utilizadores/login', requestOptions)
@@ -37,16 +37,17 @@ function Login({
                     return(res.json())
                 }
             })
-            .then(result => {console.log(result);
-                localStorage.setItem('userId',result['id']);
+            .then(result => {
+                console.log(result);
                 if (result['nif'])
-                    localStorage.setItem('userStates', 'condutor');
+                    result['tipo_user'] =  'condutor';
                 else if (result['id_gestor'])
-                    localStorage.setItem('userStates', 'admin');
+                    result['tipo_user'] =  'admin';
                 else if (result['ids_admins'])
-                    localStorage.setItem('userStates', 'gestor');
+                    result['tipo_user'] =  'gestor';
                 else
-                    localStorage.setItem('userStates', 'programador');
+                    result['tipo_user'] =  'programador';
+                localStorage.setItem('user',JSON.stringify(result));
                 window.location.href = '/';
             })
     };

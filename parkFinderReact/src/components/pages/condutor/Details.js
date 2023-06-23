@@ -74,7 +74,7 @@ function Details({
     if (parque !== null)
         return (
             <div className='front_page'>
-                <Navbar setState={setState} setFilter={null} userID={userId}/>
+                <Navbar setState={setState} setFilter={null}/>
                 <div className="front_page_content">
                     <div className="details_display">
                         <div className="details_header">

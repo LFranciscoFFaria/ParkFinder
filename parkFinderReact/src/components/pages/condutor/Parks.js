@@ -39,7 +39,7 @@ function Parks({
 
     return (
         <div className='front_page'>
-            <Navbar userID={userId} setState={setState} setFilter={() => setFilter(!filter)}/>
+            <Navbar setState={setState} setFilter={() => setFilter(!filter)}/>
             <div className='parks_content_display'>
                 <div className='parks_info_display'>
                     <div className='parks_header'>
