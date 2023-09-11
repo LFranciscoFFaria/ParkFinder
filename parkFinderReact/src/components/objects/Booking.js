@@ -1,5 +1,5 @@
 import { Button } from '../interactive_items/Button';
-import '../pages/condutor/Details.css';
+import '../pages/driver/Details.css';
 import '../objects/Booking.css';
 import { useState } from 'react';
 import Tooltip from 'rc-tooltip';

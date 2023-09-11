@@ -1,6 +1,6 @@
 import { Button } from "../interactive_items/Button";
 import "./InstantPark.css";
-import "../pages/condutor/Details.css";
+import "../pages/driver/Details.css";
 import PopUp from "../interactive_items/PopUp";
 import { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";

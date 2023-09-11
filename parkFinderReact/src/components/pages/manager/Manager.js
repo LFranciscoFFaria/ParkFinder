@@ -1,4 +1,4 @@
-import '../condutor/Details.css'
+import '../driver/Details.css'
 import { NavbarStaff } from '../../objects/Navbar';
 import { Button } from '../../interactive_items/Button';
 import { useEffect, useState } from 'react';

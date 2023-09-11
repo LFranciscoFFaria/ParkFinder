@@ -1,6 +1,6 @@
 import { NavbarStaff } from './Navbar';
 import { Button } from '../interactive_items/Button';
-import '../pages/condutor/Details.css'
+import '../pages/driver/Details.css'
 import { useEffect, useState } from 'react';
 import './EditPark.css';
 import './Security.css';

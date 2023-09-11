@@ -1,4 +1,4 @@
-import '../pages/condutor/Parks.css'
+import '../pages/driver/Parks.css'
 import './Contacts.css'
 import { FilterStaff } from './Filter';
 import { CompressedParkInfoStaff } from './CompressedParkInfo';

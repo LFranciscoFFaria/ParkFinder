@@ -2,20 +2,22 @@ import { useEffect, useState } from 'react';
 import { Button } from '../interactive_items/Button';
 import './EditPerfil.css';
 import './EditPark.css';
-import '../pages/condutor/Details.css';
+import '../pages/driver/Details.css';
 import '../interactive_items/select.css';
 import { ImageBlock } from '../interactive_items/ImageBlock';
 
 
 
 
+const diasDaSemana = ['segunda','terça','quarta','quinta','sexta','sabado','domingo'];
 
-var horas = {
+var infoSchedule = {
     "periodos" : [
         {"dia": 2, "inicio" : 7.5, "fim" : 13},
         {"dia": 3, "inicio" : 14.5, "fim" : 21},
         {"dia": 1, "inicio" : 7.5, "fim" : 13},
         {"dia": 5, "inicio" : 14.5, "fim" : 23},
+        {"dia": 5, "inicio" : 23.5, "fim" : 23.9},
         {"dia": 5, "inicio" : 7.5, "fim" : 13},
         {"dia": 2, "inicio" : 14.5, "fim" : 21},
         {"dia": 4, "inicio" : 7.5, "fim" : 13},
@@ -25,9 +27,6 @@ var horas = {
         {"dia": 1, "inicio" : 14.5, "fim" : 21},
     ]
 }
-
-
-
 
 function floatToTime(floatValue) {
     const hours = Math.floor(floatValue);
@@ -39,26 +38,35 @@ function floatToTime(floatValue) {
     return `${formattedHours}:${formattedMinutes}`;
 }
 
+function timeToFloat(timeString) {
+    const [hoursStr, minutesStr] = timeString.split(':');
+    const hours = parseInt(hoursStr, 10);
+    const minutes = parseInt(minutesStr, 10);
+  
+    const floatValue = hours + minutes / 60;
+    return floatValue;
+}
 
 
 
-const diasDaSemana = ['segunda','terça','quarta','quinta','sexta','sabado','domingo'];
+
 
 function EditParkManager({
-    parque,
-    setParque
+    parque
 }) {
     const [nome, setNome] = useState(parque['nome']);
     const [descricao, setDescricao] = useState(parque['descricao']);
     const [imagem, setImagem] = useState(parque['link_imagem']);
     const [disponivel, setDisponivel] = useState(parque['disponivel']);
 
-    const [schedule, setSchedule] = useState(horas);
+    const [scheduleError, setScheduleError] = useState('');
+    const [schedule, setSchedule] = useState(infoSchedule);
     const [scheduleElement, setScheduleElement] = useState(null);
     const [horaInicio, setHoraInicio] = useState('');
     const [horaFim, setHoraFim] = useState('');
     const [day, setDay] = useState(diasDaSemana[0]);
-    const [buttonPressed, setButtonPressed] = useState('');
+    const [selectedButton, setSelectedButton] = useState('');
+    const [selectedShift, setSelectedShift] = useState('');
     const [instantaneasLineares, setInstantaneasLineares] = useState(0);
     const [instantaneas, setInstantaneas] = useState({
         precoI: 0,
@@ -85,66 +93,95 @@ function EditParkManager({
 
     useEffect(() => {
         setScheduleElement(getOpeningHours(schedule));
-    },[schedule]);
+    },[schedule,selectedShift]);
 
-    function getOpeningHours() {
 
-        let horas2 = [
-            {"dia": 1, "horas" : []},
-            {"dia": 2, "horas" : []},
-            {"dia": 3, "horas" : []},
-            {"dia": 4, "horas" : []},
-            {"dia": 5, "horas" : []},
-            {"dia": 6, "horas" : []},
-            {"dia": 7, "horas" : []},
-        ];
 
-        
-        horas['periodos'].forEach((horario) => {
-            horas2[horario['dia'] - 1]['horas'].push(horario['inicio'], horario['fim']);
+
+    function getOpeningHours(schedule) {
+
+        let organizedSchedule = {
+            1 : [],
+            2 : [],
+            3 : [],
+            4 : [],
+            5 : [],
+            6 : [],
+            7 : []
+        };
+
+        schedule['periodos'].forEach((periodo) => {
+            organizedSchedule[periodo['dia']].push(periodo);
         });
         
-        horas2.forEach((dia) => {
-            dia['horas'].sort((a, b) => a - b);
-        });
-        
+        function sortScheduleArray(array) {
+            array.sort((a, b) => a.inicio - b.inicio || a.fim - b.fim);
+        }
+
+        for (const key in organizedSchedule) {
+            if (organizedSchedule[key].length > 0) {
+                const array = organizedSchedule[key];
+                sortScheduleArray(array);
+            }
+        }
+
         return(
             <ul>
-                {Object.entries(horas2).map(([dia, horario]) =>
-                    <div className='caracteristics_horario_grid' key={dia}>
-                        <b className='caracteristics_dia_grid'>{diasDaSemana[dia]}:</b>
-                        {horario['horas'].length === 0? 
+                {[1, 2, 3, 4, 5, 6, 7].map(day => (
+                    <div className='caracteristics_schedule_grid' key={day}>
+                        <b className='caracteristics_day_grid'>{diasDaSemana[day-1]}:</b>
+                        {organizedSchedule[day].length === 0? 
                             <Button
-                                buttonStyle='sex_button compressed_park_staff_filter_button caracteristics_horas_1_grid'
-                                onClick={()=>{setHoraInicio(''); setHoraFim(''); setDay(diasDaSemana[dia])}}
+                                buttonStyle='sex_button compressed_park_staff_filter_button caracteristics_shifts_grid'
+                                onClick={()=>{ 
+                                    setHoraInicio('');
+                                    setHoraFim('');
+                                    setSelectedShift(0);
+                                    setDay(diasDaSemana[day-1])
+                                }}
                             >
-                                Closed
+                                Fechado
                             </Button>
                             :
                             null}
-                        {horario['horas'].length >= 2? 
-                            <Button
-                                buttonStyle='sex_button compressed_park_staff_filter_button caracteristics_horas_1_grid'
-                                onClick={()=>{setHoraInicio(floatToTime(horario['horas'][0])); setHoraFim(floatToTime(horario['horas'][1])); setDay(diasDaSemana[dia])}}
-                            >
-                                {floatToTime(horario['horas'][0])} - {floatToTime(horario['horas'][1])}
-                            </Button>
+                        {organizedSchedule[day].length > 0?
+                            <div className='caracteristics_shifts_grid'>
+                                {organizedSchedule[day].map((shift)=>(
+                                    <Button
+                                        key={shift['inicio']}
+                                        buttonStyle={'compressed_park_staff_filter_button ' + (selectedShift===`${day}${shift['inicio']}`? 'sex_button_selected':'sex_button')}
+                                        onClick={()=>{
+                                            setHoraInicio(floatToTime(shift['inicio']));
+                                            setHoraFim(floatToTime(shift['fim']));
+                                            setDay(diasDaSemana[day-1]);
+                                            setSelectedShift(`${day}${shift['inicio']}`)
+                                        }}
+                                    >
+                                        {`${floatToTime(shift['inicio'])} - ${floatToTime(shift['fim'])}`}
+                                    </Button>
+                                ))}
+                                <Button
+                                    buttonStyle='edit_park_add_new_shift sex_button compressed_park_staff_filter_button caracteristics_shifts_grid'
+                                    onClick={()=>{ 
+                                        setHoraInicio('');
+                                        setHoraFim('');
+                                        setSelectedShift(day);
+                                        setDay(diasDaSemana[day-1])
+                                    }}
+                                >
+                                    +
+                                </Button>
+                            </div>
                             :
-                            null}
-                        {horario['horas'].length === 4? 
-                            <Button
-                                buttonStyle='sex_button compressed_park_staff_filter_button caracteristics_horas_2_grid'
-                                onClick={()=>{setHoraInicio(floatToTime(horario['horas'][2])); setHoraFim(floatToTime(horario['horas'][3])); setDay(diasDaSemana[dia])}}
-                            >
-                                {floatToTime(horario['horas'][2])} - {floatToTime(horario['horas'][3])}
-                            </Button>
-                            :
-                            null}
+                            null
+                        }
                     </div>
-                )}
+                ))}
             </ul>
         );
     }
+
+
 
     const handleChange = event => {
         const result = ("000" + event.target.value.replace(/\D/g, '')).match(/(000|00[123456789]|0[123456789]\d|[123456789]\d*)$/g).toString();
@@ -161,10 +198,107 @@ function EditParkManager({
     const changeSchedule = (event) => {
         event.preventDefault();
         console.log("Change Schedule");
-        console.log(buttonPressed);
+        console.log(selectedButton);
+        console.log(selectedShift);
         console.log("dia = " + day);
         console.log("hora_inicio = " + horaInicio);
         console.log("hora_fim = " + horaFim);
+
+        let position = diasDaSemana.indexOf(day)+1;
+
+        const searchObject = {"dia": position, "inicio": timeToFloat(horaInicio), "fim": timeToFloat(horaFim)};
+
+        // remover (remove)
+        if (selectedButton === "remove") {
+            var concatS = {
+                "periodos": []
+            };
+    
+            for (let key in schedule) {
+                schedule[key].forEach(item => {
+                    if (searchObject.dia != item.dia || searchObject.inicio != item.inicio || searchObject.fim != item.fim)
+                        concatS.periodos.push({
+                            "dia": item.dia,
+                            "inicio": item.inicio,
+                            "fim": item.fim
+                        });
+                    else
+                    setScheduleError('* Periodo não encontrado')
+                });
+            }
+            setSchedule(concatS)
+            return
+        }
+
+        // testar as horas
+        if (selectedButton === "add") {
+            let error = "";
+            for (let key in schedule) {
+                schedule[key].forEach(item => {
+                    if (searchObject.inicio >= searchObject.fim)
+                        error = '* Intervalo de tempo invalido';
+                    else if (searchObject.dia == item.dia && searchObject.inicio >= item.inicio && searchObject.inicio < item.fim)
+                        error = '* Inicio invade um outro horario';
+                    else if (searchObject.dia == item.dia && searchObject.fim >= item.inicio && searchObject.fim < item.fim)
+                        error = '* Fim invade um outro horario';
+                    else if (searchObject.dia == item.dia && searchObject.inicio <= item.inicio && searchObject.fim > item.fim)
+                        error = '* Existe um horario nesse periodo';
+                });
+            }
+            if (error == ""){
+                var concatS = {
+                    "periodos": [searchObject]
+                };
+        
+                for (let key in schedule) {
+                    schedule[key].forEach(item => {
+                        concatS.periodos.push({
+                            "dia": item.dia,
+                            "inicio": item.inicio,
+                            "fim": item.fim
+                        });
+                    });
+                }
+                setSchedule(concatS)
+            } else 
+                console.log(error);
+            return
+        }
+        // atualizar (update)
+        if (selectedButton === "update") {
+            let error = "";
+            for (let key in schedule) {
+                schedule[key].forEach(item => {
+                    if (`${item['dia']}${item['inicio']}` !== selectedShift){
+                        if (searchObject.inicio >= searchObject.fim)
+                            error = '* Intervalo de tempo invalido';
+                        else if (searchObject.dia == item.dia && searchObject.inicio >= item.inicio && searchObject.inicio < item.fim)
+                            error = '* Inicio invade um outro horario';
+                        else if (searchObject.dia == item.dia && searchObject.fim >= item.inicio && searchObject.fim < item.fim)
+                            error = '* Fim invade um outro horario';
+                        else if (searchObject.dia == item.dia && searchObject.inicio <= item.inicio && searchObject.fim > item.fim)
+                            error = '* Existe um horario nesse periodo';
+                }});
+            }
+            if (error == ""){
+                var concatS = {
+                    "periodos": [searchObject]
+                };
+        
+                for (let key in schedule) {
+                    schedule[key].forEach(item => {
+                        if (`${item['dia']}${item['inicio']}` !== selectedShift)
+                            concatS.periodos.push({
+                                "dia": item.dia,
+                                "inicio": item.inicio,
+                                "fim": item.fim
+                            });
+                    });
+                }
+                setSchedule(concatS)
+            } else 
+                console.log(error);
+        }
     }
 
     const savePark = (event) => {
@@ -184,8 +318,8 @@ function EditParkManager({
             <div className='edit_park_container'>
                 <form onSubmit={savePark} className='edit_park_fields_container'>
                     <div className='security_field edit_park_open_close'>
-                        <button type='button' className={'button contrast'} onClick={() => setDisponivel(!disponivel)} required>{disponivel? 'Fechar Parque':'Abrir Parque'}</button>
                         <b className={disponivel? 'edit_park_open' : 'edit_park_close'}> {'Parque ' + (disponivel? 'Aberto':'Fechado')} </b>
+                        <button type='button' className={'button contrast'} onClick={() => setDisponivel(!disponivel)} required>{disponivel? 'Fechar Parque':'Abrir Parque'}</button>
                     </div>
                     <div className='security_field'>
                         <b> {'Nome'} </b>
@@ -217,8 +351,12 @@ function EditParkManager({
                             <input type='time' value={horaFim} onChange={(e) => setHoraFim(e.target.value)} required/>
                         </div>
                         <div className='edit_park_new_period'>
-                            <Button type='submit' buttonStyle='contrast' onClick={() => setButtonPressed('adicionar')}>Adicionar</Button>
-                            <Button type='submit' buttonStyle='contrast' onClick={() => setButtonPressed('remover')}>Remover</Button>
+                            {selectedShift<=7?
+                                <Button type='submit' buttonStyle='contrast' onClick={() => setSelectedButton('add')}>Adicionar</Button>
+                                :
+                                <Button type='submit' buttonStyle='contrast' onClick={() => setSelectedButton('update')}>Atualizar</Button>
+                            }
+                            <Button type='submit' buttonStyle='contrast' onClick={() => setSelectedButton('remove')}>Remover</Button>
                         </div>
                     </form>
                     <div className='security_input_button'>

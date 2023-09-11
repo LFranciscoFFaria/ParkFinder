@@ -1,11 +1,14 @@
 .filter_staff_box{
     min-width: 250px;
     justify-content: space-evenly;
-    border-bottom: 1px lightgrey solid;
-    padding: 0px 60px 30px;
+    border: 1px lightgrey solid;
+    padding: 0px 30px 30px;
+    margin: 0px 30px 30px;
+    background-color: rgb(231, 231, 231);
     height: fit-content;
     display: flex;
     flex-direction: column;
+    border-radius: 30px;
     gap: 15px;
 }
 

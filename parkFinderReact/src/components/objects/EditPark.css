@@ -41,6 +41,22 @@
 }
 
 
+.edit_park_add_new_shift,
+.edit_park_add_new_shift:hover{
+    font-size: 120%;
+    margin: 0;
+    padding: 0px 12px;
+    display: flex;
+    align-items: center;
+    font-weight: 900;
+}
+
+.edit_park_add_new_shift{
+    color: rgb(185, 185, 185);
+    border: 2px solid white;
+}
+
+
 .edit_park_parking_spaces,
 .edit_park_new_period{
     display: flex;

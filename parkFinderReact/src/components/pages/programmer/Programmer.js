@@ -1,6 +1,6 @@
 import { NavbarStaff } from '../../objects/Navbar';
 import { Button } from '../../interactive_items/Button';
-import '../condutor/Details.css'
+import '../driver/Details.css'
 import { useEffect, useState } from 'react';
 import ParksProgrammer from '../../objects/ParksProgrammer';
 import ContactsProgrammer from '../../objects/ContactsProgrammer';

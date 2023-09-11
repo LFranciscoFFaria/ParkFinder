@@ -1,7 +1,8 @@
-import '../pages/condutor/Details.css';
+import '../pages/driver/Details.css';
 
+const diasDaSemana = ['segunda','terça','quarta','quinta','sexta','sabado','domingo'];
 
-const horas = {
+const infoSchedule = {
     "periodos" : [
         {"dia": 2, "inicio" : 7.5, "fim" : 13},
         {"dia": 3, "inicio" : 14.5, "fim" : 21},
@@ -30,38 +31,49 @@ function floatToTime(floatValue) {
     return <label>{formattedHours}h{formattedMinutes}</label>;
 }
 
-function getOpeningHours(horas) {
+function getOpeningHours(infoSchedule) {
 
-    let horas2 = [
-        {"dia": 1, "horas" : []},
-        {"dia": 2, "horas" : []},
-        {"dia": 3, "horas" : []},
-        {"dia": 4, "horas" : []},
-        {"dia": 5, "horas" : []},
-        {"dia": 6, "horas" : []},
-        {"dia": 7, "horas" : []},
-    ];
+    let organizedSchedule = {
+        1 : [],
+        2 : [],
+        3 : [],
+        4 : [],
+        5 : [],
+        6 : [],
+        7 : []
+    };
 
-    let diasDaSemana = ['segunda','terça','quarta','quinta','sexta','sabado','domingo'];
-
-    horas['periodos'].forEach((horario) => {
-        horas2[horario['dia'] - 1]['horas'].push(horario['inicio'], horario['fim']);
+    infoSchedule['periodos'].forEach((periodo) => {
+        organizedSchedule[periodo['dia']].push(periodo);
     });
+    
+    function sortScheduleArray(array) {
+        array.sort((a, b) => a.inicio - b.inicio || a.fim - b.fim);
+    }
 
-    horas2.forEach((dia) => {
-        dia['horas'].sort((a, b) => a - b);
-    });
+    for (const key in organizedSchedule) {
+        if (organizedSchedule[key].length > 0) {
+            const array = organizedSchedule[key];
+            sortScheduleArray(array);
+        }
+    }
 
     return(
         <ul>
-            {Object.entries(horas2).map(([dia, horario]) =>
-                <li className='caracteristics_horario_grid' key={dia}>
-                    <b className='caracteristics_dia_grid'>{diasDaSemana[dia]}:</b>
-                    {horario['horas'].length === 0? <label  className='caracteristics_horas_1_grid'> Closed </label> : null}
-                    {horario['horas'].length >= 2? <label  className='caracteristics_horas_1_grid'> {floatToTime(horario['horas'][0])} - {floatToTime(horario['horas'][1])} </label> : null}
-                    {horario['horas'].length === 4? <label  className='caracteristics_horas_2_grid'> {floatToTime(horario['horas'][2])} - {floatToTime(horario['horas'][3])} </label> : null}
+            {[1, 2, 3, 4, 5, 6, 7].map(day => (
+                <li className='caracteristics_schedule_grid' key={day}>
+                    <b className='caracteristics_day_grid'>{diasDaSemana[day-1]}:</b>
+                    <div className='caracteristics_shifts_grid'>
+                        {organizedSchedule[day].map((shift)=>(
+                            (organizedSchedule[day].length === 0?
+                                <label key={shift['inicio']}> Fechado </label>
+                                :
+                                <label key={shift['inicio']}> {floatToTime(shift['inicio'])} - {floatToTime(shift['fim'])} </label>
+                            )
+                        ))}
+                    </div>
                 </li>
-            )}
+            ))}
         </ul>
     );
 }
@@ -76,7 +88,7 @@ function Characteristics({
             </div>
             <div className="details_pages_display">
                 <h3>Horário de funcionamento</h3>
-                {getOpeningHours(horas)}
+                {getOpeningHours(infoSchedule)}
                 <h3>Capacidade</h3>
                 <ul>
                     <li> Nº de lugares vagos: {parque['lugares_vagos']} </li>

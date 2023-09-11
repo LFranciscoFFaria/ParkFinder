@@ -1,0 +1,74 @@
+
+
+.details_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.caracteristics_schedule_grid{
+    display: grid;
+    grid-template-areas:
+        "day shifts";
+    width: 100%;
+    grid-template-columns: 25% 66%;
+    align-items: center;
+    padding: 0px 0px 0px 20px;
+}
+
+.caracteristics_day_grid{
+    grid-area: day;
+}
+
+.caracteristics_shifts_grid{
+    grid-area: shifts;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+
+
+
+
+.details_image{
+    margin: 30px;
+    width: 650px;
+    height: 300px;
+}
+
+.details_options{
+    border-bottom: 2px solid lightgrey;
+}
+
+
+
+.details_pages_display{
+    padding: 10px 30px 0px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+option[value=""][disabled] {
+    display: none;
+}
+
+.booking_desc_section{
+    border-top: 1px solid lightgrey;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking_desc_subsection{
+    display: flex;
+    flex-direction: row;
+    padding: 20px 20px 0px 20px;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.details_display{
+    width: 50%;
+}

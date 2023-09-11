@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/pages/condutor/Login.js';
-import Register from './components/pages/condutor/Register.js';
-import Perfil from './components/pages/condutor/Perfil';
-import Details from './components/pages/condutor/Details';
-import Parks from './components/pages/condutor/Parks';
+import Login from './components/pages/driver/Login.js';
+import Register from './components/pages/driver/Register.js';
+import Perfil from './components/pages/driver/Perfil';
+import Details from './components/pages/driver/Details';
+import Parks from './components/pages/driver/Parks';
 
 import Admin from './components/pages/admin/Admin';
 import AdminDetails from './components/pages/admin/AdminDetails.js';
@@ -235,28 +235,10 @@ const users = [
 
 
 function App() {
-
-    const [state, setState] = useState('');
-    const [filter, setFilter] = useState(false);
-    const [idParque, setIdParque] = useState(-1);
-    const [userId, setUserID] = useState(0);
-    const [userStates, setUserState] = useState('loggoff')
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const [parkTypeFilter, setParkTypeFilter] = useState('');
+    const [displayFilter, setDisplayFilter] = useState(false);
     
-    /*Possible userStates:
-        loggedOff: loggedOff
-        condutor: condutor logged in
-        admin: admin logged in
-        gestor: gestor logged in
-        programador: programador logged in
-    */
-
-    useEffect(() => {
-        setUserID(localStorage.getItem('userId'))
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('userStates', userStates);
-    }, [userStates])
 
     return (
         <Router>
@@ -264,22 +246,40 @@ function App() {
                 {/*Common user*/}
                 <Route path='/login' element={<Login/>} />
                 <Route path='/register' element={<Register/>} />
-                <Route path='/' element={<Parks parques={parques} filter={filter} setFilter={setFilter} setState={setState} state={state}/>} />
-                <Route path='/details' element={<Details filter={filter} setState={setState}/>} />
-                <Route path='/perfil' element={<Perfil setState={setState} reservations={reservations}/>} />
+                <Route path='/' element={<Parks parques={parques} displayFilter={displayFilter} setDisplayFilter={setDisplayFilter} setParkTypeFilter={setParkTypeFilter} parkTypeFilter={parkTypeFilter}/>} />
+                {user['tipo_user'] === 'driver'?
+                    <>
+                        <Route path='/details' element={<Details setParkTypeFilter={setParkTypeFilter}/>} />
+                        <Route path='/perfil' element={<Perfil setParkTypeFilter={setParkTypeFilter} reservations={reservations}/>} />
+                    </>
+                    :
+                    null
+                }
 
 
                 {/*Admin*/}
-                <Route path='/admin' element={<Admin parks={parques} parques={parques}/>}/>
-                <Route path='/admin/details' element={<AdminDetails/>}/>
+                {user['tipo_user'] === 'admin'?
+                    <>
+                        <Route path='/admin' element={<Admin parks={parques} parques={parques}/>}/>
+                        <Route path='/admin/details' element={<AdminDetails/>}/>
+                    </>
+                    :
+                    null
+                }
 
 
                 {/*Manager*/}
-                <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} parks={parques} selected={1}/>}/>
-                <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
-                <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
-                <Route path='/manager/details' element={<ManagerDetails/>}/>
-                <Route path='/manager/admin/create' element={<CreateAdmin selected={2}/>}/>
+                {user['tipo_user'] === 'manager'?
+                    <>
+                        <Route path='/manager' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} parks={parques} selected={1}/>}/>
+                        <Route path='/manager/admins' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={2}/>}/>
+                        <Route path='/manager/statistics' element={<Manager parques={parques} estatisticas={estatisticas} administradores={administradores} selected={3}/>}/>
+                        <Route path='/manager/details' element={<ManagerDetails/>}/>
+                        <Route path='/manager/admin/create' element={<CreateAdmin selected={2}/>}/>
+                    </>
+                    :
+                    null
+                }
 
 
                 {/*Programmer*/}

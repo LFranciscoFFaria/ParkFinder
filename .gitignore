@@ -1,8 +1,0 @@
-parkFinderReact/node_modules/*
-.gitignore
-*.lck*
-*.bak_*
-.iml
-.idea/
-*.class
-ParkFinderBackend/target/classes/application.properties

@@ -1,4 +1,4 @@
-import '../pages/condutor/Details.css';
+import '../pages/driver/Details.css';
 
 
 

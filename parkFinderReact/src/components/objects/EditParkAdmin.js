@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '../interactive_items/Button';
 import './EditPerfil.css';
 import './EditPark.css';
-import '../pages/condutor/Details.css';
+import '../pages/driver/Details.css';
 import '../interactive_items/select.css';
 import { ImageBlock } from '../interactive_items/ImageBlock';
 
